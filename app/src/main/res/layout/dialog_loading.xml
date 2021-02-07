@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <View
+            android:alpha="0.5"
+            android:layout_centerInParent="true"
+            android:background="@drawable/dialog_loading_bg"
+            android:layout_width="96dp"
+            android:layout_height="96dp"/>
+
+    <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/loading_gif"
+            android:background="@drawable/loading"
+            android:layout_centerInParent="true"
+            android:layout_width="@dimen/icon_image_32"
+            android:layout_height="@dimen/icon_image_32"/>
+
+</RelativeLayout>

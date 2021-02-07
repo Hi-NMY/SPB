@@ -1,0 +1,73 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.example.spb"
+        minSdkVersion 24
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
+
+    implementation 'com.google.code.gson:gson:2.8.6'   //GSON解析
+
+    implementation "com.squareup.okhttp3:okhttp:4.9.0"  //okhttp
+
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'   //gif图
+
+    implementation 'org.litepal.guolindev:core:3.2.3'    //litepal
+
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'   //glide图片加载
+
+    implementation 'top.zibin:Luban:1.1.8'   //LuBan图片压缩
+
+    implementation 'com.gyf.immersionbar:immersionbar:3.0.0'  //状态栏沉浸依赖  基础包
+
+    implementation 'com.github.hackware1993:MagicIndicator:1.7.0'    //高级ViewPage滑动
+
+    //基础工具库     RxTool
+    implementation 'com.github.tamsiree.RxTool:RxKit:v2.6.2'
+    //UI库
+    implementation 'com.github.tamsiree.RxTool:RxUI:v2.6.2'
+    //相机库
+    implementation 'com.github.tamsiree.RxTool:RxCamera:v2.6.2'
+    //功能库（Zxing扫描与生成二维码条形码）
+    implementation 'com.github.tamsiree.RxTool:RxFeature:v2.6.2'
+
+    implementation 'com.makeramen:roundedimageview:2.3.0'    //圆角图片
+
+
+}

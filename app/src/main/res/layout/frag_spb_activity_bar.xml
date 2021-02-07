@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/spb_activity_bar"
+        android:background="@color/beijing"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spb_activity_bar_44">
+
+    <ImageView
+            android:id="@+id/bar_left_img"
+            android:visibility="invisible"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/icon_image_32"
+            android:layout_height="@dimen/icon_image_32"/>
+
+    <TextView
+            android:id="@+id/bar_left_txt"
+            android:visibility="invisible"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/icon_image_32"/>
+
+
+    <ImageView
+            android:id="@+id/bar_right_img1"
+            android:visibility="invisible"
+            android:layout_marginRight="@dimen/margin_16"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/icon_image_32"
+            android:layout_height="@dimen/icon_image_32"/>
+
+    <View
+            android:id="@+id/bar_newnotice_view"
+            android:visibility="invisible"
+            android:layout_marginRight="@dimen/margin_16"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentRight="true"
+            android:background="@color/blue"
+            android:layout_width="10dp"
+            android:layout_height="10dp"/>
+
+
+    <TextView
+            android:id="@+id/bar_right_txt1"
+            android:visibility="invisible"
+            android:layout_marginRight="@dimen/margin_16"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/icon_image_32"/>
+
+    <ImageView
+            android:id="@+id/bar_right_img2"
+            android:visibility="invisible"
+            android:layout_marginRight="@dimen/margin_8"
+            android:layout_toLeftOf="@id/bar_right_img1"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/icon_image_32"
+            android:layout_height="@dimen/icon_image_32"/>
+
+    <TextView
+            android:id="@+id/bar_right_txt2"
+            android:visibility="invisible"
+            android:layout_marginRight="@dimen/margin_8"
+            android:layout_toLeftOf="@id/bar_right_img1"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/icon_image_32"/>
+
+
+    <TextView
+            android:id="@+id/bar_central_txt"
+            android:visibility="invisible"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/icon_image_32"/>
+
+
+</RelativeLayout>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.activity.FirstPage">
+
+    <fragment
+            android:id="@+id/first_actbar"
+            android:layout_width="match_parent"
+            android:name="com.example.spb.view.Component.FragmentSpbAvtivityBar"
+            android:layout_height="@dimen/spb_activity_bar_44"/>
+
+    <ImageView
+            android:id="@+id/ba_image"
+            android:src="@drawable/xiaoba"
+            android:layout_marginTop="32dp"
+            android:layout_below="@id/first_actbar"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+            android:id="@+id/enter_r1"
+            android:layout_marginTop="32dp"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/ba_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <ImageView
+                android:id="@+id/img1"
+                android:src="@drawable/account"
+                android:layout_marginLeft="32dp"
+                android:layout_width="@dimen/icon_image_32"
+                android:layout_height="@dimen/icon_image_32"/>
+
+        <TextView
+                android:id="@+id/text1"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_14"
+                android:layout_marginLeft="@dimen/margin_12"
+                android:layout_alignBottom="@id/img1"
+                android:layout_alignTop="@id/img1"
+                android:layout_toRightOf="@id/img1"
+                android:text="账号"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <EditText
+                android:id="@+id/account_number_edit"
+                android:hint="请输入账号"
+                android:gravity="center_vertical"
+                android:maxLength="10"
+                android:lines="1"
+                android:inputType="text"
+                android:background="@null"
+                android:textSize="@dimen/font_14"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginLeft="36dp"
+                android:layout_toLeftOf="@id/empty_view"
+                android:layout_below="@+id/img1"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+
+        <View
+                android:id="@+id/view1"
+                android:layout_marginRight="36dp"
+                android:layout_marginLeft="36dp"
+                android:layout_marginTop="2dp"
+                android:layout_below="@id/account_number_edit"
+                android:background="@color/lightgrey"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"/>
+
+        <ImageView
+                android:id="@+id/empty_view"
+                android:visibility="invisible"
+                android:layout_margin="@dimen/margin_8"
+                android:layout_alignRight="@+id/view1"
+                android:layout_alignBottom="@id/view1"
+                android:background="@drawable/chahao"
+                android:layout_width="@dimen/icon_image_16"
+                android:layout_height="@dimen/icon_image_16"/>
+
+        <ImageView
+                android:id="@+id/enter_check"
+                android:layout_marginTop="@dimen/margin_12"
+                android:layout_marginLeft="40dp"
+                android:layout_below="@+id/empty_view"
+                android:background="@drawable/enter_nocheck"
+                android:layout_width="@dimen/icon_image_16"
+                android:layout_height="@dimen/icon_image_16"/>
+
+        <TextView
+                android:id="@+id/enter_notice"
+                android:layout_marginLeft="@dimen/margin_4"
+                android:textColor="@color/lightgrey"
+                android:textSize="@dimen/font_10"
+                android:gravity="center_vertical"
+                android:layout_alignBottom="@id/enter_check"
+                android:layout_alignTop="@+id/enter_check"
+                android:layout_toRightOf="@id/enter_check"
+                android:text="我已阅读并同意"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/enter_usernotice"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/font_10"
+                android:gravity="center_vertical"
+                android:layout_alignBottom="@id/enter_check"
+                android:layout_alignTop="@+id/enter_check"
+                android:layout_toRightOf="@id/enter_notice"
+                android:text="校吧用户须知"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/enter_user_registered"
+                android:layout_marginRight="@dimen/margin_4"
+                android:textColor="@color/theme_color2"
+                android:textSize="@dimen/font_10"
+                android:gravity="center_vertical"
+                android:layout_alignBottom="@id/enter_check"
+                android:layout_alignTop="@+id/enter_check"
+                android:layout_alignRight="@id/view1"
+                android:text="新用户注册"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+            android:id="@+id/enter_r2"
+            android:visibility="gone"
+            android:layout_marginTop="32dp"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/ba_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <ImageView
+                android:id="@+id/img2"
+                android:src="@drawable/password"
+                android:layout_marginLeft="32dp"
+                android:layout_width="@dimen/icon_image_32"
+                android:layout_height="@dimen/icon_image_32"/>
+
+        <TextView
+                android:id="@+id/text2"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_14"
+                android:layout_marginLeft="@dimen/margin_12"
+                android:layout_alignBottom="@id/img2"
+                android:layout_alignTop="@id/img2"
+                android:layout_toRightOf="@id/img2"
+                android:text="密码"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <EditText
+                android:id="@+id/password_number_edit"
+                android:hint="请输入密码"
+                android:gravity="center_vertical"
+                android:maxLength="10"
+                android:lines="1"
+                android:inputType="textPassword"
+                android:background="@null"
+                android:textSize="@dimen/font_14"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginLeft="36dp"
+                android:layout_toLeftOf="@id/empty_view_p"
+                android:layout_below="@+id/img2"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+
+        <View
+                android:id="@+id/view2"
+                android:layout_marginRight="36dp"
+                android:layout_marginLeft="36dp"
+                android:layout_marginTop="2dp"
+                android:layout_below="@id/password_number_edit"
+                android:background="@color/lightgrey"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"/>
+
+        <ImageView
+                android:id="@+id/password_eye"
+                android:layout_margin="@dimen/margin_8"
+                android:layout_alignRight="@+id/view2"
+                android:layout_alignBottom="@id/view2"
+                android:background="@drawable/eye_no"
+                android:layout_width="@dimen/icon_image_16"
+                android:layout_height="@dimen/icon_image_16"/>
+
+        <ImageView
+                android:id="@+id/empty_view_p"
+                android:visibility="invisible"
+                android:layout_marginBottom="@dimen/margin_8"
+                android:layout_toLeftOf="@+id/password_eye"
+                android:layout_alignBottom="@id/view2"
+                android:background="@drawable/chahao"
+                android:layout_width="@dimen/icon_image_16"
+                android:layout_height="@dimen/icon_image_16"/>
+
+
+        <TextView
+                android:id="@+id/enter_user_forgot_password"
+                android:layout_below="@id/empty_view_p"
+                android:layout_marginRight="@dimen/margin_4"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/font_10"
+                android:gravity="center_vertical"
+                android:layout_alignRight="@+id/view2"
+                android:layout_marginTop="@dimen/margin_12"
+                android:text="忘记密码?"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+    </RelativeLayout>
+
+
+    <Button
+            android:id="@+id/enter_next_btn"
+            android:clickable="false"
+            android:textColor="@color/white"
+            android:text="确定"
+            android:stateListAnimator="@null"
+            android:background="@drawable/enter_next_login_false"
+            android:layout_marginTop="200dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/ba_image"
+            android:layout_width="112dp"
+            android:layout_height="44dp"/>
+
+</RelativeLayout>
