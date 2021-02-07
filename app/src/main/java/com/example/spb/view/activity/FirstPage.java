@@ -275,6 +275,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
     @Override
     public void setBtnClick(boolean i){
         if (i){
+
             mEnterNextBtn.setBackground(getDrawable(R.drawable.enter_next_login));
             mEnterNextBtn.setClickable(true);
         }else {
