@@ -339,7 +339,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
 
     @Override
     public void createDialog() {
-        dialogLoading = new EasyDialog(this,R.drawable.loading);
+        dialogLoading = new EasyDialog(this, R.drawable.loading);
     }
 
     @Override
