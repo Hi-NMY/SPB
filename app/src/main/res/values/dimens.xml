@@ -26,6 +26,7 @@
 
     <dimen name="corner_8">8dp</dimen>
     <dimen name="corner_5">5dp</dimen>
+    <dimen name="corner_20">20dp</dimen>
 
 
 </resources>

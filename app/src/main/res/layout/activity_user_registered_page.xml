@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,4 +7,33 @@
         android:layout_height="match_parent"
         tools:context=".view.activity.UserRegisteredPage">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <fragment
+            android:id="@+id/user_egisterd_actbar"
+            android:layout_width="match_parent"
+            android:name="com.example.spb.view.Component.FragmentSpbAvtivityBar"
+            android:layout_height="@dimen/spb_activity_bar_44"/>
+
+    <TextView
+            android:id="@+id/text"
+            android:textSize="@dimen/font_22"
+            android:layout_marginTop="64dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/black"
+            android:text="欢迎\n注册"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/registered_user_headimg"
+            app:riv_corner_radius="360dp"
+            app:riv_border_width="2dp"
+            app:riv_border_color="@color/lightgrey"
+            app:riv_oval="true"
+            android:src="@drawable/close_black"
+            android:layout_marginTop="@dimen/margin_12"
+            android:layout_below="@+id/text"
+            android:layout_centerHorizontal="true"
+            android:layout_width="72dp"
+            android:layout_height="72dp"/>
+
+</RelativeLayout>

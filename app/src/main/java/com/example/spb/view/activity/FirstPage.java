@@ -1,17 +1,20 @@
 package com.example.spb.view.activity;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.*;
+import androidx.annotation.Nullable;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
@@ -24,6 +27,7 @@ import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;
 import com.example.spb.view.InterTotal.SpbInterDialog;
 import com.example.spb.view.InterTotal.SpbInterInitView;
 import com.example.spb.view.inter.IFirstPageAView;
+import com.example.spb.view.littlefun.JumpIntent;
 import com.example.spb.view.littlefun.MyToastClass;
 import com.gyf.immersionbar.ImmersionBar;
 
@@ -44,6 +48,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
     private static RelativeLayout mEnterR2;
 
     private DialogInter dialogLoading;
+    private DialogInter dialogUserNotice;
 
     private boolean ENTER_CHECK = false;
     private boolean CLICKYES = true;
@@ -218,20 +223,21 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
                 if (!ENTER_CHECK) {
                     mEnterCheck.setBackground(getDrawable(R.drawable.enter_check));
                     ENTER_CHECK = true;
+                    showDialogS(1);
                 } else {
                     mEnterCheck.setBackground(getDrawable(R.drawable.enter_nocheck));
                     ENTER_CHECK = false;
                 }
                 break;
             case R.id.enter_user_registered:
-
+                JumpIntent.startForResultIntent(this,UserRegisteredPage.class,1);
                 break;
             case R.id.empty_view:
                 mAccountNumberEdit.setText("");
                 setEmptyVisibility(false);
                 break;
             case R.id.enter_usernotice:
-                showDialog();
+                showDialogS(1);
                 break;
             case R.id.password_eye:
                 if (SEE){
@@ -255,6 +261,17 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            String account = data.getStringExtra("AccountNumber");
+        }catch (Exception e){
+
+        }
+        mAccountNumberEdit.setText("");
+    }
+
+    @Override
     public void setEmptyVisibility(boolean id) {
         if (!id) {
             mEmptyView.setVisibility(View.INVISIBLE);
@@ -275,7 +292,6 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
     @Override
     public void setBtnClick(boolean i){
         if (i){
-
             mEnterNextBtn.setBackground(getDrawable(R.drawable.enter_next_login));
             mEnterNextBtn.setClickable(true);
         }else {
@@ -338,18 +354,57 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
         });
     }
 
+    private TextView dialogText;
+    private ImageView closeImg;
     @Override
     public void createDialog() {
         dialogLoading = new EasyDialog(this, R.drawable.loading);
+        dialogUserNotice = new ComponentDialog(this, R.layout.dialog_user_notice, new ComponentDialog.InitDialog() {
+            @Override
+            public void initView(View view) {
+                dialogText = (TextView)view.findViewById(R.id.textView);
+                closeImg = (ImageView)view.findViewById(R.id.img);
+                dialogText.setMovementMethod(ScrollingMovementMethod.getInstance());
+            }
+
+            @Override
+            public void initData() {
+
+            }
+
+            @Override
+            public void initListener() {
+                closeImg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        closeDialog(1);
+                    }
+                });
+            }
+        });
     }
 
     @Override
-    public void showDialog() {
-        dialogLoading.showMyDialog();
+    public void showDialogS(int i) {
+        switch (i){
+            case 1:
+                dialogUserNotice.showMyDialog();
+                break;
+            case 2:
+                dialogLoading.showMyDialog();
+                break;
+        }
     }
 
     @Override
-    public void closeDialog() {
-
+    public void closeDialog(int i) {
+        switch (i){
+            case 1:
+                dialogUserNotice.closeMyDialog();
+                break;
+            case 2:
+                dialogLoading.closeMyDialog();
+                break;
+        }
     }
 }

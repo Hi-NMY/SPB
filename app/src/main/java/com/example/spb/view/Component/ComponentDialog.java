@@ -20,12 +20,12 @@ public class ComponentDialog implements DialogInter {
         builder = new AlertDialog.Builder(context);
         view = LayoutInflater.from(context).inflate(viewId,null);
         initView(view);
-        alertDialog = builder.create();
-        window = alertDialog.getWindow();
-        setBackgroundTransparent();
         initDialog.initView(view);
         initDialog.initData();
         initDialog.initListener();
+        alertDialog = builder.create();
+        window = alertDialog.getWindow();
+        setBackgroundTransparent();
     }
 
     @Override
@@ -45,7 +45,7 @@ public class ComponentDialog implements DialogInter {
 
     @Override
     public void initView(View view) {
-
+        builder.setView(view);
     }
 
     @Override

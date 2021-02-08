@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:layout_marginVertical="128dp"
+            android:layout_marginHorizontal="60dp"
+            android:background="@drawable/act_user_notice_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ImageView
+                android:id="@+id/img"
+                android:layout_margin="@dimen/margin_8"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/close_black"
+                android:layout_width="@dimen/icon_image_32"
+                android:layout_height="@dimen/icon_image_32"/>
+
+        <TextView
+                android:id="@+id/text"
+                android:layout_below="@+id/img"
+                android:translationY="-4dp"
+                android:gravity="center"
+                android:text="校吧户须知"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_14"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/textView"
+                android:layout_marginTop="@dimen/margin_4"
+                android:layout_marginHorizontal="@dimen/margin_20"
+                android:layout_marginBottom="@dimen/margin_20"
+                android:layout_below="@id/text"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font_12"
+                android:scrollbars="vertical"
+                android:text="啊哈哈哈\n额外若无\n东方时尚\n非官方个\n师德师风\n持续性陈v"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+               />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -4,7 +4,7 @@
                 android:layout_height="match_parent">
 
     <View
-            android:alpha="0.5"
+            android:alpha="0.3"
             android:layout_centerInParent="true"
             android:background="@drawable/dialog_loading_bg"
             android:layout_width="96dp"

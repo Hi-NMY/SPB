@@ -238,9 +238,8 @@
             android:text="确定"
             android:stateListAnimator="@null"
             android:background="@drawable/enter_next_login_false"
-            android:layout_marginTop="200dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/ba_image"
+            android:layout_centerInParent="true"
+            android:translationY="100dp"
             android:layout_width="112dp"
             android:layout_height="44dp"/>
 

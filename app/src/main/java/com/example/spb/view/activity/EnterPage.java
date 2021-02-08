@@ -3,7 +3,6 @@ package com.example.spb.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
@@ -22,7 +21,7 @@ public class EnterPage extends BaseMVPActivity<IEnterPageAView, EnterPageAPresen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.enterpage_main);
+        setContentView(R.layout.activity_enterpage_main);
         LitePal.getDatabase();
         initActView();
     }
@@ -55,7 +54,6 @@ public class EnterPage extends BaseMVPActivity<IEnterPageAView, EnterPageAPresen
                         Intent intent = new Intent(MyApplication.getContext(),FirstPage.class);
                         startActivity(intent);
                     }
-
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

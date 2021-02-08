@@ -12,13 +12,13 @@ public interface SpbInterDialog {
      * @Auther  nmynmy
      * @Date  2021-02-05  23:42
      */
-    public void showDialog();
+    public void showDialogS(int i);
 
     /**
      *关闭dialog
      * @Auther  nmynmy
      * @Date  2021-02-05  23:43
      */
-    public void closeDialog();
+    public void closeDialog(int i);
 
 }
