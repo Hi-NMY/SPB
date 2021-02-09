@@ -1,7 +1,5 @@
 package com.example.spb.view.inter;
 
-import com.example.spb.view.InterTotal.SpbInterDialog;
-
 public interface IEnterPageAView{
     //请求标记
     int REQUEST_ONE = 0;

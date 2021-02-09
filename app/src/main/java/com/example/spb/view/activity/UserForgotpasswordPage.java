@@ -40,4 +40,34 @@ public class UserForgotpasswordPage extends BaseMVPActivity<IUserForgotpasswordP
     public <T> void response(T response, int responseFlag) {
 
     }
+
+    @Override
+    public void createDialog() {
+
+    }
+
+    @Override
+    public void showDialogS(int i) {
+
+    }
+
+    @Override
+    public void closeDialog(int i) {
+
+    }
+
+    @Override
+    public void setMyListener() {
+
+    }
+
+    @Override
+    public void setBar() {
+
+    }
+
+    @Override
+    public void setActivityBar() {
+
+    }
 }

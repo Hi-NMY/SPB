@@ -9,10 +9,8 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
 import android.widget.*;
 import androidx.annotation.Nullable;
 import com.example.spb.R;
@@ -24,14 +22,12 @@ import com.example.spb.view.Component.EasyDialog;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;
-import com.example.spb.view.InterTotal.SpbInterDialog;
-import com.example.spb.view.InterTotal.SpbInterInitView;
 import com.example.spb.view.inter.IFirstPageAView;
 import com.example.spb.view.littlefun.JumpIntent;
 import com.example.spb.view.littlefun.MyToastClass;
 import com.gyf.immersionbar.ImmersionBar;
 
-public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresenterImpl> implements SpbInterDialog,IFirstPageAView, SpbInterInitView, View.OnClickListener {
+public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresenterImpl> implements IFirstPageAView, View.OnClickListener {
 
     private ISpbAvtivityBarFView bar;
     private EditText mAccountNumberEdit;
@@ -265,10 +261,10 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
         super.onActivityResult(requestCode, resultCode, data);
         try {
             String account = data.getStringExtra("AccountNumber");
+            mAccountNumberEdit.setText(account);
         }catch (Exception e){
-
+            mAccountNumberEdit.setText("");
         }
-        mAccountNumberEdit.setText("");
     }
 
     @Override

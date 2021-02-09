@@ -69,5 +69,9 @@ dependencies {
 
     implementation 'com.makeramen:roundedimageview:2.3.0'    //圆角图片
 
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.6.0'  //图片选择器
+
+    implementation 'com.shuyu:GSYVideoPlayer:8.1.0'   //视频播放器
+
 
 }

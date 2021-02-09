@@ -1,8 +1,9 @@
 package com.example.spb.view.inter;
 
 import android.text.TextWatcher;
+import com.example.spb.view.InterTotal.SpbInterOne;
 
-public interface IFirstPageAView {
+public interface IFirstPageAView extends SpbInterOne {
     //请求标记
     int REQUEST_ONE = 0;
     int REQUEST_TWO = 1;

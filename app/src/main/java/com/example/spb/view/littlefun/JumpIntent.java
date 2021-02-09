@@ -46,6 +46,7 @@ public class JumpIntent {
         Intent intent = new Intent();
         setMsg.setMessage(intent);
         myAct.setResult(result,intent);
+        myAct.finish();
     }
 
     public static void finishAct(Activity myAct){

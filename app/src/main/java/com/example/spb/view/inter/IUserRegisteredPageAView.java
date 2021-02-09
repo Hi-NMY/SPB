@@ -1,6 +1,8 @@
 package com.example.spb.view.inter;
 
-public interface IUserRegisteredPageAView {
+import com.example.spb.view.InterTotal.SpbInterOne;
+
+public interface IUserRegisteredPageAView extends SpbInterOne {
     //请求标记
     int REQUEST_ONE = 0;
     int REQUEST_TWO = 1;
