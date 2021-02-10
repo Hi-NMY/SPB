@@ -18,7 +18,7 @@ public class UserForgotpasswordPage extends BaseMVPActivity<IUserForgotpasswordP
 
     @Override
     protected UserForgotpasswordPageAPresenterImpl createPresenter() {
-        return new UserForgotpasswordPageAPresenterImpl(this);
+        return new UserForgotpasswordPageAPresenterImpl();
     }
 
     @Override

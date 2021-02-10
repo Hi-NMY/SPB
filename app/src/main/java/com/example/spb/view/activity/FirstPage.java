@@ -103,7 +103,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
 
     @Override
     protected FirstPageAPresenterImpl createPresenter() {
-        return new FirstPageAPresenterImpl(this);
+        return new FirstPageAPresenterImpl();
     }
 
     @Override
@@ -259,12 +259,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        try {
-            String account = data.getStringExtra("AccountNumber");
-            mAccountNumberEdit.setText(account);
-        }catch (Exception e){
-            mAccountNumberEdit.setText("");
-        }
+        mPresenter.setAccount(data);
     }
 
     @Override
@@ -303,7 +298,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
 
     @Override
     public <T> void response(T response, int responseFlag) {
-
+        mAccountNumberEdit.setText((String) response);
     }
 
     @Override

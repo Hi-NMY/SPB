@@ -28,7 +28,7 @@ public class EnterPage extends BaseMVPActivity<IEnterPageAView, EnterPageAPresen
 
     @Override
     protected EnterPageAPresenterImpl createPresenter() {
-        return new EnterPageAPresenterImpl(this);
+        return new EnterPageAPresenterImpl();
     }
 
     @Override

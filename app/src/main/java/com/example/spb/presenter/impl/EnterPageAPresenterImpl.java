@@ -13,10 +13,8 @@ import com.example.spb.view.inter.IEnterPageAView;
 public class EnterPageAPresenterImpl extends BasePresenter<IEnterPageAView> implements IEnterPageAPresenter {
 
     private SpbModelBasicInter enterPageAModel;
-    private IEnterPageAView mIEnterPageAView;
 
-    public EnterPageAPresenterImpl(IEnterPageAView iEnterPageAView) {
-        mIEnterPageAView = iEnterPageAView;
+    public EnterPageAPresenterImpl() {
         enterPageAModel = new EnterPageAModelImpl();
         User user = new User();
         user.setName("name");

@@ -8,11 +8,9 @@ import com.example.spb.view.inter.IUserForgotpasswordPageAView;
 
 public class UserForgotpasswordPageAPresenterImpl extends BasePresenter<IUserForgotpasswordPageAView> implements IUserForgotpasswordPageAPresenter {
 
-    private IUserForgotpasswordPageAView mIUserForgotpasswordPageAView;
     private IUserForgotpasswordPageAModel mIUserForgotpasswordPageAModel;
 
-    public UserForgotpasswordPageAPresenterImpl(IUserForgotpasswordPageAView aIUserForgotpasswordPageAView) {
-        mIUserForgotpasswordPageAView = aIUserForgotpasswordPageAView;
+    public UserForgotpasswordPageAPresenterImpl() {
         mIUserForgotpasswordPageAModel = new UserForgotpasswordPageAModelImpl();
     }
 

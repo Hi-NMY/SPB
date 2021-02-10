@@ -1,6 +1,7 @@
 package com.example.spb.view.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -9,18 +10,28 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import com.bumptech.glide.Glide;
 import com.example.spb.R;
+import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.UserRegisteredPageAPresenterImpl;
 import com.example.spb.view.Component.EasyDialog;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
+import com.example.spb.view.Component.SelectImage;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;
+import com.example.spb.view.InterComponent.SpbSelectImage;
 import com.example.spb.view.inter.IUserRegisteredPageAView;
+import com.example.spb.view.littlefun.GlideRoundTransform;
 import com.example.spb.view.littlefun.JumpIntent;
 import com.example.spb.view.littlefun.MyToastClass;
 import com.gyf.immersionbar.ImmersionBar;
+import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.listener.OnResultCallbackListener;
 import com.makeramen.roundedimageview.RoundedImageView;
+
+import java.io.File;
+import java.util.List;
 
 public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView, UserRegisteredPageAPresenterImpl> implements IUserRegisteredPageAView, View.OnClickListener {
 
@@ -34,6 +45,10 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
     private Button mRegStarBtn;
 
     private DialogInter dialogLoading;
+    private SpbSelectImage spbSelectImage;
+
+    private String imageName = "UserHeadImage.png";
+    private String imagePath;
 
     private boolean SEE = false;
 
@@ -46,11 +61,12 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
 
     @Override
     protected UserRegisteredPageAPresenterImpl createPresenter() {
-        return new UserRegisteredPageAPresenterImpl(this);
+        return new UserRegisteredPageAPresenterImpl();
     }
 
     @Override
     protected void initActView() {
+        spbSelectImage = new SelectImage(this);
         mRegisteredUserHeadimg = (RoundedImageView) findViewById(R.id.registered_user_headimg);
         mRegUserName = (EditText) findViewById(R.id.reg_user_name);
         mRegUserAccount = (EditText) findViewById(R.id.reg_user_account);
@@ -77,7 +93,13 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
 
     @Override
     public <T> void response(T response, int responseFlag) {
-
+        if (responseFlag == RESPONSE_ONE){
+            Glide.with(this)
+                    .load((String)response)
+                    .centerCrop()
+                    .into(mRegisteredUserHeadimg);
+            imagePath = (String)response;
+        }
     }
 
     @Override
@@ -99,6 +121,7 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
     public void setMyListener() {
         mRegStarBtn.setOnClickListener(this);
         mRegPasswordEye.setOnClickListener(this);
+        mRegisteredUserHeadimg.setOnClickListener(this);
     }
 
     @Override
@@ -106,7 +129,6 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
         ImmersionBar.with(this)
                 .keyboardEnable(true)
                 .statusBarDarkFont(true)
-                .fitsSystemWindows(true)
                 .statusBarColor(R.color.beijing)
                 .init();
     }
@@ -153,6 +175,19 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
                     SEE = true;
                 }
                 break;
+            case R.id.registered_user_headimg:
+                spbSelectImage.selectOneImg(imageName,new OnResultCallbackListener<LocalMedia>(){
+                    @Override
+                    public void onResult(List<LocalMedia> result) {
+                        mPresenter.getHeadImage(result);
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        //MyToastClass.ShowToast(MyApplication.getContext(),"出错了");
+                    }
+                });
+                break;
         }
     }
 
@@ -161,6 +196,11 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
     private String password;
     private boolean submit() {
         // validate
+        if (TextUtils.isEmpty(imagePath)) {
+            MyToastClass.ShowToast(this,"请设置头像");
+            return false;
+        }
+
         name = mRegUserName.getText().toString().trim();
         if (TextUtils.isEmpty(name)) {
             MyToastClass.ShowToast(this,"请输入合法用户名");

@@ -32,7 +32,8 @@
             android:theme="@style/AppTheme">
         <activity android:name=".view.activity.UserForgotpasswordPage">
         </activity>
-        <activity android:name=".view.activity.UserRegisteredPage">
+        <activity android:name=".view.activity.UserRegisteredPage"
+                  android:windowSoftInputMode="stateVisible|adjustResize">
         </activity>
         <activity android:name=".view.activity.FirstPage">
         </activity>
