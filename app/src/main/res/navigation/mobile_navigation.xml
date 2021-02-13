@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/mobile_navigation">
+
+    <fragment
+            android:id="@+id/postbar_page"
+            android:name="com.example.spb.view.fragment.ui.postbarpage.PostBarPage"
+            android:label="@string/title_home"
+            tools:layout="@layout/fragment_postbar_page"/>
+
+    <fragment
+            android:id="@+id/video_page"
+            android:name="com.example.spb.view.fragment.ui.videopage.VideoPage"
+            android:label="@string/title_dashboard"
+            tools:layout="@layout/fragment_video_page"/>
+
+    <fragment
+            android:id="@+id/message_page"
+            android:name="com.example.spb.view.fragment.ui.messagepage.MessagePage"
+            android:label="@string/title_notifications"
+            tools:layout="@layout/fragment_message_page"/>
+
+    <fragment
+            android:id="@+id/user_page"
+            android:name="com.example.spb.view.fragment.ui.userpage.UserPage"
+            android:label="@string/title_notifications"
+            tools:layout="@layout/fragment_user_page"/>
+
+</navigation>

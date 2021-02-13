@@ -2,7 +2,7 @@ package com.example.spb.view.InterTotal;
 
 public interface SpbInterOne {
     /**
-     *显示dialog
+     *创建dialog
      * @Auther  nmynmy
      * @Date  2021-02-05  23:42
      */

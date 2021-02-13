@@ -200,7 +200,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
         switch (v.getId()) {
             case R.id.enter_next_btn:
                 if (ENTER_FUN == 1){
-
+                    JumpIntent.startMyIntent(UserHomePage.class);
                 }else {
                     if (!ENTER_CHECK){
                         MyToastClass.ShowToast(this,"请阅读并同意校吧用户须知");

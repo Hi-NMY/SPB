@@ -34,14 +34,4 @@ public class MyToastClass {
         }
         toast.show();
     }
-    public static void ShowToast(Context context,int value){
-        if (toast==null){
-            toast = Toast.makeText(context,value,Toast.LENGTH_SHORT);
-        }else {
-            toast.setText(value);
-        }
-
-        toast.show();
-    }
-
 }
