@@ -8,4 +8,14 @@
         <item name="colorAccent">@color/gray</item>
     </style>
 
+    <style name="dialogHomeSend_anim">
+        <item name="android:windowEnterAnimation">@anim/homesend_show</item>
+        <item name="android:windowExitAnimation">@anim/homesend_dismiss</item>
+    </style>
+
+    <style name="dialogHomeSend" parent="@android:style/Theme.Dialog">
+        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上 -->
+        <item name="android:windowAnimationStyle">@style/dialogHomeSend_anim</item>
+    </style>
+
 </resources>

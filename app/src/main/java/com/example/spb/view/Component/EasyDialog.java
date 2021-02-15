@@ -80,4 +80,9 @@ public class EasyDialog implements DialogInter {
     public void setBottomGravity() {
         window.setGravity(Gravity.BOTTOM);
     }
+
+    @Override
+    public void changePosition(View v) {
+
+    }
 }

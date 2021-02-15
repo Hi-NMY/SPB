@@ -16,6 +16,8 @@
 
     <TextView
             android:id="@+id/bar_left_txt"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_14"
             android:visibility="invisible"
             android:layout_marginLeft="@dimen/margin_16"
             android:layout_centerVertical="true"
@@ -46,6 +48,8 @@
     <TextView
             android:id="@+id/bar_right_txt1"
             android:visibility="invisible"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_14"
             android:layout_marginRight="@dimen/margin_16"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -64,6 +68,8 @@
     <TextView
             android:id="@+id/bar_right_txt2"
             android:visibility="invisible"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_14"
             android:layout_marginRight="@dimen/margin_8"
             android:layout_toLeftOf="@id/bar_right_img1"
             android:layout_centerVertical="true"
@@ -74,9 +80,63 @@
     <TextView
             android:id="@+id/bar_central_txt"
             android:visibility="invisible"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_14"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/icon_image_32"/>
 
+    <RelativeLayout
+            android:id="@+id/search_rlt"
+            android:visibility="invisible"
+            android:background="@drawable/search_bg"
+            android:layout_marginRight="@dimen/margin_16"
+            android:layout_toLeftOf="@id/sign_rlt"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/icon_image_32">
+
+        <TextView
+                android:gravity="left|center"
+                android:hint="点击搜索更多内容"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font_14"
+                android:layout_marginHorizontal="@dimen/margin_12"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/sign_rlt"
+            android:visibility="gone"
+            android:layout_marginRight="@dimen/margin_16"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/enter_next_login"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/icon_image_32">
+
+        <ImageView
+                android:id="@+id/img"
+                android:layout_marginLeft="@dimen/margin_8"
+                android:layout_marginRight="@dimen/margin_4"
+                android:background="@drawable/sign_icon"
+                android:layout_centerVertical="true"
+                android:layout_width="@dimen/icon_image_24"
+                android:layout_height="@dimen/icon_image_24"/>
+
+        <TextView
+                android:layout_toRightOf="@+id/img"
+                android:layout_marginRight="@dimen/margin_12"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/font_14"
+                android:textColor="@color/beijing"
+                android:text="签到"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

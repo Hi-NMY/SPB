@@ -1,12 +1,13 @@
 package com.example.spb.view.Component;
 
 import android.app.Activity;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.Window;
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Point;
+import android.view.*;
 import androidx.appcompat.app.AlertDialog;
 import com.example.spb.R;
+import com.example.spb.app.MyApplication;
 import com.example.spb.view.InterComponent.DialogInter;
 
 public class ComponentDialog implements DialogInter {
@@ -18,6 +19,18 @@ public class ComponentDialog implements DialogInter {
 
     public ComponentDialog(Activity context,int viewId,InitDialog initDialog) {
         builder = new AlertDialog.Builder(context);
+        view = LayoutInflater.from(context).inflate(viewId,null);
+        initView(view);
+        initDialog.initView(view);
+        initDialog.initData();
+        initDialog.initListener();
+        alertDialog = builder.create();
+        window = alertDialog.getWindow();
+        setBackgroundTransparent();
+    }
+
+    public ComponentDialog(Activity context,int viewId,int styleId,InitDialog initDialog) {
+        builder = new AlertDialog.Builder(context,styleId);
         view = LayoutInflater.from(context).inflate(viewId,null);
         initView(view);
         initDialog.initView(view);
@@ -83,4 +96,18 @@ public class ComponentDialog implements DialogInter {
         void initData();
         void initListener();
     }
+
+    public void changePosition(View v){
+        WindowManager mWindowManager = (WindowManager) MyApplication.getContext().getSystemService(Context.WINDOW_SERVICE);
+        Point point = new Point();
+        mWindowManager.getDefaultDisplay().getSize(point);
+        int screenHeight = point.y;
+        WindowManager.LayoutParams layoutParams = window.getAttributes();
+        int[] location = new  int[2] ;
+        v.getLocationInWindow(location); //获取在当前窗体内的绝对坐标
+        v.getLocationOnScreen(location);//获取在整个屏幕内的绝对坐标
+        layoutParams.x = 0; //对 dialog 设置 x 轴坐标
+        layoutParams.y = (int) (-(screenHeight/2)+location[1]-v.getHeight()*1.7); //对dialog设置y轴坐标
+        window.setAttributes(layoutParams);
+    };
 }

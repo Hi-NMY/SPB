@@ -37,6 +37,23 @@
             android:layout_marginRight="@dimen/margin_16"
             app:itemBackground="@null"
             app:labelVisibilityMode="unlabeled"
-            app:menu="@menu/bottom_nav_menu"/>
+            app:menu="@menu/bottom_nav_menu">
+        
+        <RelativeLayout
+                android:id="@+id/homepage_send"
+                android:background="@drawable/send_bg"
+                android:layout_gravity="center"
+                android:layout_width="@dimen/spb_activity_bar_48"
+                android:layout_height="@dimen/spb_activity_bar_48">
+
+            <ImageView
+                    android:background="@drawable/send_plane"
+                    android:layout_centerInParent="true"
+                    android:layout_width="@dimen/icon_image_24"
+                    android:layout_height="@dimen/icon_image_24"/>
+
+        </RelativeLayout>
+            
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </RelativeLayout>

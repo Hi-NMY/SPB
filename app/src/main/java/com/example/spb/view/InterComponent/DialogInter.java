@@ -24,4 +24,6 @@ public interface DialogInter {
 
     public void setBottomGravity();
 
+    public void changePosition(View v);
+
 }

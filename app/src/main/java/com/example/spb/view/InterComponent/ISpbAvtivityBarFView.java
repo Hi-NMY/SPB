@@ -31,11 +31,17 @@ public interface ISpbAvtivityBarFView {
 
     public void barCentralTxt(String title, FragmentSpbAvtivityBar.OnMyClick onMyClick);
 
+    public void barSearchView(FragmentSpbAvtivityBar.OnMyClick onMyClick);
+
+    public void barSignView(FragmentSpbAvtivityBar.OnMyClick onMyClick);
+
     public void barNewNoticeView();
 
     public void barOnClickListener(View view, FragmentSpbAvtivityBar.OnMyClick onMyClick);
 
     public void removeInvisible(View view);
+
+    public void searchShow(View view,int fun);
 
     public void setBarBackground(int color);
 

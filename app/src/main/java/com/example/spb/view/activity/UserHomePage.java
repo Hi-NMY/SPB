@@ -1,26 +1,32 @@
 package com.example.spb.view.activity;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
+import android.view.*;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.UserHomePageAPresenterImpl;
-import com.example.spb.presenter.inter.IUserHomePageAPresenter;
+import com.example.spb.view.Component.ComponentDialog;
+import com.example.spb.view.Component.FragmentSpbAvtivityBar;
+import com.example.spb.view.Component.MyPopupWindow;
+import com.example.spb.view.InterComponent.DialogInter;
+import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;
+import com.example.spb.view.InterComponent.MyPopupWindowInter;
 import com.example.spb.view.fragment.ui.messagepage.MessagePage;
 import com.example.spb.view.fragment.ui.postbarpage.PostBarPage;
 import com.example.spb.view.fragment.ui.userpage.UserPage;
 import com.example.spb.view.fragment.ui.videopage.VideoPage;
 import com.example.spb.view.inter.IUserHomePageAView;
+import com.example.spb.view.littlefun.MyToastClass;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gyf.immersionbar.ImmersionBar;
 
 
-public class UserHomePage extends BaseMVPActivity<IUserHomePageAView,UserHomePageAPresenterImpl> implements IUserHomePageAView {
+public class UserHomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAPresenterImpl> implements IUserHomePageAView, View.OnClickListener {
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
@@ -34,7 +40,11 @@ public class UserHomePage extends BaseMVPActivity<IUserHomePageAView,UserHomePag
     private int MESSAGEPAGE = 3;
     private int USERPAGE = 4;
 
+    private ISpbAvtivityBarFView bar;
+    private DialogInter dialogHomeSend;
+
     private BottomNavigationView bottomNavigationView;
+    private RelativeLayout mHomepageSend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +62,9 @@ public class UserHomePage extends BaseMVPActivity<IUserHomePageAView,UserHomePag
     @Override
     protected void initActView() {
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.homepage_bottom_btn);
+        mHomepageSend = (RelativeLayout) findViewById(R.id.homepage_send);
+        mHomepageSend.bringToFront();
+        bottomNavigationView.setItemIconTintList(null);
 
         setActivityBar();
         createDialog();
@@ -132,11 +145,11 @@ public class UserHomePage extends BaseMVPActivity<IUserHomePageAView,UserHomePag
         }
     }
 
-    public BottomNavigationView.OnNavigationItemSelectedListener getItemListener(){
-        BottomNavigationView.OnNavigationItemSelectedListener listener = new BottomNavigationView.OnNavigationItemSelectedListener(){
+    public BottomNavigationView.OnNavigationItemSelectedListener getItemListener() {
+        BottomNavigationView.OnNavigationItemSelectedListener listener = new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.postbar_page:
                         selectionFragment(POSTBARPAGE);
                         break;
@@ -167,23 +180,53 @@ public class UserHomePage extends BaseMVPActivity<IUserHomePageAView,UserHomePag
     }
 
     @Override
-    public void createDialog() {
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.homepage_send:
+                selectionFragment(POSTBARPAGE);
+                bottomNavigationView.setSelectedItemId(R.id.postbar_page);
+                showDialogS(0);
+                break;
+        }
+    }
 
+    private LinearLayout homesendR;
+    @Override
+    public void createDialog() {
+        dialogHomeSend = new ComponentDialog(this, R.layout.dialog_homesend, R.style.dialogHomeSend, new ComponentDialog.InitDialog() {
+            @Override
+            public void initView(View view) {
+                homesendR = (LinearLayout)view.findViewById(R.id.homesend_R);
+            }
+
+            @Override
+            public void initData() {
+
+            }
+
+            @Override
+            public void initListener() {
+
+            }
+        });
+        dialogHomeSend.setCancelable(true);
     }
 
     @Override
     public void showDialogS(int i) {
-
+        dialogHomeSend.changePosition(bottomNavigationView);
+        dialogHomeSend.showMyDialog();
     }
 
     @Override
     public void closeDialog(int i) {
-
+        dialogHomeSend.closeMyDialog();
     }
 
     @Override
     public void setMyListener() {
         bottomNavigationView.setOnNavigationItemSelectedListener(getItemListener());
+        mHomepageSend.setOnClickListener(this);
     }
 
     @Override
@@ -197,19 +240,61 @@ public class UserHomePage extends BaseMVPActivity<IUserHomePageAView,UserHomePag
 
     @Override
     public void setActivityBar() {
-        switch (PAGENUMBER){
+        bar = setMyActivityBar(R.id.homepage_bar);
+        switch (PAGENUMBER) {
             case 1:
+                bar.barSearchView(new FragmentSpbAvtivityBar.OnMyClick() {
+                    @Override
+                    public void onClick() {
 
+                    }
+                });
+                bar.barSignView(new FragmentSpbAvtivityBar.OnMyClick() {
+                    @Override
+                    public void onClick() {
+
+                    }
+                });
                 break;
             case 2:
+                bar.barSearchView(new FragmentSpbAvtivityBar.OnMyClick() {
+                    @Override
+                    public void onClick() {
 
+                    }
+                });
                 break;
             case 3:
-
+                bar.barCentralTxt("消息", null);
                 break;
             case 4:
-
+                bar.barCentralTxt("主页", null);
                 break;
+        }
+        bar.searchShow(null, 1);
+    }
+
+    private long exitTime;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && PAGENUMBER != 1){
+            selectionFragment(1);
+            bottomNavigationView.setSelectedItemId(R.id.postbar_page);
+        }
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0 && PAGENUMBER == 1){
+            exit();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void exit() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            MyToastClass.ShowToast(this, "再按一次退出应用");
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+            System.exit(0);
         }
     }
 }
