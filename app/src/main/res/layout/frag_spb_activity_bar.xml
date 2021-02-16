@@ -59,7 +59,6 @@
     <ImageView
             android:id="@+id/bar_right_img2"
             android:visibility="invisible"
-            android:layout_marginRight="@dimen/margin_8"
             android:layout_toLeftOf="@id/bar_right_img1"
             android:layout_centerVertical="true"
             android:layout_width="@dimen/icon_image_32"
@@ -70,7 +69,6 @@
             android:visibility="invisible"
             android:textColor="@color/black"
             android:textSize="@dimen/font_16"
-            android:layout_marginRight="@dimen/margin_8"
             android:layout_toLeftOf="@id/bar_right_img1"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
@@ -81,6 +79,7 @@
             android:id="@+id/bar_central_txt"
             android:visibility="invisible"
             android:textColor="@color/black"
+            android:gravity="center"
             android:textSize="@dimen/font_16"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"

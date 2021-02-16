@@ -6,9 +6,15 @@
     <color name="weilan">#70f3ff</color>
     <color name="bilan">#3eede7</color>
     <color name="navyblue">#2ed0ca</color>
-    <color name="qianbai">#f0f0f4</color>
+
+
     <color name="theme_color">#46B3E6</color>
     <color name="theme_color2">#4D80E4</color>
+    <color name="theme_color3">#A685E2</color>
+    <color name="theme_color4">#DFF6F0</color>
+    <color name="theme_color5">#ffcc29</color>
+
+    <color name="qianbai">#f0f0f4</color>
     <color name="lightgrey">#d3d3d3</color><!--亮灰色 -->
     <color name="beijing">#FBFBFB</color>
     <color name="ziti">#363636</color>

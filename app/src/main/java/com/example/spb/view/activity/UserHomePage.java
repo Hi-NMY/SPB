@@ -1,8 +1,9 @@
 package com.example.spb.view.activity;
 
 import android.os.Bundle;
-import android.view.*;
-import android.widget.LinearLayout;
+import android.view.KeyEvent;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
@@ -12,10 +13,8 @@ import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.UserHomePageAPresenterImpl;
 import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
-import com.example.spb.view.Component.MyPopupWindow;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;
-import com.example.spb.view.InterComponent.MyPopupWindowInter;
 import com.example.spb.view.fragment.ui.messagepage.MessagePage;
 import com.example.spb.view.fragment.ui.postbarpage.PostBarPage;
 import com.example.spb.view.fragment.ui.userpage.UserPage;
@@ -45,6 +44,9 @@ public class UserHomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePa
 
     private BottomNavigationView bottomNavigationView;
     private RelativeLayout mHomepageSend;
+    private RelativeLayout mPostbarRlt;
+    private RelativeLayout mVideoRlt;
+    private RelativeLayout mGoodsRlt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,7 +183,7 @@ public class UserHomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePa
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.homepage_send:
                 selectionFragment(POSTBARPAGE);
                 bottomNavigationView.setSelectedItemId(R.id.postbar_page);
@@ -190,13 +192,14 @@ public class UserHomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePa
         }
     }
 
-    private LinearLayout homesendR;
     @Override
     public void createDialog() {
         dialogHomeSend = new ComponentDialog(this, R.layout.dialog_homesend, R.style.dialogHomeSend, new ComponentDialog.InitDialog() {
             @Override
             public void initView(View view) {
-                homesendR = (LinearLayout)view.findViewById(R.id.homesend_R);
+                mPostbarRlt = (RelativeLayout)view.findViewById(R.id.postbar_Rlt);
+                mVideoRlt = (RelativeLayout)view.findViewById(R.id.video_Rlt);
+                mGoodsRlt = (RelativeLayout)view.findViewById(R.id.goods_Rlt);
             }
 
             @Override
@@ -206,7 +209,24 @@ public class UserHomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePa
 
             @Override
             public void initListener() {
+                mPostbarRlt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
+                    }
+                });
+                mVideoRlt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                mGoodsRlt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
             }
         });
         dialogHomeSend.setCancelable(true);
@@ -240,7 +260,9 @@ public class UserHomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePa
 
     @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.homepage_bar);
+        if (bar == null){
+            bar = setMyActivityBar(R.id.homepage_bar);
+        }
         switch (PAGENUMBER) {
             case 1:
                 bar.barSearchView(new FragmentSpbAvtivityBar.OnMyClick() {
@@ -266,22 +288,40 @@ public class UserHomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePa
                 break;
             case 3:
                 bar.barCentralTxt("消息", null);
+                bar.barRightImg1(R.drawable.messageadd_icon, new FragmentSpbAvtivityBar.OnMyClick() {
+                    @Override
+                    public void onClick() {
+
+                    }
+                });
                 break;
             case 4:
-                bar.barCentralTxt("主页", null);
+                bar.barRightImg1(R.drawable.install_icon, new FragmentSpbAvtivityBar.OnMyClick() {
+                    @Override
+                    public void onClick() {
+
+                    }
+                });
+                bar.barRightImg2(R.drawable.scancode_icon, new FragmentSpbAvtivityBar.OnMyClick() {
+                    @Override
+                    public void onClick() {
+
+                    }
+                });
                 break;
         }
         bar.searchShow(null, 1);
     }
 
     private long exitTime;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && PAGENUMBER != 1){
+        if (keyCode == KeyEvent.KEYCODE_BACK && PAGENUMBER != 1) {
             selectionFragment(1);
             bottomNavigationView.setSelectedItemId(R.id.postbar_page);
         }
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0 && PAGENUMBER == 1){
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0 && PAGENUMBER == 1) {
             exit();
             return true;
         }

@@ -99,6 +99,7 @@ public class FragmentSpbAvtivityBar extends BaseMVPFragment<ISpbAvtivityBarFView
     @Override
     public void barRightImg1(int imgPath, OnMyClick onMyClick) {
         KEYRIGHTIMG1 = true;
+        mBarRightImg1.setBackgroundResource(imgPath);
         removeInvisible(mBarRightImg1);
         barOnClickListener(mBarRightImg1, onMyClick);
     }
@@ -114,6 +115,7 @@ public class FragmentSpbAvtivityBar extends BaseMVPFragment<ISpbAvtivityBarFView
     @Override
     public void barRightImg2(int imgPath, OnMyClick onMyClick) {
         KEYRIGHTIMG2 = true;
+        mBarRightImg2.setBackgroundResource(imgPath);
         removeInvisible(mBarRightImg2);
         barOnClickListener(mBarRightImg2, onMyClick);
     }
@@ -156,12 +158,14 @@ public class FragmentSpbAvtivityBar extends BaseMVPFragment<ISpbAvtivityBarFView
 
     @Override
     public void barOnClickListener(View view, OnMyClick onMyClick) {
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onMyClick.onClick();
-            }
-        });
+        if (onMyClick !=null){
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onMyClick.onClick();
+                }
+            });
+        }
     }
 
 
