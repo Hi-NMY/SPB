@@ -9,12 +9,14 @@ public class JumpIntent {
 
     public static void startMyIntent(Class toActivity){
         Intent intent = new Intent(MyApplication.getContext(),toActivity);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         MyApplication.getContext().startActivity(intent);
     }
 
     public static void startMsgIntent(Class toActivity,SetMsg setMsg){
         Intent intent = new Intent(MyApplication.getContext(),toActivity);
         setMsg.setMessage(intent);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         MyApplication.getContext().startActivity(intent);
     }
 
