@@ -140,12 +140,6 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
             @Override
             public void onClick() {
                 JumpIntent.finishAct(UserRegisteredPage.this);
-//                JumpIntent.startSetResultIntent(UserRegisteredPage.this, 1, new JumpIntent.SetMsg() {
-//                     @Override
-//                    public void setMessage(Intent intent) {
-//
-//                    }
-//                });
             }
         });
     }

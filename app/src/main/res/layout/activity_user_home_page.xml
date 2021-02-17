@@ -18,6 +18,7 @@
             android:layout_below="@+id/homepage_bar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/qianbai"
             app:layout_constraintBottom_toTopOf="@id/homepage_bottom_btn"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"

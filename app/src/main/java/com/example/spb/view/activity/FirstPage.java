@@ -200,7 +200,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
         switch (v.getId()) {
             case R.id.enter_next_btn:
                 if (ENTER_FUN == 1){
-                    JumpIntent.startMyIntent(UserHomePage.class);
+
                 }else {
                     if (!ENTER_CHECK){
                         MyToastClass.ShowToast(this,"请阅读并同意校吧用户须知");
@@ -217,9 +217,10 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
                 break;
             case R.id.enter_check:
                 if (!ENTER_CHECK) {
-                    mEnterCheck.setBackground(getDrawable(R.drawable.enter_check));
-                    ENTER_CHECK = true;
-                    showDialogS(1);
+                    JumpIntent.startMyIntent(UserHomePage.class);
+//                    mEnterCheck.setBackground(getDrawable(R.drawable.enter_check));
+//                    ENTER_CHECK = true;
+//                    showDialogS(1);
                 } else {
                     mEnterCheck.setBackground(getDrawable(R.drawable.enter_nocheck));
                     ENTER_CHECK = false;

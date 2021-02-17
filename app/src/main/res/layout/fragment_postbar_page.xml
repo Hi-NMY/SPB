@@ -1,24 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/qianbai"
         tools:context=".view.fragment.ui.postbarpage.PostBarPage">
 
-    <TextView
-            android:id="@+id/text_home"
-            android:text="1"
+    <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/postbar_appbarlayout"
+            app:elevation="0dp"
+            android:background="@color/qianbai"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/postbar_collapsinglayout"
+                android:layout_width="match_parent"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                android:layout_height="wrap_content">
+            <RelativeLayout
+                    android:id="@+id/postbar_R"
+                    android:background="@color/qianbai"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spb_activity_bar_44">
+
+                <RelativeLayout
+                        android:id="@+id/search_rlt"
+                        android:background="@drawable/search_bg"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/margin_16"
+                        android:layout_toLeftOf="@id/sign_rlt"
+                        android:layout_marginLeft="@dimen/margin_16"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/icon_image_32">
+
+                    <TextView
+                            android:gravity="left|center"
+                            android:hint="点击搜索更多内容"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/font_14"
+                            android:layout_marginHorizontal="@dimen/margin_12"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:id="@+id/sign_rlt"
+                        android:layout_marginRight="@dimen/margin_16"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/enter_next_login"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/icon_image_32">
+
+                    <ImageView
+                            android:id="@+id/img"
+                            android:layout_marginLeft="@dimen/margin_8"
+                            android:layout_marginRight="@dimen/margin_4"
+                            android:background="@drawable/sign_icon"
+                            android:layout_centerVertical="true"
+                            android:layout_width="@dimen/icon_image_24"
+                            android:layout_height="@dimen/icon_image_24"/>
+
+                    <TextView
+                            android:layout_toRightOf="@+id/img"
+                            android:layout_marginRight="@dimen/margin_12"
+                            android:layout_centerVertical="true"
+                            android:textSize="@dimen/font_14"
+                            android:textColor="@color/beijing"
+                            android:text="签到"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </RelativeLayout>
+            </RelativeLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+            android:id="@+id/postbar_scrollview"
+            android:fillViewport="true"
+            android:background="@color/qianbai"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <ImageView
+                    android:id="@+id/postbar_search_icon"
+                    android:alpha="0"
+                    android:visibility="invisible"
+                    android:src="@drawable/search_icon"
+                    android:scaleType="centerCrop"
+                    android:layout_marginRight="@dimen/margin_16"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignBottom="@+id/postbar_page_idt"
+                    android:layout_alignTop="@+id/postbar_page_idt"
+                    android:layout_width="@dimen/icon_image_32"
+                    android:layout_height="@dimen/icon_image_32"/>
+
+            <net.lucode.hackware.magicindicator.MagicIndicator
+                    android:id="@+id/postbar_page_idt"
+                    android:paddingLeft="@dimen/margin_12"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp" />
+
+            <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/postbar_page_viewpager"
+                    android:layout_below="@id/postbar_page_idt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

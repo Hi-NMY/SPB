@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.example.spb.R;
+import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.presenter.impl.SpbAvtivityBarFPresenterImpl;
 import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;
@@ -225,7 +226,7 @@ public class FragmentSpbAvtivityBar extends BaseMVPFragment<ISpbAvtivityBarFView
 
     @Override
     public void setBarBackground(int color) {
-        mSpbActivityBar.setBackgroundColor(color);
+        mSpbActivityBar.setBackground(MyApplication.getContext().getDrawable(color));
     }
 
     public interface OnMyClick {

@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.spb.R;
@@ -47,6 +48,7 @@ public class UserHomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePa
     private RelativeLayout mPostbarRlt;
     private RelativeLayout mVideoRlt;
     private RelativeLayout mGoodsRlt;
+    private View bar2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,7 @@ public class UserHomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePa
 
     @Override
     protected void initActView() {
+        bar2 = (View) findViewById(R.id.homepage_bar);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.homepage_bottom_btn);
         mHomepageSend = (RelativeLayout) findViewById(R.id.homepage_send);
         mHomepageSend.bringToFront();
@@ -128,8 +131,14 @@ public class UserHomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePa
                 }
                 break;
         }
-        setActivityBar();
         fragmentTransaction.commitAllowingStateLoss();
+        if (index == 1){
+            bar2.setVisibility(View.GONE);
+            bar = null;
+        } else {
+            bar2.setVisibility(View.VISIBLE);
+            setActivityBar();
+        }
     }
 
     private void hideFragments(FragmentTransaction transaction) {
@@ -254,7 +263,7 @@ public class UserHomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePa
         ImmersionBar.with(this)
                 .statusBarDarkFont(true)
                 .fitsSystemWindows(true)
-                .statusBarColor(R.color.beijing)
+                .statusBarColor(R.color.qianbai)
                 .init();
     }
 
@@ -263,21 +272,8 @@ public class UserHomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePa
         if (bar == null){
             bar = setMyActivityBar(R.id.homepage_bar);
         }
+        bar.setBarBackground(R.color.qianbai);
         switch (PAGENUMBER) {
-            case 1:
-                bar.barSearchView(new FragmentSpbAvtivityBar.OnMyClick() {
-                    @Override
-                    public void onClick() {
-
-                    }
-                });
-                bar.barSignView(new FragmentSpbAvtivityBar.OnMyClick() {
-                    @Override
-                    public void onClick() {
-
-                    }
-                });
-                break;
             case 2:
                 bar.barSearchView(new FragmentSpbAvtivityBar.OnMyClick() {
                     @Override
