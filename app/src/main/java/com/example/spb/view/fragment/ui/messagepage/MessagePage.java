@@ -1,16 +1,11 @@
 package com.example.spb.view.fragment.ui.messagepage;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.presenter.impl.MessagePageFPresenterImpl;
-import com.example.spb.presenter.inter.IMessagePageFPresenter;
 import com.example.spb.view.inter.IMessagePageFView;
 
 public class MessagePage extends BaseMVPFragment<IMessagePageFView,MessagePageFPresenterImpl> implements IMessagePageFView {
@@ -27,7 +22,7 @@ public class MessagePage extends BaseMVPFragment<IMessagePageFView,MessagePageFP
 
     @Override
     protected int getLayoutViewId() {
-        return R.layout.fragment_message_page;
+        return R.layout.fragment_postbar_message_page;
     }
 
     @Override

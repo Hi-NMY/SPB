@@ -20,7 +20,7 @@
             android:id="@+id/message_page"
             android:name="com.example.spb.view.fragment.ui.messagepage.MessagePage"
             android:label="@string/title_notifications"
-            tools:layout="@layout/fragment_message_page"/>
+            tools:layout="@layout/fragment_postbar_message_page"/>
 
     <fragment
             android:id="@+id/user_page"

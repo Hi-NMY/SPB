@@ -261,9 +261,6 @@ public class UserHomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePa
     @Override
     public void setBar() {
         ImmersionBar.with(this)
-                .statusBarDarkFont(true)
-                .fitsSystemWindows(true)
-                .statusBarColor(R.color.qianbai)
                 .init();
     }
 
@@ -275,6 +272,7 @@ public class UserHomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePa
         bar.setBarBackground(R.color.qianbai);
         switch (PAGENUMBER) {
             case 2:
+                bar.setBarBackground(R.color.beijing);
                 bar.barSearchView(new FragmentSpbAvtivityBar.OnMyClick() {
                     @Override
                     public void onClick() {
@@ -283,6 +281,7 @@ public class UserHomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePa
                 });
                 break;
             case 3:
+                bar.setBarBackground(R.color.beijing);
                 bar.barCentralTxt("消息", null);
                 bar.barRightImg1(R.drawable.messageadd_icon, new FragmentSpbAvtivityBar.OnMyClick() {
                     @Override
@@ -292,6 +291,7 @@ public class UserHomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePa
                 });
                 break;
             case 4:
+                bar.setBarBackground(R.color.beijing);
                 bar.barRightImg1(R.drawable.install_icon, new FragmentSpbAvtivityBar.OnMyClick() {
                     @Override
                     public void onClick() {

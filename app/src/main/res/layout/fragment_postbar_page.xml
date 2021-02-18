@@ -20,9 +20,9 @@
                 android:layout_width="match_parent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 android:layout_height="wrap_content">
+
             <RelativeLayout
-                    android:id="@+id/postbar_R"
-                    android:background="@color/qianbai"
+                    android:id="@+id/postbar_r"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/spb_activity_bar_44">
 
@@ -75,6 +75,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                 </RelativeLayout>
+
+                <RelativeLayout
+                        android:id="@+id/postbar_R"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
             </RelativeLayout>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

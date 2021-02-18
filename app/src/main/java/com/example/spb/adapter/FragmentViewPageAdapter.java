@@ -1,5 +1,6 @@
 package com.example.spb.adapter;
 
+import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class FragmentViewPageAdapter extends FragmentPagerAdapter {
 
-    private List<Fragment> fragments;
+    private ArrayList<Fragment> fragments;
 
     public FragmentViewPageAdapter(FragmentManager fragmentManager, ArrayList<Fragment> f, int sum){
         super(fragmentManager,sum);

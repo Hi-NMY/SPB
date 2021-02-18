@@ -6,16 +6,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <fragment
-            android:id="@+id/homepage_bar"
-            android:name="com.example.spb.view.Component.FragmentSpbAvtivityBar"
+    <RelativeLayout
+            android:id="@+id/r"
+            android:layout_marginTop="@dimen/margin_20"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/spb_activity_bar_44">
-    </fragment>
+            android:layout_height="wrap_content">
+
+        <fragment
+                android:id="@+id/homepage_bar"
+                android:name="com.example.spb.view.Component.FragmentSpbAvtivityBar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spb_activity_bar_44">
+        </fragment>
+
+    </RelativeLayout>
+
 
     <FrameLayout
             android:id="@+id/homepage_fragment"
-            android:layout_below="@+id/homepage_bar"
+            android:layout_below="@+id/r"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/qianbai"

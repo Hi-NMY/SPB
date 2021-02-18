@@ -3,10 +3,12 @@ package com.example.spb.view.fragment.ui.postbarpage;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -29,14 +31,19 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.badge.BadgeAnchor;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.badge.BadgePagerTitleView;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.badge.BadgeRule;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageFPresenterImpl> implements IPostBarPageFView {
+public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageFPresenterImpl> implements IPostBarPageFView, View.OnClickListener {
 
     private MagicIndicator mPostbarPageIdt;
+    private BadgePagerTitleView badgePagerTitleView;
+    private SimplePagerTitleView simplePagerTitleView;
     private ViewPager mPostbarPageViewpager;
     private static final String[] title = new String[]{"关注", "最新", "话题"};
     private List<String> myTitleList = Arrays.asList(title);
@@ -48,6 +55,7 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
     private AppBarLayout mPostbarAppbarlayout;
     private ImageView mPostbarSearchIcon;
     private CollapsingToolbarLayout mPostbarCollapsinglayout;
+    private RelativeLayout mPostbarR;
 
 
     @Override
@@ -71,9 +79,12 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
         mPostbarPageViewpager = (ViewPager) view.findViewById(R.id.postbar_page_viewpager);
         mPostbarAppbarlayout = (AppBarLayout) view.findViewById(R.id.postbar_appbarlayout);
         mPostbarSearchIcon = (ImageView) view.findViewById(R.id.postbar_search_icon);
-        mPostbarCollapsinglayout = (CollapsingToolbarLayout)view.findViewById(R.id.postbar_collapsinglayout);
+        mPostbarCollapsinglayout = (CollapsingToolbarLayout) view.findViewById(R.id.postbar_collapsinglayout);
+        mPostbarR = (RelativeLayout)view.findViewById(R.id.postbar_R);
+        mPostbarSearchIcon.bringToFront();
         intFollowViewPager();
         listenViewMove();
+        setMyListener();
     }
 
     @Override
@@ -86,21 +97,33 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
                 if (i != 0) {
+                    int persent = -i * 3;
+                    if (persent > 255) {
+                        persent = 255;
+                    }
+                    int color = Color.argb(persent, 249, 249, 249);
+                    mPostbarPageIdt.setBackgroundColor(color);
                     float topA = 1 - (1 - i) / 65f;
-                    mPostbarAppbarlayout.setAlpha(topA);
+                    mPostbarR.setBackgroundColor(color);
                     topA = 1 - (topA + 0.2f);
                     mPostbarSearchIcon.setAlpha(topA);
                     if (mPostbarSearchIcon.getAlpha() > 0) {
+                        mPostbarR.setVisibility(View.VISIBLE);
                         mPostbarSearchIcon.setVisibility(View.VISIBLE);
                     } else {
+                        mPostbarR.setVisibility(View.INVISIBLE);
                         mPostbarSearchIcon.setVisibility(View.INVISIBLE);
                     }
-                }else {
+                } else {
+                    mPostbarPageIdt.setBackgroundColor(Color.argb(0, 249, 249, 249));
+                    mPostbarR.setBackgroundColor(Color.argb(0, 249, 249, 249));
                     mPostbarAppbarlayout.setAlpha(1 - (1 - appBarLayout.getTotalScrollRange()) / 65f);
-                    mPostbarSearchIcon.setAlpha(1-(1 - (1 - appBarLayout.getTotalScrollRange()) / 65f + 0.2f));
+                    mPostbarSearchIcon.setAlpha(1 - (1 - (1 - appBarLayout.getTotalScrollRange()) / 65f + 0.2f));
                     if (mPostbarSearchIcon.getAlpha() > 0) {
+                        mPostbarR.setVisibility(View.VISIBLE);
                         mPostbarSearchIcon.setVisibility(View.VISIBLE);
                     } else {
+                        mPostbarR.setVisibility(View.INVISIBLE);
                         mPostbarSearchIcon.setVisibility(View.INVISIBLE);
                     }
                 }
@@ -135,7 +158,8 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
 
             @Override
             public IPagerTitleView getTitleView(Context context, int index) {
-                SimplePagerTitleView simplePagerTitleView = new ScaleTransitionPagerTitleView(context);
+                badgePagerTitleView = new BadgePagerTitleView(context);
+                simplePagerTitleView = new ScaleTransitionPagerTitleView(context);
                 simplePagerTitleView.setText(myTitleList.get(index));
                 simplePagerTitleView.setTextSize(18);
 
@@ -147,7 +171,19 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
                         mPostbarPageViewpager.setCurrentItem(index);
                     }
                 });
-                return simplePagerTitleView;
+
+                badgePagerTitleView.setInnerPagerTitleView(simplePagerTitleView);
+
+                if (index == 0) {
+                    ImageView badgeImageView = (ImageView) LayoutInflater.from(context).inflate(R.layout.simple_red_dot, null);
+                    badgePagerTitleView.setBadgeView(badgeImageView);
+                    badgePagerTitleView.setXBadgeRule(new BadgeRule(BadgeAnchor.CONTENT_RIGHT, -UIUtil.dip2px(context, 6)));
+                    badgePagerTitleView.setYBadgeRule(new BadgeRule(BadgeAnchor.CONTENT_TOP, 0));
+                }
+
+                badgePagerTitleView.setAutoCancelBadge(true);
+
+                return badgePagerTitleView;
             }
 
             @Override
@@ -176,6 +212,65 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
 
     @Override
     public <T> void response(T response, int responseFlag) {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.postbar_search_icon:
+                mPostbarAppbarlayout.setExpanded(true);
+                break;
+        }
+    }
+
+    @Override
+    public void createDialog() {
+
+    }
+
+    @Override
+    public void showDialogS(int i) {
+
+    }
+
+    @Override
+    public void closeDialog(int i) {
+
+    }
+
+    @Override
+    public void setMyListener() {
+        mPostbarSearchIcon.setOnClickListener(this);
+    }
+
+    @Override
+    public void setBar() {
+
+    }
+
+    @Override
+    public void setActivityBar() {
+
+    }
+
+    @Override
+    public void startRefresh() {
+
+    }
+
+    @Override
+    public void obtainMoreRefresh() {
+
+    }
+
+    @Override
+    public void stopRefresh() {
+
+    }
+
+    @Override
+    public void stopMoreRefresh() {
 
     }
 }

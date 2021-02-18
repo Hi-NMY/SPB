@@ -53,4 +53,54 @@ public class UserPage extends BaseMVPFragment<IUserPageFView,UserPageFPresenterI
     public <T> void response(T response, int responseFlag) {
 
     }
+
+    @Override
+    public void createDialog() {
+
+    }
+
+    @Override
+    public void showDialogS(int i) {
+
+    }
+
+    @Override
+    public void closeDialog(int i) {
+
+    }
+
+    @Override
+    public void setMyListener() {
+
+    }
+
+    @Override
+    public void setBar() {
+
+    }
+
+    @Override
+    public void setActivityBar() {
+
+    }
+
+    @Override
+    public void startRefresh() {
+
+    }
+
+    @Override
+    public void obtainMoreRefresh() {
+
+    }
+
+    @Override
+    public void stopRefresh() {
+
+    }
+
+    @Override
+    public void stopMoreRefresh() {
+
+    }
 }
