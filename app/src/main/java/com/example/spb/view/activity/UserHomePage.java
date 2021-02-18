@@ -261,6 +261,9 @@ public class UserHomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePa
     @Override
     public void setBar() {
         ImmersionBar.with(this)
+                .statusBarDarkFont(true)
+                .fitsSystemWindows(true)
+                .statusBarColor(R.color.beijing)
                 .init();
     }
 

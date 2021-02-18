@@ -22,7 +22,7 @@ public class MessagePage extends BaseMVPFragment<IMessagePageFView,MessagePageFP
 
     @Override
     protected int getLayoutViewId() {
-        return R.layout.fragment_postbar_message_page;
+        return R.layout.fragment_message_page;
     }
 
     @Override

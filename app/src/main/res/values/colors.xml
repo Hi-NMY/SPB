@@ -15,6 +15,7 @@
     <color name="theme_color5">#ffcc29</color>
 
     <color name="qianbai">#f0f0f4</color>
+    <color name="qihei">#161823</color>
     <color name="lightgrey">#d3d3d3</color><!--亮灰色 -->
     <color name="beijing">#FBFBFB</color>
     <color name="ziti">#363636</color>
@@ -182,7 +183,6 @@
     <color name="youhei">#665757</color>
     <color name="zise1">#493131</color>
     <color name="meihei">#312520</color>
-    <color name="qihei">#161823</color>
     <color name="heise">#000000</color>
 
     <color name="white">#ffffff</color><!--白色 -->
