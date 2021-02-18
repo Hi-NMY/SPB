@@ -27,20 +27,20 @@
                     android:layout_height="wrap_content">
 
                 <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/ruser_page_user_headimg"
+                    android:id="@+id/user_page_user_headimg"
                     android:layout_margin="@dimen/margin_16"
                     android:scaleType="centerCrop"
                     android:src="@drawable/enterbg"
-                    android:layout_width="68dp"
-                    android:layout_height="68dp"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
                     app:riv_corner_radius="360dp"
                     app:riv_oval="true"/>
 
                 <TextView
                         android:id="@+id/user_page_username"
                         android:layout_marginTop="@dimen/margin_8"
-                        android:layout_alignTop="@id/ruser_page_user_headimg"
-                        android:layout_toRightOf="@id/ruser_page_user_headimg"
+                        android:layout_alignTop="@id/user_page_user_headimg"
+                        android:layout_toRightOf="@id/user_page_user_headimg"
                         android:textSize="@dimen/font_16"
                         android:textStyle="bold"
                         android:textColor="@color/black"
@@ -72,8 +72,8 @@
                 <TextView
                         android:id="@+id/txt1"
                         android:layout_marginBottom="@dimen/margin_8"
-                        android:layout_toRightOf="@id/ruser_page_user_headimg"
-                        android:layout_alignBottom="@id/ruser_page_user_headimg"
+                        android:layout_toRightOf="@id/user_page_user_headimg"
+                        android:layout_alignBottom="@id/user_page_user_headimg"
                         android:textSize="@dimen/font_14"
                         android:textColor="@color/grey"
                         android:text="关注"
@@ -94,8 +94,8 @@
                 <TextView
                         android:id="@+id/txt3"
                         android:layout_marginBottom="@dimen/margin_8"
-                        android:layout_toRightOf="@id/ruser_page_user_headimg"
-                        android:layout_alignBottom="@id/ruser_page_user_headimg"
+                        android:layout_toRightOf="@id/user_page_user_headimg"
+                        android:layout_alignBottom="@id/user_page_user_headimg"
                         android:textSize="@dimen/font_14"
                         android:textColor="@color/qihei"
                         android:text="关注"
@@ -106,8 +106,8 @@
                         android:id="@+id/user_page_useronlineday"
                         android:layout_marginHorizontal="@dimen/margin_12"
                         android:layout_marginVertical="@dimen/margin_20"
-                        android:layout_below="@id/ruser_page_user_headimg"
-                        android:layout_alignLeft="@id/ruser_page_user_headimg"
+                        android:layout_below="@id/user_page_user_headimg"
+                        android:layout_alignLeft="@id/user_page_user_headimg"
                         android:textSize="@dimen/font_16"
                         android:textColor="@color/black"
                         android:textStyle="bold"
@@ -120,7 +120,7 @@
                         android:layout_marginTop="@dimen/margin_12"
                         android:layout_alignLeft="@id/t1"
                         android:layout_alignRight="@id/t1"
-                        android:layout_below="@id/ruser_page_user_headimg"
+                        android:layout_below="@id/user_page_user_headimg"
                         android:gravity="center"
                         android:textSize="@dimen/font_16"
                         android:textColor="@color/black"
@@ -147,7 +147,7 @@
                         android:layout_marginTop="@dimen/margin_12"
                         android:layout_alignLeft="@id/t2"
                         android:layout_alignRight="@id/t2"
-                        android:layout_below="@id/ruser_page_user_headimg"
+                        android:layout_below="@id/user_page_user_headimg"
                         android:gravity="center"
                         android:textSize="@dimen/font_16"
                         android:textColor="@color/black"
@@ -174,7 +174,7 @@
                         android:layout_marginTop="@dimen/margin_12"
                         android:layout_alignLeft="@id/t3"
                         android:layout_alignRight="@id/t3"
-                        android:layout_below="@id/ruser_page_user_headimg"
+                        android:layout_below="@id/user_page_user_headimg"
                         android:gravity="center"
                         android:textSize="@dimen/font_16"
                         android:textColor="@color/black"
@@ -200,7 +200,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignBottom="@id/t3"
                         android:scaleType="centerInside"
-                        android:layout_alignTop="@id/ruser_page_user_headimg"
+                        android:layout_alignTop="@id/user_page_user_headimg"
                         android:src="@drawable/right_grey"
                         android:layout_width="@dimen/icon_image_32"
                         android:layout_height="@dimen/icon_image_32"/>
@@ -322,6 +322,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                    android:id="@+id/user_page_subject"
                     android:layout_below="@id/user_page_commonfun"
                     android:layout_marginBottom="@dimen/margin_4"
                     android:layout_marginTop="@dimen/margin_8"
@@ -329,7 +330,43 @@
                     android:background="@drawable/cardview_gb"
                     android:minHeight="100dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:id="@+id/ct1"
+                        android:layout_margin="@dimen/margin_12"
+                        android:textSize="@dimen/font_16"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:text="我的课程表"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/user_page_dayactive"
+                    android:layout_below="@id/user_page_subject"
+                    android:layout_marginBottom="@dimen/margin_4"
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:layout_marginHorizontal="@dimen/margin_8"
+                    android:background="@drawable/cardview_gb"
+                    android:minHeight="300dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:id="@+id/ct2"
+                        android:layout_margin="@dimen/margin_12"
+                        android:textSize="@dimen/font_16"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:text="今日活跃"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 

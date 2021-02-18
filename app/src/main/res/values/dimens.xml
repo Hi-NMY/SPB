@@ -6,6 +6,9 @@
     <dimen name="spb_activity_bar_44">44dp</dimen>
     <dimen name="spb_activity_bar_48">48dp</dimen>
 
+    <dimen name="icon_image_64">64dp</dimen>
+    <dimen name="icon_image_44">44dp</dimen>
+    <dimen name="icon_image_40">40dp</dimen>
     <dimen name="icon_image_32">32dp</dimen>
     <dimen name="icon_image_24">24dp</dimen>
     <dimen name="icon_image_16">16dp</dimen>
