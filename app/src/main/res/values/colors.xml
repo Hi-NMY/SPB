@@ -14,6 +14,7 @@
     <color name="theme_color4">#DFF6F0</color>
     <color name="theme_color5">#ffcc29</color>
 
+    <color name="darkgrey">#a9a9a9</color><!--暗灰色 -->
     <color name="qianbai">#f0f0f4</color>
     <color name="qihei">#161823</color>
     <color name="lightgrey">#d3d3d3</color><!--亮灰色 -->
@@ -263,7 +264,6 @@
     <color name="greenyellow">#adff2f</color><!--黄绿色 -->
     <color name="lightblue">#add8e6</color><!--亮蓝色 -->
     <color name="darkgray">#a9a9a9</color><!--暗灰色 -->
-    <color name="darkgrey">#a9a9a9</color><!--暗灰色 -->
     <color name="brown">#a52a2a</color><!--褐色 -->
     <color name="sienna">#a0522d</color><!--赭色 -->
     <color name="darkorchid">#9932cc</color><!--暗紫色 -->

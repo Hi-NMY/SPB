@@ -57,18 +57,126 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
+        <ImageView
+                android:id="@+id/item_voice_more"
+                android:src="@drawable/icon_more"
+                android:layout_alignTop="@+id/item_voice_user_headimg"
+                android:layout_alignParentRight="true"
+                android:layout_marginHorizontal="@dimen/margin_12"
+                android:layout_alignBottom="@id/item_voice_user_headimg"
+                android:layout_width="@dimen/icon_image_32"
+                android:layout_height="@dimen/icon_image_32"/>
+
         <TextView
                 android:id="@+id/item_voice_txt"
                 android:text="傻傻的贺卡是的哈水电卡水电卡较\n好的卡号的"
+                android:lineSpacingMultiplier="1.1"
                 android:textSize="@dimen/font_16"
                 android:textColor="@color/black"
-                android:layout_marginVertical="@dimen/margin_12"
+                android:layout_marginVertical="@dimen/margin_8"
                 android:layout_marginHorizontal="@dimen/margin_16"
                 android:layout_below="@id/item_voice_user_headimg"
                 android:minHeight="50dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
+        <View
+                android:id="@+id/item_voice_voice"
+                android:background="@color/lightgrey"
+                android:layout_below="@+id/item_voice_txt"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginBottom="@dimen/margin_8"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"/>
+
+        <TextView
+                android:id="@+id/item_voice_label"
+                android:layout_below="@id/item_voice_voice"
+                android:layout_alignLeft="@id/item_voice_voice"
+                android:layout_marginBottom="@dimen/margin_12"
+                android:textSize="@dimen/font_14"
+                android:textColor="@color/theme_color2"
+                android:text="\@第一食堂"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <LinearLayout
+                android:layout_marginHorizontal="@dimen/margin_12"
+                android:layout_marginBottom="@dimen/margin_4"
+                android:layout_below="@+id/item_voice_label"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <RelativeLayout
+                    android:id="@+id/item_voice_share_R"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <ImageView
+                        android:id="@+id/item_voice_share_img"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="@dimen/icon_image_32"
+                        android:layout_height="@dimen/icon_image_32"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/item_voice_discuss_R"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <ImageView
+                        android:id="@+id/item_voice_discuss_img"
+                        android:background="@drawable/icon_discuss"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="@dimen/icon_image_32"
+                        android:layout_height="@dimen/icon_image_32"/>
+
+                <TextView
+                        android:id="@+id/item_voice_discuss_num"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_12"
+                        android:text="2365"
+                        android:gravity="center"
+                        android:layout_alignBottom="@id/item_voice_discuss_img"
+                        android:layout_alignTop="@+id/item_voice_discuss_img"
+                        android:layout_toRightOf="@+id/item_voice_discuss_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                    android:id="@+id/item_voice_like_R"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <ImageView
+                        android:id="@+id/item_voice_like_img"
+                        android:background="@drawable/icon_like"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="@dimen/icon_image_32"
+                        android:layout_height="@dimen/icon_image_32"/>
+
+                <TextView
+                        android:id="@+id/item_voice_like_num"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_12"
+                        android:text="2365"
+                        android:gravity="center"
+                        android:layout_alignBottom="@id/item_voice_like_img"
+                        android:layout_alignTop="@+id/item_voice_like_img"
+                        android:layout_toRightOf="@+id/item_voice_like_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+        </LinearLayout>
     </RelativeLayout>
 
 </RelativeLayout>
