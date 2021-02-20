@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+            android:id="@+id/item_disscuss_R"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/item_disscuss_user_headimg"
+                android:layout_marginTop="@dimen/margin_12"
+                android:src="@drawable/enterbg"
+                android:scaleType="centerCrop"
+                android:layout_width="@dimen/icon_image_36"
+                android:layout_height="@dimen/icon_image_36"
+                app:riv_oval="true"/>
+
+        <LinearLayout
+                android:id="@+id/item_disscuss_llt"
+                android:layout_alignTop="@+id/item_disscuss_user_headimg"
+                android:layout_marginLeft="@dimen/margin_8"
+                android:layout_toRightOf="@+id/item_disscuss_user_headimg"
+                android:layout_alignBottom="@id/item_disscuss_user_headimg"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TextView
+                    android:id="@+id/item_disscuss_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:text="null"
+                    android:textColor="@color/qihei"
+                    android:textSize="@dimen/font_14"/>
+
+            <TextView
+                    android:id="@+id/item_disscuss_date"
+                    android:layout_marginTop="@dimen/margin_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:text="null"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/font_12"/>
+
+        </LinearLayout>
+
+        <TextView
+                android:id="@+id/item_disscuss_txt"
+                android:textColor="@color/black"
+                android:text=""
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginHorizontal="@dimen/margin_8"
+                android:lineSpacingMultiplier="1.5"
+                android:layout_toRightOf="@+id/item_disscuss_user_headimg"
+                android:layout_below="@+id/item_disscuss_llt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+    <View
+            android:layout_below="@id/item_disscuss_R"
+            android:background="@color/lightgray"
+            android:layout_width="match_parent"
+            android:alpha="0.3"
+            android:layout_height="0.5dp"/>
+
+</RelativeLayout>

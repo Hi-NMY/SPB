@@ -30,6 +30,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".view.activity.PostBarDetailPage">
+        </activity>
         <activity
                 android:name=".view.activity.UserHomePage"
                 android:label="@string/title_activity_user_home_page">

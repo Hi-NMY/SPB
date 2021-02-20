@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:background="@color/qianbai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+    <RelativeLayout
+            android:minHeight="100dp"
+            android:layout_marginVertical="@dimen/margin_4"
+            android:layout_marginHorizontal="@dimen/margin_8"
+            android:background="@drawable/cardview_gb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/item_postbar_user_headimg"
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginHorizontal="@dimen/margin_12"
+                android:scaleType="centerCrop"
+                android:src="@drawable/enterbg"
+                android:layout_width="@dimen/icon_image_40"
+                android:layout_height="@dimen/icon_image_40"
+                app:riv_corner_radius="@dimen/corner_16"
+                app:riv_oval="true"/>
+
+        <TextView
+                android:id="@+id/item_postbar_username"
+                android:layout_marginTop="@dimen/margin_2"
+                android:layout_alignTop="@id/item_postbar_user_headimg"
+                android:layout_toRightOf="@id/item_postbar_user_headimg"
+                android:textSize="@dimen/font_14"
+                android:textColor="@color/black"
+                android:text="撒大声地"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <ImageView
+                android:id="@+id/item_postbar_userbadge"
+                android:layout_marginLeft="@dimen/margin_4"
+                android:background="@drawable/enterbg"
+                android:scaleType="centerCrop"
+                android:layout_alignBottom="@id/item_postbar_username"
+                android:layout_alignTop="@id/item_postbar_username"
+                android:layout_toRightOf="@id/item_postbar_username"
+                android:layout_width="@dimen/icon_image_16"
+                android:layout_height="@dimen/icon_image_16"/>
+
+        <TextView
+                android:id="@+id/item_postbar_postdate"
+                android:layout_marginBottom="@dimen/margin_2"
+                android:layout_toRightOf="@id/item_postbar_user_headimg"
+                android:layout_alignBottom="@id/item_postbar_user_headimg"
+                android:textSize="@dimen/font_12"
+                android:textColor="@color/darkgray"
+                android:text="2020-12-06 12:32"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <ImageView
+                android:id="@+id/item_postbar_more"
+                android:src="@drawable/icon_more"
+                android:layout_alignTop="@+id/item_postbar_user_headimg"
+                android:layout_alignParentRight="true"
+                android:layout_marginHorizontal="@dimen/margin_12"
+                android:layout_alignBottom="@id/item_postbar_user_headimg"
+                android:layout_width="@dimen/icon_image_32"
+                android:layout_height="@dimen/icon_image_32"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/item_postbar_imagelist"
+                android:layout_below="@id/item_postbar_user_headimg"
+                android:layout_toRightOf="@id/item_postbar_user_headimg"
+                android:layout_toLeftOf="@id/item_postbar_more"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"/>
+
+        <TextView
+                android:id="@+id/item_postbar_txt"
+                android:text="傻傻的贺卡是的哈水电卡dadadadad水电卡较\n好的卡号的"
+                android:lineSpacingMultiplier="1.5"
+                android:textSize="@dimen/font_16"
+                android:textColor="@color/black"
+                android:layout_toRightOf="@id/item_postbar_user_headimg"
+                android:layout_marginRight="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_4"
+                android:layout_marginBottom="@dimen/margin_8"
+                android:layout_below="@id/item_postbar_imagelist"
+                android:minHeight="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+        <View
+                android:id="@+id/item_postbar_voice"
+                android:layout_marginRight="@dimen/margin_28"
+                android:background="@color/theme_color"
+                android:layout_toLeftOf="@id/item_postbar_more"
+                android:layout_toRightOf="@id/item_postbar_user_headimg"
+                android:layout_below="@id/item_postbar_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/icon_image_40"/>
+
+        <TextView
+                android:id="@+id/item_video_topic"
+                android:layout_below="@id/item_postbar_voice"
+                android:layout_toRightOf="@id/item_postbar_user_headimg"
+                android:layout_marginTop="@dimen/margin_8"
+                android:textSize="@dimen/font_14"
+                android:textColor="@color/theme_color2"
+                android:text="\#第一食堂"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/item_postbar_location"
+                android:layout_toRightOf="@id/item_postbar_user_headimg"
+                android:layout_below="@+id/item_video_topic"
+                android:layout_marginVertical="@dimen/margin_8"
+                android:textSize="@dimen/font_14"
+                android:textColor="@color/darkgrey"
+                android:text="上海"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <LinearLayout
+                android:layout_marginHorizontal="@dimen/margin_12"
+                android:layout_marginBottom="@dimen/margin_4"
+                android:layout_below="@+id/item_postbar_location"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <RelativeLayout
+                    android:id="@+id/item_postbar_share_R"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <ImageView
+                        android:id="@+id/item_postbar_share_img"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="@dimen/icon_image_32"
+                        android:layout_height="@dimen/icon_image_32"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/item_postbar_discuss_R"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <ImageView
+                        android:id="@+id/item_postbar_discuss_img"
+                        android:background="@drawable/icon_discuss"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="@dimen/icon_image_32"
+                        android:layout_height="@dimen/icon_image_32"/>
+
+                <TextView
+                        android:id="@+id/item_postbar_discuss_num"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_12"
+                        android:text="2365"
+                        android:gravity="center"
+                        android:layout_alignBottom="@id/item_postbar_discuss_img"
+                        android:layout_alignTop="@+id/item_postbar_discuss_img"
+                        android:layout_toRightOf="@+id/item_postbar_discuss_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                    android:id="@+id/item_postbar_like_R"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <ImageView
+                        android:id="@+id/item_postbar_like_img"
+                        android:background="@drawable/icon_like"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="@dimen/icon_image_32"
+                        android:layout_height="@dimen/icon_image_32"/>
+
+                <TextView
+                        android:id="@+id/item_postbar_like_num"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_12"
+                        android:text="2365"
+                        android:gravity="center"
+                        android:layout_alignBottom="@id/item_postbar_like_img"
+                        android:layout_alignTop="@+id/item_postbar_like_img"
+                        android:layout_toRightOf="@+id/item_postbar_like_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>
