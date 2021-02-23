@@ -1,15 +1,15 @@
-package com.example.spb.view.fragment.ui.postbarpage;
+package com.example.spb.view.fragment.personalspace;
 
 import android.os.Bundle;
 import android.view.View;
 import androidx.fragment.app.Fragment;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPFragment;
-import com.example.spb.presenter.impl.TopicPageFPresenterImpl;
-import com.example.spb.presenter.inter.ITopicPageFPresenter;
-import com.example.spb.view.inter.ITopicPageFView;
+import com.example.spb.presenter.impl.PersonalPostBarFPresenterImpl;
+import com.example.spb.presenter.inter.IPersonalPostBarFPresenter;
+import com.example.spb.view.inter.IPersonalPostBarFView;
 
-public class TopicPage extends BaseMVPFragment<ITopicPageFView,TopicPageFPresenterImpl> implements ITopicPageFView {
+public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView,PersonalPostBarFPresenterImpl> implements IPersonalPostBarFView {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,13 +27,13 @@ public class TopicPage extends BaseMVPFragment<ITopicPageFView,TopicPageFPresent
     }
 
     @Override
-    protected TopicPageFPresenterImpl createPresenter() {
-        return new TopicPageFPresenterImpl();
+    protected PersonalPostBarFPresenterImpl createPresenter() {
+        return new PersonalPostBarFPresenterImpl();
     }
 
     @Override
     protected int getLayoutViewId() {
-        return R.layout.fragment_postbar_topic_page;
+        return R.layout.fragment_personalspace_personal_post_bar;
     }
 
     @Override

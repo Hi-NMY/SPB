@@ -1,4 +1,4 @@
-package com.example.spb.view.fragment.ui.messagepage;
+package com.example.spb.view.fragment.homepage.messagepage;
 
 import android.os.Bundle;
 import android.view.View;

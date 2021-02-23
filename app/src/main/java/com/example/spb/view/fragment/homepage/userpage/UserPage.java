@@ -1,23 +1,19 @@
-package com.example.spb.view.fragment.ui.userpage;
+package com.example.spb.view.fragment.homepage.userpage;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import androidx.annotation.NonNull;
+import android.widget.RelativeLayout;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.presenter.impl.UserPageFPresenterImpl;
-import com.example.spb.presenter.inter.IUserPageFPresenter;
+import com.example.spb.view.activity.PersonalSpace;
 import com.example.spb.view.inter.IUserPageFView;
+import com.example.spb.view.littlefun.JumpIntent;
 
-public class UserPage extends BaseMVPFragment<IUserPageFView,UserPageFPresenterImpl> implements IUserPageFView {
+public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenterImpl> implements IUserPageFView, View.OnClickListener {
 
+    private RelativeLayout mUserPageUserR;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,7 +32,8 @@ public class UserPage extends BaseMVPFragment<IUserPageFView,UserPageFPresenterI
 
     @Override
     protected void initFragView(View view) {
-
+        mUserPageUserR = (RelativeLayout)view.findViewById(R.id.user_page_userR);
+        setMyListener();
     }
 
     @Override
@@ -71,7 +68,7 @@ public class UserPage extends BaseMVPFragment<IUserPageFView,UserPageFPresenterI
 
     @Override
     public void setMyListener() {
-
+        mUserPageUserR.setOnClickListener(this);
     }
 
     @Override
@@ -102,5 +99,14 @@ public class UserPage extends BaseMVPFragment<IUserPageFView,UserPageFPresenterI
     @Override
     public void stopMoreRefresh() {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.user_page_userR:
+                JumpIntent.startMyIntent(PersonalSpace.class);
+                break;
+        }
     }
 }

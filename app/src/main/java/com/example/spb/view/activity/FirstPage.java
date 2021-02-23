@@ -217,7 +217,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
                 break;
             case R.id.enter_check:
                 if (!ENTER_CHECK) {
-                    JumpIntent.startMyIntent(UserHomePage.class);
+                    JumpIntent.startMyIntent(HomePage.class);
 //                    mEnterCheck.setBackground(getDrawable(R.drawable.enter_check));
 //                    ENTER_CHECK = true;
 //                    showDialogS(1);

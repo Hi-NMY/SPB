@@ -6,25 +6,25 @@
 
     <fragment
             android:id="@+id/postbar_page"
-            android:name="com.example.spb.view.fragment.ui.postbarpage.PostBarPage"
+            android:name="com.example.spb.view.fragment.homepage.postbarpage.PostBarPage"
             android:label="@string/title_home"
             tools:layout="@layout/fragment_postbar_page"/>
 
     <fragment
             android:id="@+id/video_page"
-            android:name="com.example.spb.view.fragment.ui.videopage.VideoPage"
+            android:name="com.example.spb.view.fragment.homepage.videopage.VideoPage"
             android:label="@string/title_dashboard"
             tools:layout="@layout/fragment_video_page"/>
 
     <fragment
             android:id="@+id/message_page"
-            android:name="com.example.spb.view.fragment.ui.messagepage.MessagePage"
+            android:name="com.example.spb.view.fragment.homepage.messagepage.MessagePage"
             android:label="@string/title_notifications"
             tools:layout="@layout/fragment_message_page"/>
 
     <fragment
             android:id="@+id/user_page"
-            android:name="com.example.spb.view.fragment.ui.userpage.UserPage"
+            android:name="com.example.spb.view.fragment.homepage.userpage.UserPage"
             android:label="@string/title_notifications"
             tools:layout="@layout/fragment_user_page"/>
 

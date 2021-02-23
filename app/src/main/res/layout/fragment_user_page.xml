@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/qianbai"
-        tools:context=".view.fragment.ui.userpage.UserPage">
+        tools:context=".view.fragment.homepage.userpage.UserPage">
 
     <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -50,24 +50,23 @@
 
                 <ImageView
                         android:id="@+id/user_page_usersex"
-                        android:background="@drawable/enterbg"
+                        android:src="@drawable/icon_boy"
                         android:scaleType="centerCrop"
-                        android:layout_marginHorizontal="@dimen/margin_8"
                         android:layout_alignBottom="@id/user_page_username"
                         android:layout_alignTop="@id/user_page_username"
                         android:layout_toRightOf="@id/user_page_username"
-                        android:layout_width="@dimen/icon_image_16"
-                        android:layout_height="@dimen/icon_image_16"/>
+                        android:layout_width="@dimen/icon_image_32"
+                        android:layout_height="@dimen/icon_image_32"/>
 
                 <ImageView
                         android:id="@+id/user_page_userbadge"
-                        android:background="@drawable/enterbg"
+                        android:src="@drawable/icon_girl"
                         android:scaleType="centerCrop"
                         android:layout_alignBottom="@id/user_page_usersex"
                         android:layout_alignTop="@id/user_page_usersex"
                         android:layout_toRightOf="@id/user_page_usersex"
-                        android:layout_width="@dimen/icon_image_16"
-                        android:layout_height="@dimen/icon_image_16"/>
+                        android:layout_width="@dimen/icon_image_32"
+                        android:layout_height="@dimen/icon_image_32"/>
 
                 <TextView
                         android:id="@+id/txt1"
@@ -114,6 +113,16 @@
                         android:text="2345天"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
+
+                <ImageView
+                        android:id="@+id/user_page_useronlinetip"
+                        android:translationY="-8dp"
+                        android:translationX="-12dp"
+                        android:layout_toRightOf="@+id/user_page_useronlineday"
+                        android:layout_alignTop="@+id/user_page_useronlineday"
+                        android:background="@drawable/icon_tip"
+                        android:layout_width="@dimen/icon_image_24"
+                        android:layout_height="@dimen/icon_image_24"/>
 
                 <TextView
                         android:id="@+id/user_page_postbarnum"
@@ -192,7 +201,7 @@
                         android:layout_below="@id/user_page_postbarnum"
                         android:textSize="@dimen/font_12"
                         android:textColor="@color/qihei"
-                        android:text="关注的主题"
+                        android:text="关注的话题"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
@@ -236,84 +245,84 @@
                         android:layout_height="wrap_content">
 
                     <ImageView
-                            android:id="@+id/fun1"
+                            android:id="@+id/user_page_commonfun_edu"
                             android:layout_marginVertical="@dimen/margin_8"
                             android:layout_marginHorizontal="@dimen/margin_28"
-                            android:background="@drawable/postbar_icon"
+                            android:background="@drawable/icon_educational"
                             android:layout_width="@dimen/icon_image_32"
                             android:layout_height="@dimen/icon_image_32"/>
 
                     <TextView
-                            android:layout_below="@id/fun1"
-                            android:text="帖子"
+                            android:layout_below="@id/user_page_commonfun_edu"
+                            android:text="校网"
                             android:textColor="@color/qihei"
                             android:textSize="@dimen/font_12"
                             android:gravity="center"
-                            android:layout_alignLeft="@id/fun1"
-                            android:layout_alignRight="@id/fun1"
+                            android:layout_alignLeft="@id/user_page_commonfun_edu"
+                            android:layout_alignRight="@id/user_page_commonfun_edu"
                             android:layout_marginTop="@dimen/margin_4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
                     <ImageView
-                            android:id="@+id/fun2"
-                            android:layout_toRightOf="@id/fun1"
+                            android:id="@+id/user_page_commonfun_sch"
+                            android:layout_toRightOf="@id/user_page_commonfun_edu"
                             android:layout_marginVertical="@dimen/margin_8"
                             android:layout_marginHorizontal="@dimen/margin_28"
-                            android:background="@drawable/postbar_icon"
+                            android:background="@drawable/icon_schedule"
                             android:layout_width="@dimen/icon_image_32"
                             android:layout_height="@dimen/icon_image_32"/>
 
                     <TextView
-                            android:layout_below="@id/fun2"
-                            android:text="帖子"
+                            android:layout_below="@id/user_page_commonfun_sch"
+                            android:text="课程"
                             android:textColor="@color/qihei"
                             android:textSize="@dimen/font_12"
                             android:gravity="center"
-                            android:layout_alignLeft="@id/fun2"
-                            android:layout_alignRight="@id/fun2"
+                            android:layout_alignLeft="@id/user_page_commonfun_sch"
+                            android:layout_alignRight="@id/user_page_commonfun_sch"
                             android:layout_marginTop="@dimen/margin_4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
                     <ImageView
-                            android:id="@+id/fun3"
-                            android:layout_toRightOf="@id/fun2"
+                            android:id="@+id/user_page_commonfun_dia"
+                            android:layout_toRightOf="@id/user_page_commonfun_sch"
                             android:layout_marginVertical="@dimen/margin_8"
                             android:layout_marginHorizontal="@dimen/margin_28"
-                            android:background="@drawable/postbar_icon"
+                            android:background="@drawable/icon_diary"
                             android:layout_width="@dimen/icon_image_32"
                             android:layout_height="@dimen/icon_image_32"/>
 
                     <TextView
-                            android:layout_below="@id/fun3"
-                            android:text="帖子"
+                            android:layout_below="@id/user_page_commonfun_dia"
+                            android:text="日记"
                             android:textColor="@color/qihei"
                             android:textSize="@dimen/font_12"
                             android:gravity="center"
-                            android:layout_alignLeft="@id/fun3"
-                            android:layout_alignRight="@id/fun3"
+                            android:layout_alignLeft="@id/user_page_commonfun_dia"
+                            android:layout_alignRight="@id/user_page_commonfun_dia"
                             android:layout_marginTop="@dimen/margin_4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
                     <ImageView
-                            android:id="@+id/fun4"
-                            android:layout_toRightOf="@id/fun3"
+                            android:id="@+id/user_page_commonfun_shop"
+                            android:layout_toRightOf="@id/user_page_commonfun_dia"
                             android:layout_marginVertical="@dimen/margin_8"
                             android:layout_marginHorizontal="@dimen/margin_28"
-                            android:background="@drawable/postbar_icon"
+                            android:background="@drawable/icon_shop"
                             android:layout_width="@dimen/icon_image_32"
                             android:layout_height="@dimen/icon_image_32"/>
 
                     <TextView
-                            android:layout_below="@id/fun4"
-                            android:text="帖子"
+                            android:layout_below="@id/user_page_commonfun_shop"
+                            android:text="二手"
                             android:textColor="@color/qihei"
                             android:textSize="@dimen/font_12"
                             android:gravity="center"
-                            android:layout_alignLeft="@id/fun4"
-                            android:layout_alignRight="@id/fun4"
+                            android:layout_alignLeft="@id/user_page_commonfun_shop"
+                            android:layout_alignRight="@id/user_page_commonfun_shop"
                             android:layout_marginTop="@dimen/margin_4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
@@ -361,7 +370,7 @@
                         android:textSize="@dimen/font_16"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        android:text="今日活跃"
+                        android:text="最近活跃"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 

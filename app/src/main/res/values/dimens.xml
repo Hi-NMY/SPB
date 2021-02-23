@@ -38,5 +38,7 @@
     <dimen name="corner_16">16dp</dimen>
     <dimen name="corner_20">20dp</dimen>
 
+    <dimen name="StatusBar_height">25dp</dimen>
+
 
 </resources>

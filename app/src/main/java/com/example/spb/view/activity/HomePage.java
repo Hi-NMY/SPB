@@ -6,7 +6,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.spb.R;
@@ -16,17 +15,17 @@ import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;
-import com.example.spb.view.fragment.ui.messagepage.MessagePage;
-import com.example.spb.view.fragment.ui.postbarpage.PostBarPage;
-import com.example.spb.view.fragment.ui.userpage.UserPage;
-import com.example.spb.view.fragment.ui.videopage.VideoPage;
+import com.example.spb.view.fragment.homepage.messagepage.MessagePage;
+import com.example.spb.view.fragment.homepage.postbarpage.PostBarPage;
+import com.example.spb.view.fragment.homepage.userpage.UserPage;
+import com.example.spb.view.fragment.homepage.videopage.VideoPage;
 import com.example.spb.view.inter.IUserHomePageAView;
 import com.example.spb.view.littlefun.MyToastClass;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gyf.immersionbar.ImmersionBar;
 
 
-public class UserHomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAPresenterImpl> implements IUserHomePageAView, View.OnClickListener {
+public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAPresenterImpl> implements IUserHomePageAView, View.OnClickListener {
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;

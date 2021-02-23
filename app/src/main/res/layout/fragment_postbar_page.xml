@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/qianbai"
-        tools:context=".view.fragment.ui.postbarpage.PostBarPage">
+        tools:context=".view.fragment.homepage.postbarpage.PostBarPage">
 
     <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/postbar_appbarlayout"

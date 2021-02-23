@@ -1,4 +1,4 @@
-package com.example.spb.view.fragment.ui.postbarpage;
+package com.example.spb.view.fragment.homepage.postbarpage;
 
 import android.content.Context;
 import android.graphics.Color;

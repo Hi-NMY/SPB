@@ -1,19 +1,11 @@
-package com.example.spb.view.fragment.ui.videopage;
+package com.example.spb.view.fragment.homepage.videopage;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.presenter.impl.VideoPageFPresenterImpl;
-import com.example.spb.presenter.inter.IVideoPageFPresenter;
 import com.example.spb.view.inter.IVideoPageFView;
 
 public class VideoPage extends BaseMVPFragment<IVideoPageFView,VideoPageFPresenterImpl> implements IVideoPageFView {

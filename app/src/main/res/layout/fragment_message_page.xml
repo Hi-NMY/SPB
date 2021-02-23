@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/beijing"
-        tools:context=".view.fragment.ui.messagepage.MessagePage">
+        tools:context=".view.fragment.homepage.messagepage.MessagePage">
 
     <TextView
             android:id="@+id/text_notifications"

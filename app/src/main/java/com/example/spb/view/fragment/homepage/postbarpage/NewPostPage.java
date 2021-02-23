@@ -1,15 +1,13 @@
-package com.example.spb.view.fragment.ui.postbarpage;
+package com.example.spb.view.fragment.homepage.postbarpage;
 
 import android.os.Bundle;
 import android.view.View;
-import androidx.fragment.app.Fragment;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPFragment;
-import com.example.spb.presenter.impl.AttentionPageFPresenterImpl;
-import com.example.spb.presenter.inter.IAttentionPageFPresenter;
-import com.example.spb.view.inter.IAttentionPageFView;
+import com.example.spb.presenter.impl.NewPostPageFPresenterImpl;
+import com.example.spb.view.inter.INewPostPageFView;
 
-public class AttentionPage extends BaseMVPFragment<IAttentionPageFView,AttentionPageFPresenterImpl> implements IAttentionPageFView {
+public class NewPostPage extends BaseMVPFragment<INewPostPageFView,NewPostPageFPresenterImpl> implements INewPostPageFView {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,13 +25,13 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView,Attention
     }
 
     @Override
-    protected AttentionPageFPresenterImpl createPresenter() {
-        return new AttentionPageFPresenterImpl();
+    protected NewPostPageFPresenterImpl createPresenter() {
+        return new NewPostPageFPresenterImpl();
     }
 
     @Override
     protected int getLayoutViewId() {
-        return R.layout.fragment_postbar_attention_page;
+        return R.layout.fragment_postbar_new_post_page;
     }
 
     @Override

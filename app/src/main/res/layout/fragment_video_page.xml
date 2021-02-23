@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/qianbai"
-        tools:context=".view.fragment.ui.videopage.VideoPage">
+        tools:context=".view.fragment.homepage.videopage.VideoPage">
 
     <TextView
             android:id="@+id/text_dashboard"

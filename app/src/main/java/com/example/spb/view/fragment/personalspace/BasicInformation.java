@@ -1,15 +1,15 @@
-package com.example.spb.view.fragment.ui.postbarpage;
+package com.example.spb.view.fragment.personalspace;
 
 import android.os.Bundle;
 import android.view.View;
 import androidx.fragment.app.Fragment;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPFragment;
-import com.example.spb.presenter.impl.NewPostPageFPresenterImpl;
-import com.example.spb.presenter.inter.INewPostPageFPresenter;
-import com.example.spb.view.inter.INewPostPageFView;
+import com.example.spb.presenter.impl.BasicInformationFPresenterImpl;
+import com.example.spb.presenter.inter.IBasicInformationFPresenter;
+import com.example.spb.view.inter.IBasicInformationFView;
 
-public class NewPostPage extends BaseMVPFragment<INewPostPageFView,NewPostPageFPresenterImpl> implements INewPostPageFView {
+public class BasicInformation extends BaseMVPFragment<IBasicInformationFView,BasicInformationFPresenterImpl> implements IBasicInformationFView {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,13 +27,13 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView,NewPostPageFP
     }
 
     @Override
-    protected NewPostPageFPresenterImpl createPresenter() {
-        return new NewPostPageFPresenterImpl();
+    protected BasicInformationFPresenterImpl createPresenter() {
+        return new BasicInformationFPresenterImpl();
     }
 
     @Override
     protected int getLayoutViewId() {
-        return R.layout.fragment_postbar_new_post_page;
+        return R.layout.fragment_personalspace_basic_information;
     }
 
     @Override
