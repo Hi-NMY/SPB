@@ -1,9 +1,11 @@
 package com.example.spb.view.Component;
 
+import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import androidx.annotation.ColorInt;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPFragment;
@@ -227,6 +229,11 @@ public class FragmentSpbAvtivityBar extends BaseMVPFragment<ISpbAvtivityBarFView
     @Override
     public void setBarBackground(int color) {
         mSpbActivityBar.setBackground(MyApplication.getContext().getDrawable(color));
+    }
+
+    @Override
+    public void setBarBackgroundcolor(int color) {
+        mSpbActivityBar.setBackgroundColor(color);
     }
 
     public interface OnMyClick {

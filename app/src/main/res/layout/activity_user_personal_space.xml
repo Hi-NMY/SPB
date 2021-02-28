@@ -1,98 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.scwang.smart.refresh.layout.SmartRefreshLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/personalspace_R_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/enterbg"
         tools:context=".view.activity.PersonalSpace">
 
-    <ImageView
-            android:background="@drawable/left_return"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/personalspace_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/homespace_appbarlayout"
-                android:background="@color/TransColor"
+        <RelativeLayout
+                android:layout_marginTop="@dimen/margin_32"
+                android:minHeight="@dimen/icon_image_64"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <com.google.android.material.appbar.CollapsingToolbarLayout
-                    android:id="@+id/postbar_collapsinglayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    app:contentScrim="@color/beijing"
-                    app:collapsedTitleGravity="left"
-                    app:expandedTitleGravity="left|bottom"
-                    app:expandedTitleMarginBottom="10dp"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                    app:titleEnabled="false">
+            <pl.droidsonroids.gif.GifImageView
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/loading2"
+                    android:layout_width="@dimen/icon_image_32"
+                    android:layout_height="@dimen/icon_image_32"
+                    />
+        </RelativeLayout>
 
-                <androidx.appcompat.widget.Toolbar
-                        android:id="@+id/mySpace_Toolbar"
-                        android:layout_marginTop="@dimen/StatusBar_height"
-                        android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize"
-                        android:minHeight="?attr/actionBarSize"
-                        app:layout_collapseMode="pin"
-                        app:title="@null">
-
-                    <ImageView
-                            android:id="@+id/mySpace_Toolbar_FanHui"
-                            android:background="@drawable/left_return"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"/>
-
-                </androidx.appcompat.widget.Toolbar>
-
-                <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/item_video_user_headimg"
-                        android:layout_marginTop="100dp"
-                        android:layout_marginHorizontal="@dimen/margin_12"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/enterbg"
-                        android:layout_width="@dimen/icon_image_40"
-                        android:layout_height="@dimen/icon_image_40"
-                        app:riv_corner_radius="@dimen/corner_16"
-                        app:riv_oval="true"/>
-            </com.google.android.material.appbar.CollapsingToolbarLayout>
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <androidx.core.widget.NestedScrollView
-                android:id="@+id/personalspace_scrollview"
-                android:fillViewport="true"
-                android:background="@drawable/very_bg"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:clipChildren="false"
+                android:clipToPadding="false"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            <RelativeLayout
+
+
+                <com.google.android.material.appbar.AppBarLayout
+                        android:id="@+id/personalspace_appbarlayout"
+                        android:background="@color/TransColor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    <com.google.android.material.appbar.CollapsingToolbarLayout
+                            android:id="@+id/personalspace_collapsinglayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="250dp"
+                            app:collapsedTitleGravity="left"
+                            app:expandedTitleGravity="left|bottom"
+                            app:expandedTitleMarginBottom="10dp"
+                            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                            app:titleEnabled="false">
+
+                        <androidx.appcompat.widget.Toolbar
+                                android:id="@+id/personalspace_Toolbar"
+                                android:layout_marginTop="@dimen/StatusBar_height"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/spb_activity_bar_44"
+                                android:minHeight="?attr/actionBarSize"
+                                android:background="@color/beijing"
+                                android:alpha="0"
+                                app:layout_collapseMode="pin"
+                                app:title="@null">
+                        </androidx.appcompat.widget.Toolbar>
+
+                    </com.google.android.material.appbar.CollapsingToolbarLayout>
+                </com.google.android.material.appbar.AppBarLayout>
+                <androidx.core.widget.NestedScrollView
+                    android:id="@+id/personalspace_scrollview"
+                    android:fillViewport="true"
+                    android:background="@drawable/very_bg"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                 <RelativeLayout
-                        android:id="@+id/r"
-                        android:paddingTop="@dimen/StatusBar_height"
+                        android:clipChildren="false"
+                        android:clipToPadding="false"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                    <net.lucode.hackware.magicindicator.MagicIndicator
-                            android:id="@+id/personalspace_idt"
-                            android:paddingLeft="@dimen/margin_12"
+                        android:layout_height="match_parent">
+                    <RelativeLayout
+                            android:id="@+id/r"
+                            android:layout_marginTop="-25dp"
+                            android:background="@drawable/very_bg"
+                            android:paddingTop="@dimen/StatusBar_height"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp" />
+                            android:layout_height="wrap_content">
+                        <net.lucode.hackware.magicindicator.MagicIndicator
+                                android:id="@+id/personalspace_idt"
+                                android:paddingLeft="@dimen/margin_12"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp" />
+                    </RelativeLayout>
+
+                    <androidx.viewpager.widget.ViewPager
+                            android:id="@+id/personalspace_viewpager"
+                            android:layout_below="@id/r"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
                 </RelativeLayout>
 
-                <androidx.viewpager.widget.ViewPager
-                        android:id="@+id/personalspace_viewpager"
-                        android:layout_below="@id/r"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-            </RelativeLayout>
-        </androidx.core.widget.NestedScrollView>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-</com.scwang.smart.refresh.layout.SmartRefreshLayout>
+            </androidx.core.widget.NestedScrollView>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+    <RelativeLayout
+            android:id="@+id/personalspace_bar_R"
+            android:paddingTop="@dimen/StatusBar_height"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <fragment
+                android:id="@+id/personalspace_bar"
+                android:name="com.example.spb.view.Component.FragmentSpbAvtivityBar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spb_activity_bar_44"/>
+    </RelativeLayout>
+</RelativeLayout>

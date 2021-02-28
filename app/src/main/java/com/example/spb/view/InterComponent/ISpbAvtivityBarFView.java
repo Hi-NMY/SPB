@@ -45,4 +45,6 @@ public interface ISpbAvtivityBarFView {
 
     public void setBarBackground(int color);
 
+    public void setBarBackgroundcolor(int color);
+
 }

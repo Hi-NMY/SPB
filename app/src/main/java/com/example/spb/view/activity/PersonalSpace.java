@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.ScrollView;
+import android.widget.RelativeLayout;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -15,10 +16,13 @@ import com.example.spb.R;
 import com.example.spb.adapter.FragmentViewPageAdapter;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.UserPersonalSpaceAPresenterImpl;
+import com.example.spb.view.Component.FragmentSpbAvtivityBar;
 import com.example.spb.view.fragment.personalspace.BasicInformation;
 import com.example.spb.view.fragment.personalspace.PersonalPostBar;
 import com.example.spb.view.inter.IUserPersonalSpaceAView;
+import com.example.spb.view.littlefun.JumpIntent;
 import com.example.spb.view.littlefun.ScaleTransitionPagerTitleView;
+import com.google.android.material.appbar.AppBarLayout;
 import com.gyf.immersionbar.ImmersionBar;
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -47,6 +51,12 @@ public class PersonalSpace extends BaseMVPActivity<IUserPersonalSpaceAView, User
     private ViewPager mPersonalspaceViewpager;
     private NestedScrollView mPersonalspaceScrollview;
 
+    private String USERNAME = "";
+
+    private FragmentSpbAvtivityBar bar;
+    private AppBarLayout mPersonalspaceAppbarlayout;
+    private RelativeLayout mPersonalspaceBarR;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +75,11 @@ public class PersonalSpace extends BaseMVPActivity<IUserPersonalSpaceAView, User
         setBar();
         mPersonalspaceIdt = (MagicIndicator) findViewById(R.id.personalspace_idt);
         mPersonalspaceViewpager = (ViewPager) findViewById(R.id.personalspace_viewpager);
-        mPersonalspaceScrollview = (NestedScrollView)findViewById(R.id.personalspace_scrollview);
-        mPersonalspaceScrollview.bringToFront();
+        mPersonalspaceScrollview = (NestedScrollView) findViewById(R.id.personalspace_scrollview);
+        mPersonalspaceAppbarlayout = (AppBarLayout) findViewById(R.id.personalspace_appbarlayout);
+        mPersonalspaceBarR = (RelativeLayout) findViewById(R.id.personalspace_bar_R);
         intFollowViewPager();
+        setActivityBar();
         setMyListener();
     }
 
@@ -133,6 +145,27 @@ public class PersonalSpace extends BaseMVPActivity<IUserPersonalSpaceAView, User
         mPersonalspaceViewpager.setCurrentItem(1);
     }
 
+    private AppBarLayout.OnOffsetChangedListener listenViewMove() {
+        AppBarLayout.OnOffsetChangedListener onOffsetChangedListener = new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+                int persent = -i*2/3;
+                if (persent > 255) {
+                    persent = 255;
+                    bar.barCentralTxt(USERNAME, new FragmentSpbAvtivityBar.OnMyClick() {
+                        @Override
+                        public void onClick() {
+                            mPersonalspaceAppbarlayout.setExpanded(true);
+                        }
+                    });
+                }
+                int color = Color.argb(persent, 249, 249, 249);
+                mPersonalspaceBarR.setBackgroundColor(color);
+            }
+        };
+        return onOffsetChangedListener;
+    }
+
     @Override
     public <T> T request(int requestFlag) {
         return null;
@@ -160,7 +193,7 @@ public class PersonalSpace extends BaseMVPActivity<IUserPersonalSpaceAView, User
 
     @Override
     public void setMyListener() {
-
+        mPersonalspaceAppbarlayout.addOnOffsetChangedListener(listenViewMove());
     }
 
     @Override
@@ -172,7 +205,14 @@ public class PersonalSpace extends BaseMVPActivity<IUserPersonalSpaceAView, User
 
     @Override
     public void setActivityBar() {
-
+        bar = setMyActivityBar(R.id.personalspace_bar);
+        bar.setBarBackground(R.color.picture_color_transparent);
+        bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
+            @Override
+            public void onClick() {
+                finish();
+            }
+        });
     }
 
     @Override
