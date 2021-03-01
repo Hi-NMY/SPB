@@ -44,7 +44,7 @@
                     <com.google.android.material.appbar.CollapsingToolbarLayout
                             android:id="@+id/personalspace_collapsinglayout"
                             android:layout_width="match_parent"
-                            android:layout_height="250dp"
+                            android:layout_height="320dp"
                             app:collapsedTitleGravity="left"
                             app:expandedTitleGravity="left|bottom"
                             app:expandedTitleMarginBottom="10dp"
@@ -80,6 +80,160 @@
                         android:clipToPadding="false"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                            android:id="@+id/personalspace_user_headimg"
+                            android:layout_marginLeft="@dimen/margin_32"
+                            android:layout_marginRight="@dimen/margin_20"
+                            android:layout_marginTop="-120dp"
+                            android:layout_alignTop="@+id/l"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/enterbg"
+                            android:layout_width="@dimen/icon_image_64"
+                            android:layout_height="@dimen/icon_image_64"
+                            app:riv_corner_radius="@dimen/corner_16"
+                            app:riv_oval="true"/>
+
+                    <TextView
+                            android:id="@+id/personalspace_username"
+                            android:layout_marginTop="@dimen/margin_8"
+                            android:layout_alignTop="@id/personalspace_user_headimg"
+                            android:layout_toRightOf="@id/personalspace_user_headimg"
+                            android:textSize="@dimen/font_18"
+                            android:textStyle="bold"
+                            android:textColor="@color/beijing"
+                            android:text="撒大声地"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <ImageView
+                            android:id="@+id/personalspace_usersex"
+                            android:src="@drawable/icon_boy"
+                            android:scaleType="centerCrop"
+                            android:layout_alignBottom="@id/personalspace_username"
+                            android:layout_alignTop="@id/personalspace_username"
+                            android:layout_toRightOf="@id/personalspace_username"
+                            android:layout_width="@dimen/icon_image_32"
+                            android:layout_height="@dimen/icon_image_32"/>
+
+                    <ImageView
+                            android:id="@+id/personalspace_userbadge"
+                            android:src="@drawable/icon_girl"
+                            android:scaleType="centerCrop"
+                            android:layout_alignBottom="@id/personalspace_usersex"
+                            android:layout_alignTop="@id/personalspace_usersex"
+                            android:layout_toRightOf="@id/personalspace_usersex"
+                            android:layout_width="@dimen/icon_image_32"
+                            android:layout_height="@dimen/icon_image_32"/>
+
+                    <TextView
+                            android:id="@+id/personalspace_usersign"
+                            android:layout_toRightOf="@id/personalspace_user_headimg"
+                            android:layout_alignBottom="@id/personalspace_user_headimg"
+                            android:textSize="@dimen/font_16"
+                            android:textColor="@color/lightgrey"
+                            android:text="这个人很懒，什么也没写~"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <LinearLayout
+                            android:id="@+id/l"
+                            android:layout_marginTop="-44dp"
+                            android:layout_alignTop="@+id/r"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/icon_image_44">
+
+                        <RelativeLayout
+                                android:id="@+id/r1"
+                                android:layout_weight="1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent">
+
+                            <TextView
+                                    android:id="@+id/personalspace_userattention_num"
+                                    android:layout_centerHorizontal="true"
+                                    android:translationX="-16dp"
+                                    android:textColor="@color/beijing"
+                                    android:textSize="@dimen/font_20"
+                                    android:textStyle="bold"
+                                    android:text="23"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+
+                            <TextView
+                                    android:id="@+id/text"
+                                    android:translationX="-16dp"
+                                    android:layout_marginLeft="@dimen/margin_2"
+                                    android:layout_toRightOf="@+id/personalspace_userattention_num"
+                                    android:layout_alignBottom="@+id/personalspace_userattention_num"
+                                    android:layout_centerHorizontal="true"
+                                    android:textColor="@color/beijing"
+                                    android:textSize="@dimen/font_16"
+                                    android:text="关注"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+
+                        </RelativeLayout>
+                        <RelativeLayout
+                                android:id="@+id/r2"
+                                android:layout_weight="1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                            <TextView
+                                    android:id="@+id/personalspace_userfans_num"
+                                    android:layout_centerHorizontal="true"
+                                    android:translationX="-16dp"
+                                    android:textColor="@color/beijing"
+                                    android:textSize="@dimen/font_20"
+                                    android:textStyle="bold"
+                                    android:text="23"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+
+                            <TextView
+                                    android:id="@+id/text2"
+                                    android:translationX="-16dp"
+                                    android:layout_marginLeft="@dimen/margin_2"
+                                    android:layout_toRightOf="@+id/personalspace_userfans_num"
+                                    android:layout_alignBottom="@+id/personalspace_userfans_num"
+                                    android:layout_centerHorizontal="true"
+                                    android:textColor="@color/beijing"
+                                    android:textSize="@dimen/font_16"
+                                    android:text="粉丝"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+
+                        </RelativeLayout>
+                        <RelativeLayout
+                                android:id="@+id/r3"
+                                android:layout_weight="1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                            <TextView
+                                    android:id="@+id/personalspace_usertopic_num"
+                                    android:layout_centerHorizontal="true"
+                                    android:translationX="-16dp"
+                                    android:textColor="@color/beijing"
+                                    android:textSize="@dimen/font_20"
+                                    android:textStyle="bold"
+                                    android:text="23"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+
+                            <TextView
+                                    android:id="@+id/text3"
+                                    android:layout_marginLeft="@dimen/margin_2"
+                                    android:translationX="-16dp"
+                                    android:layout_toRightOf="@+id/personalspace_usertopic_num"
+                                    android:layout_alignBottom="@+id/personalspace_usertopic_num"
+                                    android:layout_centerHorizontal="true"
+                                    android:textColor="@color/beijing"
+                                    android:textSize="@dimen/font_16"
+                                    android:text="话题"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                        </RelativeLayout>
+                    </LinearLayout>
                     <RelativeLayout
                             android:id="@+id/r"
                             android:layout_marginTop="-25dp"
@@ -100,7 +254,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"/>
                 </RelativeLayout>
-
             </androidx.core.widget.NestedScrollView>
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>

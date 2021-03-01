@@ -24,6 +24,16 @@
     <dimen name="margin_28">28dp</dimen>
     <dimen name="margin_32">32dp</dimen>
 
+    <dimen name="margin__2">-2dp</dimen>
+    <dimen name="margin__4">-4dp</dimen>
+    <dimen name="margin__8">-8dp</dimen>
+    <dimen name="margin__12">-12dp</dimen>
+    <dimen name="margin__16">-16dp</dimen>
+    <dimen name="margin__20">-20dp</dimen>
+    <dimen name="margin__24">-24dp</dimen>
+    <dimen name="margin__28">-28dp</dimen>
+    <dimen name="margin__32">-32dp</dimen>
+
     <dimen name="font_10">10sp</dimen>
     <dimen name="font_12">12sp</dimen>
     <dimen name="font_14">14sp</dimen>

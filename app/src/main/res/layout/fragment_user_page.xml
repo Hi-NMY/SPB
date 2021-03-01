@@ -31,8 +31,8 @@
                     android:layout_margin="@dimen/margin_16"
                     android:scaleType="centerCrop"
                     android:src="@drawable/enterbg"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                    android:layout_width="@dimen/icon_image_64"
+                    android:layout_height="@dimen/icon_image_64"
                     app:riv_corner_radius="360dp"
                     app:riv_oval="true"/>
 
@@ -41,7 +41,7 @@
                         android:layout_marginTop="@dimen/margin_8"
                         android:layout_alignTop="@id/user_page_user_headimg"
                         android:layout_toRightOf="@id/user_page_user_headimg"
-                        android:textSize="@dimen/font_16"
+                        android:textSize="@dimen/font_18"
                         android:textStyle="bold"
                         android:textColor="@color/black"
                         android:text="撒大声地"
@@ -91,23 +91,12 @@
                         android:layout_height="wrap_content"/>
 
                 <TextView
-                        android:id="@+id/txt3"
-                        android:layout_marginBottom="@dimen/margin_8"
-                        android:layout_toRightOf="@id/user_page_user_headimg"
-                        android:layout_alignBottom="@id/user_page_user_headimg"
-                        android:textSize="@dimen/font_14"
-                        android:textColor="@color/qihei"
-                        android:text="关注"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                <TextView
                         android:id="@+id/user_page_useronlineday"
-                        android:layout_marginHorizontal="@dimen/margin_12"
+                        android:layout_marginHorizontal="@dimen/margin_8"
                         android:layout_marginVertical="@dimen/margin_20"
                         android:layout_below="@id/user_page_user_headimg"
                         android:layout_alignLeft="@id/user_page_user_headimg"
-                        android:textSize="@dimen/font_16"
+                        android:textSize="@dimen/font_18"
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:text="2345天"
@@ -131,7 +120,7 @@
                         android:layout_alignRight="@id/t1"
                         android:layout_below="@id/user_page_user_headimg"
                         android:gravity="center"
-                        android:textSize="@dimen/font_16"
+                        android:textSize="@dimen/font_18"
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:text="38"
@@ -140,12 +129,12 @@
 
                 <TextView
                         android:id="@+id/t1"
-                        android:layout_marginHorizontal="@dimen/margin_20"
+                        android:layout_marginHorizontal="@dimen/margin_16"
                         android:layout_marginTop="@dimen/margin_4"
                         android:layout_marginBottom="@dimen/margin_16"
                         android:layout_toRightOf="@id/user_page_useronlineday"
                         android:layout_below="@id/user_page_postbarnum"
-                        android:textSize="@dimen/font_12"
+                        android:textSize="@dimen/font_14"
                         android:textColor="@color/qihei"
                         android:text="我的帖子"
                         android:layout_width="wrap_content"
@@ -158,7 +147,7 @@
                         android:layout_alignRight="@id/t2"
                         android:layout_below="@id/user_page_user_headimg"
                         android:gravity="center"
-                        android:textSize="@dimen/font_16"
+                        android:textSize="@dimen/font_18"
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:text="38"
@@ -167,12 +156,12 @@
 
                 <TextView
                         android:id="@+id/t2"
-                        android:layout_marginHorizontal="@dimen/margin_20"
+                        android:layout_marginHorizontal="@dimen/margin_16"
                         android:layout_marginTop="@dimen/margin_4"
                         android:layout_marginBottom="@dimen/margin_16"
                         android:layout_toRightOf="@id/t1"
                         android:layout_below="@id/user_page_postbarnum"
-                        android:textSize="@dimen/font_12"
+                        android:textSize="@dimen/font_14"
                         android:textColor="@color/qihei"
                         android:text="我的收藏"
                         android:layout_width="wrap_content"
@@ -185,7 +174,7 @@
                         android:layout_alignRight="@id/t3"
                         android:layout_below="@id/user_page_user_headimg"
                         android:gravity="center"
-                        android:textSize="@dimen/font_16"
+                        android:textSize="@dimen/font_18"
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:text="38"
@@ -194,12 +183,12 @@
 
                 <TextView
                         android:id="@+id/t3"
-                        android:layout_marginHorizontal="@dimen/margin_20"
+                        android:layout_marginHorizontal="@dimen/margin_16"
                         android:layout_marginTop="@dimen/margin_4"
                         android:layout_marginBottom="@dimen/margin_16"
                         android:layout_toRightOf="@id/t2"
                         android:layout_below="@id/user_page_postbarnum"
-                        android:textSize="@dimen/font_12"
+                        android:textSize="@dimen/font_14"
                         android:textColor="@color/qihei"
                         android:text="关注的话题"
                         android:layout_width="wrap_content"
@@ -235,99 +224,114 @@
                         android:text="常用功能"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
-
-                <RelativeLayout
+                <LinearLayout
                         android:layout_marginBottom="@dimen/margin_16"
                         android:layout_marginTop="@dimen/margin_4"
                         android:layout_centerHorizontal="true"
                         android:layout_below="@+id/ct"
+                        android:orientation="horizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
-
-                    <ImageView
-                            android:id="@+id/user_page_commonfun_edu"
-                            android:layout_marginVertical="@dimen/margin_8"
-                            android:layout_marginHorizontal="@dimen/margin_28"
-                            android:background="@drawable/icon_educational"
-                            android:layout_width="@dimen/icon_image_32"
-                            android:layout_height="@dimen/icon_image_32"/>
-
-                    <TextView
-                            android:layout_below="@id/user_page_commonfun_edu"
-                            android:text="校网"
-                            android:textColor="@color/qihei"
-                            android:textSize="@dimen/font_12"
-                            android:gravity="center"
-                            android:layout_alignLeft="@id/user_page_commonfun_edu"
-                            android:layout_alignRight="@id/user_page_commonfun_edu"
-                            android:layout_marginTop="@dimen/margin_4"
+                    <RelativeLayout
+                            android:id="@+id/r1"
+                            android:layout_weight="1"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                    <ImageView
-                            android:id="@+id/user_page_commonfun_sch"
-                            android:layout_toRightOf="@id/user_page_commonfun_edu"
-                            android:layout_marginVertical="@dimen/margin_8"
-                            android:layout_marginHorizontal="@dimen/margin_28"
-                            android:background="@drawable/icon_schedule"
-                            android:layout_width="@dimen/icon_image_32"
-                            android:layout_height="@dimen/icon_image_32"/>
-
-                    <TextView
-                            android:layout_below="@id/user_page_commonfun_sch"
-                            android:text="课程"
-                            android:textColor="@color/qihei"
-                            android:textSize="@dimen/font_12"
-                            android:gravity="center"
-                            android:layout_alignLeft="@id/user_page_commonfun_sch"
-                            android:layout_alignRight="@id/user_page_commonfun_sch"
-                            android:layout_marginTop="@dimen/margin_4"
+                            android:layout_height="wrap_content">
+                        <ImageView
+                                android:id="@+id/user_page_commonfun_edu"
+                                android:layout_marginVertical="@dimen/margin_8"
+                                android:layout_marginHorizontal="@dimen/margin_28"
+                                android:background="@drawable/icon_educational"
+                                android:layout_width="@dimen/icon_image_32"
+                                android:layout_height="@dimen/icon_image_32"/>
+                        <TextView
+                                android:layout_below="@id/user_page_commonfun_edu"
+                                android:text="校网"
+                                android:textColor="@color/qihei"
+                                android:textSize="@dimen/font_12"
+                                android:gravity="center"
+                                android:layout_alignLeft="@id/user_page_commonfun_edu"
+                                android:layout_alignRight="@id/user_page_commonfun_edu"
+                                android:layout_marginTop="@dimen/margin_4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                    </RelativeLayout>
+                    <RelativeLayout
+                            android:id="@+id/r2"
+                            android:layout_weight="1"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content">
+                        <ImageView
+                                android:id="@+id/user_page_commonfun_sch"
+                                android:layout_marginVertical="@dimen/margin_8"
+                                android:layout_marginHorizontal="@dimen/margin_28"
+                                android:background="@drawable/icon_schedule"
+                                android:layout_width="@dimen/icon_image_32"
+                                android:layout_height="@dimen/icon_image_32"/>
 
-                    <ImageView
-                            android:id="@+id/user_page_commonfun_dia"
-                            android:layout_toRightOf="@id/user_page_commonfun_sch"
-                            android:layout_marginVertical="@dimen/margin_8"
-                            android:layout_marginHorizontal="@dimen/margin_28"
-                            android:background="@drawable/icon_diary"
-                            android:layout_width="@dimen/icon_image_32"
-                            android:layout_height="@dimen/icon_image_32"/>
+                        <TextView
+                                android:layout_below="@id/user_page_commonfun_sch"
+                                android:text="课程"
+                                android:textColor="@color/qihei"
+                                android:textSize="@dimen/font_12"
+                                android:gravity="center"
+                                android:layout_alignLeft="@id/user_page_commonfun_sch"
+                                android:layout_alignRight="@id/user_page_commonfun_sch"
+                                android:layout_marginTop="@dimen/margin_4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
 
-                    <TextView
-                            android:layout_below="@id/user_page_commonfun_dia"
-                            android:text="日记"
-                            android:textColor="@color/qihei"
-                            android:textSize="@dimen/font_12"
-                            android:gravity="center"
-                            android:layout_alignLeft="@id/user_page_commonfun_dia"
-                            android:layout_alignRight="@id/user_page_commonfun_dia"
-                            android:layout_marginTop="@dimen/margin_4"
+                    </RelativeLayout>
+                    <RelativeLayout
+                            android:id="@+id/r3"
+                            android:layout_weight="1"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content">
+                        <ImageView
+                                android:id="@+id/user_page_commonfun_dia"
+                                android:layout_marginVertical="@dimen/margin_8"
+                                android:layout_marginHorizontal="@dimen/margin_28"
+                                android:background="@drawable/icon_diary"
+                                android:layout_width="@dimen/icon_image_32"
+                                android:layout_height="@dimen/icon_image_32"/>
 
-                    <ImageView
-                            android:id="@+id/user_page_commonfun_shop"
-                            android:layout_toRightOf="@id/user_page_commonfun_dia"
-                            android:layout_marginVertical="@dimen/margin_8"
-                            android:layout_marginHorizontal="@dimen/margin_28"
-                            android:background="@drawable/icon_shop"
-                            android:layout_width="@dimen/icon_image_32"
-                            android:layout_height="@dimen/icon_image_32"/>
-
-                    <TextView
-                            android:layout_below="@id/user_page_commonfun_shop"
-                            android:text="二手"
-                            android:textColor="@color/qihei"
-                            android:textSize="@dimen/font_12"
-                            android:gravity="center"
-                            android:layout_alignLeft="@id/user_page_commonfun_shop"
-                            android:layout_alignRight="@id/user_page_commonfun_shop"
-                            android:layout_marginTop="@dimen/margin_4"
+                        <TextView
+                                android:layout_below="@id/user_page_commonfun_dia"
+                                android:text="日记"
+                                android:textColor="@color/qihei"
+                                android:textSize="@dimen/font_12"
+                                android:gravity="center"
+                                android:layout_alignLeft="@id/user_page_commonfun_dia"
+                                android:layout_alignRight="@id/user_page_commonfun_dia"
+                                android:layout_marginTop="@dimen/margin_4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                    </RelativeLayout>
+                    <RelativeLayout
+                            android:id="@+id/r4"
+                            android:layout_weight="1"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                </RelativeLayout>
+                            android:layout_height="wrap_content">
+                        <ImageView
+                                android:id="@+id/user_page_commonfun_shop"
+                                android:layout_marginVertical="@dimen/margin_8"
+                                android:layout_marginHorizontal="@dimen/margin_28"
+                                android:background="@drawable/icon_shop"
+                                android:layout_width="@dimen/icon_image_32"
+                                android:layout_height="@dimen/icon_image_32"/>
+                        <TextView
+                                android:layout_below="@id/user_page_commonfun_shop"
+                                android:text="二手"
+                                android:textColor="@color/qihei"
+                                android:textSize="@dimen/font_12"
+                                android:gravity="center"
+                                android:layout_alignLeft="@id/user_page_commonfun_shop"
+                                android:layout_alignRight="@id/user_page_commonfun_shop"
+                                android:layout_marginTop="@dimen/margin_4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                    </RelativeLayout>
+                </LinearLayout>
             </RelativeLayout>
 
             <RelativeLayout
