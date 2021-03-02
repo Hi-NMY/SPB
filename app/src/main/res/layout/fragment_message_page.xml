@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -8,18 +8,65 @@
         android:background="@color/beijing"
         tools:context=".view.fragment.homepage.messagepage.MessagePage">
 
-    <TextView
-            android:id="@+id/text_notifications"
-            android:text="3"
+    <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="120dp">
+        <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/messagepage_notice"
+                    app:riv_corner_radius="@dimen/corner_16"
+                    android:translationX="@dimen/margin_20"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/icon_notice"
+                    android:layout_width="@dimen/icon_image_44"
+                    android:layout_height="@dimen/icon_image_44"/>
+
+            <TextView
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:layout_below="@id/messagepage_notice"
+                    android:gravity="center"
+                    android:translationX="@dimen/margin_20"
+                    android:textSize="@dimen/font_14"
+                    android:textColor="@color/qihei"
+                    android:text="通知"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/messagepage_friend"
+                    app:riv_corner_radius="@dimen/corner_16"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:layout_centerHorizontal="true"
+                    android:translationX="@dimen/margin__20"
+                    android:src="@drawable/icon_friend"
+                    android:layout_width="@dimen/icon_image_44"
+                    android:layout_height="@dimen/icon_image_44"/>
+
+            <TextView
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:layout_below="@id/messagepage_friend"
+                    android:gravity="center"
+                    android:translationX="@dimen/margin__20"
+                    android:textSize="@dimen/font_14"
+                    android:textColor="@color/qihei"
+                    android:text="关注/被关注"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

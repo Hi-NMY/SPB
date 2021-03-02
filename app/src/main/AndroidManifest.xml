@@ -1,64 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.example.spb">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.spb" >
 
-    <uses-sdk tools:overrideLibrary="org.litepal"/>
+    <uses-sdk tools:overrideLibrary="org.litepal" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> <!-- 这个权限用于访问GPS定位 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/> <!-- 录音 -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/> <!-- 播音 -->
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" /> <!-- 录音 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 播音 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-            android:name=".app.MyApplication"
-            android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.PersonalSpace">
+        android:name=".app.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme" >
+        <activity android:name=".view.activity.AttentionUserPage" >
         </activity>
-        <activity android:name=".view.activity.PostBarDetailPage">
+        <activity android:name=".view.activity.SetUpPage" >
+        </activity>
+        <activity android:name=".view.activity.ChangeInformationPagePage" >
+        </activity>
+        <activity android:name=".view.activity.PersonalSpacePagePage" >
+        </activity>
+        <activity android:name=".view.activity.PostBarDetailPage" >
         </activity>
         <activity
-                android:name=".view.activity.HomePage"
-                android:label="@string/title_activity_user_home_page">
+            android:name=".view.activity.HomePage"
+            android:label="@string/title_activity_user_home_page" >
         </activity>
-        <activity android:name=".view.activity.UserForgotpasswordPage">
+        <activity android:name=".view.activity.UserForgotpasswordPage" >
         </activity>
         <activity
-                android:name=".view.activity.UserRegisteredPage"
-                android:windowSoftInputMode="stateVisible|adjustResize">
+            android:name=".view.activity.UserRegisteredPage"
+            android:windowSoftInputMode="stateVisible|adjustResize" >
         </activity>
-        <activity android:name=".view.activity.FirstPage">
+        <activity android:name=".view.activity.FirstPage" >
         </activity>
-        <activity android:name=".view.activity.EnterPage">
+        <activity android:name=".view.activity.EnterPage" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- 适配华为（huawei）刘海屏 -->
         <meta-data
-                android:name="android.notch_support"
-                android:value="true"/> <!-- 适配小米（xiaomi）刘海屏 -->
+            android:name="android.notch_support"
+            android:value="true" /> <!-- 适配小米（xiaomi）刘海屏 -->
         <meta-data
-                android:name="notch.config"
-                android:value="portrait|landscape"/>
+            android:name="notch.config"
+            android:value="portrait|landscape" />
     </application>
 
 </manifest>

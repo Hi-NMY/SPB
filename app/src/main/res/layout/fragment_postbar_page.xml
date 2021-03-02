@@ -113,7 +113,7 @@
                     android:id="@+id/postbar_page_idt"
                     android:paddingLeft="@dimen/margin_12"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp" />
+                    android:layout_height="@dimen/icon_image_40" />
 
             <androidx.viewpager.widget.ViewPager
                     android:id="@+id/postbar_page_viewpager"

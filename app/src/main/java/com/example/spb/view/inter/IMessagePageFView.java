@@ -1,6 +1,8 @@
 package com.example.spb.view.inter;
 
-public interface IMessagePageFView {
+import com.example.spb.view.InterTotal.SpbInterOne;
+
+public interface IMessagePageFView extends SpbInterOne {
     //请求标记
     int REQUEST_ONE = 0;
     int REQUEST_TWO = 1;

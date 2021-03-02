@@ -29,7 +29,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_margin="@dimen/margin_12"
                 android:textSize="@dimen/font_14"
-                android:textColor="@color/theme_color2"
+                android:textColor="@color/theme_color"
                 android:text="点我修改资料"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -53,6 +53,7 @@
                     android:id="@+id/basicinformation_online"
                     android:layout_toRightOf="@+id/t1"
                     android:layout_alignTop="@+id/t1"
+                    android:layout_marginLeft="@dimen/margin_12"
                     android:textSize="@dimen/font_16"
                     android:textColor="@color/qihei"
                     android:text="326天"
@@ -80,6 +81,7 @@
                     android:layout_toRightOf="@+id/t2"
                     android:layout_alignTop="@+id/t2"
                     android:textSize="@dimen/font_16"
+                    android:layout_marginLeft="@dimen/margin_12"
                     android:textColor="@color/qihei"
                     android:text="2021年03月01日"
                     android:layout_width="wrap_content"
@@ -105,6 +107,7 @@
                     android:layout_toRightOf="@+id/t3"
                     android:layout_alignTop="@+id/t3"
                     android:textSize="@dimen/font_16"
+                    android:layout_marginLeft="@dimen/margin_12"
                     android:textColor="@color/qihei"
                     android:text="水瓶座"
                     android:layout_width="wrap_content"
@@ -130,6 +133,7 @@
                     android:layout_toRightOf="@+id/t4"
                     android:layout_alignTop="@+id/t4"
                     android:textSize="@dimen/font_16"
+                    android:layout_marginLeft="@dimen/margin_12"
                     android:textColor="@color/qihei"
                     android:text="干饭"
                     android:layout_width="wrap_content"
@@ -157,37 +161,10 @@
                     android:layout_alignTop="@+id/t5"
                     android:textSize="@dimen/font_16"
                     android:textColor="@color/qihei"
+                    android:layout_marginLeft="@dimen/margin_12"
                     android:text="苏州"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
         </RelativeLayout>
-        <RelativeLayout
-                android:id="@+id/r6"
-                android:layout_below="@id/r5"
-                android:layout_marginVertical="@dimen/margin_12"
-                android:layout_marginHorizontal="@dimen/margin_20"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            <TextView
-                    android:id="@+id/t6"
-                    android:textSize="@dimen/font_16"
-                    android:textColor="@color/grey"
-                    android:text="去过哪里："
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            <TextView
-                    android:id="@+id/basicinformation_tour"
-                    android:layout_toRightOf="@+id/t6"
-                    android:layout_alignTop="@+id/t6"
-                    android:textSize="@dimen/font_16"
-                    android:textColor="@color/qihei"
-                    android:text="苏州"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-        </RelativeLayout>
-
     </RelativeLayout>
-
-
 </RelativeLayout>

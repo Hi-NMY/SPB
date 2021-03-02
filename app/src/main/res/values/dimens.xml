@@ -7,6 +7,7 @@
     <dimen name="spb_activity_bar_48">48dp</dimen>
 
     <dimen name="icon_image_64">64dp</dimen>
+    <dimen name="icon_image_56">56dp</dimen>
     <dimen name="icon_image_44">44dp</dimen>
     <dimen name="icon_image_40">40dp</dimen>
     <dimen name="icon_image_36">36dp</dimen>
@@ -23,6 +24,8 @@
     <dimen name="margin_24">24dp</dimen>
     <dimen name="margin_28">28dp</dimen>
     <dimen name="margin_32">32dp</dimen>
+    <dimen name="margin_40">40dp</dimen>
+    <dimen name="margin_64">64dp</dimen>
 
     <dimen name="margin__2">-2dp</dimen>
     <dimen name="margin__4">-4dp</dimen>

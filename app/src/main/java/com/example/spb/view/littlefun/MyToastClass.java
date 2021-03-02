@@ -16,7 +16,7 @@ public class MyToastClass {
 
     public static void ShowToast(Context context, String value){
         if (view==null){
-            view = LayoutInflater.from(context).inflate(R.layout.toast_mytoast,null);
+            view = LayoutInflater.from(context).inflate(R.layout.other_toast_mytoast,null);
         }
         if (textView==null){
             textView = (TextView)view.findViewById(R.id.ToastText);

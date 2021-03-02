@@ -48,9 +48,12 @@
     <TextView
             android:id="@+id/bar_right_txt1"
             android:visibility="invisible"
+            android:gravity="center"
+            android:layout_alignTop="@id/bar_right_img1"
+            android:layout_alignBottom="@+id/bar_right_img1"
             android:textColor="@color/black"
             android:textSize="@dimen/font_16"
-            android:layout_marginRight="@dimen/margin_16"
+            android:layout_marginRight="@dimen/margin_20"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
@@ -67,6 +70,9 @@
     <TextView
             android:id="@+id/bar_right_txt2"
             android:visibility="invisible"
+            android:gravity="center"
+            android:layout_alignTop="@id/bar_right_img2"
+            android:layout_alignBottom="@+id/bar_right_img2"
             android:textColor="@color/black"
             android:textSize="@dimen/font_16"
             android:layout_toLeftOf="@id/bar_right_img1"

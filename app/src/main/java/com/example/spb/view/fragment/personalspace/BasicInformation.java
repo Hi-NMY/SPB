@@ -2,14 +2,17 @@ package com.example.spb.view.fragment.personalspace;
 
 import android.os.Bundle;
 import android.view.View;
-import androidx.fragment.app.Fragment;
+import android.widget.TextView;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.presenter.impl.BasicInformationFPresenterImpl;
-import com.example.spb.presenter.inter.IBasicInformationFPresenter;
+import com.example.spb.view.activity.ChangeInformationPagePage;
 import com.example.spb.view.inter.IBasicInformationFView;
+import com.example.spb.view.littlefun.JumpIntent;
 
-public class BasicInformation extends BaseMVPFragment<IBasicInformationFView,BasicInformationFPresenterImpl> implements IBasicInformationFView {
+public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, BasicInformationFPresenterImpl> implements IBasicInformationFView, View.OnClickListener {
+
+    private TextView mBasicinformationChange;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,11 +41,51 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView,Bas
 
     @Override
     protected void initFragView(View view) {
-
+        mBasicinformationChange = (TextView)view.findViewById(R.id.basicinformation_change);
+        setMyListener();
     }
 
     @Override
     protected void initData() {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.basicinformation_change:
+                JumpIntent.startMyIntent(ChangeInformationPagePage.class);
+                break;
+        }
+    }
+
+    @Override
+    public void createDialog() {
+
+    }
+
+    @Override
+    public void showDialogS(int i) {
+
+    }
+
+    @Override
+    public void closeDialog(int i) {
+
+    }
+
+    @Override
+    public void setMyListener() {
+        mBasicinformationChange.setOnClickListener(this);
+    }
+
+    @Override
+    public void setBar() {
+
+    }
+
+    @Override
+    public void setActivityBar() {
 
     }
 }

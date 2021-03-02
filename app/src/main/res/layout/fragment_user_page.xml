@@ -92,7 +92,7 @@
 
                 <TextView
                         android:id="@+id/user_page_useronlineday"
-                        android:layout_marginHorizontal="@dimen/margin_8"
+                        android:layout_marginHorizontal="@dimen/margin_12"
                         android:layout_marginVertical="@dimen/margin_20"
                         android:layout_below="@id/user_page_user_headimg"
                         android:layout_alignLeft="@id/user_page_user_headimg"
@@ -240,7 +240,7 @@
                         <ImageView
                                 android:id="@+id/user_page_commonfun_edu"
                                 android:layout_marginVertical="@dimen/margin_8"
-                                android:layout_marginHorizontal="@dimen/margin_28"
+                                android:layout_marginHorizontal="@dimen/margin_24"
                                 android:background="@drawable/icon_educational"
                                 android:layout_width="@dimen/icon_image_32"
                                 android:layout_height="@dimen/icon_image_32"/>
@@ -252,7 +252,7 @@
                                 android:gravity="center"
                                 android:layout_alignLeft="@id/user_page_commonfun_edu"
                                 android:layout_alignRight="@id/user_page_commonfun_edu"
-                                android:layout_marginTop="@dimen/margin_4"
+                                android:layout_marginTop="@dimen/margin_2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
                     </RelativeLayout>
@@ -264,7 +264,7 @@
                         <ImageView
                                 android:id="@+id/user_page_commonfun_sch"
                                 android:layout_marginVertical="@dimen/margin_8"
-                                android:layout_marginHorizontal="@dimen/margin_28"
+                                android:layout_marginHorizontal="@dimen/margin_24"
                                 android:background="@drawable/icon_schedule"
                                 android:layout_width="@dimen/icon_image_32"
                                 android:layout_height="@dimen/icon_image_32"/>
@@ -277,7 +277,7 @@
                                 android:gravity="center"
                                 android:layout_alignLeft="@id/user_page_commonfun_sch"
                                 android:layout_alignRight="@id/user_page_commonfun_sch"
-                                android:layout_marginTop="@dimen/margin_4"
+                                android:layout_marginTop="@dimen/margin_2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
 
@@ -290,7 +290,7 @@
                         <ImageView
                                 android:id="@+id/user_page_commonfun_dia"
                                 android:layout_marginVertical="@dimen/margin_8"
-                                android:layout_marginHorizontal="@dimen/margin_28"
+                                android:layout_marginHorizontal="@dimen/margin_24"
                                 android:background="@drawable/icon_diary"
                                 android:layout_width="@dimen/icon_image_32"
                                 android:layout_height="@dimen/icon_image_32"/>
@@ -303,7 +303,7 @@
                                 android:gravity="center"
                                 android:layout_alignLeft="@id/user_page_commonfun_dia"
                                 android:layout_alignRight="@id/user_page_commonfun_dia"
-                                android:layout_marginTop="@dimen/margin_4"
+                                android:layout_marginTop="@dimen/margin_2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
                     </RelativeLayout>
@@ -315,7 +315,7 @@
                         <ImageView
                                 android:id="@+id/user_page_commonfun_shop"
                                 android:layout_marginVertical="@dimen/margin_8"
-                                android:layout_marginHorizontal="@dimen/margin_28"
+                                android:layout_marginHorizontal="@dimen/margin_24"
                                 android:background="@drawable/icon_shop"
                                 android:layout_width="@dimen/icon_image_32"
                                 android:layout_height="@dimen/icon_image_32"/>
@@ -327,7 +327,7 @@
                                 android:gravity="center"
                                 android:layout_alignLeft="@id/user_page_commonfun_shop"
                                 android:layout_alignRight="@id/user_page_commonfun_shop"
-                                android:layout_marginTop="@dimen/margin_4"
+                                android:layout_marginTop="@dimen/margin_2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
                     </RelativeLayout>

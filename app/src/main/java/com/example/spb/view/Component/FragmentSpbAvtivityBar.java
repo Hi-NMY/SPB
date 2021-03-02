@@ -67,6 +67,38 @@ public class FragmentSpbAvtivityBar extends BaseMVPFragment<ISpbAvtivityBarFView
         mSignRlt = (RelativeLayout)view.findViewById(R.id.sign_rlt);
     }
 
+    public ImageView getmBarLeftImg() {
+        return mBarLeftImg;
+    }
+
+    public TextView getmBarLeftTxt() {
+        return mBarLeftTxt;
+    }
+
+    public ImageView getmBarRightImg1() {
+        return mBarRightImg1;
+    }
+
+    public View getmBarNewnoticeView() {
+        return mBarNewnoticeView;
+    }
+
+    public TextView getmBarRightTxt1() {
+        return mBarRightTxt1;
+    }
+
+    public ImageView getmBarRightImg2() {
+        return mBarRightImg2;
+    }
+
+    public TextView getmBarRightTxt2() {
+        return mBarRightTxt2;
+    }
+
+    public TextView getmBarCentralTxt() {
+        return mBarCentralTxt;
+    }
+
     @Override
     protected void initData() {
 

@@ -20,6 +20,7 @@ import com.example.spb.view.fragment.homepage.postbarpage.PostBarPage;
 import com.example.spb.view.fragment.homepage.userpage.UserPage;
 import com.example.spb.view.fragment.homepage.videopage.VideoPage;
 import com.example.spb.view.inter.IUserHomePageAView;
+import com.example.spb.view.littlefun.JumpIntent;
 import com.example.spb.view.littlefun.MyToastClass;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gyf.immersionbar.ImmersionBar;
@@ -297,7 +298,7 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
                 bar.barRightImg1(R.drawable.install_icon, new FragmentSpbAvtivityBar.OnMyClick() {
                     @Override
                     public void onClick() {
-
+                        JumpIntent.startMyIntent(SetUpPage.class);
                     }
                 });
                 bar.barRightImg2(R.drawable.scancode_icon, new FragmentSpbAvtivityBar.OnMyClick() {

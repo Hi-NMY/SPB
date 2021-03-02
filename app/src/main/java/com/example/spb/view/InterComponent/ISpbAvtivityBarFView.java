@@ -1,6 +1,8 @@
 package com.example.spb.view.InterComponent;
 
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
 
 public interface ISpbAvtivityBarFView {
@@ -16,6 +18,22 @@ public interface ISpbAvtivityBarFView {
     <T> T request(int requestFlag);
 
     <T> void response(T response, int responseFlag);
+
+    public ImageView getmBarLeftImg();
+
+    public TextView getmBarLeftTxt() ;
+
+    public ImageView getmBarRightImg1() ;
+
+    public View getmBarNewnoticeView();
+
+    public TextView getmBarRightTxt1();
+
+    public ImageView getmBarRightImg2();
+
+    public TextView getmBarRightTxt2();
+
+    public TextView getmBarCentralTxt();
 
     public void barLeftImg(int imgPath, FragmentSpbAvtivityBar.OnMyClick onMyClick);
 

@@ -6,9 +6,15 @@ import androidx.annotation.Nullable;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.presenter.impl.MessagePageFPresenterImpl;
+import com.example.spb.view.activity.AttentionUserPage;
 import com.example.spb.view.inter.IMessagePageFView;
+import com.example.spb.view.littlefun.JumpIntent;
+import com.makeramen.roundedimageview.RoundedImageView;
 
-public class MessagePage extends BaseMVPFragment<IMessagePageFView,MessagePageFPresenterImpl> implements IMessagePageFView {
+public class MessagePage extends BaseMVPFragment<IMessagePageFView, MessagePageFPresenterImpl> implements IMessagePageFView, View.OnClickListener {
+
+    private RoundedImageView mMessagepageNotice;
+    private RoundedImageView mMessagepageFriend;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,7 +33,9 @@ public class MessagePage extends BaseMVPFragment<IMessagePageFView,MessagePageFP
 
     @Override
     protected void initFragView(View view) {
-
+        mMessagepageNotice = (RoundedImageView)view.findViewById(R.id.messagepage_notice);
+        mMessagepageFriend = (RoundedImageView)view.findViewById(R.id.messagepage_friend);
+        setMyListener();
     }
 
     @Override
@@ -42,6 +50,49 @@ public class MessagePage extends BaseMVPFragment<IMessagePageFView,MessagePageFP
 
     @Override
     public <T> void response(T response, int responseFlag) {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.messagepage_notice:
+
+                break;
+            case R.id.messagepage_friend:
+                JumpIntent.startMyIntent(AttentionUserPage.class);
+                break;
+        }
+    }
+
+    @Override
+    public void createDialog() {
+
+    }
+
+    @Override
+    public void showDialogS(int i) {
+
+    }
+
+    @Override
+    public void closeDialog(int i) {
+
+    }
+
+    @Override
+    public void setMyListener() {
+        mMessagepageNotice.setOnClickListener(this);
+        mMessagepageFriend.setOnClickListener(this);
+    }
+
+    @Override
+    public void setBar() {
+
+    }
+
+    @Override
+    public void setActivityBar() {
 
     }
 }

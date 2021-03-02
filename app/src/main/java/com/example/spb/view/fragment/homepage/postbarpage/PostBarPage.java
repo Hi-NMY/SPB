@@ -175,7 +175,7 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
                 badgePagerTitleView.setInnerPagerTitleView(simplePagerTitleView);
 
                 if (index == 0) {
-                    ImageView badgeImageView = (ImageView) LayoutInflater.from(context).inflate(R.layout.simple_red_dot, null);
+                    ImageView badgeImageView = (ImageView) LayoutInflater.from(context).inflate(R.layout.other_simple_red_dot, null);
                     badgePagerTitleView.setBadgeView(badgeImageView);
                     badgePagerTitleView.setXBadgeRule(new BadgeRule(BadgeAnchor.CONTENT_RIGHT, -UIUtil.dip2px(context, 6)));
                     badgePagerTitleView.setYBadgeRule(new BadgeRule(BadgeAnchor.CONTENT_TOP, 0));
