@@ -7,6 +7,7 @@ import com.example.spb.R;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.presenter.impl.MessagePageFPresenterImpl;
 import com.example.spb.view.activity.AttentionUserPage;
+import com.example.spb.view.activity.NoticePage;
 import com.example.spb.view.inter.IMessagePageFView;
 import com.example.spb.view.littlefun.JumpIntent;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -57,7 +58,7 @@ public class MessagePage extends BaseMVPFragment<IMessagePageFView, MessagePageF
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.messagepage_notice:
-
+                JumpIntent.startMyIntent(NoticePage.class);
                 break;
             case R.id.messagepage_friend:
                 JumpIntent.startMyIntent(AttentionUserPage.class);

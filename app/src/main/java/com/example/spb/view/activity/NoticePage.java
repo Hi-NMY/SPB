@@ -1,39 +1,39 @@
 package com.example.spb.view.activity;
 
 import android.os.Bundle;
-import android.widget.TextView;
-import androidx.core.content.ContextCompat;
+import android.view.View;
+import androidx.appcompat.app.AppCompatActivity;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPActivity;
-import com.example.spb.presenter.impl.ChangeInformationPageAPresenterImpl;
+import com.example.spb.presenter.impl.NoticePageAPresenterImpl;
+import com.example.spb.presenter.inter.INoticePageAPresenter;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
-import com.example.spb.view.inter.IChangeInformationPageAView;
+import com.example.spb.view.inter.INoticePageAView;
 import com.gyf.immersionbar.ImmersionBar;
 
-public class ChangeInformationPagePage extends BaseMVPActivity<IChangeInformationPageAView, ChangeInformationPageAPresenterImpl> implements IChangeInformationPageAView {
+public class NoticePage extends BaseMVPActivity<INoticePageAView,NoticePageAPresenterImpl> implements INoticePageAView {
 
     private FragmentSpbAvtivityBar bar;
-    private String TITLE = "修改资料";
-    private String RIGHTTXT = "保存";
+    private String TITLE = "通知";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_change_information_page);
+        setContentView(R.layout.activity_notice_page);
         initActView();
     }
 
     @Override
-    protected ChangeInformationPageAPresenterImpl createPresenter() {
-        return new ChangeInformationPageAPresenterImpl();
+    protected NoticePageAPresenterImpl createPresenter() {
+        return new NoticePageAPresenterImpl();
     }
 
     @Override
     protected void initActView() {
+        setActivityBar();
+        setBar();
         setMyListener();
         createDialog();
-        setBar();
-        setActivityBar();
     }
 
     @Override
@@ -82,20 +82,12 @@ public class ChangeInformationPagePage extends BaseMVPActivity<IChangeInformatio
 
     @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.changeinformation_actbar);
-        TextView rightTxt = bar.getmBarRightTxt1();
-        rightTxt.setTextColor(ContextCompat.getColor(this,R.color.theme_color2));
+        bar = setMyActivityBar(R.id.notice_actbar);
         bar.barCentralTxt(TITLE,null);
-        bar.barLeftImg(R.drawable.close_black, new FragmentSpbAvtivityBar.OnMyClick() {
+        bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
             public void onClick() {
                 finish();
-            }
-        });
-        bar.barRightTxt1(RIGHTTXT, new FragmentSpbAvtivityBar.OnMyClick() {
-            @Override
-            public void onClick() {
-
             }
         });
     }

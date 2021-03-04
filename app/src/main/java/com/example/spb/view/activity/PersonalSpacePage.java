@@ -3,10 +3,13 @@ package com.example.spb.view.activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -14,14 +17,23 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.spb.R;
 import com.example.spb.adapter.FragmentViewPageAdapter;
 import com.example.spb.base.BaseMVPActivity;
-import com.example.spb.presenter.impl.PersonalSpacePagePageAPresenterImpl;
+import com.example.spb.presenter.impl.PersonalSpacePageAPresenterImpl;
+import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
+import com.example.spb.view.Component.SelectImage;
+import com.example.spb.view.InterComponent.DialogInter;
+import com.example.spb.view.InterComponent.SpbSelectImage;
 import com.example.spb.view.fragment.personalspace.BasicInformation;
 import com.example.spb.view.fragment.personalspace.PersonalPostBar;
 import com.example.spb.view.inter.IPersonalSpacePageAView;
+import com.example.spb.view.littlefun.MyToastClass;
 import com.example.spb.view.littlefun.ScaleTransitionPagerTitleView;
 import com.google.android.material.appbar.AppBarLayout;
 import com.gyf.immersionbar.ImmersionBar;
+import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.listener.OnResultCallbackListener;
+import com.luck.picture.lib.tools.ToastUtils;
+import com.makeramen.roundedimageview.RoundedImageView;
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
@@ -36,7 +48,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PersonalSpacePagePage extends BaseMVPActivity<IPersonalSpacePageAView, PersonalSpacePagePageAPresenterImpl> implements IPersonalSpacePageAView, View.OnClickListener {
+public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, PersonalSpacePageAPresenterImpl>
+        implements IPersonalSpacePageAView, View.OnClickListener {
 
     private SimplePagerTitleView simplePagerTitleView;
     private static final String[] title = new String[]{"资料", "帖子"};
@@ -48,12 +61,17 @@ public class PersonalSpacePagePage extends BaseMVPActivity<IPersonalSpacePageAVi
     private MagicIndicator mPersonalspaceIdt;
     private ViewPager mPersonalspaceViewpager;
     private NestedScrollView mPersonalspaceScrollview;
+    private DialogInter bottomDialog;
+    private SpbSelectImage spbSelectImage;
 
     private String USERNAME = "";
+    private String IMAGENAME = "UserHeadImage.png";
+    private String DIALOGTITLE = "设置头像";
 
     private FragmentSpbAvtivityBar bar;
     private AppBarLayout mPersonalspaceAppbarlayout;
     private RelativeLayout mPersonalspaceBarR;
+    private RoundedImageView mPersonalspaceUserHeadimg;
 
 
     @Override
@@ -64,21 +82,24 @@ public class PersonalSpacePagePage extends BaseMVPActivity<IPersonalSpacePageAVi
     }
 
     @Override
-    protected PersonalSpacePagePageAPresenterImpl createPresenter() {
-        return new PersonalSpacePagePageAPresenterImpl();
+    protected PersonalSpacePageAPresenterImpl createPresenter() {
+        return new PersonalSpacePageAPresenterImpl();
     }
 
     @Override
     protected void initActView() {
         setBar();
+        spbSelectImage = new SelectImage(this);
         mPersonalspaceIdt = (MagicIndicator) findViewById(R.id.personalspace_idt);
         mPersonalspaceViewpager = (ViewPager) findViewById(R.id.personalspace_viewpager);
         mPersonalspaceScrollview = (NestedScrollView) findViewById(R.id.personalspace_scrollview);
         mPersonalspaceAppbarlayout = (AppBarLayout) findViewById(R.id.personalspace_appbarlayout);
         mPersonalspaceBarR = (RelativeLayout) findViewById(R.id.personalspace_bar_R);
+        mPersonalspaceUserHeadimg = (RoundedImageView) findViewById(R.id.personalspace_user_headimg);
         intFollowViewPager();
         setActivityBar();
         setMyListener();
+        createDialog();
     }
 
     @Override
@@ -147,7 +168,7 @@ public class PersonalSpacePagePage extends BaseMVPActivity<IPersonalSpacePageAVi
         AppBarLayout.OnOffsetChangedListener onOffsetChangedListener = new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-                int persent = -i*2/3;
+                int persent = -i * 2 / 3;
                 if (persent > 255) {
                     persent = 255;
                     bar.barCentralTxt(USERNAME, new FragmentSpbAvtivityBar.OnMyClick() {
@@ -174,24 +195,71 @@ public class PersonalSpacePagePage extends BaseMVPActivity<IPersonalSpacePageAVi
 
     }
 
+    private TextView mDialogCamera;
+    private TextView mDialogPhotoalbum;
+    private TextView mDialogClose;
+    private TextView mDialogTitle;
     @Override
     public void createDialog() {
+        bottomDialog = new ComponentDialog(this, R.layout.dialog_selectpicture, R.style.bottomdialog, new ComponentDialog.InitDialog() {
+            @Override
+            public void initView(View view) {
+                mDialogTitle = (TextView)view.findViewById(R.id.dialog_title);
+                mDialogCamera = (TextView) view.findViewById(R.id.dialog_camera);
+                mDialogPhotoalbum = (TextView) view.findViewById(R.id.dialog_photoalbum);
+                mDialogClose = (TextView) view.findViewById(R.id.dialog_close);
+            }
 
+            @Override
+            public void initData() {
+                mDialogTitle.setText(DIALOGTITLE);
+            }
+
+            @Override
+            public void initListener() {
+                mDialogClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        closeDialog(0);
+                    }
+                });
+                mDialogPhotoalbum.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        closeDialog(0);
+                        spbSelectImage.selectOneImg(IMAGENAME, new OnResultCallbackListener<LocalMedia>() {
+                            @Override
+                            public void onResult(List<LocalMedia> result) {
+                                mPresenter.getHeadImage(result);
+                            }
+
+                            @Override
+                            public void onCancel() {
+                                //MyToastClass.ShowToast(MyApplication.getContext(),"出错了");
+                            }
+                        });
+                    }
+                });
+            }
+        });
+        bottomDialog.setBottomStyle();
+        bottomDialog.setAnimation(R.style.bottomdialog_animStyle);
     }
 
     @Override
     public void showDialogS(int i) {
-
+        bottomDialog.showMyDialog();
     }
 
     @Override
     public void closeDialog(int i) {
-
+        bottomDialog.closeMyDialog();
     }
 
     @Override
     public void setMyListener() {
         mPersonalspaceAppbarlayout.addOnOffsetChangedListener(listenViewMove());
+        mPersonalspaceUserHeadimg.setOnClickListener(this);
     }
 
     @Override
@@ -235,8 +303,10 @@ public class PersonalSpacePagePage extends BaseMVPActivity<IPersonalSpacePageAVi
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-
+        switch (v.getId()){
+            case R.id.personalspace_user_headimg:
+                showDialogS(0);
+                break;
         }
     }
 }

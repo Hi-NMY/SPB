@@ -20,6 +20,10 @@ public interface DialogInter {
 
     public void setDimAmount();
 
+    public void setAnimation(int animId);
+
+    public void setBottomStyle();
+
     public void setCenterGravity();
 
     public void setBottomGravity();

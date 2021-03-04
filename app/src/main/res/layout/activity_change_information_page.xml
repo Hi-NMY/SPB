@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="true"
-        tools:context=".view.activity.ChangeInformationPagePage">
+        tools:context=".view.activity.ChangeInformationPage">
 
     <fragment
             android:id="@+id/changeinformation_actbar"

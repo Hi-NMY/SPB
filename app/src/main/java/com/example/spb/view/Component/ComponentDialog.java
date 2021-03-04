@@ -89,6 +89,21 @@ public class ComponentDialog implements DialogInter {
     }
 
     @Override
+    public void setAnimation(int animId) {
+        window.setWindowAnimations(animId);
+    }
+
+    @Override
+    public void setBottomStyle() {
+        window.setGravity(Gravity.BOTTOM);
+        window.getDecorView().setPadding(0,0,0,0);
+        WindowManager.LayoutParams layoutParams=window.getAttributes();
+        layoutParams.width= WindowManager.LayoutParams.MATCH_PARENT;
+        layoutParams.height=WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(layoutParams);
+    }
+
+    @Override
     public void setCenterGravity() {
         window.setGravity(Gravity.CENTER);
     }

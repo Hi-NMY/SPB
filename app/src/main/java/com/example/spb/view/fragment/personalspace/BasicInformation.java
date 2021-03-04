@@ -6,7 +6,7 @@ import android.widget.TextView;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.presenter.impl.BasicInformationFPresenterImpl;
-import com.example.spb.view.activity.ChangeInformationPagePage;
+import com.example.spb.view.activity.ChangeInformationPage;
 import com.example.spb.view.inter.IBasicInformationFView;
 import com.example.spb.view.littlefun.JumpIntent;
 
@@ -54,7 +54,7 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.basicinformation_change:
-                JumpIntent.startMyIntent(ChangeInformationPagePage.class);
+                JumpIntent.startMyIntent(ChangeInformationPage.class);
                 break;
         }
     }

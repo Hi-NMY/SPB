@@ -1,7 +1,6 @@
 package com.example.spb.view.activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -10,11 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.spb.R;
-import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.UserRegisteredPageAPresenterImpl;
+import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.Component.EasyDialog;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
 import com.example.spb.view.Component.SelectImage;
@@ -22,7 +22,6 @@ import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;
 import com.example.spb.view.InterComponent.SpbSelectImage;
 import com.example.spb.view.inter.IUserRegisteredPageAView;
-import com.example.spb.view.littlefun.GlideRoundTransform;
 import com.example.spb.view.littlefun.JumpIntent;
 import com.example.spb.view.littlefun.MyToastClass;
 import com.gyf.immersionbar.ImmersionBar;
@@ -30,7 +29,6 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.listener.OnResultCallbackListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 
-import java.io.File;
 import java.util.List;
 
 public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView, UserRegisteredPageAPresenterImpl> implements IUserRegisteredPageAView, View.OnClickListener {
@@ -45,9 +43,10 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
     private Button mRegStarBtn;
 
     private DialogInter dialogLoading;
+    private DialogInter bottomDialog;
     private SpbSelectImage spbSelectImage;
 
-    private String imageName = "UserHeadImage.png";
+    private String IMAGENAME = "UserHeadImage.png";
     private String imagePath;
 
     private boolean SEE = false;
@@ -93,28 +92,87 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
 
     @Override
     public <T> void response(T response, int responseFlag) {
-        if (responseFlag == RESPONSE_ONE){
+        if (responseFlag == RESPONSE_ONE) {
             Glide.with(this)
-                    .load((String)response)
+                    .load((String) response)
                     .centerCrop()
                     .into(mRegisteredUserHeadimg);
-            imagePath = (String)response;
+            imagePath = (String) response;
         }
     }
 
+    private TextView mDialogCamera;
+    private TextView mDialogPhotoalbum;
+    private TextView mDialogClose;
     @Override
     public void createDialog() {
         dialogLoading = new EasyDialog(this, R.drawable.loading);
+        bottomDialog = new ComponentDialog(this, R.layout.dialog_selectpicture, R.style.bottomdialog, new ComponentDialog.InitDialog() {
+            @Override
+            public void initView(View view) {
+                mDialogCamera = (TextView) view.findViewById(R.id.dialog_camera);
+                mDialogPhotoalbum = (TextView) view.findViewById(R.id.dialog_photoalbum);
+                mDialogClose = (TextView) view.findViewById(R.id.dialog_close);
+            }
+
+            @Override
+            public void initData() {
+
+            }
+
+            @Override
+            public void initListener() {
+                mDialogClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        closeDialog(2);
+                    }
+                });
+                mDialogPhotoalbum.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        closeDialog(2);
+                        spbSelectImage.selectOneImg(IMAGENAME,new OnResultCallbackListener<LocalMedia>(){
+                            @Override
+                            public void onResult(List<LocalMedia> result) {
+                                mPresenter.getHeadImage(result);
+                            }
+
+                            @Override
+                            public void onCancel() {
+                                //MyToastClass.ShowToast(MyApplication.getContext(),"出错了");
+                            }
+                        });
+                    }
+                });
+            }
+        });
+        bottomDialog.setBottomStyle();
+        bottomDialog.setAnimation(R.style.bottomdialog_animStyle);
     }
 
     @Override
     public void showDialogS(int i) {
-        dialogLoading.showMyDialog();
+        switch (i) {
+            case 1:
+                dialogLoading.showMyDialog();
+                break;
+            case 2:
+                bottomDialog.showMyDialog();
+                break;
+        }
     }
 
     @Override
     public void closeDialog(int i) {
-        dialogLoading.closeMyDialog();
+        switch (i) {
+            case 1:
+                dialogLoading.closeMyDialog();
+                break;
+            case 2:
+                bottomDialog.closeMyDialog();
+                break;
+        }
     }
 
     @Override
@@ -149,38 +207,28 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.reg_star_btn:
-                if (submit()){
+                if (submit()) {
                     JumpIntent.startSetResultIntent(this, 1, new JumpIntent.SetMsg() {
                         @Override
                         public void setMessage(Intent intent) {
-                            intent.putExtra("AccountNumber",account);
+                            intent.putExtra("AccountNumber", account);
                         }
                     });
                 }
                 break;
             case R.id.reg_password_eye:
-                if (SEE){
+                if (SEE) {
                     mRegUserPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     mRegPasswordEye.setBackground(getDrawable(R.drawable.eye_no));
                     SEE = false;
-                }else {
+                } else {
                     mRegUserPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     mRegPasswordEye.setBackground(getDrawable(R.drawable.eye_yes));
                     SEE = true;
                 }
                 break;
             case R.id.registered_user_headimg:
-                spbSelectImage.selectOneImg(imageName,new OnResultCallbackListener<LocalMedia>(){
-                    @Override
-                    public void onResult(List<LocalMedia> result) {
-                        mPresenter.getHeadImage(result);
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        //MyToastClass.ShowToast(MyApplication.getContext(),"出错了");
-                    }
-                });
+                showDialogS(2);
                 break;
         }
     }
@@ -188,38 +236,39 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
     private String name;
     private String account;
     private String password;
+
     private boolean submit() {
         // validate
         if (TextUtils.isEmpty(imagePath)) {
-            MyToastClass.ShowToast(this,"请设置头像");
+            MyToastClass.ShowToast(this, "请设置头像");
             return false;
         }
 
         name = mRegUserName.getText().toString().trim();
         if (TextUtils.isEmpty(name)) {
-            MyToastClass.ShowToast(this,"请输入合法用户名");
+            MyToastClass.ShowToast(this, "请输入合法用户名");
             return false;
         }
 
         account = mRegUserAccount.getText().toString().trim();
         if (TextUtils.isEmpty(account)) {
-            MyToastClass.ShowToast(this,"请输入账号");
+            MyToastClass.ShowToast(this, "请输入账号");
             return false;
         }
 
         password = mRegUserPassword.getText().toString().trim();
         if (TextUtils.isEmpty(password)) {
-            MyToastClass.ShowToast(this,"请输入合法密码");
+            MyToastClass.ShowToast(this, "请输入合法密码");
             return false;
         }
 
         String again = mRegUserPasswordAgain.getText().toString().trim();
         if (TextUtils.isEmpty(again)) {
-            MyToastClass.ShowToast(this,"请确认密码");
+            MyToastClass.ShowToast(this, "请确认密码");
             return false;
-        }else {
-            if (!password.equals(again)){
-                MyToastClass.ShowToast(this,"请确认两次密码一致");
+        } else {
+            if (!password.equals(again)) {
+                MyToastClass.ShowToast(this, "请确认两次密码一致");
                 return false;
             }
         }

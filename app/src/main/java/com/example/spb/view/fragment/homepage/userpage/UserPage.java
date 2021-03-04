@@ -7,7 +7,7 @@ import androidx.annotation.Nullable;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.presenter.impl.UserPageFPresenterImpl;
-import com.example.spb.view.activity.PersonalSpacePagePage;
+import com.example.spb.view.activity.PersonalSpacePage;
 import com.example.spb.view.inter.IUserPageFView;
 import com.example.spb.view.littlefun.JumpIntent;
 
@@ -105,7 +105,7 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.user_page_userR:
-                JumpIntent.startMyIntent(PersonalSpacePagePage.class);
+                JumpIntent.startMyIntent(PersonalSpacePage.class);
                 break;
         }
     }
