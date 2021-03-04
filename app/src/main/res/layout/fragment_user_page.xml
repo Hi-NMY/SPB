@@ -245,13 +245,13 @@
                         android:layout_height="wrap_content">
                     <RelativeLayout
                             android:id="@+id/r1"
+                            android:layout_marginVertical="@dimen/margin_8"
+                            android:layout_marginHorizontal="@dimen/margin_24"
                             android:layout_weight="1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
                         <ImageView
                                 android:id="@+id/user_page_commonfun_edu"
-                                android:layout_marginVertical="@dimen/margin_8"
-                                android:layout_marginHorizontal="@dimen/margin_24"
                                 android:background="@drawable/icon_educational"
                                 android:layout_width="@dimen/icon_image_32"
                                 android:layout_height="@dimen/icon_image_32"/>
@@ -263,19 +263,19 @@
                                 android:gravity="center"
                                 android:layout_alignLeft="@id/user_page_commonfun_edu"
                                 android:layout_alignRight="@id/user_page_commonfun_edu"
-                                android:layout_marginTop="@dimen/margin_2"
+                                android:layout_marginTop="@dimen/margin_8"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
                     </RelativeLayout>
                     <RelativeLayout
                             android:id="@+id/r2"
                             android:layout_weight="1"
+                            android:layout_marginVertical="@dimen/margin_8"
+                            android:layout_marginHorizontal="@dimen/margin_24"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
                         <ImageView
                                 android:id="@+id/user_page_commonfun_sch"
-                                android:layout_marginVertical="@dimen/margin_8"
-                                android:layout_marginHorizontal="@dimen/margin_24"
                                 android:background="@drawable/icon_schedule"
                                 android:layout_width="@dimen/icon_image_32"
                                 android:layout_height="@dimen/icon_image_32"/>
@@ -288,7 +288,7 @@
                                 android:gravity="center"
                                 android:layout_alignLeft="@id/user_page_commonfun_sch"
                                 android:layout_alignRight="@id/user_page_commonfun_sch"
-                                android:layout_marginTop="@dimen/margin_2"
+                                android:layout_marginTop="@dimen/margin_8"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
 
@@ -296,12 +296,12 @@
                     <RelativeLayout
                             android:id="@+id/r3"
                             android:layout_weight="1"
+                            android:layout_marginVertical="@dimen/margin_8"
+                            android:layout_marginHorizontal="@dimen/margin_24"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
                         <ImageView
                                 android:id="@+id/user_page_commonfun_dia"
-                                android:layout_marginVertical="@dimen/margin_8"
-                                android:layout_marginHorizontal="@dimen/margin_24"
                                 android:background="@drawable/icon_diary"
                                 android:layout_width="@dimen/icon_image_32"
                                 android:layout_height="@dimen/icon_image_32"/>
@@ -314,19 +314,19 @@
                                 android:gravity="center"
                                 android:layout_alignLeft="@id/user_page_commonfun_dia"
                                 android:layout_alignRight="@id/user_page_commonfun_dia"
-                                android:layout_marginTop="@dimen/margin_2"
+                                android:layout_marginTop="@dimen/margin_8"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
                     </RelativeLayout>
                     <RelativeLayout
                             android:id="@+id/r4"
                             android:layout_weight="1"
+                            android:layout_marginVertical="@dimen/margin_8"
+                            android:layout_marginHorizontal="@dimen/margin_24"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
                         <ImageView
                                 android:id="@+id/user_page_commonfun_shop"
-                                android:layout_marginVertical="@dimen/margin_8"
-                                android:layout_marginHorizontal="@dimen/margin_24"
                                 android:background="@drawable/icon_shop"
                                 android:layout_width="@dimen/icon_image_32"
                                 android:layout_height="@dimen/icon_image_32"/>
@@ -338,7 +338,7 @@
                                 android:gravity="center"
                                 android:layout_alignLeft="@id/user_page_commonfun_shop"
                                 android:layout_alignRight="@id/user_page_commonfun_shop"
-                                android:layout_marginTop="@dimen/margin_2"
+                                android:layout_marginTop="@dimen/margin_8"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
                     </RelativeLayout>

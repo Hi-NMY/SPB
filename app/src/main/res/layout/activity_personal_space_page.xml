@@ -123,20 +123,22 @@
 
                             <LinearLayout
                                     android:id="@+id/l"
+                                    android:layout_centerHorizontal="true"
                                     android:layout_marginBottom="25dp"
                                     android:layout_alignParentBottom="true"
                                     android:layout_width="match_parent"
-                                    android:layout_height="@dimen/icon_image_44">
+                                    android:layout_height="wrap_content">
 
                                 <RelativeLayout
                                         android:id="@+id/r1"
                                         android:layout_weight="1"
+                                        android:layout_marginVertical="@dimen/margin_8"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="match_parent">
+                                        android:layout_height="wrap_content">
 
                                     <TextView
                                             android:id="@+id/personalspace_userattention_num"
-                                            android:layout_centerHorizontal="true"
+                                            android:layout_centerInParent="true"
                                             android:translationX="-16dp"
                                             android:textColor="@color/beijing"
                                             android:textSize="@dimen/font_20"
@@ -162,11 +164,12 @@
                                 <RelativeLayout
                                         android:id="@+id/r2"
                                         android:layout_weight="1"
+                                        android:layout_marginVertical="@dimen/margin_8"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content">
                                     <TextView
                                             android:id="@+id/personalspace_userfans_num"
-                                            android:layout_centerHorizontal="true"
+                                            android:layout_centerInParent="true"
                                             android:translationX="-16dp"
                                             android:textColor="@color/beijing"
                                             android:textSize="@dimen/font_20"
@@ -192,11 +195,12 @@
                                 <RelativeLayout
                                         android:id="@+id/r3"
                                         android:layout_weight="1"
+                                        android:layout_marginVertical="@dimen/margin_8"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content">
                                     <TextView
                                             android:id="@+id/personalspace_usertopic_num"
-                                            android:layout_centerHorizontal="true"
+                                            android:layout_centerInParent="true"
                                             android:translationX="-16dp"
                                             android:textColor="@color/beijing"
                                             android:textSize="@dimen/font_20"

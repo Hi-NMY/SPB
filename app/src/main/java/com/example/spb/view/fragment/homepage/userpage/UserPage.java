@@ -9,9 +9,7 @@ import com.example.spb.R;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.presenter.impl.UserPageFPresenterImpl;
 import com.example.spb.view.Component.ComponentDialog;
-import com.example.spb.view.activity.AttentionTopicPage;
-import com.example.spb.view.activity.PersonalSpacePage;
-import com.example.spb.view.activity.UserCollectPage;
+import com.example.spb.view.activity.*;
 import com.example.spb.view.inter.IUserPageFView;
 import com.example.spb.view.littlefun.JumpIntent;
 
@@ -22,6 +20,10 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
     private ComponentDialog tipDialog;
     private RelativeLayout mUserPageCollectnumR;
     private RelativeLayout mUserPageAttentionnumR;
+    private RelativeLayout mR1;
+    private RelativeLayout mR2;
+    private RelativeLayout mR3;
+    private RelativeLayout mR4;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,8 +44,12 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
     protected void initFragView(View view) {
         mUserPageUserR = (RelativeLayout) view.findViewById(R.id.user_page_userR);
         mUserPageUseronlinetip = (ImageView) view.findViewById(R.id.user_page_useronlinetip);
-        mUserPageCollectnumR = (RelativeLayout)view.findViewById(R.id.user_page_collectnum_r);
-        mUserPageAttentionnumR = (RelativeLayout)view.findViewById(R.id.user_page_attentionnum_r);
+        mUserPageCollectnumR = (RelativeLayout) view.findViewById(R.id.user_page_collectnum_r);
+        mUserPageAttentionnumR = (RelativeLayout) view.findViewById(R.id.user_page_attentionnum_r);
+        mR1 = (RelativeLayout)view.findViewById(R.id.r1);
+        mR2 = (RelativeLayout)view.findViewById(R.id.r2);
+        mR3 = (RelativeLayout)view.findViewById(R.id.r3);
+        mR4 = (RelativeLayout)view.findViewById(R.id.r4);
         createDialog();
         setMyListener();
     }
@@ -106,6 +112,10 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
         mUserPageUseronlinetip.setOnClickListener(this);
         mUserPageAttentionnumR.setOnClickListener(this);
         mUserPageCollectnumR.setOnClickListener(this);
+        mR1.setOnClickListener(this);
+        mR2.setOnClickListener(this);
+        mR3.setOnClickListener(this);
+        mR4.setOnClickListener(this);
     }
 
     @Override
@@ -152,6 +162,18 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
                 break;
             case R.id.user_page_collectnum_r:
                 JumpIntent.startMyIntent(UserCollectPage.class);
+                break;
+            case R.id.r1:
+
+                break;
+            case R.id.r2:
+                JumpIntent.startMyIntent(UserCoursePage.class);
+                break;
+            case R.id.r3:
+                JumpIntent.startMyIntent(UserDiaryPage.class);
+                break;
+            case R.id.r4:
+                JumpIntent.startMyIntent(SecondHandStorePage.class);
                 break;
         }
     }

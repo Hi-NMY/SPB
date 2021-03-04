@@ -1,15 +1,14 @@
 package com.example.spb.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -26,13 +25,12 @@ import com.example.spb.view.InterComponent.SpbSelectImage;
 import com.example.spb.view.fragment.personalspace.BasicInformation;
 import com.example.spb.view.fragment.personalspace.PersonalPostBar;
 import com.example.spb.view.inter.IPersonalSpacePageAView;
-import com.example.spb.view.littlefun.MyToastClass;
+import com.example.spb.view.littlefun.JumpIntent;
 import com.example.spb.view.littlefun.ScaleTransitionPagerTitleView;
 import com.google.android.material.appbar.AppBarLayout;
 import com.gyf.immersionbar.ImmersionBar;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.listener.OnResultCallbackListener;
-import com.luck.picture.lib.tools.ToastUtils;
 import com.makeramen.roundedimageview.RoundedImageView;
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -72,6 +70,9 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
     private AppBarLayout mPersonalspaceAppbarlayout;
     private RelativeLayout mPersonalspaceBarR;
     private RoundedImageView mPersonalspaceUserHeadimg;
+    private RelativeLayout mR1;
+    private RelativeLayout mR2;
+    private RelativeLayout mR3;
 
 
     @Override
@@ -96,6 +97,9 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         mPersonalspaceAppbarlayout = (AppBarLayout) findViewById(R.id.personalspace_appbarlayout);
         mPersonalspaceBarR = (RelativeLayout) findViewById(R.id.personalspace_bar_R);
         mPersonalspaceUserHeadimg = (RoundedImageView) findViewById(R.id.personalspace_user_headimg);
+        mR1 = (RelativeLayout) findViewById(R.id.r1);
+        mR2 = (RelativeLayout) findViewById(R.id.r2);
+        mR3 = (RelativeLayout) findViewById(R.id.r3);
         intFollowViewPager();
         setActivityBar();
         setMyListener();
@@ -199,12 +203,13 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
     private TextView mDialogPhotoalbum;
     private TextView mDialogClose;
     private TextView mDialogTitle;
+
     @Override
     public void createDialog() {
         bottomDialog = new ComponentDialog(this, R.layout.dialog_selectpicture, R.style.bottomdialog, new ComponentDialog.InitDialog() {
             @Override
             public void initView(View view) {
-                mDialogTitle = (TextView)view.findViewById(R.id.dialog_title);
+                mDialogTitle = (TextView) view.findViewById(R.id.dialog_title);
                 mDialogCamera = (TextView) view.findViewById(R.id.dialog_camera);
                 mDialogPhotoalbum = (TextView) view.findViewById(R.id.dialog_photoalbum);
                 mDialogClose = (TextView) view.findViewById(R.id.dialog_close);
@@ -260,6 +265,9 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
     public void setMyListener() {
         mPersonalspaceAppbarlayout.addOnOffsetChangedListener(listenViewMove());
         mPersonalspaceUserHeadimg.setOnClickListener(this);
+        mR1.setOnClickListener(this);
+        mR2.setOnClickListener(this);
+        mR3.setOnClickListener(this);
     }
 
     @Override
@@ -303,10 +311,30 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.personalspace_user_headimg:
                 showDialogS(0);
                 break;
+            case R.id.r1:
+                JumpIntent.startMsgIntent(AttentionUserPage.class, new JumpIntent.SetMsg() {
+                    @Override
+                    public void setMessage(Intent intent) {
+                        intent.putExtra("SELECTNUM",0);
+                    }
+                });
+                break;
+            case R.id.r2:
+                JumpIntent.startMsgIntent(AttentionUserPage.class, new JumpIntent.SetMsg() {
+                    @Override
+                    public void setMessage(Intent intent) {
+                        intent.putExtra("SELECTNUM",1);
+                    }
+                });
+                break;
+            case R.id.r3:
+                JumpIntent.startMyIntent(AttentionTopicPage.class);
+                break;
+
         }
     }
 }

@@ -40,6 +40,7 @@ public class AttentionUserPage extends BaseMVPActivity<IAttentionUserPageAView, 
     private FragmentSpbAvtivityBar bar;
     private SimplePagerTitleView simplePagerTitleView;
     private static final String[] title = new String[]{"关注", "被关注"};
+    private int SELECTNUM = 0;
     private List<String> myTitleList = Arrays.asList(title);
     private ArrayList<Fragment> fragments;
     private FragmentManager fragmentManager;
@@ -53,6 +54,7 @@ public class AttentionUserPage extends BaseMVPActivity<IAttentionUserPageAView, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attention_user_page);
+        SELECTNUM = getIntent().getIntExtra("SELECTNUM",0);
         initActView();
     }
 
@@ -131,7 +133,7 @@ public class AttentionUserPage extends BaseMVPActivity<IAttentionUserPageAView, 
 
         mAttentionuserIdt.setNavigator(commonNavigator);
         ViewPagerHelper.bind(mAttentionuserIdt, mAttentionuserViewpager);
-        mAttentionuserViewpager.setCurrentItem(1);
+        mAttentionuserViewpager.setCurrentItem(SELECTNUM);
     }
 
     @Override
