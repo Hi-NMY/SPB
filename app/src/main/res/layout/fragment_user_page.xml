@@ -113,90 +113,101 @@
                         android:layout_width="@dimen/icon_image_24"
                         android:layout_height="@dimen/icon_image_24"/>
 
-                <TextView
-                        android:id="@+id/user_page_postbarnum"
-                        android:layout_marginTop="@dimen/margin_12"
-                        android:layout_alignLeft="@id/t1"
-                        android:layout_alignRight="@id/t1"
-                        android:layout_below="@id/user_page_user_headimg"
-                        android:gravity="center"
-                        android:textSize="@dimen/font_18"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:text="38"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                <TextView
-                        android:id="@+id/t1"
-                        android:layout_marginHorizontal="@dimen/margin_16"
-                        android:layout_marginTop="@dimen/margin_4"
-                        android:layout_marginBottom="@dimen/margin_16"
+                <RelativeLayout
+                        android:id="@+id/user_page_postbarnum_r"
+                        android:layout_margin="@dimen/margin_16"
                         android:layout_toRightOf="@id/user_page_useronlineday"
-                        android:layout_below="@id/user_page_postbarnum"
-                        android:textSize="@dimen/font_14"
-                        android:textColor="@color/qihei"
-                        android:text="我的帖子"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                <TextView
-                        android:id="@+id/user_page_collectnum"
-                        android:layout_marginTop="@dimen/margin_12"
-                        android:layout_alignLeft="@id/t2"
-                        android:layout_alignRight="@id/t2"
                         android:layout_below="@id/user_page_user_headimg"
-                        android:gravity="center"
-                        android:textSize="@dimen/font_18"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:text="38"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content">
 
-                <TextView
-                        android:id="@+id/t2"
-                        android:layout_marginHorizontal="@dimen/margin_16"
-                        android:layout_marginTop="@dimen/margin_4"
-                        android:layout_marginBottom="@dimen/margin_16"
-                        android:layout_toRightOf="@id/t1"
-                        android:layout_below="@id/user_page_postbarnum"
-                        android:textSize="@dimen/font_14"
-                        android:textColor="@color/qihei"
-                        android:text="我的收藏"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                    <TextView
+                            android:id="@+id/user_page_postbarnum"
+                            android:layout_alignLeft="@id/t1"
+                            android:layout_alignRight="@id/t1"
+                            android:gravity="center"
+                            android:textSize="@dimen/font_18"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:text="38"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
 
-                <TextView
-                        android:id="@+id/user_page_attentionnum"
-                        android:layout_marginTop="@dimen/margin_12"
-                        android:layout_alignLeft="@id/t3"
-                        android:layout_alignRight="@id/t3"
+                    <TextView
+                            android:id="@+id/t1"
+                            android:layout_below="@id/user_page_postbarnum"
+                            android:textSize="@dimen/font_14"
+                            android:textColor="@color/qihei"
+                            android:text="我的帖子"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:id="@+id/user_page_collectnum_r"
+                        android:layout_margin="@dimen/margin_16"
+                        android:layout_toRightOf="@id/user_page_postbarnum_r"
                         android:layout_below="@id/user_page_user_headimg"
-                        android:gravity="center"
-                        android:textSize="@dimen/font_18"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:text="38"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content">
 
-                <TextView
-                        android:id="@+id/t3"
-                        android:layout_marginHorizontal="@dimen/margin_16"
-                        android:layout_marginTop="@dimen/margin_4"
-                        android:layout_marginBottom="@dimen/margin_16"
-                        android:layout_toRightOf="@id/t2"
-                        android:layout_below="@id/user_page_postbarnum"
-                        android:textSize="@dimen/font_14"
-                        android:textColor="@color/qihei"
-                        android:text="关注的话题"
+                    <TextView
+                            android:id="@+id/user_page_collectnum"
+                            android:layout_alignLeft="@id/t2"
+                            android:layout_alignRight="@id/t2"
+                            android:gravity="center"
+                            android:textSize="@dimen/font_18"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:text="38"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/t2"
+                            android:layout_below="@+id/user_page_collectnum"
+                            android:textSize="@dimen/font_14"
+                            android:textColor="@color/qihei"
+                            android:text="我的收藏"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:id="@+id/user_page_attentionnum_r"
+                        android:layout_margin="@dimen/margin_16"
+                        android:layout_toRightOf="@id/user_page_collectnum_r"
+                        android:layout_below="@id/user_page_user_headimg"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/user_page_attentionnum"
+                            android:layout_alignLeft="@id/t3"
+                            android:layout_alignRight="@id/t3"
+                            android:gravity="center"
+                            android:textSize="@dimen/font_18"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:text="38"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:id="@+id/t3"
+                            android:layout_below="@id/user_page_attentionnum"
+                            android:textSize="@dimen/font_14"
+                            android:textColor="@color/qihei"
+                            android:text="关注的话题"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                </RelativeLayout>
 
                 <ImageView
                         android:layout_alignParentRight="true"
-                        android:layout_alignBottom="@id/t3"
+                        android:layout_alignBottom="@id/user_page_attentionnum_r"
                         android:scaleType="centerInside"
                         android:layout_alignTop="@id/user_page_user_headimg"
                         android:src="@drawable/right_grey"
