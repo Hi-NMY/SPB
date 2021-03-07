@@ -22,6 +22,7 @@ import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;
 import com.example.spb.view.InterComponent.SpbSelectImage;
 import com.example.spb.view.inter.IUserRegisteredPageAView;
+import com.example.spb.view.littlefun.HideKeyboard;
 import com.example.spb.view.littlefun.JumpIntent;
 import com.example.spb.view.littlefun.MyToastClass;
 import com.gyf.immersionbar.ImmersionBar;
@@ -205,6 +206,7 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
 
     @Override
     public void onClick(View v) {
+        HideKeyboard.hideboard(v);
         switch (v.getId()) {
             case R.id.reg_star_btn:
                 if (submit()) {

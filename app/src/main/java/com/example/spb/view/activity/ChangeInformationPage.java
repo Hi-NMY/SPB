@@ -20,6 +20,7 @@ import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.inter.IChangeInformationPageAView;
+import com.example.spb.view.littlefun.HideKeyboard;
 import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.Calendar;
@@ -151,6 +152,7 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
 
     @Override
     public void onClick(View v) {
+        HideKeyboard.hideboard(v);
         switch (v.getId()) {
             case R.id.r_favorite:
                 showDialogS(0);

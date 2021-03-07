@@ -23,8 +23,10 @@ import com.example.spb.view.Component.FragmentSpbAvtivityBar;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;
 import com.example.spb.view.inter.IFirstPageAView;
+import com.example.spb.view.littlefun.HideKeyboard;
 import com.example.spb.view.littlefun.JumpIntent;
 import com.example.spb.view.littlefun.MyToastClass;
+import com.example.spb.view.littlefun.RequestForAccess;
 import com.gyf.immersionbar.ImmersionBar;
 
 public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresenterImpl> implements IFirstPageAView, View.OnClickListener {
@@ -56,8 +58,8 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
     private static Animation animationb;
 
     static {
-        animationa = AnimationUtils.loadAnimation(MyApplication.getContext(),R.anim.enter_anim);
-        animationb = AnimationUtils.loadAnimation(MyApplication.getContext(),R.anim.enter_anim2);
+        animationa = AnimationUtils.loadAnimation(MyApplication.getContext(), R.anim.enter_anim);
+        animationb = AnimationUtils.loadAnimation(MyApplication.getContext(), R.anim.enter_anim2);
         animationa.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -123,7 +125,6 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
         mEnterR2 = (RelativeLayout) findViewById(R.id.enter_r2);
 
         mEnterUsernotice.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
-
         createDialog();
         setBar();
         setMyListener();
@@ -132,7 +133,27 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
 
     @Override
     protected void initData() {
+        RequestForAccess.setNewAccess(this, new RequestForAccess.OnReturn() {
+            @Override
+            public void allTrue() {
+                MyToastClass.ShowToast(MyApplication.getContext(), "权限已获取");
+            }
 
+            @Override
+            public void someTrue() {
+                MyToastClass.ShowToast(MyApplication.getContext(), "部分权限未获取，可能会影响使用");
+            }
+
+            @Override
+            public void allFalse() {
+                finish();
+            }
+
+            @Override
+            public void toTure() {
+
+            }
+        });
     }
 
     @Override
@@ -197,14 +218,15 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
 
     @Override
     public void onClick(View v) {
+        HideKeyboard.hideboard(v);
         switch (v.getId()) {
             case R.id.enter_next_btn:
-                if (ENTER_FUN == 1){
+                if (ENTER_FUN == 1) {
 
-                }else {
-                    if (!ENTER_CHECK){
-                        MyToastClass.ShowToast(this,"请阅读并同意校吧用户须知");
-                    }else {
+                } else {
+                    if (!ENTER_CHECK) {
+                        MyToastClass.ShowToast(this, "请阅读并同意校吧用户须知");
+                    } else {
                         mEnterR1.startAnimation(animationa);
                         mEnterR2.startAnimation(animationb);
                         mEnterR1.setVisibility(View.GONE);
@@ -227,7 +249,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
                 }
                 break;
             case R.id.enter_user_registered:
-                JumpIntent.startForResultIntent(this,UserRegisteredPage.class,1);
+                JumpIntent.startForResultIntent(this, UserRegisteredPage.class, 1);
                 break;
             case R.id.empty_view:
                 mAccountNumberEdit.setText("");
@@ -237,11 +259,11 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
                 showDialogS(1);
                 break;
             case R.id.password_eye:
-                if (SEE){
+                if (SEE) {
                     mPasswordNumberEdit.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     mPasswordEye.setBackground(getDrawable(R.drawable.eye_no));
                     SEE = false;
-                }else {
+                } else {
                     mPasswordNumberEdit.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     mPasswordEye.setBackground(getDrawable(R.drawable.eye_yes));
                     SEE = true;
@@ -282,11 +304,11 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
     }
 
     @Override
-    public void setBtnClick(boolean i){
-        if (i){
+    public void setBtnClick(boolean i) {
+        if (i) {
             mEnterNextBtn.setBackground(getDrawable(R.drawable.enter_next_login));
             mEnterNextBtn.setClickable(true);
-        }else {
+        } else {
             mEnterNextBtn.setBackground(getDrawable(R.drawable.enter_next_login_false));
             mEnterNextBtn.setClickable(false);
         }
@@ -332,14 +354,14 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
         bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
             public void onClick() {
-                if (ENTER_FUN == 1){
+                if (ENTER_FUN == 1) {
                     mEnterR1.startAnimation(animationb);
                     mEnterR2.startAnimation(animationa);
                     mEnterR1.setVisibility(View.VISIBLE);
                     mEnterR2.setVisibility(View.GONE);
                     setBtnClick(CLICKYES);
                     ENTER_FUN = 0;
-                }else {
+                } else {
                     finish();
                 }
             }
@@ -347,15 +369,18 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
     }
 
     private TextView dialogText;
-    private ImageView closeImg;
+    private TextView mClickFalse;
+    private TextView mClickTrue;
+
     @Override
     public void createDialog() {
         dialogLoading = new EasyDialog(this, R.drawable.loading);
         dialogUserNotice = new ComponentDialog(this, R.layout.dialog_user_notice, new ComponentDialog.InitDialog() {
             @Override
             public void initView(View view) {
-                dialogText = (TextView)view.findViewById(R.id.textView);
-                closeImg = (ImageView)view.findViewById(R.id.img);
+                mClickFalse = (TextView) view.findViewById(R.id.click_false);
+                mClickTrue = (TextView) view.findViewById(R.id.click_true);
+                dialogText = (TextView) view.findViewById(R.id.textView);
                 dialogText.setMovementMethod(ScrollingMovementMethod.getInstance());
             }
 
@@ -366,7 +391,13 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
 
             @Override
             public void initListener() {
-                closeImg.setOnClickListener(new View.OnClickListener() {
+                mClickFalse.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        closeDialog(1);
+                    }
+                });
+                mClickTrue.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         closeDialog(1);
@@ -378,7 +409,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
 
     @Override
     public void showDialogS(int i) {
-        switch (i){
+        switch (i) {
             case 1:
                 dialogUserNotice.showMyDialog();
                 break;
@@ -390,7 +421,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
 
     @Override
     public void closeDialog(int i) {
-        switch (i){
+        switch (i) {
             case 1:
                 dialogUserNotice.closeMyDialog();
                 break;

@@ -286,7 +286,13 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
             case 3:
                 bar.setBarBackground(R.color.beijing);
                 bar.barCentralTxt("消息", null);
-                bar.barRightImg1(R.drawable.messageadd_icon, new FragmentSpbAvtivityBar.OnMyClick() {
+                bar.barRightImg1(R.drawable.adduser_icon, new FragmentSpbAvtivityBar.OnMyClick() {
+                    @Override
+                    public void onClick() {
+
+                    }
+                });
+                bar.barRightImg2(R.drawable.scancode_icon, new FragmentSpbAvtivityBar.OnMyClick() {
                     @Override
                     public void onClick() {
 
@@ -301,7 +307,7 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
                         JumpIntent.startMyIntent(SetUpPage.class);
                     }
                 });
-                bar.barRightImg2(R.drawable.scancode_icon, new FragmentSpbAvtivityBar.OnMyClick() {
+                bar.barRightImg2(R.drawable.qr_icon, new FragmentSpbAvtivityBar.OnMyClick() {
                     @Override
                     public void onClick() {
 

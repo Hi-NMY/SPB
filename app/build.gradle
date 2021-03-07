@@ -81,5 +81,7 @@ dependencies {
 
     implementation 'com.contrarywind:Android-PickerView:4.1.9'   //多级选择
 
+    implementation 'com.king.zxing:zxing-lite:1.1.9-androidx'   //精简版二维码
+
     //implementation 'com.shuyu:GSYVideoPlayer:8.1.0'   //视频播放器
 }

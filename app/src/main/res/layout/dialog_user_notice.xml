@@ -5,24 +5,17 @@
         android:layout_height="match_parent">
 
     <RelativeLayout
+            android:paddingVertical="@dimen/margin_20"
             android:background="@drawable/act_user_notice_bg"
+            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-
-        <ImageView
-                android:id="@+id/img"
-                android:layout_margin="@dimen/margin_8"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/close_black"
-                android:layout_width="@dimen/icon_image_32"
-                android:layout_height="@dimen/icon_image_32"/>
 
         <TextView
                 android:id="@+id/text"
                 android:layout_below="@+id/img"
-                android:translationY="-4dp"
                 android:gravity="center"
-                android:text="校吧户须知"
+                android:text="欢迎使用校吧"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_14"
                 android:layout_centerHorizontal="true"
@@ -31,20 +24,41 @@
 
         <TextView
                 android:id="@+id/textView"
-                android:layout_marginTop="@dimen/margin_4"
-                android:layout_marginHorizontal="@dimen/margin_20"
-                android:layout_marginBottom="@dimen/margin_20"
+                android:layout_marginVertical="@dimen/margin_12"
+                android:layout_marginHorizontal="@dimen/margin_28"
                 android:layout_below="@id/text"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/font_12"
                 android:scrollbars="vertical"
                 android:layout_centerHorizontal="true"
-                android:text="啊哈哈哈\n额外若无\n东方时尚\n非官方个\n师德师风\n持续性陈v"
-                android:layout_width="wrap_content"
+                android:text="   啊aadadadaadasdasdsdadadada哈哈asdadadadaasd\n额外若无\n东
+                方时尚\n非官方个\n师德师风\n持续性陈v"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                />
 
+        <TextView
+                android:id="@+id/click_false"
+                android:textSize="@dimen/font_10"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/textView"
+                android:textColor="@color/lightgrey"
+                android:text="不同意"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
+        <TextView
+                android:id="@+id/click_true"
+                android:layout_marginTop="@dimen/margin_4"
+                android:paddingVertical="@dimen/margin_8"
+                android:paddingHorizontal="@dimen/margin_40"
+                android:textSize="@dimen/font_12"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/click_false"
+                android:textColor="@color/beijing"
+                android:background="@drawable/enter_next_login"
+                android:text="同意并继续"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
     </RelativeLayout>
-
 </RelativeLayout>
