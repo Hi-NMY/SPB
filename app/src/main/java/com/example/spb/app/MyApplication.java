@@ -2,7 +2,6 @@ package com.example.spb.app;
 
 import android.app.Application;
 import android.content.Context;
-import com.tamsiree.rxkit.RxTool;
 import org.litepal.LitePal;
 
 public class MyApplication extends Application {
@@ -14,8 +13,6 @@ public class MyApplication extends Application {
         super.onCreate();
         LitePal.initialize(this);
         context = getApplicationContext();
-        RxTool.init(this);
-
     }
 
     public static Context getContext() {

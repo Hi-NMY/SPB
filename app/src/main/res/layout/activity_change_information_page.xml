@@ -42,6 +42,7 @@
                     android:id="@+id/changeinformation_username"
                     android:textSize="@dimen/font_16"
                     android:hint="请输入合法昵称"
+                    android:gravity="left|center"
                     android:textColor="@color/qihei"
                     android:layout_toRightOf="@+id/t1"
                     android:layout_toLeftOf="@id/x1"
@@ -76,9 +77,9 @@
 
             <TextView
                     android:id="@+id/changeinformation_birth"
-                    android:gravity="center"
+                    android:gravity="left|center"
                     android:textSize="@dimen/font_16"
-                    android:textColor="@color/qihei"
+                    android:textColor="@color/grey"
                     android:layout_toRightOf="@+id/t2"
                     android:layout_toLeftOf="@id/x2"
                     android:layout_width="wrap_content"
@@ -142,9 +143,9 @@
 
             <TextView
                     android:id="@+id/changeinformation_home"
-                    android:gravity="center"
+                    android:gravity="left|center"
                     android:textSize="@dimen/font_16"
-                    android:textColor="@color/qihei"
+                    android:textColor="@color/grey"
                     android:layout_toRightOf="@+id/t4"
                     android:layout_toLeftOf="@id/x4"
                     android:layout_width="wrap_content"
