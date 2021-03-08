@@ -14,6 +14,7 @@ import com.example.spb.app.MyApplication;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
 import com.example.spb.view.Component.SelectImage;
 import com.example.spb.view.InterTotal.SpbInterOne;
+import com.example.spb.view.littlefun.JumpIntent;
 import com.example.spb.view.littlefun.MyToastClass;
 import com.example.spb.view.littlefun.RequestForAccess;
 import com.gyf.immersionbar.ImmersionBar;
@@ -78,7 +79,7 @@ public class QRPage extends AppCompatActivity implements SpbInterOne, OnCaptureC
         mIvImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                JumpIntent.startMyIntent(UserQrPage.class);
             }
         });
     }

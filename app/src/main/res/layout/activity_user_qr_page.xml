@@ -7,6 +7,12 @@
         android:layout_height="match_parent"
         tools:context=".view.activity.UserQrPage">
 
+    <fragment
+            android:id="@+id/userqr_actbar"
+            android:layout_width="match_parent"
+            android:name="com.example.spb.view.Component.FragmentSpbAvtivityBar"
+            android:layout_height="@dimen/spb_activity_bar_44"/>
+
     <ImageView
             android:id="@+id/my_qrCode"
             android:scaleType="center"
