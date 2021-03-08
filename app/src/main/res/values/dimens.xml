@@ -36,6 +36,8 @@
     <dimen name="margin__24">-24dp</dimen>
     <dimen name="margin__28">-28dp</dimen>
     <dimen name="margin__32">-32dp</dimen>
+    <dimen name="margin__40">-40dp</dimen>
+    <dimen name="margin__64">-64dp</dimen>
 
     <dimen name="font_10">10sp</dimen>
     <dimen name="font_12">12sp</dimen>

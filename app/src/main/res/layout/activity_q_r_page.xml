@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+    <SurfaceView
+            android:id="@+id/surfaceView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    <com.king.zxing.ViewfinderView
+            android:id="@+id/viewfinderView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    <ImageView
+            android:id="@+id/ivTorch"
+            android:visibility="invisible"
+            android:layout_width="@dimen/icon_image_32"
+            android:layout_height="@dimen/icon_image_32"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:translationX="@dimen/margin__64"
+            android:translationY="-68dp"
+            android:src="@drawable/zxl_torch_selector"/>
+
+    <ImageView
+            android:id="@+id/ivImg"
+            android:layout_width="@dimen/icon_image_40"
+            android:layout_height="@dimen/icon_image_40"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:translationY="@dimen/margin__64"
+            android:src="@drawable/qr_white_icon"/>
+
+    <TextView
+            android:textSize="@dimen/font_16"
+            android:textColor="@color/beijing"
+            android:text="我的二维码"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:translationY="@dimen/margin__40"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <fragment
+            android:id="@+id/qrpage_bar"
+            android:layout_marginTop="@dimen/StatusBar_height"
+            android:name="com.example.spb.view.Component.FragmentSpbAvtivityBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spb_activity_bar_44">
+    </fragment>
+
+</RelativeLayout>

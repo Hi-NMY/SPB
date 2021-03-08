@@ -1,5 +1,6 @@
 package com.example.spb.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.spb.R;
+import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.UserHomePageAPresenterImpl;
 import com.example.spb.view.Component.ComponentDialog;
@@ -22,8 +24,10 @@ import com.example.spb.view.fragment.homepage.videopage.VideoPage;
 import com.example.spb.view.inter.IUserHomePageAView;
 import com.example.spb.view.littlefun.JumpIntent;
 import com.example.spb.view.littlefun.MyToastClass;
+import com.example.spb.view.littlefun.RequestForAccess;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gyf.immersionbar.ImmersionBar;
+import com.king.zxing.CaptureActivity;
 
 
 public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAPresenterImpl> implements IUserHomePageAView, View.OnClickListener {
@@ -295,7 +299,33 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
                 bar.barRightImg2(R.drawable.scancode_icon, new FragmentSpbAvtivityBar.OnMyClick() {
                     @Override
                     public void onClick() {
+                        RequestForAccess.setCameraAccess(HomePage.this, new RequestForAccess.OnReturn() {
+                            @Override
+                            public void allTrue() {
+                                startActivityForResult(new Intent(MyApplication.getContext(), QRPage.class),1);
+                            }
 
+                            @Override
+                            public void someTrue() {
+
+                            }
+
+                            @Override
+                            public void allFalse() {
+                                finish();
+                                MyToastClass.ShowToast(MyApplication.getContext(),"权限获取失败，请重试或进入手机设置修改");
+                            }
+
+                            @Override
+                            public void toTure() {
+
+                            }
+
+                            @Override
+                            public void low() {
+                                startActivityForResult(new Intent(MyApplication.getContext(), QRPage.class),1);
+                            }
+                        });
                     }
                 });
                 break;
@@ -310,7 +340,7 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
                 bar.barRightImg2(R.drawable.qr_icon, new FragmentSpbAvtivityBar.OnMyClick() {
                     @Override
                     public void onClick() {
-
+                        JumpIntent.startMyIntent(UserQrPage.class);
                     }
                 });
                 break;

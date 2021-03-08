@@ -153,6 +153,11 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
             public void toTure() {
 
             }
+
+            @Override
+            public void low() {
+
+            }
         });
     }
 

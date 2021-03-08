@@ -24,6 +24,29 @@ public class SelectImage implements SpbSelectImage {
     }
 
     @Override
+    public void selectEasyImg(OnResultCallbackListener onResultCallbackListener) {
+        PictureSelector.create(activity)
+                .openGallery(PictureMimeType.ofImage())
+                .imageEngine(GlideEngine.createGlideEngine())
+                .setPictureStyle(mPictureParameterStyle)
+                .setPictureCropStyle(mCropParameterStyle)
+                .setLanguage(-1)
+                .isUseCustomCamera(false)
+                .maxVideoSelectNum(1)
+                .isReturnEmpty(false)
+                .selectionMode(PictureConfig.SINGLE)
+                .isPreviewImage(false)
+                .showCropGrid(false)
+                .withAspectRatio(1,1)
+                .hideBottomControls(true)
+                .showCropFrame(true)
+                .isDragFrame(true)
+                .rotateEnabled(false)
+                .scaleEnabled(true)
+                .forResult(onResultCallbackListener);
+    }
+
+    @Override
     public void selectOneImg(String imgName, OnResultCallbackListener onResultCallbackListener) {
         PictureSelector.create(activity)
                 .openGallery(PictureMimeType.ofImage())
@@ -55,7 +78,6 @@ public class SelectImage implements SpbSelectImage {
 
     @Override
     public void selectMoreImg(String imgName, OnResultCallbackListener onResultCallbackListener) {
-
     }
 
     @Override

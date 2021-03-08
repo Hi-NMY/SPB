@@ -4,6 +4,8 @@ import com.luck.picture.lib.listener.OnResultCallbackListener;
 
 public interface SpbSelectImage {
 
+    public void selectEasyImg(OnResultCallbackListener onResultCallbackListener);
+
     public void selectOneImg(String imgName, OnResultCallbackListener onResultCallbackListener);
 
     public void selectMoreImg(String imgName, OnResultCallbackListener onResultCallbackListener);

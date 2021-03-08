@@ -13,7 +13,6 @@
 
         <TextView
                 android:id="@+id/text"
-                android:layout_below="@+id/img"
                 android:gravity="center"
                 android:text="欢迎使用校吧"
                 android:textColor="@color/black"
