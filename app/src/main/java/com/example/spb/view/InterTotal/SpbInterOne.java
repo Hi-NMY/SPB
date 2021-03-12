@@ -1,6 +1,6 @@
 package com.example.spb.view.InterTotal;
 
-public interface SpbInterOne {
+public interface SpbInterOne{
     /**
      *创建dialog
      * @Auther  nmynmy

@@ -95,22 +95,12 @@ public class AttentionTopicPage extends BaseMVPActivity<IAttentionTopicPageAView
     }
 
     @Override
-    public void startRefresh() {
+    public void createRefresh() {
 
     }
 
     @Override
-    public void obtainMoreRefresh() {
-
-    }
-
-    @Override
-    public void stopRefresh() {
-
-    }
-
-    @Override
-    public void stopMoreRefresh() {
+    public void finishRefresh(int num) {
 
     }
 }

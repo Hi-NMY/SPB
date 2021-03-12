@@ -3,7 +3,7 @@ package com.example.spb.view.InterTotal;
 public interface SpbInterTwo {
 
     /**
-     *显示dialog
+     *创建dialog
      * @Auther  nmynmy
      * @Date  2021-02-05  23:42
      */
@@ -42,29 +42,16 @@ public interface SpbInterTwo {
     public void setActivityBar();
 
     /**
-     *头部刷新
+     *创建刷新
      * @Auther  nmynmy
      * @Date  2021-02-05  23:42
      */
-    public void startRefresh();
+    public void createRefresh();
 
     /**
-     *获取更多刷新
+     *关闭刷新
      * @Auther  nmynmy
      * @Date  2021-02-05  23:42
      */
-    public void obtainMoreRefresh();
-
-    /**
-     *关闭顶部刷新
-     * @Auther  nmynmy
-     * @Date  2021-02-05  23:44
-     */
-    public void stopRefresh();
-    /**
-     *关闭更多刷新
-     * @Auther  nmynmy
-     * @Date  2021-02-05  23:44
-     */
-    public void stopMoreRefresh();
+    public void finishRefresh(int num);
 }

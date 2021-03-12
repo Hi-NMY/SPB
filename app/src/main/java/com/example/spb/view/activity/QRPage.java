@@ -1,6 +1,5 @@
 package com.example.spb.view.activity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
@@ -15,8 +14,7 @@ import com.example.spb.view.Component.FragmentSpbAvtivityBar;
 import com.example.spb.view.Component.SelectImage;
 import com.example.spb.view.InterTotal.SpbInterOne;
 import com.example.spb.view.littlefun.JumpIntent;
-import com.example.spb.view.littlefun.MyToastClass;
-import com.example.spb.view.littlefun.RequestForAccess;
+import com.example.spb.view.Component.MyToastClass;
 import com.gyf.immersionbar.ImmersionBar;
 import com.king.zxing.CaptureHelper;
 import com.king.zxing.Intents;
@@ -24,12 +22,9 @@ import com.king.zxing.OnCaptureCallback;
 import com.king.zxing.ViewfinderView;
 import com.king.zxing.camera.CameraManager;
 import com.king.zxing.util.CodeUtils;
-import com.luck.picture.lib.PictureSelector;
-import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.listener.OnResultCallbackListener;
 
-import java.io.File;
 import java.util.List;
 
 public class QRPage extends AppCompatActivity implements SpbInterOne, OnCaptureCallback {

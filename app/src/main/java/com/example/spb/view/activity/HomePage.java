@@ -23,11 +23,10 @@ import com.example.spb.view.fragment.homepage.userpage.UserPage;
 import com.example.spb.view.fragment.homepage.videopage.VideoPage;
 import com.example.spb.view.inter.IUserHomePageAView;
 import com.example.spb.view.littlefun.JumpIntent;
-import com.example.spb.view.littlefun.MyToastClass;
+import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.littlefun.RequestForAccess;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gyf.immersionbar.ImmersionBar;
-import com.king.zxing.CaptureActivity;
 
 
 public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAPresenterImpl> implements IUserHomePageAView, View.OnClickListener {

@@ -1,4 +1,4 @@
-package com.example.spb.view.littlefun;
+package com.example.spb.view.Component;
 
 import android.content.Context;
 import android.view.Gravity;

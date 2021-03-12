@@ -5,9 +5,22 @@
              android:layout_height="match_parent"
              tools:context=".view.fragment.homepage.postbarpage.NewPostPage">
 
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="最新"/>
+
+    <LinearLayout
+            android:id="@+id/item_postbar_voice"
+            android:orientation="horizontal"
+            android:layout_marginRight="150dp"
+            android:background="@drawable/bar_music_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/icon_image_40">
+
+        <pl.droidsonroids.gif.GifImageView
+                android:layout_marginRight="@dimen/margin_4"
+                android:translationY="@dimen/margin__16"
+                android:background="@drawable/loading_mu"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"/>
+
+    </LinearLayout>
 
 </FrameLayout>

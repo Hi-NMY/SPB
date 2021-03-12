@@ -110,7 +110,7 @@
                 android:textColor="@color/grey"
                 android:textSize="@dimen/font_16"
                 android:maxWidth="172dp"
-                android:text="第三、你、\n方发\n阿萨\n大大大\n大所的在\n下次行n\政\n村\naaadadada\ndasfdfd\nsfsfsdfsf\nsfsfada"
+                android:text="第三、你、\n方发\n阿萨\n大大大\n大所的在\n下次行n\政\n村\naaadafassadadsasdadaddasdsadadasddadadafdada\ndasfdfd\nsfsfsdfsf\nsfsfada"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:ignore="MissingConstraints"/>

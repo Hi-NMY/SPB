@@ -25,7 +25,7 @@ import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;
 import com.example.spb.view.inter.IFirstPageAView;
 import com.example.spb.view.littlefun.HideKeyboard;
 import com.example.spb.view.littlefun.JumpIntent;
-import com.example.spb.view.littlefun.MyToastClass;
+import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.littlefun.RequestForAccess;
 import com.gyf.immersionbar.ImmersionBar;
 

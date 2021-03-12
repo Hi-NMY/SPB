@@ -1,13 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".view.fragment.homepage.postbarpage.TopicPage">
+<com.scwang.smart.refresh.layout.SmartRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/topicpage_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/qianbai"
+        tools:context=".view.fragment.homepage.postbarpage.TopicPage">
 
-    <TextView
+    <RelativeLayout
+            android:minHeight="@dimen/icon_image_64"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="话题"/>
+            android:layout_height="wrap_content">
 
-</FrameLayout>
+        <pl.droidsonroids.gif.GifImageView
+                android:layout_centerInParent="true"
+                android:background="@drawable/loading4"
+                android:layout_width="@dimen/icon_image_64"
+                android:layout_height="@dimen/icon_image_64"
+                />
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:id="@+id/topicpage_refresh_tip"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:background="@color/theme_color"
+                    android:textColor="@color/beijing"
+                    android:text=""
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/icon_image_24"/>
+
+            <RelativeLayout
+                    android:id="@+id/r1"
+                    android:layout_below="@id/topicpage_refresh_tip"
+                    android:layout_marginTop="@dimen/margin_16"
+                    android:layout_marginHorizontal="@dimen/margin_8"
+                    android:minHeight="100dp"
+                    android:background="@drawable/cardview_gb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:id="@+id/t1"
+                        android:layout_marginLeft="@dimen/margin_8"
+                        android:layout_marginTop="@dimen/margin_12"
+                        android:textSize="@dimen/font_14"
+                        android:textColor="@color/qihei"
+                        android:text="我关注的"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/topicpage_tip_one"
+                        android:translationY="@dimen/margin_12"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:lineSpacingMultiplier="1.4"
+                        android:textSize="@dimen/font_12"
+                        android:textColor="@color/lightgrey"
+                        android:text="你还没有关注任何话题\n快去关注你喜欢的话题吧"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <ListView
+                        android:id="@+id/topicpage_userat_list"
+                        android:visibility="invisible"
+                        android:layout_marginBottom="@dimen/margin_8"
+                        android:layout_marginTop="@dimen/margin_8"
+                        android:layout_below="@id/t1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_64"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_below="@id/r1"
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:layout_marginHorizontal="@dimen/margin_8"
+                    android:minHeight="100dp"
+                    android:background="@drawable/cardview_gb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:id="@+id/t2"
+                        android:layout_marginLeft="@dimen/margin_8"
+                        android:layout_marginTop="@dimen/margin_12"
+                        android:textSize="@dimen/font_14"
+                        android:textColor="@color/qihei"
+                        android:text="猜你喜欢"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/topicpage_guess_next"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/margin_8"
+                        android:layout_marginTop="@dimen/margin_12"
+                        android:textSize="@dimen/font_14"
+                        android:textColor="@color/theme_color2"
+                        android:text="换一换"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <ListView
+                        android:id="@+id/topicpage_guess_list"
+                        android:visibility="invisible"
+                        android:layout_marginBottom="@dimen/margin_8"
+                        android:layout_marginTop="@dimen/margin_8"
+                        android:layout_below="@id/t2"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_64"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</com.scwang.smart.refresh.layout.SmartRefreshLayout>

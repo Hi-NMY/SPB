@@ -129,22 +129,12 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
     }
 
     @Override
-    public void startRefresh() {
+    public void createRefresh() {
 
     }
 
     @Override
-    public void obtainMoreRefresh() {
-
-    }
-
-    @Override
-    public void stopRefresh() {
-
-    }
-
-    @Override
-    public void stopMoreRefresh() {
+    public void finishRefresh(int num) {
 
     }
 

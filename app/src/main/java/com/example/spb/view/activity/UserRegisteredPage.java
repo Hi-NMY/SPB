@@ -24,7 +24,7 @@ import com.example.spb.view.InterComponent.SpbSelectImage;
 import com.example.spb.view.inter.IUserRegisteredPageAView;
 import com.example.spb.view.littlefun.HideKeyboard;
 import com.example.spb.view.littlefun.JumpIntent;
-import com.example.spb.view.littlefun.MyToastClass;
+import com.example.spb.view.Component.MyToastClass;
 import com.gyf.immersionbar.ImmersionBar;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.listener.OnResultCallbackListener;
