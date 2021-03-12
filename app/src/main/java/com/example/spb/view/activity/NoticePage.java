@@ -14,7 +14,6 @@ import com.gyf.immersionbar.ImmersionBar;
 public class NoticePage extends BaseMVPActivity<INoticePageAView,NoticePageAPresenterImpl> implements INoticePageAView {
 
     private FragmentSpbAvtivityBar bar;
-    private String TITLE = "通知";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

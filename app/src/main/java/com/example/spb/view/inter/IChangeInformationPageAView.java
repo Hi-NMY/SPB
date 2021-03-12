@@ -8,9 +8,18 @@ public interface IChangeInformationPageAView extends SpbInterOne {
     int REQUEST_TWO = 1;
     int REQUEST_THREE = 2;
     //响应标记
-    int RESPONSE_ONE = 0;
+    int RESPONSE_SUCCESS = 0;
     int RESPONSE_TWO = 1;
     int RESPONSE_THREE = 2;
+
+    String TITLE = "修改资料";
+    String RIGHTTXT = "保存";
+    String CANCEL = "取消";
+    String SUBMIT = "确认";
+    String BIRTHTITLE = "生日选择";
+    String HOMETITLE = "家乡选择";
+
+    int BOTTOMDIALOG = 0;
 
     <T> T request(int requestFlag);
 

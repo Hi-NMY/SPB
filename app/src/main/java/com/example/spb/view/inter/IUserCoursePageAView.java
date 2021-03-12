@@ -8,9 +8,11 @@ public interface IUserCoursePageAView extends SpbInterTwo {
     int REQUEST_TWO = 1;
     int REQUEST_THREE = 2;
     //响应标记
-    int RESPONSE_ONE = 0;
+    int RESPONSE_SUCCESS = 0;
     int RESPONSE_TWO = 1;
     int RESPONSE_THREE = 2;
+
+    String TITLE = "课程";
 
     <T> T request(int requestFlag);
 

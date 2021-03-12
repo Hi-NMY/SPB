@@ -29,7 +29,7 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
         }
 
         if (isAttachView()){
-            getView().response(headImgPath, IUserRegisteredPageAView.RESPONSE_ONE);
+            getView().response(headImgPath, IUserRegisteredPageAView.RESPONSE_SUCCESS);
         }
     }
 }

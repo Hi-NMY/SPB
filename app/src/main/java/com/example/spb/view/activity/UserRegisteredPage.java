@@ -47,7 +47,6 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
     private DialogInter bottomDialog;
     private SpbSelectImage spbSelectImage;
 
-    private String IMAGENAME = "UserHeadImage.png";
     private String imagePath;
 
     private boolean SEE = false;
@@ -93,7 +92,7 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
 
     @Override
     public <T> void response(T response, int responseFlag) {
-        if (responseFlag == RESPONSE_ONE) {
+        if (responseFlag == RESPONSE_SUCCESS) {
             Glide.with(this)
                     .load((String) response)
                     .centerCrop()
@@ -126,13 +125,13 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
                 mDialogClose.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        closeDialog(2);
+                        closeDialog(BOTTOMDIALOG);
                     }
                 });
                 mDialogPhotoalbum.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        closeDialog(2);
+                        closeDialog(BOTTOMDIALOG);
                         spbSelectImage.selectOneImg(IMAGENAME,new OnResultCallbackListener<LocalMedia>(){
                             @Override
                             public void onResult(List<LocalMedia> result) {
@@ -155,10 +154,10 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
     @Override
     public void showDialogS(int i) {
         switch (i) {
-            case 1:
+            case DIALOGLOADING:
                 dialogLoading.showMyDialog();
                 break;
-            case 2:
+            case BOTTOMDIALOG:
                 bottomDialog.showMyDialog();
                 break;
         }
@@ -167,10 +166,10 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
     @Override
     public void closeDialog(int i) {
         switch (i) {
-            case 1:
+            case DIALOGLOADING:
                 dialogLoading.closeMyDialog();
                 break;
-            case 2:
+            case BOTTOMDIALOG:
                 bottomDialog.closeMyDialog();
                 break;
         }
@@ -213,7 +212,7 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
                     JumpIntent.startSetResultIntent(this, 1, new JumpIntent.SetMsg() {
                         @Override
                         public void setMessage(Intent intent) {
-                            intent.putExtra("AccountNumber", account);
+                            intent.putExtra(STRINGEXTRA, account);
                         }
                     });
                 }
@@ -230,7 +229,7 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
                 }
                 break;
             case R.id.registered_user_headimg:
-                showDialogS(2);
+                showDialogS(BOTTOMDIALOG);
                 break;
         }
     }

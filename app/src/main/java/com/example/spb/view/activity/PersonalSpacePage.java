@@ -62,10 +62,6 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
     private DialogInter bottomDialog;
     private SpbSelectImage spbSelectImage;
 
-    private String USERNAME = "";
-    private String IMAGENAME = "UserHeadImage.png";
-    private String DIALOGTITLE = "设置头像";
-
     private FragmentSpbAvtivityBar bar;
     private AppBarLayout mPersonalspaceAppbarlayout;
     private RelativeLayout mPersonalspaceBarR;
@@ -309,7 +305,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                 JumpIntent.startMsgIntent(AttentionUserPage.class, new JumpIntent.SetMsg() {
                     @Override
                     public void setMessage(Intent intent) {
-                        intent.putExtra("SELECTNUM",0);
+                        intent.putExtra(STRINGEXTRA,PAGENUMONE);
                     }
                 });
                 break;
@@ -317,7 +313,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                 JumpIntent.startMsgIntent(AttentionUserPage.class, new JumpIntent.SetMsg() {
                     @Override
                     public void setMessage(Intent intent) {
-                        intent.putExtra("SELECTNUM",1);
+                        intent.putExtra(STRINGEXTRA,PAGENUMTWO);
                     }
                 });
                 break;

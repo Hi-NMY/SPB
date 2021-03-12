@@ -14,7 +14,6 @@ public class UserCollectPage extends BaseMVPActivity<IUserCollectPageAView,UserC
         implements IUserCollectPageAView {
 
     private FragmentSpbAvtivityBar bar;
-    private String TITLE = "我的收藏";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

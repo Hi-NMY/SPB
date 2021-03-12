@@ -14,7 +14,6 @@ public class UserDiaryPage extends BaseMVPActivity<IUserDiaryPageAView,UserDiary
         implements IUserDiaryPageAView {
 
     private FragmentSpbAvtivityBar bar;
-    private String TITLE = "日记";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

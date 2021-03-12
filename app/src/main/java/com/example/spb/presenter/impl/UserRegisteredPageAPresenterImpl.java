@@ -28,7 +28,7 @@ public class UserRegisteredPageAPresenterImpl extends BasePresenter<IUserRegiste
         }
 
         if (isAttachView()){
-            getView().response(headImgPath,IUserRegisteredPageAView.RESPONSE_ONE);
+            getView().response(headImgPath,IUserRegisteredPageAView.RESPONSE_SUCCESS);
         }
     }
 }

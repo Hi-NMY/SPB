@@ -15,7 +15,6 @@ import com.gyf.immersionbar.ImmersionBar;
 public class SetUpPage extends BaseMVPActivity<ISetUpPageAView,SetUpPageAPresenterImpl> implements ISetUpPageAView {
 
     private FragmentSpbAvtivityBar bar;
-    private String TITLE = "设置";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

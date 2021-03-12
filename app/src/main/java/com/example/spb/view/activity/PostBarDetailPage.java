@@ -86,6 +86,6 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
                 finish();
             }
         });
-        bar.barCentralTxt("帖子",null);
+        bar.barCentralTxt(TITLE,null);
     }
 }

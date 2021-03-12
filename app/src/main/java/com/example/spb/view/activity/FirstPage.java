@@ -136,12 +136,12 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
         RequestForAccess.setNewAccess(this, new RequestForAccess.OnReturn() {
             @Override
             public void allTrue() {
-                MyToastClass.ShowToast(MyApplication.getContext(), "权限已获取");
+                MyToastClass.ShowToast(MyApplication.getContext(), STRINGACCESSTRUE);
             }
 
             @Override
             public void someTrue() {
-                MyToastClass.ShowToast(MyApplication.getContext(), "部分权限未获取，可能会影响使用");
+                MyToastClass.ShowToast(MyApplication.getContext(), STRINGACCESSTRUE1);
             }
 
             @Override
@@ -230,7 +230,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
 
                 } else {
                     if (!ENTER_CHECK) {
-                        MyToastClass.ShowToast(this, "请阅读并同意校吧用户须知");
+                        MyToastClass.ShowToast(this, TOASTTXT);
                     } else {
                         mEnterR1.startAnimation(animationa);
                         mEnterR2.startAnimation(animationb);
@@ -261,7 +261,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
                 setEmptyVisibility(false);
                 break;
             case R.id.enter_usernotice:
-                showDialogS(1);
+                showDialogS(DIALOGUSERNOTICE);
                 break;
             case R.id.password_eye:
                 if (SEE) {
@@ -399,13 +399,13 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
                 mClickFalse.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        closeDialog(1);
+                        closeDialog(DIALOGUSERNOTICE);
                     }
                 });
                 mClickTrue.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        closeDialog(1);
+                        closeDialog(DIALOGUSERNOTICE);
                     }
                 });
             }
@@ -415,10 +415,10 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
     @Override
     public void showDialogS(int i) {
         switch (i) {
-            case 1:
+            case DIALOGUSERNOTICE:
                 dialogUserNotice.showMyDialog();
                 break;
-            case 2:
+            case DIALOGLOADING:
                 dialogLoading.showMyDialog();
                 break;
         }
@@ -427,10 +427,10 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
     @Override
     public void closeDialog(int i) {
         switch (i) {
-            case 1:
+            case DIALOGUSERNOTICE:
                 dialogUserNotice.closeMyDialog();
                 break;
-            case 2:
+            case DIALOGLOADING:
                 dialogLoading.closeMyDialog();
                 break;
         }

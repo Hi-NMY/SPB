@@ -31,8 +31,6 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
         implements IChangeInformationPageAView, View.OnClickListener {
 
     private FragmentSpbAvtivityBar bar;
-    private String TITLE = "修改资料";
-    private String RIGHTTXT = "保存";
 
     private DialogInter bottomDialog;
     private RelativeLayout mRFavorite;
@@ -155,7 +153,7 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
         HideKeyboard.hideboard(v);
         switch (v.getId()) {
             case R.id.r_favorite:
-                showDialogS(0);
+                showDialogS(BOTTOMDIALOG);
                 break;
             case R.id.r_birth:
                 Calendar startDate = Calendar.getInstance();
@@ -169,9 +167,9 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
                         mChangeinformationBirth.setText(MyDateClass.getStringDate(date) + "   " + MyDateClass.getConstellation(MyDateClass.getStringDateMonth(date)));
                     }
                 }).setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
-                        .setCancelText("取消")
-                        .setSubmitText("确认")
-                        .setTitleText("生日选择")
+                        .setCancelText(CANCEL)
+                        .setSubmitText(SUBMIT)
+                        .setTitleText(BIRTHTITLE)
                         .setSubmitColor(ContextCompat.getColor(this, R.color.theme_color))//确定按钮文字颜色
                         .setCancelColor(ContextCompat.getColor(this, R.color.theme_color))//取消按钮文字颜色
                         .setOutSideCancelable(true)
@@ -202,9 +200,9 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
                     }
                 })
 
-                        .setSubmitText("确定")//确定按钮文字
-                        .setCancelText("取消")//取消按钮文字
-                        .setTitleText("家乡选择")//标题
+                        .setSubmitText(SUBMIT)//确定按钮文字
+                        .setCancelText(CANCEL)//取消按钮文字
+                        .setTitleText(HOMETITLE)//标题
                         .setSubmitColor(ContextCompat.getColor(this, R.color.theme_color))
                         .setCancelColor(ContextCompat.getColor(this, R.color.theme_color))
                         .isCenterLabel(false)

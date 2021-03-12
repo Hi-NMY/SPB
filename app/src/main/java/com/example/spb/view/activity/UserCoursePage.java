@@ -14,7 +14,6 @@ public class UserCoursePage extends BaseMVPActivity<IUserCoursePageAView,UserCou
         implements IUserCoursePageAView {
 
     private FragmentSpbAvtivityBar bar;
-    private String TITLE = "课程";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -288,7 +288,7 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
                 break;
             case 3:
                 bar.setBarBackground(R.color.beijing);
-                bar.barCentralTxt("消息", null);
+                bar.barCentralTxt(TITLE, null);
                 bar.barRightImg1(R.drawable.adduser_icon, new FragmentSpbAvtivityBar.OnMyClick() {
                     @Override
                     public void onClick() {
@@ -312,7 +312,7 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
                             @Override
                             public void allFalse() {
                                 finish();
-                                MyToastClass.ShowToast(MyApplication.getContext(),"权限获取失败，请重试或进入手机设置修改");
+                                MyToastClass.ShowToast(MyApplication.getContext(),STRINGACCESS);
                             }
 
                             @Override
@@ -364,7 +364,7 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
 
     private void exit() {
         if ((System.currentTimeMillis() - exitTime) > 2000) {
-            MyToastClass.ShowToast(this, "再按一次退出应用");
+            MyToastClass.ShowToast(this, RETURN);
             exitTime = System.currentTimeMillis();
         } else {
             finish();

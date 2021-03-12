@@ -14,7 +14,6 @@ public class SecondHandStorePage extends BaseMVPActivity<ISecondHandStorePageAVi
         implements ISecondHandStorePageAView {
 
     private FragmentSpbAvtivityBar bar;
-    private String TITLE = "二手商店";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

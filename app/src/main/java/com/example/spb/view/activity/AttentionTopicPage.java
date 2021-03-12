@@ -16,7 +16,6 @@ public class AttentionTopicPage extends BaseMVPActivity<IAttentionTopicPageAView
         implements IAttentionTopicPageAView {
 
     private FragmentSpbAvtivityBar bar;
-    private String TITLE = "我关注的话题";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
