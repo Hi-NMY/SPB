@@ -14,6 +14,7 @@
             android:layout_height="wrap_content">
 
         <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/topicpage_refresh_gif"
                 android:layout_centerInParent="true"
                 android:background="@drawable/loading4"
                 android:layout_width="@dimen/icon_image_64"

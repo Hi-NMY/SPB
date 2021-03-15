@@ -7,17 +7,24 @@ import androidx.annotation.NonNull;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.presenter.impl.TopicPageFPresenterImpl;
+import com.example.spb.view.Component.MySmartRefresh;
 import com.example.spb.view.Component.RefreshTipAnima;
 import com.example.spb.view.inter.ITopicPageFView;
+import com.example.spb.view.littlefun.GIFShow;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
+import com.scwang.smart.refresh.layout.listener.ScrollBoundaryDecider;
+import pl.droidsonroids.gif.GifDrawable;
+import pl.droidsonroids.gif.GifImageView;
 
 public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresenterImpl> implements ITopicPageFView {
 
     private SmartRefreshLayout mTopicpageRefresh;
     private TextView mTopicpageRefreshTip;
     private TextView mTopicpageGuessNext;
+    private GifImageView mTopicpageRefreshGif;
+    private MySmartRefresh mySmartRefresh;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,11 +56,13 @@ public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresen
         mTopicpageGuessNext = (TextView) view.findViewById(R.id.topicpage_guess_next);
         mTopicpageRefreshTip = (TextView) view.findViewById(R.id.topicpage_refresh_tip);
         mTopicpageRefresh = (SmartRefreshLayout) view.findViewById(R.id.topicpage_refresh);
+        mTopicpageRefreshGif = (GifImageView)view.findViewById(R.id.topicpage_refresh_gif);
+        mySmartRefresh = new MySmartRefresh(mTopicpageRefresh,mTopicpageRefreshGif,null);
         mTopicpageGuessNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mTopicpageRefresh.finishRefresh();
-                RefreshTipAnima.tipAnimation(mTopicpageRefreshTip,12);
+                mySmartRefresh.finishMyRefresh();
+                RefreshTipAnima.tipAnimation(mTopicpageRefreshTip, 12);
             }
         });
         initData();
@@ -99,14 +108,14 @@ public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresen
 
     @Override
     public void createRefresh() {
-        mTopicpageRefresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+        mySmartRefresh.setMyRefreshListener(new MySmartRefresh.MyRefreshListener() {
             @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
 
             }
 
             @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
 
             }
         });
