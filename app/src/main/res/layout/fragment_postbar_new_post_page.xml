@@ -1,35 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".view.fragment.homepage.postbarpage.NewPostPage">
+<com.scwang.smart.refresh.layout.SmartRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/newpostpage_refresh"
+        android:background="@color/qianbai"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.fragment.homepage.postbarpage.NewPostPage">
 
-
-    <LinearLayout
-            android:id="@+id/r"
-            android:orientation="horizontal"
-            android:layout_marginRight="150dp"
-            android:background="@drawable/bar_music_bg"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/icon_image_40">
+    <RelativeLayout
+            android:minHeight="@dimen/icon_image_64"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         <pl.droidsonroids.gif.GifImageView
-                android:id="@+id/item_postbar_voice"
-                android:background="@drawable/loading_mu"
-                android:layout_marginRight="@dimen/margin_4"
-                android:translationY="@dimen/margin__16"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"/>
+                android:id="@+id/newpostpage_refresh_tgif"
+                android:layout_centerInParent="true"
+                android:background="@drawable/loading4"
+                android:layout_width="@dimen/icon_image_64"
+                android:layout_height="@dimen/icon_image_64"
+                />
+    </RelativeLayout>
 
-    </LinearLayout>
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
 
-    <ImageView
-            android:id="@+id/item_postbar_like_img"
-            android:layout_below="@id/r"
-            android:layout_centerInParent="true"
-            android:background="@drawable/icon_like"
-            android:layout_width="@dimen/icon_image_32"
-            android:layout_height="@dimen/icon_image_32"/>
+        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-</RelativeLayout>
+            <TextView
+                    android:id="@+id/newpostpage_refresh_tip"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:background="@color/theme_color"
+                    android:textColor="@color/beijing"
+                    android:text=""
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/icon_image_24"/>
+
+            <LinearLayout
+                    android:id="@+id/r"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="150dp"
+                    android:background="@drawable/bar_music_bg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/icon_image_40">
+
+                <pl.droidsonroids.gif.GifImageView
+                        android:id="@+id/item_postbar_voice"
+                        android:background="@drawable/loading_mu"
+                        android:layout_marginRight="@dimen/margin_4"
+                        android:translationY="@dimen/margin__16"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"/>
+
+            </LinearLayout>
+
+            <ImageView
+                    android:id="@+id/item_postbar_like_img"
+                    android:layout_below="@id/r"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/icon_like"
+                    android:layout_width="@dimen/icon_image_32"
+                    android:layout_height="@dimen/icon_image_32"/>
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <RelativeLayout
+            android:minHeight="@dimen/icon_image_64"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/txt"
+                android:textSize="@dimen/font_10"
+                android:textColor="@color/darkgrey"
+                android:text="松手获取更多内容"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/newpostpage_refresh_bgif"
+                android:layout_toLeftOf="@id/txt"
+                android:layout_centerInParent="true"
+                android:background="@drawable/loading1"
+                android:layout_width="@dimen/icon_image_32"
+                android:layout_height="@dimen/icon_image_32"
+                />
+
+    </RelativeLayout>
+
+</com.scwang.smart.refresh.layout.SmartRefreshLayout>

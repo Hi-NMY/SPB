@@ -19,4 +19,8 @@ public class GIFShow{
     public void resetGif(){
         gifDrawable.setLoopCount(1);
     }
+
+    public void stopGif(){
+        gifDrawable.stop();
+    }
 }

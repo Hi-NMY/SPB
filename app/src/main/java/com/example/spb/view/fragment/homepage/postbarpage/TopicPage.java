@@ -21,7 +21,6 @@ import pl.droidsonroids.gif.GifImageView;
 public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresenterImpl> implements ITopicPageFView {
 
     private SmartRefreshLayout mTopicpageRefresh;
-    private TextView mTopicpageRefreshTip;
     private TextView mTopicpageGuessNext;
     private GifImageView mTopicpageRefreshGif;
     private MySmartRefresh mySmartRefresh;
@@ -54,7 +53,6 @@ public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresen
     @Override
     protected void initFragView(View view) {
         mTopicpageGuessNext = (TextView) view.findViewById(R.id.topicpage_guess_next);
-        mTopicpageRefreshTip = (TextView) view.findViewById(R.id.topicpage_refresh_tip);
         mTopicpageRefresh = (SmartRefreshLayout) view.findViewById(R.id.topicpage_refresh);
         mTopicpageRefreshGif = (GifImageView)view.findViewById(R.id.topicpage_refresh_gif);
         mySmartRefresh = new MySmartRefresh(mTopicpageRefresh,mTopicpageRefreshGif,null);
@@ -62,7 +60,6 @@ public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresen
             @Override
             public void onClick(View v) {
                 mySmartRefresh.finishMyRefresh();
-                RefreshTipAnima.tipAnimation(mTopicpageRefreshTip, 12);
             }
         });
         initData();
