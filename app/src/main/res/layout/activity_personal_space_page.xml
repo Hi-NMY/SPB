@@ -15,16 +15,16 @@
             android:layout_height="match_parent">
 
         <RelativeLayout
-                android:layout_marginTop="@dimen/margin_32"
-                android:minHeight="@dimen/icon_image_64"
+                android:layout_marginTop="@dimen/margin_16"
+                android:minHeight="@dimen/icon_image_44"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
             <pl.droidsonroids.gif.GifImageView
                     android:layout_centerInParent="true"
-                    android:background="@drawable/loading2"
-                    android:layout_width="@dimen/icon_image_32"
-                    android:layout_height="@dimen/icon_image_32"
+                    android:background="@drawable/loading4"
+                    android:layout_width="@dimen/icon_image_64"
+                    android:layout_height="@dimen/icon_image_64"
                     />
         </RelativeLayout>
 

@@ -135,7 +135,7 @@
 
                 <ImageView
                         android:id="@+id/item_video_discuss_img"
-                        android:background="@drawable/icon_discuss"
+                        android:background="@drawable/icon_comment"
                         android:layout_centerHorizontal="true"
                         android:layout_width="@dimen/icon_image_32"
                         android:layout_height="@dimen/icon_image_32"/>

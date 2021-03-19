@@ -161,7 +161,7 @@
 
                 <ImageView
                         android:id="@+id/postbar_detail_collect_img"
-                        android:background="@drawable/icon_discuss"
+                        android:background="@drawable/icon_comment"
                         android:layout_centerHorizontal="true"
                         android:layout_width="@dimen/icon_image_32"
                         android:layout_height="@dimen/icon_image_32"/>

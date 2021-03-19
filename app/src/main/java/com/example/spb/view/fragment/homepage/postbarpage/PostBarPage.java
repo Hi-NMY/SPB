@@ -18,7 +18,9 @@ import com.example.spb.adapter.FragmentViewPageAdapter;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.presenter.impl.PostBarPageFPresenterImpl;
+import com.example.spb.view.activity.TopicBarPage;
 import com.example.spb.view.inter.IPostBarPageFView;
+import com.example.spb.view.littlefun.JumpIntent;
 import com.example.spb.view.littlefun.ScaleTransitionPagerTitleView;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -56,6 +58,7 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
     private ImageView mPostbarSearchIcon;
     private CollapsingToolbarLayout mPostbarCollapsinglayout;
     private RelativeLayout mPostbarR;
+    private RelativeLayout mSignRlt;
 
 
     @Override
@@ -80,7 +83,8 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
         mPostbarAppbarlayout = (AppBarLayout) view.findViewById(R.id.postbar_appbarlayout);
         mPostbarSearchIcon = (ImageView) view.findViewById(R.id.postbar_search_icon);
         mPostbarCollapsinglayout = (CollapsingToolbarLayout) view.findViewById(R.id.postbar_collapsinglayout);
-        mPostbarR = (RelativeLayout)view.findViewById(R.id.postbar_R);
+        mPostbarR = (RelativeLayout) view.findViewById(R.id.postbar_R);
+        mSignRlt = (RelativeLayout)view.findViewById(R.id.sign_rlt);
         mPostbarSearchIcon.bringToFront();
         intFollowViewPager();
         listenViewMove();
@@ -217,9 +221,12 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.postbar_search_icon:
                 mPostbarAppbarlayout.setExpanded(true);
+                break;
+            case R.id.sign_rlt:
+                JumpIntent.startMyIntent(TopicBarPage.class);
                 break;
         }
     }
@@ -242,6 +249,7 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
     @Override
     public void setMyListener() {
         mPostbarSearchIcon.setOnClickListener(this);
+        mSignRlt.setOnClickListener(this);
     }
 
     @Override

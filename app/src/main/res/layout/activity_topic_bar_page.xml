@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/topicbar_R_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/enterbg"
+        tools:context=".view.activity.TopicBarPage">
+
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/topicbar_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <RelativeLayout
+                android:layout_marginTop="@dimen/margin_16"
+                android:minHeight="@dimen/icon_image_44"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <pl.droidsonroids.gif.GifImageView
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/loading4"
+                    android:layout_width="@dimen/icon_image_64"
+                    android:layout_height="@dimen/icon_image_64"
+                    />
+        </RelativeLayout>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+            <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/topicbar_appbarlayout"
+                    android:background="@color/TransColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                        android:id="@+id/topicbar_collapsinglayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="220dp"
+                        app:collapsedTitleGravity="left"
+                        app:expandedTitleGravity="left|bottom"
+                        app:expandedTitleMarginBottom="10dp"
+                        app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                        app:titleEnabled="false">
+
+                    <androidx.appcompat.widget.Toolbar
+                            android:id="@+id/topicbar_Toolbar"
+                            android:layout_marginTop="@dimen/StatusBar_height"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/spb_activity_bar_44"
+                            android:minHeight="?attr/actionBarSize"
+                            android:background="@color/beijing"
+                            android:alpha="0"
+                            app:layout_collapseMode="pin"
+                            app:title="@null">
+                    </androidx.appcompat.widget.Toolbar>
+
+                    <RelativeLayout
+                            android:layout_marginTop="69dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                        <com.makeramen.roundedimageview.RoundedImageView
+                                android:id="@+id/topicbar_img"
+                                android:layout_marginLeft="@dimen/margin_32"
+                                android:layout_marginRight="@dimen/margin_20"
+                                android:layout_marginTop="@dimen/margin_32"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/enterbg"
+                                android:layout_width="@dimen/icon_image_56"
+                                android:layout_height="@dimen/icon_image_56"
+                                app:riv_corner_radius="@dimen/corner_20"/>
+
+                        <TextView
+                                android:id="@+id/topicbar_name"
+                                android:layout_alignTop="@id/topicbar_img"
+                                android:layout_toRightOf="@id/topicbar_img"
+                                android:textSize="@dimen/font_16"
+                                android:textStyle="bold"
+                                android:textColor="@color/beijing"
+                                android:text="撒大声地"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                        <TextView
+                                android:id="@+id/topicbar_t"
+                                android:layout_marginTop="@dimen/margin_2"
+                                android:layout_below="@+id/topicbar_name"
+                                android:layout_toRightOf="@id/topicbar_img"
+                                android:textSize="@dimen/font_10"
+                                android:textColor="@color/beijing"
+                                android:text="关注"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        <TextView
+                                android:id="@+id/topicbar_attention_num"
+                                android:layout_marginLeft="@dimen/margin_4"
+                                android:layout_alignTop="@id/topicbar_t"
+                                android:layout_toRightOf="@id/topicbar_t"
+                                android:textSize="@dimen/font_10"
+                                android:textColor="@color/beijing"
+                                android:text="21.2w"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        <TextView
+                                android:id="@+id/topicbar_t2"
+                                android:layout_marginLeft="@dimen/margin_8"
+                                android:layout_alignTop="@id/topicbar_attention_num"
+                                android:layout_toRightOf="@id/topicbar_attention_num"
+                                android:textSize="@dimen/font_10"
+                                android:textColor="@color/beijing"
+                                android:text="帖子"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        <TextView
+                                android:id="@+id/topicbar_bar_num"
+                                android:layout_alignTop="@id/topicbar_t2"
+                                android:layout_toRightOf="@id/topicbar_t2"
+                                android:layout_marginLeft="@dimen/margin_4"
+                                android:textSize="@dimen/font_10"
+                                android:textColor="@color/beijing"
+                                android:text="20.6w"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                        <TextView
+                                android:id="@+id/topicbar_slogan"
+                                android:layout_toRightOf="@id/topicbar_img"
+                                android:layout_alignBottom="@id/topicbar_img"
+                                android:textSize="@dimen/font_10"
+                                android:textColor="@color/beijing"
+                                android:text="这个人很懒，什么也没写~"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                        <Button
+                                android:id="@+id/topicbar_attention_btn"
+                                android:layout_marginVertical="@dimen/margin_12"
+                                android:layout_alignTop="@+id/topicbar_name"
+                                android:layout_alignBottom="@id/topicbar_slogan"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="@dimen/margin_32"
+                                android:textColor="@color/qihei"
+                                android:textSize="@dimen/font_12"
+                                android:text="关注"
+                                android:stateListAnimator="@null"
+                                android:background="@drawable/white_bg"
+                                android:layout_width="@dimen/icon_image_64"
+                                android:layout_height="wrap_content"/>
+                    </RelativeLayout>
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+            </com.google.android.material.appbar.AppBarLayout>
+            <androidx.core.widget.NestedScrollView
+                    android:id="@+id/topicbar_scrollview"
+                    android:fillViewport="true"
+                    android:background="@drawable/very_bg"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <RelativeLayout
+                        android:clipChildren="false"
+                        android:clipToPadding="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    <RelativeLayout
+                            android:id="@+id/r"
+                            android:layout_marginTop="-25dp"
+                            android:background="@drawable/very_bg"
+                            android:paddingTop="@dimen/StatusBar_height"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                        <net.lucode.hackware.magicindicator.MagicIndicator
+                                android:id="@+id/topicbar_idt"
+                                android:paddingLeft="@dimen/margin_12"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/icon_image_40" />
+                    </RelativeLayout>
+
+                    <androidx.viewpager.widget.ViewPager
+                            android:id="@+id/topicbar_viewpager"
+                            android:layout_below="@id/r"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+                </RelativeLayout>
+            </androidx.core.widget.NestedScrollView>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+    <RelativeLayout
+            android:id="@+id/topicbar_bar_R"
+            android:paddingTop="@dimen/StatusBar_height"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <fragment
+                android:id="@+id/topicbar_bar"
+                android:name="com.example.spb.view.Component.FragmentSpbAvtivityBar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spb_activity_bar_44"/>
+    </RelativeLayout>
+</RelativeLayout>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
@@ -24,6 +25,7 @@ import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.InterComponent.SpbSelectImage;
 import com.example.spb.view.fragment.personalspace.BasicInformation;
 import com.example.spb.view.fragment.personalspace.PersonalPostBar;
+import com.example.spb.view.fragment.personalspace.PersonalVideo;
 import com.example.spb.view.inter.IPersonalSpacePageAView;
 import com.example.spb.view.littlefun.JumpIntent;
 import com.example.spb.view.littlefun.ScaleTransitionPagerTitleView;
@@ -50,7 +52,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         implements IPersonalSpacePageAView, View.OnClickListener {
 
     private SimplePagerTitleView simplePagerTitleView;
-    private static final String[] title = new String[]{"资料", "帖子"};
+    private static final String[] title = new String[]{"资料","帖子","视频"};
     private List<String> myTitleList = Arrays.asList(title);
     private ArrayList<Fragment> fragments;
     private FragmentManager fragmentManager;
@@ -111,10 +113,11 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         fragments = new ArrayList<>();
         fragments.add(new BasicInformation());
         fragments.add(new PersonalPostBar());
+        fragments.add(new PersonalVideo());
 
         fragmentManager = getSupportFragmentManager();
 
-        pagerAdapter = new FragmentViewPageAdapter(fragmentManager, fragments, 2);
+        pagerAdapter = new FragmentViewPageAdapter(fragmentManager, fragments, 3);
 
         mPersonalspaceViewpager.setAdapter(pagerAdapter);
         highViewPager();
@@ -171,12 +174,16 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                 int persent = -i * 2 / 3;
                 if (persent > 255) {
                     persent = 255;
-                    bar.barCentralTxt(USERNAME, new FragmentSpbAvtivityBar.OnMyClick() {
+                    bar.barCentralTxt("USERNAME", new FragmentSpbAvtivityBar.OnMyClick() {
                         @Override
                         public void onClick() {
                             mPersonalspaceAppbarlayout.setExpanded(true);
                         }
                     });
+                    bar.barLeftImg(R.drawable.left_return,null);
+                }else {
+                    bar.barCentralTxt("",null);
+                    bar.barLeftImg(R.drawable.left_return_white,null);
                 }
                 int color = Color.argb(persent, 249, 249, 249);
                 mPersonalspaceBarR.setBackgroundColor(color);
@@ -277,7 +284,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
     public void setActivityBar() {
         bar = setMyActivityBar(R.id.personalspace_bar);
         bar.setBarBackground(R.color.picture_color_transparent);
-        bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
+        bar.barLeftImg(R.drawable.left_return_white, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
             public void onClick() {
                 finish();

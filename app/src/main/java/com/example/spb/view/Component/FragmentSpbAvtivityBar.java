@@ -67,6 +67,10 @@ public class FragmentSpbAvtivityBar extends BaseMVPFragment<ISpbAvtivityBarFView
         mSignRlt = (RelativeLayout)view.findViewById(R.id.sign_rlt);
     }
 
+    public RelativeLayout getmSpbActivityBar() {
+        return mSpbActivityBar;
+    }
+
     public ImageView getmBarLeftImg() {
         return mBarLeftImg;
     }

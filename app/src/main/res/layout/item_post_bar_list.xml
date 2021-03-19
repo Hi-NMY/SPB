@@ -156,27 +156,27 @@
             </RelativeLayout>
 
             <RelativeLayout
-                    android:id="@+id/item_postbar_discuss_R"
+                    android:id="@+id/item_postbar_comment_R"
                     android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                 <ImageView
-                        android:id="@+id/item_postbar_discuss_img"
-                        android:background="@drawable/icon_discuss"
+                        android:id="@+id/item_postbar_comment_img"
+                        android:background="@drawable/icon_comment"
                         android:layout_centerHorizontal="true"
                         android:layout_width="@dimen/icon_image_32"
                         android:layout_height="@dimen/icon_image_32"/>
 
                 <TextView
-                        android:id="@+id/item_postbar_discuss_num"
+                        android:id="@+id/item_postbar_comment_num"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_12"
                         android:text="2365"
                         android:gravity="center"
-                        android:layout_alignBottom="@id/item_postbar_discuss_img"
-                        android:layout_alignTop="@+id/item_postbar_discuss_img"
-                        android:layout_toRightOf="@+id/item_postbar_discuss_img"
+                        android:layout_alignBottom="@id/item_postbar_comment_img"
+                        android:layout_alignTop="@+id/item_postbar_comment_img"
+                        android:layout_toRightOf="@+id/item_postbar_comment_img"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
