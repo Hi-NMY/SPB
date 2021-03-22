@@ -12,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.spb.R;
+import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
+import com.example.spb.entity.User;
 import com.example.spb.presenter.impl.UserRegisteredPageAPresenterImpl;
 import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.Component.EasyDialog;
@@ -51,6 +53,8 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
 
     private boolean SEE = false;
 
+    private User user = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,17 +91,45 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
 
     @Override
     public <T> T request(int requestFlag) {
+        closeDialog(DIALOGLOADING);
+        if (requestFlag == RESPONSE_ZERO){
+            MyToastClass.ShowToast(this,"错误，请重试");
+        }
         return null;
     }
 
     @Override
     public <T> void response(T response, int responseFlag) {
-        if (responseFlag == RESPONSE_SUCCESS) {
-            Glide.with(this)
-                    .load((String) response)
-                    .centerCrop()
-                    .into(mRegisteredUserHeadimg);
-            imagePath = (String) response;
+        switch (responseFlag){
+            case IMAGE_SUCCESS:
+                Glide.with(this)
+                        .load((String) response)
+                        .centerCrop()
+                        .into(mRegisteredUserHeadimg);
+                imagePath = (String) response;
+                break;
+            case RESPONSE_ONE:
+                MyToastClass.ShowToast(this,STRINGERRORONE);
+                closeDialog(DIALOGLOADING);
+                break;
+            case RESPONSE_THREE:
+                MyToastClass.ShowToast(this,STRINGERRORTHREE);
+                closeDialog(DIALOGLOADING);
+                break;
+            case RESPONSE_FORE:
+                MyToastClass.ShowToast(this,STRINGERRORFORE);
+                closeDialog(DIALOGLOADING);
+                break;
+            case RESPONSE_SUCCESS:
+                closeDialog(DIALOGLOADING);
+                MyToastClass.ShowToast(this,STRINGSUCCESS);
+                JumpIntent.startSetResultIntent(this, 1, new JumpIntent.SetMsg() {
+                    @Override
+                    public void setMessage(Intent intent) {
+                        intent.putExtra(STRINGEXTRA, account);
+                    }
+                });
+                break;
         }
     }
 
@@ -107,6 +139,7 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
     @Override
     public void createDialog() {
         dialogLoading = new EasyDialog(this, R.drawable.loading);
+        dialogLoading.setCancelable(false);
         bottomDialog = new ComponentDialog(this, R.layout.dialog_selectpicture, R.style.bottomdialog, new ComponentDialog.InitDialog() {
             @Override
             public void initView(View view) {
@@ -135,6 +168,23 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
                         spbSelectImage.selectOneImg(IMAGENAME,new OnResultCallbackListener<LocalMedia>(){
                             @Override
                             public void onResult(List<LocalMedia> result) {
+                                mPresenter.getHeadImage(result);
+                            }
+
+                            @Override
+                            public void onCancel() {
+                                //MyToastClass.ShowToast(MyApplication.getContext(),"出错了");
+                            }
+                        });
+                    }
+                });
+                mDialogCamera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        closeDialog(BOTTOMDIALOG);
+                        spbSelectImage.selectCameraImg(IMAGENAME, new OnResultCallbackListener() {
+                            @Override
+                            public void onResult(List result) {
                                 mPresenter.getHeadImage(result);
                             }
 
@@ -202,6 +252,14 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
         });
     }
 
+    private User setUser(){
+        user = new User();
+        user.setUser_head_image(imagePath);
+        user.setUser_account(account);
+        user.setUser_name(name);
+        user.setUser_password(password);
+        return user;
+    }
 
     @Override
     public void onClick(View v) {
@@ -209,12 +267,8 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
         switch (v.getId()) {
             case R.id.reg_star_btn:
                 if (submit()) {
-                    JumpIntent.startSetResultIntent(this, 1, new JumpIntent.SetMsg() {
-                        @Override
-                        public void setMessage(Intent intent) {
-                            intent.putExtra(STRINGEXTRA, account);
-                        }
-                    });
+                    showDialogS(DIALOGLOADING);
+                    mPresenter.registerUser(setUser());
                 }
                 break;
             case R.id.reg_password_eye:
@@ -239,7 +293,6 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
     private String password;
 
     private boolean submit() {
-        // validate
         if (TextUtils.isEmpty(imagePath)) {
             MyToastClass.ShowToast(this, "请设置头像");
             return false;
@@ -258,7 +311,7 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
         }
 
         password = mRegUserPassword.getText().toString().trim();
-        if (TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(password) || mRegUserPassword.length() < 8) {
             MyToastClass.ShowToast(this, "请输入合法密码");
             return false;
         }

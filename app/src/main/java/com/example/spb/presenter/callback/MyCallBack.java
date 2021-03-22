@@ -1,12 +1,15 @@
 package com.example.spb.presenter.callback;
 
-public interface MyCallBack<T> {
+import okhttp3.Response;
+import org.jetbrains.annotations.NotNull;
+
+public interface MyCallBack{
     //超时
     int ERROR_ONE = 1;
     //连接错误
     int ERROR_TWO = 2;
 
-    void onSuccess(T response);
+    void onSuccess(@NotNull Response response);
 
     void onError(int t);
 }

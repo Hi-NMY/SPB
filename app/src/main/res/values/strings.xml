@@ -14,4 +14,17 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    
+    <string name="Shared_RongUser">RongUser</string>
+
+    <string name="httpHeader">http://nmy1206.natapp1.cc</string>
+    <string name="httpHeadert">http://nmy1206.natapp1.cc/</string>
+    <string name="getSysTime">http://quan.suning.com/getSysTime.do</string>
+    <string name="RongCloudUser">http://nmy1206.natapp1.cc/RongCloudServer/RongCloud/SPBServer/User.php</string>
+    <string name="SendToken">http://nmy1206.natapp1.cc/SendToken.php</string>
+    <string name="getuiServer">http://nmy1206.natapp1.cc/getuiServer.php</string>
+    <string name="MyAppVersion">http://nmy1206.natapp1.cc/MyAppVersion.php</string>
+    <string name="SPBAPK">http://nmy1206.natapp1.cc/appDownLoad/SPB.apk</string>
+
+    <string name="VerifyMessage">http://nmy1206.natapp1.cc/VerifyMessage.php</string>
 </resources>

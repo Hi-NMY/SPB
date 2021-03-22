@@ -61,19 +61,18 @@ public class SelectImage implements SpbSelectImage {
                 .minSelectNum(1)
                 .isPreviewImage(true)
                 .isEnableCrop(true)//是否开启裁剪
+                .isCompress(true)
                 .withAspectRatio(1,1)
                 .freeStyleCropEnabled(false)
                 .showCropFrame(true)
                 .scaleEnabled(true)
                 .isDragFrame(true)
-                .isCompress(true)
-                .minimumCompressSize(100)
                 .synOrAsy(false)
                 .setLanguage(LanguageConfig.CHINESE)
-                .cameraFileName(imgName)//自定义拍照文件名，
-                .renameCompressFile("a"+imgName)//自定义压缩文件名，
-                .renameCropFileName(imgName)//自定义裁剪文件名，
-                .forResult(onResultCallbackListener);
+                .cameraFileName(System.currentTimeMillis()+imgName)//自定义拍照文件名，
+                .renameCompressFile(System.currentTimeMillis()+imgName)//自定义压缩文件名，
+                .renameCropFileName(System.currentTimeMillis()+imgName)//自定义裁剪文件名，
+                .forResult(PictureConfig.CHOOSE_REQUEST,onResultCallbackListener);
     }
 
     @Override
@@ -87,7 +86,24 @@ public class SelectImage implements SpbSelectImage {
 
     @Override
     public void selectCameraImg(String imgName, OnResultCallbackListener onResultCallbackListener) {
-
+        PictureSelector.create(activity)
+                .openCamera(PictureMimeType.ofImage())
+                .imageEngine(GlideEngine.createGlideEngine())
+                .selectionMode(PictureConfig.SINGLE)
+                .isPreviewImage(true)
+                .isEnableCrop(true)//是否开启裁剪
+                .withAspectRatio(1,1)
+                .freeStyleCropEnabled(false)
+                .showCropFrame(true)
+                .scaleEnabled(true)
+                .isDragFrame(true)
+                .isCompress(true)
+                .synOrAsy(false)
+                .setLanguage(LanguageConfig.CHINESE)
+                .cameraFileName(System.currentTimeMillis()+imgName)//自定义拍照文件名，
+                .renameCompressFile(System.currentTimeMillis()+imgName)//自定义压缩文件名，
+                .renameCropFileName(System.currentTimeMillis()+imgName)//自定义裁剪文件名，
+                .forResult(PictureConfig.REQUEST_CAMERA,onResultCallbackListener);
     }
 
     private PictureParameterStyle mPictureParameterStyle;

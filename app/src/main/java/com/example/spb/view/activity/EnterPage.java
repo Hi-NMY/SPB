@@ -59,6 +59,7 @@ public class EnterPage extends BaseMVPActivity<IEnterPageAView, EnterPageAPresen
                 }
             }
         }).start();
+
     }
 
     @Override

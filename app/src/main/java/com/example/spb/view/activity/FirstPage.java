@@ -181,7 +181,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
                 } else {
                     setEmptyVisibility(false);
                 }
-                if (mAccountNumberEdit.getText().toString().trim().length() == 10) {
+                if (mAccountNumberEdit.getText().toString().trim().length() == 9) {
                     setBtnClick(CLICKYES);
                 } else {
                     setBtnClick(CLICKNO);
@@ -211,7 +211,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
                 } else {
                     setEmptyPVisibility(false);
                 }
-                if (mPasswordNumberEdit.getText().toString().trim().length() == 10) {
+                if (mPasswordNumberEdit.getText().toString().trim().length() >= 8 && mPasswordNumberEdit.getText().toString().trim().length() <=16) {
                     setBtnClick(CLICKYES);
                 } else {
                     setBtnClick(CLICKNO);
@@ -244,11 +244,11 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
                 break;
             case R.id.enter_check:
                 if (!ENTER_CHECK) {
-                    JumpIntent.startMyIntent(HomePage.class);
-//                    mEnterCheck.setBackground(getDrawable(R.drawable.enter_check));
-//                    ENTER_CHECK = true;
-//                    showDialogS(1);
+                    mEnterCheck.setBackground(getDrawable(R.drawable.enter_check));
+                    ENTER_CHECK = true;
+                    showDialogS(DIALOGUSERNOTICE);
                 } else {
+                    JumpIntent.startMyIntent(HomePage.class);
                     mEnterCheck.setBackground(getDrawable(R.drawable.enter_nocheck));
                     ENTER_CHECK = false;
                 }
@@ -400,11 +400,15 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
                     @Override
                     public void onClick(View v) {
                         closeDialog(DIALOGUSERNOTICE);
+                        mEnterCheck.setBackground(getDrawable(R.drawable.enter_nocheck));
+                        ENTER_CHECK = false;
                     }
                 });
                 mClickTrue.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        mEnterCheck.setBackground(getDrawable(R.drawable.enter_check));
+                        ENTER_CHECK = true;
                         closeDialog(DIALOGUSERNOTICE);
                     }
                 });

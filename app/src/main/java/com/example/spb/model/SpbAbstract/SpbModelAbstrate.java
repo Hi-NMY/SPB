@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 public abstract class SpbModelAbstrate {
 
     public RequestBody requestBody = null;
+    public MultipartBody.Builder builder = null;
 
     public void sendHttp(String path, RequestBody requestBody, MyCallBack callBack){
         OkHttpClient client = new OkHttpClient.Builder()
