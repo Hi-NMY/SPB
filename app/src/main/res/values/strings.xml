@@ -14,8 +14,14 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    
+
+    <string name="Shared_FirstLogIn">firstLogIn</string>
+    <string name="FirstLogIn_login">login</string>
+
     <string name="Shared_RongUser">RongUser</string>
+    <string name="RongUser_userId">userId</string>
+    <string name="RongUser_token">token</string>
+
 
     <string name="httpHeader">http://nmy1206.natapp1.cc</string>
     <string name="httpHeadert">http://nmy1206.natapp1.cc/</string>
@@ -27,4 +33,6 @@
     <string name="SPBAPK">http://nmy1206.natapp1.cc/appDownLoad/SPB.apk</string>
 
     <string name="VerifyMessage">http://nmy1206.natapp1.cc/VerifyMessage.php</string>
+    <string name="VerifyAccount">http://nmy1206.natapp1.cc/VerifyAccount.php</string>
+    <string name="VerifyPassword">http://nmy1206.natapp1.cc/VerifyPassword.php</string>
 </resources>

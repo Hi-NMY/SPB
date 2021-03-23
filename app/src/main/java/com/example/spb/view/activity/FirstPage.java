@@ -3,6 +3,8 @@ package com.example.spb.view.activity;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
@@ -12,10 +14,12 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.*;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
+import com.example.spb.entity.User;
 import com.example.spb.presenter.impl.FirstPageAPresenterImpl;
 import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.Component.EasyDialog;
@@ -57,6 +61,8 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
     private static Animation animationa;
     private static Animation animationb;
 
+    private User user;
+
     static {
         animationa = AnimationUtils.loadAnimation(MyApplication.getContext(), R.anim.enter_anim);
         animationb = AnimationUtils.loadAnimation(MyApplication.getContext(), R.anim.enter_anim2);
@@ -96,6 +102,14 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
         });
     }
 
+    private Handler verifyAccountHanlder = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            response(msg.obj,msg.what);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +125,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
     @Override
     protected void initActView() {
         setActivityBar();
+        user = new User();
         mAccountNumberEdit = (EditText) findViewById(R.id.account_number_edit);
         mEmptyView = (ImageView) findViewById(R.id.empty_view);
         mEnterCheck = (ImageView) findViewById(R.id.enter_check);
@@ -227,18 +242,15 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
         switch (v.getId()) {
             case R.id.enter_next_btn:
                 if (ENTER_FUN == 1) {
-
+                    user.setUser_password(mPasswordNumberEdit.getText().toString().trim());
+                    mPresenter.verifyPassword(user,verifyAccountHanlder);
                 } else {
                     if (!ENTER_CHECK) {
                         MyToastClass.ShowToast(this, TOASTTXT);
                     } else {
-                        mEnterR1.startAnimation(animationa);
-                        mEnterR2.startAnimation(animationb);
-                        mEnterR1.setVisibility(View.GONE);
-                        mEnterR2.setVisibility(View.VISIBLE);
-                        mPasswordNumberEdit.setText("");
-                        mEnterNextBtn.setClickable(false);
-                        ENTER_FUN = 1;
+                        showDialogS(DIALOGLOADING);
+                        user.setUser_account(mAccountNumberEdit.getText().toString().trim());
+                        mPresenter.verifyAccount(user,verifyAccountHanlder);
                     }
                 }
                 break;
@@ -326,7 +338,45 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
 
     @Override
     public <T> void response(T response, int responseFlag) {
-        mAccountNumberEdit.setText((String) response);
+        switch (responseFlag){
+            case RESPONSE_ACC:
+                mAccountNumberEdit.setText((String) response);
+                break;
+            case RESPONSE_SUCCESS_ONE:
+                closeDialog(DIALOGLOADING);
+                this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mEnterR1.startAnimation(animationa);
+                        mEnterR2.startAnimation(animationb);
+                        mEnterR1.setVisibility(View.GONE);
+                        mEnterR2.setVisibility(View.VISIBLE);
+                        mPasswordNumberEdit.setText("");
+                        mEnterNextBtn.setClickable(false);
+                    }
+                });
+                ENTER_FUN = 1;
+                break;
+            case RESPONSE_SUCCESS_TWO:
+                closeDialog(DIALOGLOADING);
+                if (mPresenter.setFirstLogIn()){
+                    JumpIntent.startNewIntent(HomePage.class);
+                };
+                finish();
+                break;
+            case RESPONSE_ONE:
+                closeDialog(DIALOGLOADING);
+                MyToastClass.ShowToast(this,STRINGERROE_ONE);
+                break;
+            case RESPONSE_THREE:
+                closeDialog(DIALOGLOADING);
+                MyToastClass.ShowToast(this,STRINGERROE_THREE);
+                break;
+            case RESPONSE_ZERO:
+                closeDialog(DIALOGLOADING);
+                MyToastClass.ShowToast(this,STRINGERROE_ZERO);
+                break;
+        }
     }
 
     @Override
@@ -380,6 +430,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
     @Override
     public void createDialog() {
         dialogLoading = new EasyDialog(this, R.drawable.loading);
+        dialogLoading.setCancelable(false);
         dialogUserNotice = new ComponentDialog(this, R.layout.dialog_user_notice, new ComponentDialog.InitDialog() {
             @Override
             public void initView(View view) {

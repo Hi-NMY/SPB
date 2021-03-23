@@ -1,6 +1,7 @@
 package com.example.spb.presenter.impl;
 
 import android.content.SharedPreferences;
+import android.os.Handler;
 import com.example.spb.R;
 import com.example.spb.base.BasePresenter;
 import com.example.spb.entity.RongUser;
@@ -11,6 +12,7 @@ import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.inter.IUserRegisteredPageAPresenter;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MySharedPreferences;
+import com.example.spb.presenter.littlefun.SendHandler;
 import com.example.spb.view.inter.IUserRegisteredPageAView;
 import com.google.gson.Gson;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -44,7 +46,7 @@ public class UserRegisteredPageAPresenterImpl extends BasePresenter<IUserRegiste
         }
     }
 
-    public void registerUser(User user){
+    public void registerUser(User user, Handler handler){
         userModel.addData(UserModelImpl.REGISTEREDPAGE, user, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
@@ -52,43 +54,33 @@ public class UserRegisteredPageAPresenterImpl extends BasePresenter<IUserRegiste
                     try {
                         String a = response.body().string();
                         switch (Integer.valueOf(a.substring(0,3))){
-                            case 000:
-                                getView().response(null,getView().RESPONSE_ZERO);
-                                break;
-                            case 100:
-                                getView().response(null,getView().RESPONSE_ONE);
-                                break;
-                            case 300:
-                                getView().response(null,getView().RESPONSE_THREE);
-                                break;
-                            case 400:
-                                getView().response(null,getView().RESPONSE_FORE);
-                                break;
                             case 200:
                                 String data = a.substring(3);
                                 r = new Gson().fromJson(data,RongUser.class);
                                 setRongShared();
-                                getView().response(null,getView().RESPONSE_SUCCESS);
+                                handler.sendMessage(SendHandler.setMessage(getView().RESPONSE_SUCCESS,null));
+                                break;
+                            default:
+                                handler.sendMessage(SendHandler.setMessage(Integer.valueOf(a.substring(0,3)),null));
                                 break;
                         }
                     } catch (IOException e) {
+                        handler.sendMessage(SendHandler.setMessage(getView().RESPONSE_ZERO,null));
                         e.printStackTrace();
                     }
                 }
             }
             @Override
             public void onError(int t) {
-                if (isAttachView()){
-                    getView().request(getView().RESPONSE_ZERO);
-                }
+                handler.sendMessage(SendHandler.setMessage(getView().RESPONSE_ZERO,null));
             }
         });
     }
 
     public void setRongShared(){
         SharedPreferences.Editor editor = MySharedPreferences.saveShared(InValues.send(R.string.Shared_RongUser));
-        editor.putString("userId",r.getUserId());
-        editor.putString("token",r.getToken());
-        MySharedPreferences.startSave();
+        editor.putString(InValues.send(R.string.RongUser_userId),r.getUserId());
+        editor.putString(InValues.send(R.string.RongUser_token),r.getToken());
+        editor.apply();
     }
 }

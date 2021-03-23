@@ -1,12 +1,14 @@
 package com.example.spb.presenter.impl;
 
 import android.content.SharedPreferences;
+import com.example.spb.R;
 import com.example.spb.base.BasePresenter;
 import com.example.spb.entity.User;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
 import com.example.spb.model.impl.EnterPageAModelImpl;
 import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.inter.IEnterPageAPresenter;
+import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MySharedPreferences;
 import com.example.spb.view.inter.IEnterPageAView;
 
@@ -20,8 +22,8 @@ public class EnterPageAPresenterImpl extends BasePresenter<IEnterPageAView> impl
 
     @Override
     public boolean getFirstLogIn() {
-        SharedPreferences sharedPreferences = MySharedPreferences.getShared("firstLogIn");
-        return sharedPreferences.getBoolean("login",true);
+        SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_FirstLogIn));
+        return sharedPreferences.getBoolean(InValues.send(R.string.FirstLogIn_login),true);
     }
 
     public boolean getInitialize(){

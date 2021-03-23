@@ -5,6 +5,8 @@ import com.example.spb.presenter.callback.MyCallBack;
 public interface SpbModelBasicInter<T> {
 
     public static int REGISTEREDPAGE = 1;
+    public static int FIRSTPAGE_ONE = 1;
+    public static int FIRSTPAGE_TWO = 2;
 
     public void addData(int fun,T data, MyCallBack callBack);
 

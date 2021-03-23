@@ -22,6 +22,13 @@ public interface IUserRegisteredPageAView extends SpbInterOne {
     String STRINGERRORFORE = "重复昵称，请修改";
     String STRINGSUCCESS = "注册成功";
 
+    String WHAT_ONE = "请设置头像";
+    String WHAT_TWO = "请输入合法用户名";
+    String WHAT_THREE = "请输入账号";
+    String WHAT_FORE = "请输入合法密码";
+    String WHAT_FIVE = "请确认密码";
+    String WHAT_SIX = "请确认两次密码一致";
+
     int DIALOGLOADING = 1;
     int BOTTOMDIALOG = 2;
 

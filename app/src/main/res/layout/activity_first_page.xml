@@ -55,6 +55,7 @@
         <EditText
                 android:id="@+id/account_number_edit"
                 android:hint="请输入账号"
+                android:digits="G1234567890"
                 android:gravity="center_vertical"
                 android:maxLength="9"
                 android:lines="1"
@@ -173,6 +174,7 @@
         <EditText
                 android:id="@+id/password_number_edit"
                 android:hint="请输入密码"
+                android:digits="1234567890qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM.,/?\+=-_!@#$%"
                 android:gravity="center_vertical"
                 android:maxLength="16"
                 android:lines="1"

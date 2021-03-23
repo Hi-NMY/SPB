@@ -2,6 +2,8 @@ package com.example.spb.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -10,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
 import com.bumptech.glide.Glide;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
@@ -55,6 +58,14 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
 
     private User user = null;
 
+    private Handler userHanlder = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            response(null,msg.what);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,10 +102,6 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
 
     @Override
     public <T> T request(int requestFlag) {
-        closeDialog(DIALOGLOADING);
-        if (requestFlag == RESPONSE_ZERO){
-            MyToastClass.ShowToast(this,"错误，请重试");
-        }
         return null;
     }
 
@@ -129,6 +136,10 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
                         intent.putExtra(STRINGEXTRA, account);
                     }
                 });
+                break;
+            case RESPONSE_ZERO:
+                closeDialog(DIALOGLOADING);
+                MyToastClass.ShowToast(this,STRINGERRORZERO);
                 break;
         }
     }
@@ -268,7 +279,7 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
             case R.id.reg_star_btn:
                 if (submit()) {
                     showDialogS(DIALOGLOADING);
-                    mPresenter.registerUser(setUser());
+                    mPresenter.registerUser(setUser(),userHanlder);
                 }
                 break;
             case R.id.reg_password_eye:
@@ -294,35 +305,35 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
 
     private boolean submit() {
         if (TextUtils.isEmpty(imagePath)) {
-            MyToastClass.ShowToast(this, "请设置头像");
+            MyToastClass.ShowToast(this, WHAT_ONE);
             return false;
         }
 
         name = mRegUserName.getText().toString().trim();
         if (TextUtils.isEmpty(name)) {
-            MyToastClass.ShowToast(this, "请输入合法用户名");
+            MyToastClass.ShowToast(this, WHAT_TWO);
             return false;
         }
 
         account = mRegUserAccount.getText().toString().trim();
         if (TextUtils.isEmpty(account)) {
-            MyToastClass.ShowToast(this, "请输入账号");
+            MyToastClass.ShowToast(this, WHAT_THREE);
             return false;
         }
 
         password = mRegUserPassword.getText().toString().trim();
         if (TextUtils.isEmpty(password) || mRegUserPassword.length() < 8) {
-            MyToastClass.ShowToast(this, "请输入合法密码");
+            MyToastClass.ShowToast(this, WHAT_FORE);
             return false;
         }
 
         String again = mRegUserPasswordAgain.getText().toString().trim();
         if (TextUtils.isEmpty(again)) {
-            MyToastClass.ShowToast(this, "请确认密码");
+            MyToastClass.ShowToast(this, WHAT_FIVE);
             return false;
         } else {
             if (!password.equals(again)) {
-                MyToastClass.ShowToast(this, "请确认两次密码一致");
+                MyToastClass.ShowToast(this, WHAT_SIX);
                 return false;
             }
         }
