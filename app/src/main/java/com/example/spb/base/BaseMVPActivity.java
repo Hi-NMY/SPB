@@ -10,6 +10,7 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
 
     protected T mPresenter;
 
+    public static String user_account;
     public DataAttentionTopicPresenter dataAttentionTopicPresenter;
     public DataCollectBarPresenter dataCollectBarPresenter;
     public DataDiaryPresenter dataDiaryPresenter;
@@ -44,7 +45,8 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
         return (FragmentSpbAvtivityBar) getSupportFragmentManager().findFragmentById(barID);
     }
 
-    public void initUserData(){
+    public void initUserData(String account){
+        user_account = account;
         setDataAttentionTopicPresenter();
         setDataCollectBarPresenter();
         setDataDiaryPresenter();
@@ -63,7 +65,7 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
     }
 
     public void setDataAttentionTopicPresenter() {
-        this.dataAttentionTopicPresenter = new DataAttentionTopicPresenter();
+        this.dataAttentionTopicPresenter = new DataAttentionTopicPresenter(user_account);
     }
 
     public DataCollectBarPresenter getDataCollectBarPresenter() {
@@ -76,7 +78,7 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
     }
 
     public void setDataCollectBarPresenter() {
-        this.dataCollectBarPresenter = new DataCollectBarPresenter();
+        this.dataCollectBarPresenter = new DataCollectBarPresenter(user_account);
     }
 
     public DataDiaryPresenter getDataDiaryPresenter() {
@@ -89,7 +91,7 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
     }
 
     public void setDataDiaryPresenter() {
-        this.dataDiaryPresenter = new DataDiaryPresenter();
+        this.dataDiaryPresenter = new DataDiaryPresenter(user_account);
     }
 
     public DataFollowPresenter getDataFollowPresenter() {
@@ -102,7 +104,7 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
     }
 
     public void setDataFollowPresenter() {
-        this.dataFollowPresenter = new DataFollowPresenter();
+        this.dataFollowPresenter = new DataFollowPresenter(user_account);
     }
 
     public DataFollowedPresenter getDataFollowedPresenter() {
@@ -115,7 +117,7 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
     }
 
     public void setDataFollowedPresenter() {
-        this.dataFollowedPresenter = new DataFollowedPresenter();
+        this.dataFollowedPresenter = new DataFollowedPresenter(user_account);
     }
 
     public DataLikePresenter getDataLikePresenter() {
@@ -128,7 +130,7 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
     }
 
     public void setDataLikePresenter() {
-        this.dataLikePresenter = new DataLikePresenter();
+        this.dataLikePresenter = new DataLikePresenter(user_account);
     }
 
     @Override

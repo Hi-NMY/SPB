@@ -7,7 +7,6 @@ import com.example.spb.R;
 import com.example.spb.base.BasePresenter;
 import com.example.spb.entity.User;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
-import com.example.spb.model.impl.FirstPageAModelImpl;
 import com.example.spb.model.impl.UserModelImpl;
 import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.inter.IFirstPageAPresenter;

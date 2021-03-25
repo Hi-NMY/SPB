@@ -35,4 +35,5 @@
     <string name="VerifyMessage">http://nmy1206.natapp1.cc/VerifyMessage.php</string>
     <string name="VerifyAccount">http://nmy1206.natapp1.cc/VerifyAccount.php</string>
     <string name="VerifyPassword">http://nmy1206.natapp1.cc/VerifyPassword.php</string>
+    <string name="AttentionTopic">http://nmy1206.natapp1.cc/AttentionTopic.php</string>
 </resources>

@@ -3,10 +3,6 @@ package com.example.spb.presenter.impl;
 import android.content.SharedPreferences;
 import com.example.spb.R;
 import com.example.spb.base.BasePresenter;
-import com.example.spb.entity.User;
-import com.example.spb.model.InterTotal.SpbModelBasicInter;
-import com.example.spb.model.impl.EnterPageAModelImpl;
-import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.inter.IEnterPageAPresenter;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MySharedPreferences;
@@ -14,10 +10,7 @@ import com.example.spb.view.inter.IEnterPageAView;
 
 public class EnterPageAPresenterImpl extends BasePresenter<IEnterPageAView> implements IEnterPageAPresenter {
 
-    private SpbModelBasicInter enterPageAModel;
-
     public EnterPageAPresenterImpl() {
-        enterPageAModel = new EnterPageAModelImpl();
     }
 
     @Override

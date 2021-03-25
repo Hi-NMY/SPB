@@ -5,8 +5,6 @@ import android.content.res.AssetManager;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BasePresenter;
 import com.example.spb.entity.CityJsonBean;
-import com.example.spb.model.impl.ChangeInformationAModelImpl;
-import com.example.spb.model.inter.IChangeInformationAModel;
 import com.example.spb.presenter.inter.IChangeInformationPageAPresenter;
 import com.example.spb.view.inter.IChangeInformationPageAView;
 import com.google.gson.Gson;
@@ -20,13 +18,11 @@ import java.util.List;
 
 public class ChangeInformationPageAPresenterImpl extends BasePresenter<IChangeInformationPageAView> implements IChangeInformationPageAPresenter {
 
-    private IChangeInformationAModel mIChangeInformationAModel;
     private List<CityJsonBean> options1Items = new ArrayList<>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
     private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<>();
 
     public ChangeInformationPageAPresenterImpl() {
-        mIChangeInformationAModel = new ChangeInformationAModelImpl();
     }
 
     public List<CityJsonBean> getOptions1Items() {

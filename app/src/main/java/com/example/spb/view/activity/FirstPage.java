@@ -344,6 +344,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
                 break;
             case RESPONSE_SUCCESS_ONE:
                 closeDialog(DIALOGLOADING);
+                initUserData(user.getUser_account());
                 this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
