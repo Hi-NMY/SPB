@@ -11,7 +11,6 @@ import com.google.gson.reflect.TypeToken;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.util.List;
 
 public class DataAttentionTopicPresenter {
@@ -19,7 +18,7 @@ public class DataAttentionTopicPresenter {
     private static int SUCCESS = 200;
 
     private SpbModelBasicInter attentionTopicModel;
-    public List<AttentionTopic> attentionTopics;
+    public List<AttentionTopic> attentionTopicList;
     private String account;
     private String a;
     private Gson gson;
@@ -41,7 +40,7 @@ public class DataAttentionTopicPresenter {
                 try {
                     a = response.body().string();
                     if (Integer.valueOf(a.substring(0,3)) == SUCCESS){
-                        attentionTopics = gson.fromJson(a.substring(3),new TypeToken<List<AttentionTopic>>()
+                        attentionTopicList = gson.fromJson(a.substring(3),new TypeToken<List<AttentionTopic>>()
                         {}.getType());
                     }else {
 

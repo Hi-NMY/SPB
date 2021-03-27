@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.ScrollingMovementMethod;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -490,5 +491,20 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
                 dialogLoading.closeMyDialog();
                 break;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && ENTER_FUN == 1) {
+            mEnterR1.startAnimation(animationb);
+            mEnterR2.startAnimation(animationa);
+            mEnterR1.setVisibility(View.VISIBLE);
+            mEnterR2.setVisibility(View.GONE);
+            setBtnClick(CLICKYES);
+            ENTER_FUN = 0;
+        }else {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

@@ -4,7 +4,6 @@ public class    Followed {
 
     public int id;
     public String user_account;
-    public String user_date;
 
     public int getId() {
         return id;
@@ -22,11 +21,4 @@ public class    Followed {
         this.user_account = user_account;
     }
 
-    public String getUser_date() {
-        return user_date;
-    }
-
-    public void setUser_date(String user_date) {
-        this.user_date = user_date;
-    }
 }

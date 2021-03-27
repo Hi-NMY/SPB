@@ -36,4 +36,8 @@
     <string name="VerifyAccount">http://nmy1206.natapp1.cc/VerifyAccount.php</string>
     <string name="VerifyPassword">http://nmy1206.natapp1.cc/VerifyPassword.php</string>
     <string name="AttentionTopic">http://nmy1206.natapp1.cc/AttentionTopic.php</string>
+    <string name="Diary">http://nmy1206.natapp1.cc/Diary.php</string>
+    <string name="Followed">http://nmy1206.natapp1.cc/Followed.php</string>
+    <string name="Follow">http://nmy1206.natapp1.cc/Follow.php</string>
+    <string name="Like">http://nmy1206.natapp1.cc/Like.php</string>
 </resources>
