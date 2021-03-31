@@ -505,6 +505,6 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
         }else {
             finish();
         }
-        return super.onKeyDown(keyCode, event);
+        return false;
     }
 }

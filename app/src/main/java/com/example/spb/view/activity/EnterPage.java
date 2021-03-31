@@ -10,6 +10,7 @@ import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.EnterPageAPresenterImpl;
 import com.example.spb.view.inter.IEnterPageAView;
 import com.example.spb.view.littlefun.GlideRoundTransform;
+import com.example.spb.view.littlefun.JumpIntent;
 import com.gyf.immersionbar.ImmersionBar;
 import org.litepal.LitePal;
 
@@ -53,6 +54,8 @@ public class EnterPage extends BaseMVPActivity<IEnterPageAView, EnterPageAPresen
                     if (mPresenter.getFirstLogIn()){
                         Intent intent = new Intent(MyApplication.getContext(),FirstPage.class);
                         startActivity(intent);
+                    }else {
+                        JumpIntent.startNewIntent(HomePage.class);
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();

@@ -79,7 +79,14 @@ public class FirstPageAPresenterImpl extends BasePresenter<IFirstPageAView> impl
                 try {
                     String a = response.body().string();
                     if (isAttachView()){
-                        verifyAccountHanlder.sendMessage(SendHandler.setMessage(Integer.valueOf(a),null));
+                        switch (Integer.valueOf(a.substring(0,3))) {
+                            case 201:
+                                verifyAccountHanlder.sendMessage(SendHandler.setMessage(getView().RESPONSE_SUCCESS_TWO,null));
+                                break;
+                            default:
+                                verifyAccountHanlder.sendMessage(SendHandler.setMessage(getView().RESPONSE_ZERO,null));
+                                break;
+                        }
                     }
                 } catch (IOException e) {
                     if (isAttachView()){

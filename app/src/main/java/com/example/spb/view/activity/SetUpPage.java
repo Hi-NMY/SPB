@@ -1,20 +1,22 @@
 package com.example.spb.view.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.SetUpPageAPresenterImpl;
-import com.example.spb.presenter.inter.ISetUpPageAPresenter;
+import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.littlefun.MySharedPreferences;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
 import com.example.spb.view.inter.ISetUpPageAView;
 import com.gyf.immersionbar.ImmersionBar;
 
-public class SetUpPage extends BaseMVPActivity<ISetUpPageAView,SetUpPageAPresenterImpl> implements ISetUpPageAView {
+public class SetUpPage extends BaseMVPActivity<ISetUpPageAView, SetUpPageAPresenterImpl> implements ISetUpPageAView {
 
     private FragmentSpbAvtivityBar bar;
+    private TextView mTuichu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,15 @@ public class SetUpPage extends BaseMVPActivity<ISetUpPageAView,SetUpPageAPresent
 
     @Override
     protected void initActView() {
+        mTuichu = (TextView) findViewById(R.id.tuichu);
+        mTuichu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = MySharedPreferences.saveShared(InValues.send(R.string.Shared_FirstLogIn));
+                editor.putBoolean(InValues.send(R.string.FirstLogIn_login),true);
+                editor.commit();
+            }
+        });
         setActivityBar();
         setBar();
         setMyListener();
@@ -83,7 +94,7 @@ public class SetUpPage extends BaseMVPActivity<ISetUpPageAView,SetUpPageAPresent
     @Override
     public void setActivityBar() {
         bar = setMyActivityBar(R.id.setup_actbar);
-        bar.barCentralTxt(TITLE,null);
+        bar.barCentralTxt(TITLE, null);
         bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
             public void onClick() {

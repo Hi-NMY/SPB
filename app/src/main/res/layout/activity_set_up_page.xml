@@ -12,4 +12,11 @@
             android:name="com.example.spb.view.Component.FragmentSpbAvtivityBar"
             android:layout_height="@dimen/spb_activity_bar_44"/>
 
+    <TextView
+            android:id="@+id/tuichu"
+            android:layout_below="@+id/setup_actbar"
+            android:text="tuichu"
+            android:textSize="@dimen/font_22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 </RelativeLayout>
