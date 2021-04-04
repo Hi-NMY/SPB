@@ -224,7 +224,8 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
                 mPostbarRlt.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        JumpIntent.startMyIntent(SendNewBarPage.class);
+                        closeDialog(0);
                     }
                 });
                 mVideoRlt.setOnClickListener(new View.OnClickListener() {

@@ -28,6 +28,8 @@ public interface IFirstPageAView extends SpbInterOne {
 
     public void setEmptyPVisibility(boolean id);
 
+    public void goIntent();
+
     public TextWatcher setPasswordTextWatcher();
 
     public TextWatcher setAccountTextWatcher();

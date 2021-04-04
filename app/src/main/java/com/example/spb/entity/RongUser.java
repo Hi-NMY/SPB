@@ -1,9 +1,16 @@
 package com.example.spb.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 public class RongUser {
 
+    @SerializedName("id")
     private int code;
+
+    @SerializedName("user_name")
     private String userId;
+
+    @SerializedName("user_token")
     private String token;
 
     public int getCode() {

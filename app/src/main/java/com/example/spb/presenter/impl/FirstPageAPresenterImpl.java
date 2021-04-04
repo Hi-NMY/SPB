@@ -2,9 +2,11 @@ package com.example.spb.presenter.impl;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Handler;
 import com.example.spb.R;
 import com.example.spb.base.BasePresenter;
+import com.example.spb.entity.RongUser;
 import com.example.spb.entity.User;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
 import com.example.spb.model.impl.UserModelImpl;
@@ -13,8 +15,14 @@ import com.example.spb.presenter.inter.IFirstPageAPresenter;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MySharedPreferences;
 import com.example.spb.presenter.littlefun.SendHandler;
+import com.example.spb.view.activity.HomePage;
 import com.example.spb.view.inter.IFirstPageAView;
 import com.example.spb.view.inter.IUserRegisteredPageAView;
+import com.example.spb.view.littlefun.JumpIntent;
+import com.google.gson.Gson;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 
@@ -53,7 +61,17 @@ public class FirstPageAPresenterImpl extends BasePresenter<IFirstPageAView> impl
                 try {
                     String a = response.body().string();
                     if (isAttachView()){
-                        handler.sendMessage(SendHandler.setMessage(Integer.valueOf(a),null));
+                        switch (Integer.valueOf(a.substring(0,3))) {
+                            case 200:
+                                RongUser rongUser = new Gson().fromJson(a.substring(3),RongUser.class);
+                                user.setUser_name(rongUser.getUserId());
+                                user.setUser_token(rongUser.getToken());
+                                handler.sendMessage(SendHandler.setMessage(getView().RESPONSE_SUCCESS_ONE,user));
+                                break;
+                            default:
+                                handler.sendMessage(SendHandler.setMessage(Integer.valueOf(a),null));
+                                break;
+                        }
                     }
                 } catch (IOException e) {
                     if (isAttachView()){
@@ -79,12 +97,12 @@ public class FirstPageAPresenterImpl extends BasePresenter<IFirstPageAView> impl
                 try {
                     String a = response.body().string();
                     if (isAttachView()){
-                        switch (Integer.valueOf(a.substring(0,3))) {
+                        switch (Integer.valueOf(a)) {
                             case 201:
                                 verifyAccountHanlder.sendMessage(SendHandler.setMessage(getView().RESPONSE_SUCCESS_TWO,null));
                                 break;
                             default:
-                                verifyAccountHanlder.sendMessage(SendHandler.setMessage(getView().RESPONSE_ZERO,null));
+                                verifyAccountHanlder.sendMessage(SendHandler.setMessage(Integer.valueOf(a),null));
                                 break;
                         }
                     }
@@ -101,6 +119,28 @@ public class FirstPageAPresenterImpl extends BasePresenter<IFirstPageAView> impl
                 if (isAttachView()){
                     verifyAccountHanlder.sendMessage(SendHandler.setMessage(getView().RESPONSE_ZERO,null));
                 }
+            }
+        });
+    }
+
+    public void connectRong(String token,String uName,String uAccount){
+        RongIM.connect(token, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onSuccess(String s) {
+                UserInfo userInfo = new UserInfo(uAccount,uName, Uri.parse(InValues
+                        .send(R.string.httpHeader) +"/UserImageServer/"+uAccount+"/HeadImage/myHeadImage.png"));
+                RongIM.getInstance().setCurrentUserInfo(userInfo);
+                getView().goIntent();
+            }
+
+            @Override
+            public void onError(RongIMClient.ConnectionErrorCode connectionErrorCode) {
+
+            }
+
+            @Override
+            public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus databaseOpenStatus) {
+
             }
         });
     }

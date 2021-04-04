@@ -2,6 +2,7 @@ package com.example.spb.view.activity;
 
 import android.content.Intent;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,6 +23,7 @@ import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.entity.User;
 import com.example.spb.presenter.impl.FirstPageAPresenterImpl;
+import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.Component.EasyDialog;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
@@ -33,6 +35,9 @@ import com.example.spb.view.littlefun.JumpIntent;
 import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.littlefun.RequestForAccess;
 import com.gyf.immersionbar.ImmersionBar;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 
 public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresenterImpl> implements IFirstPageAView, View.OnClickListener {
 
@@ -322,6 +327,15 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
     }
 
     @Override
+    public void goIntent() {
+        closeDialog(DIALOGLOADING);
+        if (mPresenter.setFirstLogIn()){
+            JumpIntent.startNewIntent(HomePage.class);
+        };
+        finish();
+    }
+
+    @Override
     public void setBtnClick(boolean i) {
         if (i) {
             mEnterNextBtn.setBackground(getDrawable(R.drawable.enter_next_login));
@@ -345,6 +359,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
                 break;
             case RESPONSE_SUCCESS_ONE:
                 closeDialog(DIALOGLOADING);
+                user = (User)response;
                 initUserData(user.getUser_account());
                 this.runOnUiThread(new Runnable() {
                     @Override
@@ -360,11 +375,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
                 ENTER_FUN = 1;
                 break;
             case RESPONSE_SUCCESS_TWO:
-                closeDialog(DIALOGLOADING);
-                if (mPresenter.setFirstLogIn()){
-                    JumpIntent.startNewIntent(HomePage.class);
-                };
-                finish();
+                mPresenter.connectRong(user.getUser_token(),user.getUser_name(),user.getUser_account());
                 break;
             case RESPONSE_ONE:
                 closeDialog(DIALOGLOADING);
