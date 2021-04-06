@@ -31,7 +31,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.SendNewBarPage">
+        <activity android:name=".view.activity.SendNewBarPage"
+                  android:windowSoftInputMode="adjustResize">
         </activity>
         <activity android:name=".view.activity.TopicBarPage">
         </activity>
