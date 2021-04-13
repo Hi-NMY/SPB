@@ -77,6 +77,31 @@ public class SelectImage implements SpbSelectImage {
 
     @Override
     public void selectMoreImg(String imgName, OnResultCallbackListener onResultCallbackListener) {
+        PictureSelector.create(activity)
+                .openGallery(PictureMimeType.ofImage())
+                .imageEngine(GlideEngine.createGlideEngine())
+                .selectionMode(PictureConfig.MULTIPLE)
+                .isSingleDirectReturn(false)
+                .setPictureStyle(mPictureParameterStyle)
+                .setPictureCropStyle(mCropParameterStyle)
+                .isCamera(true)
+                .isZoomAnim(true)
+                .maxSelectNum(4)
+                .minSelectNum(1)
+                .isPreviewImage(true)
+                .isEnableCrop(true)//是否开启裁剪
+                .isCompress(true)
+                .withAspectRatio(1,1)
+                .freeStyleCropEnabled(false)
+                .showCropFrame(true)
+                .scaleEnabled(true)
+                .isDragFrame(true)
+                .synOrAsy(false)
+                .setLanguage(LanguageConfig.CHINESE)
+                .cameraFileName(System.currentTimeMillis()+imgName)//自定义拍照文件名，
+                .renameCompressFile(System.currentTimeMillis()+imgName)//自定义压缩文件名，
+                .renameCropFileName(System.currentTimeMillis()+imgName)//自定义裁剪文件名，
+                .forResult(PictureConfig.CHOOSE_REQUEST,onResultCallbackListener);
     }
 
     @Override

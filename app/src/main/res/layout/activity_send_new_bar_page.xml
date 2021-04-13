@@ -70,6 +70,7 @@
 
         <com.zhy.view.flowlayout.TagFlowLayout
                 android:id="@+id/bottom_flowlayout"
+                android:layout_marginVertical="@dimen/margin_8"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 app:max_select="2"
