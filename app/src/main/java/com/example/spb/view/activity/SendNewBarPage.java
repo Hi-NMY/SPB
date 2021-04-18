@@ -7,8 +7,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.R;
+import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.SendNewBarPageAPresenterImpl;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
@@ -16,9 +18,12 @@ import com.example.spb.view.Component.SelectImage;
 import com.example.spb.view.inter.ISendNewBarPageAView;
 import com.example.spb.view.littlefun.HideKeyboard;
 import com.gyf.immersionbar.ImmersionBar;
+import com.hitomi.tilibrary.transfer.TransferConfig;
+import com.hitomi.tilibrary.transfer.Transferee;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.listener.OnResultCallbackListener;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.vansz.glideimageloader.GlideImageLoader;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -170,27 +175,10 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
         HideKeyboard.hideboard(mBottomAddImage);
         switch (v.getId()){
             case R.id.sendnewbar_image_add:
-
+                selectImage();
                 break;
             case R.id.bottom_add_image:
-                selectImage.selectMoreImg(System.currentTimeMillis() +
-                        (int) (Math.random() * 1000) + ".png", new OnResultCallbackListener<LocalMedia>() {
-                    @Override
-                    public void onResult(List<LocalMedia> result) {
-                        for (LocalMedia media : result) {
-                            if (media.isCut() && media.isCompressed()){
-                                headImgPath = media.getCompressPath();
-                            }else {
-                                headImgPath = media.getCutPath();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancel() {
-
-                    }
-                });
+                selectImage();
                 break;
             case R.id.bottom_add_voice:
 
@@ -198,12 +186,60 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
         }
     }
 
+    public void selectImage(){
+        selectImage.selectMoreImg(System.currentTimeMillis() +
+                (int) (Math.random() * 1000) + ".png",MAXPOSITION - mPresenter.barImage.size()
+                ,new OnResultCallbackListener<LocalMedia>() {
+            @Override
+            public void onResult(List<LocalMedia> result) {
+                mPresenter.obtainImage(result);
+                mPresenter.setImageList(SendNewBarPage.this,
+                        new LinearLayoutManager(MyApplication.getContext()),mSendnewbarImageList);
+                mSendnewbarImageList.setVisibility(View.VISIBLE);
+                if (mPresenter.barImage.size() == 4){
+                    changeIcon(MAXIMAGE);
+                }else {
+                    changeIcon(HAVEIMAGE);
+                }
+            }
+            @Override
+            public void onCancel() {
+
+            }
+        });
+    }
+
     public void changeIcon(int a){
-        HideKeyboard.hideboard(mSendnewbarTxt);
-//        switch (a){
-//            case :
-//
-//                break;
-//        }
+        if (mPresenter.barImage == null||mPresenter.barImage.size() == 0){
+            mBottomAddVoice.setClickable(true);
+            mBottomAddVoice.setBackground(ContextCompat.getDrawable(this,R.drawable.icon_newbar_voice1));
+        }else {
+            mBottomAddVoice.setBackground(ContextCompat.getDrawable(this,R.drawable.icon_newbar_voice_no));
+            mBottomAddVoice.setClickable(false);
+        }
+        switch (a){
+            case MAXIMAGE:
+                mSendnewbarImageAdd.setVisibility(View.GONE);
+                mBottomAddImage.setBackground(ContextCompat.getDrawable(this,R.drawable.icon_newbar_img_no));
+                mBottomAddImage.setClickable(false);
+                break;
+            case STARTVOICE:
+                mBottomAddVoice.setBackground(ContextCompat.getDrawable(this,R.drawable.icon_newbar_voice2));
+                break;
+            case STARTVOICE1:
+                mBottomAddVoice.setBackground(ContextCompat.getDrawable(this,R.drawable.icon_newbar_voice1));
+                break;
+            case HAVEIMAGE:
+                mSendnewbarImageAdd.setVisibility(View.VISIBLE);
+                mBottomAddImage.setBackground(ContextCompat.getDrawable(this,R.drawable.icon_newbar_img));
+                mBottomAddImage.setClickable(true);
+                break;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.newBarImageAdapter.destroyTransFeree();
     }
 }

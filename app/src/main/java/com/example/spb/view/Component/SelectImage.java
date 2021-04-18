@@ -23,6 +23,8 @@ public class SelectImage implements SpbSelectImage {
         setTheme();
     }
 
+
+
     @Override
     public void selectEasyImg(OnResultCallbackListener onResultCallbackListener) {
         PictureSelector.create(activity)
@@ -76,7 +78,7 @@ public class SelectImage implements SpbSelectImage {
     }
 
     @Override
-    public void selectMoreImg(String imgName, OnResultCallbackListener onResultCallbackListener) {
+    public void selectMoreImg(String imgName,int maxPosition, OnResultCallbackListener onResultCallbackListener) {
         PictureSelector.create(activity)
                 .openGallery(PictureMimeType.ofImage())
                 .imageEngine(GlideEngine.createGlideEngine())
@@ -86,8 +88,7 @@ public class SelectImage implements SpbSelectImage {
                 .setPictureCropStyle(mCropParameterStyle)
                 .isCamera(true)
                 .isZoomAnim(true)
-                .maxSelectNum(4)
-                .minSelectNum(1)
+                .maxSelectNum(maxPosition)
                 .isPreviewImage(true)
                 .isEnableCrop(true)//是否开启裁剪
                 .isCompress(true)

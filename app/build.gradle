@@ -88,5 +88,8 @@ dependencies {
     api 'cn.rongcloud.sdk:im_lib:4.0.3.12'
     api 'cn.rongcloud.sdk:im_kit:4.0.3.12'  //融云通信
 
+    implementation 'com.github.Hitomis.transferee:Transferee:1.6.1'
+    implementation 'com.github.Hitomis.transferee:GlideImageLoader:1.6.1'//图片加载
+
     //implementation 'com.shuyu:GSYVideoPlayer:8.1.0'   //视频播放器
 }

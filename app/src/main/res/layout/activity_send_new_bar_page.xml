@@ -51,7 +51,8 @@
             android:id="@+id/sendnewbar_image_add"
             android:layout_below="@id/sendnewbar_txt"
             android:layout_toRightOf="@id/sendnewbar_image_list"
-            android:layout_margin="@dimen/margin_16"
+            android:layout_marginHorizontal="@dimen/margin_12"
+            android:layout_marginVertical="@dimen/margin_16"
             android:src="@drawable/icon_addimage"
             android:layout_width="@dimen/icon_image_72"
             android:layout_height="@dimen/icon_image_72"/>

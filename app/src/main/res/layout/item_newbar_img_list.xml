@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        android:paddingHorizontal="@dimen/margin_8"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <ImageView
+            android:id="@+id/image_item_view"
+            android:maxWidth="@dimen/icon_image_72"
+            android:maxHeight="@dimen/icon_image_72"
+            android:layout_width="@dimen/icon_image_72"
+            android:layout_height="@dimen/icon_image_72"/>
+
+    <ImageView
+            android:id="@+id/image_clear"
+            android:layout_marginTop="@dimen/margin__4"
+            android:layout_marginRight="@dimen/margin__4"
+            android:layout_alignRight="@id/image_item_view"
+            android:background="@drawable/close_circle"
+            android:layout_width="@dimen/icon_image_32"
+            android:layout_height="@dimen/icon_image_32"/>
+</RelativeLayout>
