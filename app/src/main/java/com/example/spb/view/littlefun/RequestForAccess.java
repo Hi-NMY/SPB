@@ -25,6 +25,13 @@ public class RequestForAccess {
         }
     }
 
+    public static final class VoiceCameraGroup {
+        public static final String[] All = new String[]{"android.permission.RECORD_AUDIO","android.permission.CAMERA","android.permission.ACCESS_COARSE_LOCATION"};
+
+        public VoiceCameraGroup() {
+        }
+    }
+
     public static void setNewAccess(Activity context,OnReturn onReturn){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             XXPermissions.with(context)
@@ -39,6 +46,16 @@ public class RequestForAccess {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             XXPermissions.with(context)
                     .permission(CameraGroup.All)
+                    .request(setCallBack(context, onReturn));
+        }else {
+            onReturn.low();
+        }
+    }
+
+    public static void setSendNewBarAccess(Activity context,OnReturn onReturn){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            XXPermissions.with(context)
+                    .permission(VoiceCameraGroup.All)
                     .request(setCallBack(context, onReturn));
         }else {
             onReturn.low();

@@ -63,9 +63,17 @@ public class FirstPageAPresenterImpl extends BasePresenter<IFirstPageAView> impl
                     if (isAttachView()){
                         switch (Integer.valueOf(a.substring(0,3))) {
                             case 200:
-                                RongUser rongUser = new Gson().fromJson(a.substring(3),RongUser.class);
-                                user.setUser_name(rongUser.getUserId());
-                                user.setUser_token(rongUser.getToken());
+                                User user1 = new Gson().fromJson(a.substring(3),User.class);
+                                user.setUser_account(user1.getUser_account());
+                                user.setUser_birth(user1.getUser_birth());
+                                user.setUser_home(user1.getUser_home());
+                                user.setUser_favorite(user1.getUser_favorite());
+                                user.setUser_profile(user1.getUser_profile());
+                                user.setUser_privacy(user1.getUser_privacy());
+                                user.setUser_ip(user1.getUser_ip());
+                                user.setUser_name(user1.getUser_name());
+                                user.setUser_token(user1.getUser_token());
+                                setUserMsg(user);
                                 handler.sendMessage(SendHandler.setMessage(getView().RESPONSE_SUCCESS_ONE,user));
                                 break;
                             default:
@@ -88,6 +96,20 @@ public class FirstPageAPresenterImpl extends BasePresenter<IFirstPageAView> impl
                 }
             }
         });
+    }
+
+    public void setUserMsg(User user){
+        SharedPreferences.Editor editor = MySharedPreferences.saveShared(InValues.send(R.string.Shared_User));
+        editor.putString(InValues.send(R.string.user_account),user.getUser_account());
+        editor.putString(InValues.send(R.string.user_birth),user.getUser_birth());
+        editor.putString(InValues.send(R.string.user_favorite),user.getUser_favorite());
+        editor.putString(InValues.send(R.string.user_home),user.getUser_home());
+        editor.putString(InValues.send(R.string.user_ip),user.getUser_ip());
+        editor.putString(InValues.send(R.string.user_name),user.getUser_name());
+        editor.putString(InValues.send(R.string.user_privacy),user.getUser_privacy());
+        editor.putString(InValues.send(R.string.user_profile),user.getUser_profile());
+        editor.putString(InValues.send(R.string.user_token),user.getUser_token());
+        editor.apply();
     }
 
     public void verifyPassword(User user, Handler verifyAccountHanlder) {
@@ -122,6 +144,7 @@ public class FirstPageAPresenterImpl extends BasePresenter<IFirstPageAView> impl
             }
         });
     }
+
 
     public void connectRong(String token,String uName,String uAccount){
         RongIM.connect(token, new RongIMClient.ConnectCallback() {

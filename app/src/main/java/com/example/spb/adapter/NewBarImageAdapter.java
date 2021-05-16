@@ -33,6 +33,7 @@ public class NewBarImageAdapter extends RecyclerView.Adapter<NewBarImageAdapter.
     private String imageDouble;
     private Transferee transferee;
     private RemoveImg removeImg;
+    private TransferConfig config;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView mImageItemView;
@@ -51,6 +52,12 @@ public class NewBarImageAdapter extends RecyclerView.Adapter<NewBarImageAdapter.
         for (ImageDouble img : imgList){
             newBarImageList.add(img.getMaxPath());
         }
+        config = TransferConfig.build()
+                .setSourceUrlList(newBarImageList)
+                .setProgressIndicator(new ProgressBarIndicator())
+                .setIndexIndicator(new NumberIndexIndicator())
+                .setImageLoader(GlideImageLoader.with(activity))
+                .create();
     }
 
     public void removeImage(int option){
@@ -85,12 +92,6 @@ public class NewBarImageAdapter extends RecyclerView.Adapter<NewBarImageAdapter.
         holder.mImageItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TransferConfig config = TransferConfig.build()
-                        .setSourceUrlList(newBarImageList)
-                        .setProgressIndicator(new ProgressBarIndicator())
-                        .setIndexIndicator(new NumberIndexIndicator())
-                        .setImageLoader(GlideImageLoader.with(activity))
-                        .create();
                 config.setNowThumbnailIndex(position);
                 transferee.apply(config).show();
             }

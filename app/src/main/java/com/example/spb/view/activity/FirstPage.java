@@ -248,6 +248,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
         switch (v.getId()) {
             case R.id.enter_next_btn:
                 if (ENTER_FUN == 1) {
+                    showDialogS(DIALOGLOADING);
                     user.setUser_password(mPasswordNumberEdit.getText().toString().trim());
                     mPresenter.verifyPassword(user,verifyAccountHanlder);
                 } else {

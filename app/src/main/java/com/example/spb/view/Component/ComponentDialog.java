@@ -134,10 +134,10 @@ public class ComponentDialog implements DialogInter {
                 int notificationBar  = Resources.getSystem().getDimensionPixelSize(
                         Resources.getSystem().getIdentifier("status_bar_height", "dimen", "android"));
                 layoutParams.x = 0; //对 dialog 设置 x 轴坐标
-                layoutParams.y = (int) (-(screenHeight / 2) + location[1] - v.getHeight() * 1.7-notificationBar/2); //对dialog设置y轴坐标
+                layoutParams.y = (int) (-(screenHeight / 2) + location[1] - v.getHeight() * 1.1-notificationBar/2); //对dialog设置y轴坐标
             }
         }else {
-            layoutParams.y = (int) (-(screenHeight / 2) + location[1] - v.getHeight() * 1.7); //对dialog设置y轴坐标
+            layoutParams.y = (int) (-(screenHeight / 2) + location[1] - v.getHeight() * 1.1); //对dialog设置y轴坐标
         }
         window.setAttributes(layoutParams);
     }

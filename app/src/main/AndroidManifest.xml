@@ -27,10 +27,22 @@
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:requestLegacyExternalStorage="true"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:requestLegacyExternalStorage="true"
+            android:usesCleartextTraffic="true">
+
+        <meta-data
+                android:name="com.baidu.lbsapi.API_KEY"
+                android:value="arOOxotQnnPzmrI7Lw9X4o0dD2bIn8pT" >
+        </meta-data>
+
+        <service android:name=".xserver.SpbLocationServer"
+                 android:enabled="true"
+                 android:process=":remote">
+        </service>
+
         <activity android:name=".view.activity.SendNewBarPage"
                   android:windowSoftInputMode="adjustResize">
         </activity>

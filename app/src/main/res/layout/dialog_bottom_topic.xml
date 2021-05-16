@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@drawable/dialog_bottom_bg"
+        android:paddingHorizontal="@dimen/margin_20"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <View
+                android:layout_marginTop="@dimen/margin_12"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/enter_next_login_false"
+                android:layout_width="@dimen/margin_40"
+                android:layout_height="@dimen/margin_8"/>
+
+        <RelativeLayout
+                android:id="@+id/r"
+                android:layout_marginTop="@dimen/margin_40"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:id="@+id/topic_close"
+                    android:text="取消"
+                    android:textSize="@dimen/font_16"
+                    android:textColor="@color/gray"
+                    android:layout_alignParentLeft="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:text="添加话题"
+                    android:textSize="@dimen/font_16"
+                    android:textColor="@color/gray"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+<!--            <TextView-->
+<!--                    android:id="@+id/topic_send"-->
+<!--                    android:text="添加"-->
+<!--                    android:textSize="@dimen/font_16"-->
+<!--                    android:textColor="@color/theme_color"-->
+<!--                    android:layout_alignParentRight="true"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"/>-->
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/topic_search_r"
+                android:layout_below="@+id/r"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_marginTop="@dimen/margin_20"
+                android:background="@drawable/search_bg"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/icon_image_36">
+
+            <ImageView
+                    android:id="@+id/image"
+                    android:layout_marginLeft="@dimen/margin_4"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/icon_topic"
+                    android:layout_width="@dimen/icon_image_32"
+                    android:layout_height="@dimen/icon_image_32"/>
+
+            <EditText
+                    android:id="@+id/topic_search_edt"
+                    android:textSize="@dimen/font_14"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:maxLength="25"
+                    android:hint="搜索喜欢的话题"
+                    android:textColor="@color/ziti"
+                    android:layout_marginRight="@dimen/margin_16"
+                    android:layout_toRightOf="@id/image"
+                    android:background="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/hot_topic_r"
+                android:visibility="visible"
+                android:layout_below="@id/topic_search_r"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:id="@+id/text"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:textColor="@color/lightgray"
+                    android:textSize="@dimen/font_14"
+                    android:text="热点话题"
+                    android:layout_alignParentLeft="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <com.zhy.view.flowlayout.TagFlowLayout
+                    android:id="@+id/hot_topic_tag"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+            </com.zhy.view.flowlayout.TagFlowLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/search_topic_r"
+                android:visibility="invisible"
+                android:layout_below="@id/topic_search_r"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:id="@+id/text1"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:textColor="@color/lightgray"
+                    android:textSize="@dimen/font_14"
+                    android:text="搜索话题"
+                    android:layout_alignParentLeft="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <com.zhy.view.flowlayout.TagFlowLayout
+                    android:id="@+id/search_topic_tag"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/text1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+            </com.zhy.view.flowlayout.TagFlowLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

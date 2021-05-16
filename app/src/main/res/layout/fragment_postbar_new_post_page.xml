@@ -43,18 +43,18 @@
             <LinearLayout
                     android:id="@+id/r"
                     android:orientation="horizontal"
-                    android:layout_marginRight="150dp"
+                    android:layout_marginRight="180dp"
                     android:background="@drawable/bar_music_bg"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/icon_image_40">
 
                 <pl.droidsonroids.gif.GifImageView
                         android:id="@+id/item_postbar_voice"
-                        android:background="@drawable/loading_mu"
-                        android:layout_marginRight="@dimen/margin_4"
-                        android:translationY="@dimen/margin__16"
-                        android:layout_width="match_parent"
-                        android:layout_height="70dp"/>
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/margin_20"
+                        android:background="@drawable/icon_voice_gif"
+                        android:layout_width="@dimen/icon_image_24"
+                        android:layout_height="@dimen/icon_image_24"/>
 
             </LinearLayout>
 

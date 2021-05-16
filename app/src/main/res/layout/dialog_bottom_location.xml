@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:background="@drawable/dialog_bottom_bg"
+                android:paddingHorizontal="@dimen/margin_20"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <View
+                android:layout_marginTop="@dimen/margin_12"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/enter_next_login_false"
+                android:layout_width="@dimen/margin_40"
+                android:layout_height="@dimen/margin_8"/>
+
+        <RelativeLayout
+                android:id="@+id/r"
+                android:layout_marginTop="@dimen/margin_40"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:id="@+id/location_close"
+                    android:text="取消"
+                    android:textSize="@dimen/font_16"
+                    android:textColor="@color/gray"
+                    android:layout_alignParentLeft="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:text="地点"
+                    android:textSize="@dimen/font_16"
+                    android:textColor="@color/gray"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/location_search_r"
+                android:layout_below="@+id/r"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_marginTop="@dimen/margin_20"
+                android:background="@drawable/search_bg"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/icon_image_36">
+
+            <ImageView
+                    android:id="@+id/image"
+                    android:layout_marginLeft="@dimen/margin_4"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/icon_location"
+                    android:layout_width="@dimen/icon_image_32"
+                    android:layout_height="@dimen/icon_image_32"/>
+
+            <EditText
+                    android:id="@+id/location_search_edt"
+                    android:textSize="@dimen/font_14"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:maxLength="25"
+                    android:hint="搜索我的位置"
+                    android:textColor="@color/ziti"
+                    android:layout_marginRight="@dimen/margin_16"
+                    android:layout_toRightOf="@id/image"
+                    android:background="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+        </RelativeLayout>
+
+        <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/location_loading"
+                android:layout_below="@+id/location_search_r"
+                android:layout_marginTop="@dimen/margin_32"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/location_loading"
+                android:layout_width="@dimen/icon_image_56"
+                android:layout_height="@dimen/icon_image_56"/>
+
+        <RelativeLayout
+                android:id="@+id/location_error_r"
+                android:visibility="gone"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/loacation_error_r"
+                android:layout_marginTop="@dimen/margin_40"
+                android:minHeight="@dimen/icon_image_24"
+                android:padding="@dimen/margin_4"
+                android:layout_below="@+id/location_search_r"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <ImageView
+                    android:id="@+id/img1"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/icon_location_refresh"
+                    android:layout_width="@dimen/icon_image_32"
+                    android:layout_height="@dimen/icon_image_32"/>
+
+            <TextView
+                    android:layout_marginRight="@dimen/margin_8"
+                    android:textSize="@dimen/font_14"
+                    android:textColor="@color/gray"
+                    android:layout_marginLeft="@dimen/margin_4"
+                    android:layout_toRightOf="@+id/img1"
+                    android:text="获取位置信息错误"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/location_recycler"
+                android:layout_marginTop="@dimen/margin_12"
+                android:visibility="gone"
+                android:layout_below="@+id/location_error_r"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+</RelativeLayout>

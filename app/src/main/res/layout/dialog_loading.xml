@@ -12,7 +12,6 @@
 
     <pl.droidsonroids.gif.GifImageView
             android:id="@+id/loading_gif"
-            android:background="@drawable/loading"
             android:layout_centerInParent="true"
             android:layout_width="@dimen/icon_image_32"
             android:layout_height="@dimen/icon_image_32"/>

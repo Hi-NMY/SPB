@@ -22,6 +22,19 @@
     <string name="RongUser_userId">userId</string>
     <string name="RongUser_token">token</string>
 
+    <string name="Shared_User">User</string>
+    <string name="user_account">user_account</string>
+    <string name="user_password">user_password</string>
+    <string name="user_name">user_name</string>
+    <string name="user_birth">user_birth</string>
+    <string name="user_home">user_home</string>
+    <string name="user_favorite">user_favorite</string>
+    <string name="user_profile">user_profile</string>
+    <string name="user_privacy">user_privacy</string>
+    <string name="user_ip">user_ip</string>
+    <string name="user_token">user_token</string>
+
+
 
     <string name="httpHeader">http://nmy1206.natapp1.cc</string>
     <string name="httpHeadert">http://nmy1206.natapp1.cc/</string>
@@ -40,4 +53,6 @@
     <string name="Followed">http://nmy1206.natapp1.cc/Followed.php</string>
     <string name="Follow">http://nmy1206.natapp1.cc/Follow.php</string>
     <string name="Like">http://nmy1206.natapp1.cc/Like.php</string>
+    <string name="Topic">http://nmy1206.natapp1.cc/Topic.php</string>
+    <string name="SendNewPostBar">http://nmy1206.natapp1.cc/SendNewPostBar.php</string>
 </resources>

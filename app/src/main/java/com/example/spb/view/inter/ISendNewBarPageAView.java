@@ -11,6 +11,13 @@ public interface ISendNewBarPageAView extends SpbInterOne {
     int RESPONSE_ONE = 0;
     int RESPONSE_TWO = 1;
     int RESPONSE_THREE = 2;
+    int RESPONSE_FOUR = 3;
+    int RESPONSE_FIVE = 4;
+    int RESPONSE_SIX = 5;
+    int RESPONSE_SEVEN = 6;
+    int RESPONSE_EIGHT = 7;
+    int SUCCESS_BAR = 8;
+    int ERROR_BAR = 9;
 
     String TITLE = "发新帖";
     String SENDTITLE = "发布";
@@ -24,6 +31,19 @@ public interface ISendNewBarPageAView extends SpbInterOne {
     int MAXIMAGE = 4;
     int HAVEIMAGE = 1;
     int NULLIMAGE = 0;
+
+    //dialog
+    int BOTTOMLOCATION = 0;
+    int BOTTOMTOPIC = 1;
+    int DIALOGLOADING = 2;
+
+    //voice控制
+    int VOICE_START = 0;
+    int VOICE_END = 1;
+    int VOICE_GO = 2;
+    int VOICE_STOP = 3;
+
+
 
     public void changeIcon(int a);
 
