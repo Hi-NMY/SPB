@@ -44,13 +44,12 @@
                         android:textSize="@dimen/font_18"
                         android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:text="撒大声地"
+                        android:text=""
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
                 <ImageView
                         android:id="@+id/user_page_usersex"
-                        android:src="@drawable/icon_boy"
                         android:scaleType="centerCrop"
                         android:layout_alignBottom="@id/user_page_username"
                         android:layout_alignTop="@id/user_page_username"
@@ -99,7 +98,7 @@
                         android:textSize="@dimen/font_18"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        android:text="2345天"
+                        android:text="9999天"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
@@ -129,7 +128,7 @@
                             android:textSize="@dimen/font_18"
                             android:textColor="@color/black"
                             android:textStyle="bold"
-                            android:text="38"
+                            android:text="0"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
@@ -160,7 +159,7 @@
                             android:textSize="@dimen/font_18"
                             android:textColor="@color/black"
                             android:textStyle="bold"
-                            android:text="38"
+                            android:text="0"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
@@ -190,7 +189,7 @@
                             android:textSize="@dimen/font_18"
                             android:textColor="@color/black"
                             android:textStyle="bold"
-                            android:text="38"
+                            android:text="0"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 

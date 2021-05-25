@@ -6,7 +6,11 @@ import com.example.spb.base.BasePresenter;
 import com.example.spb.presenter.inter.IEnterPageAPresenter;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MySharedPreferences;
+import com.example.spb.view.activity.EnterPage;
 import com.example.spb.view.inter.IEnterPageAView;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class EnterPageAPresenterImpl extends BasePresenter<IEnterPageAView> implements IEnterPageAPresenter {
 
@@ -19,12 +23,28 @@ public class EnterPageAPresenterImpl extends BasePresenter<IEnterPageAView> impl
         return sharedPreferences.getBoolean(InValues.send(R.string.FirstLogIn_login),true);
     }
 
-    public boolean getInitialize(){
-        SharedPreferences sharedPreferences = MySharedPreferences.getShared("firstInitialize");
-        return sharedPreferences.getBoolean("initialize",false);
+    public void initDate(EnterPage enterPage,Jump jump){
+//        ExecutorService executorService = Executors.newFixedThreadPool(10);
+//        executorService.execute(new Runnable() {
+//            @Override
+//            public void run() {
+                SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_User));
+                enterPage.initUserData(sharedPreferences.getString(InValues.send(R.string.user_account),""));
+//            }
+//        });
+//        executorService.shutdown();
+//        while (true){
+//            if (executorService.isTerminated()){
+//                ;
+//            }
+//        }
+        jump.toJump();
+    }
+    public interface Jump{
+        void toJump();
     }
 
-    public void setInitialize(){
+ //   public void setInitialize(){
 //        SharedPreferences.Editor editor = MySharedPreferences.saveShared("settingMessage");
 //        editor.putBoolean("thumb",true);
 //        editor.putBoolean("comment",true);
@@ -53,5 +73,5 @@ public class EnterPageAPresenterImpl extends BasePresenter<IEnterPageAView> impl
 //        editor3.putInt("goodVoice",0);
 //        editor3.putInt("goToSpace",0);
 //        editor3.commit();
-    }
+ //   }
 }

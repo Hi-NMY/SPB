@@ -1,23 +1,27 @@
 package com.example.spb.view.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
+import com.bumptech.glide.Glide;
 import com.example.spb.R;
 import com.example.spb.adapter.FragmentViewPageAdapter;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.PersonalSpacePageAPresenterImpl;
+import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
 import com.example.spb.view.Component.SelectImage;
@@ -52,7 +56,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         implements IPersonalSpacePageAView, View.OnClickListener {
 
     private SimplePagerTitleView simplePagerTitleView;
-    private static final String[] title = new String[]{"资料","帖子","视频"};
+    private static final String[] title = new String[]{"资料", "帖子", "视频"};
     private List<String> myTitleList = Arrays.asList(title);
     private ArrayList<Fragment> fragments;
     private FragmentManager fragmentManager;
@@ -71,12 +75,17 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
     private RelativeLayout mR1;
     private RelativeLayout mR2;
     private RelativeLayout mR3;
-
+    private TextView mPersonalspaceUsername;
+    private ImageView mPersonalspaceUsersex;
+    private TextView mPersonalspaceUsersign;
+    private RefreshMsg refreshMsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_space_page);
+        refreshMsg = new RefreshMsg();
+        SpbBroadcast.obtainRecriver(this,InValues.send(R.string.Bcr_refresh_userMsg),refreshMsg);
         initActView();
     }
 
@@ -95,9 +104,13 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         mPersonalspaceAppbarlayout = (AppBarLayout) findViewById(R.id.personalspace_appbarlayout);
         mPersonalspaceBarR = (RelativeLayout) findViewById(R.id.personalspace_bar_R);
         mPersonalspaceUserHeadimg = (RoundedImageView) findViewById(R.id.personalspace_user_headimg);
+        mPersonalspaceUsername = (TextView) findViewById(R.id.personalspace_username);
+        mPersonalspaceUsersex = (ImageView) findViewById(R.id.personalspace_usersex);
+        mPersonalspaceUsersign = (TextView) findViewById(R.id.personalspace_usersign);
         mR1 = (RelativeLayout) findViewById(R.id.r1);
         mR2 = (RelativeLayout) findViewById(R.id.r2);
         mR3 = (RelativeLayout) findViewById(R.id.r3);
+        initData();
         intFollowViewPager();
         setActivityBar();
         setMyListener();
@@ -106,7 +119,18 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
 
     @Override
     protected void initData() {
-
+        mPersonalspaceUsername.setText(getDataUserMsgPresenter().getUser_name());
+        mPersonalspaceUsersign.setText(getDataUserMsgPresenter().getUser_profile());
+        if (getDataUserMsgPresenter().getStu_sex().equals("男")){
+            mPersonalspaceUsersex.setImageResource(R.drawable.icon_boy);
+        }else {
+            mPersonalspaceUsersex.setImageResource(R.drawable.icon_girl);
+        }
+        Glide.with(this)
+                .load(InValues.send(R.string.httpHeader) +"/UserImageServer/" + getDataUserMsgPresenter().getUser_account() + "/HeadImage/myHeadImage.png")
+                .centerCrop()
+                .into(mPersonalspaceUserHeadimg);
+        mPersonalspaceUsername.postInvalidate();
     }
 
     private void intFollowViewPager() {
@@ -174,16 +198,16 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                 int persent = -i * 2 / 3;
                 if (persent > 255) {
                     persent = 255;
-                    bar.barCentralTxt("USERNAME", new FragmentSpbAvtivityBar.OnMyClick() {
+                    bar.barCentralTxt(dataUserMsgPresenter.user_name, new FragmentSpbAvtivityBar.OnMyClick() {
                         @Override
                         public void onClick() {
                             mPersonalspaceAppbarlayout.setExpanded(true);
                         }
                     });
-                    bar.barLeftImg(R.drawable.left_return,null);
-                }else {
-                    bar.barCentralTxt("",null);
-                    bar.barLeftImg(R.drawable.left_return_white,null);
+                    bar.barLeftImg(R.drawable.left_return, null);
+                } else {
+                    bar.barCentralTxt("", null);
+                    bar.barLeftImg(R.drawable.left_return_white, null);
                 }
                 int color = Color.argb(persent, 249, 249, 249);
                 mPersonalspaceBarR.setBackgroundColor(color);
@@ -312,7 +336,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                 JumpIntent.startMsgIntent(AttentionUserPage.class, new JumpIntent.SetMsg() {
                     @Override
                     public void setMessage(Intent intent) {
-                        intent.putExtra(STRINGEXTRA,PAGENUMONE);
+                        intent.putExtra(STRINGEXTRA, PAGENUMONE);
                     }
                 });
                 break;
@@ -320,7 +344,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                 JumpIntent.startMsgIntent(AttentionUserPage.class, new JumpIntent.SetMsg() {
                     @Override
                     public void setMessage(Intent intent) {
-                        intent.putExtra(STRINGEXTRA,PAGENUMTWO);
+                        intent.putExtra(STRINGEXTRA, PAGENUMTWO);
                     }
                 });
                 break;
@@ -328,6 +352,16 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                 JumpIntent.startMyIntent(AttentionTopicPage.class);
                 break;
 
+        }
+    }
+
+    class RefreshMsg extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mPersonalspaceUsername.setText(getDataUserMsgPresenter().getUser_name());
+            mPersonalspaceUsersign.setText(getDataUserMsgPresenter().getUser_profile());
+            mPersonalspaceUsername.postInvalidate();
+            mPersonalspaceUsersign.postInvalidate();
         }
     }
 }

@@ -4,9 +4,11 @@ import com.example.spb.presenter.callback.MyCallBack;
 
 public interface SpbModelBasicInter<T> {
 
-    public static int REGISTEREDPAGE = 1;
-    public static int FIRSTPAGE_ONE = 1;
-    public static int FIRSTPAGE_TWO = 2;
+    public static int REGISTEREDPAGE = 910;
+    public static int FIRSTPAGE_ONE = 920;
+    public static int FIRSTPAGE_TWO = 930;
+    public static int DATEUSER_UPDATE_ONE = 940;
+
 
     public static int DATEATTENTIONTOPIC_ADD_ONE = 110;
     public static int DATEATTENTIONTOPIC_SELECT_ONE = 120;

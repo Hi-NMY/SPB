@@ -55,7 +55,19 @@ public class UserModelImpl extends SpbModelAbstrate implements SpbModelBasicInte
 
     @Override
     public void updateData(int fun, User data, MyCallBack callBack) {
-
+        switch (fun){
+            case DATEUSER_UPDATE_ONE:
+                requestBody = new FormBody.Builder()
+                        .add("user_account", data.getUser_account())
+                        .add("user_name", data.getUser_name())
+                        .add("user_birth", data.getUser_birth())
+                        .add("user_favorite", data.getUser_favorite())
+                        .add("user_home", data.getUser_home())
+                        .add("user_profile", data.getUser_profile())
+                        .build();
+                sendHttp(InValues.send(R.string.User),requestBody,callBack);
+                break;
+        }
     }
 
     @Override

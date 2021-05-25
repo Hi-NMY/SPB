@@ -16,7 +16,7 @@ public class MyResolve {
             return stringBuffer.append("");
         }else {
             for (Topic t : topics){
-                stringBuffer.append(t.getTopic_name() + "&");
+                stringBuffer.append(t.getTopic_name() + "\\|");
             }
             return stringBuffer;
         }
@@ -24,7 +24,7 @@ public class MyResolve {
 
     public static List<Topic> InTopic(String date){
         List<Topic> topics = new ArrayList<>();
-        String[] s = date.split("&");
+        String[] s = date.split("\\|");
         for (int a = 0; a < s.length; a++) {
             Topic topic = new Topic();
             topic.setTopic_name(s[a]);
@@ -40,8 +40,8 @@ public class MyResolve {
             return stringBuffer.append("");
         }else {
             for (ImageDouble i : imageDoubles){
-                stringBuffer.append(i.getMinPath() + "&");
-                stringBuffer1.append(i.getMaxPath() + "&");
+                stringBuffer.append(i.getMinPath() + "|");
+                stringBuffer1.append(i.getMaxPath() + "|");
             }
             return stringBuffer.append("@" + stringBuffer1);
         }
@@ -50,8 +50,8 @@ public class MyResolve {
     public static List<ImageDouble> InDoubleImage(String date){
         List<ImageDouble> imageDoubles = new ArrayList<>();
         String[] one = date.split("@");
-        String[] two = one[0].split("&");
-        String[] three = one[1].split("&");
+        String[] two = one[0].split("\\|");
+        String[] three = one[1].split("\\|");
         for (int a = 0 ; a < two.length ; a++){
             ImageDouble imageDouble = new ImageDouble();
             imageDouble.setMinPath(two[a]);
@@ -62,7 +62,7 @@ public class MyResolve {
     }
 
     public static Bar InBar(Bar bar,String date){
-        String[] one = date.split("&");
+        String[] one = date.split("\\|");
         bar.setPb_one_id(one[0]);
         bar.setPb_image_url(one[1]);
         bar.setPb_date(one[2]);
@@ -70,5 +70,16 @@ public class MyResolve {
         bar.setPb_thumb_num(0);
         bar.setPb_comment_num(0);
         return bar;
+    }
+
+    public static List<String> InFaTag(String date){
+        List<String> tags = new ArrayList<>();
+        String[] s = date.split("\\|");
+        for (int a = 0; a < s.length; a++) {
+            if (s[a] != null && !s[a].equals("")){
+                tags.add(s[a]);
+            }
+        }
+        return tags;
     }
 }

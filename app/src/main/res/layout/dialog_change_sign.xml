@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:paddingVertical="@dimen/margin_12"
+            android:background="@drawable/act_user_notice_bg"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <EditText
+                android:id="@+id/edit_text"
+                android:background="@drawable/edit_gb"
+                android:gravity="left|top"
+                android:padding="@dimen/margin_4"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginVertical="@dimen/margin_4"
+                android:textColor="@color/qihei"
+                android:textSize="@dimen/font_14"
+                android:layout_centerHorizontal="true"
+                android:minHeight="@dimen/icon_image_72"
+                android:text=""
+                android:hint="写点有代表性的东西吧..."
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                />
+
+
+        <TextView
+                android:id="@+id/click_true"
+                android:layout_below="@id/edit_text"
+                android:layout_marginTop="@dimen/margin_12"
+                android:paddingVertical="@dimen/margin_8"
+                android:paddingHorizontal="@dimen/margin_40"
+                android:textSize="@dimen/font_12"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/beijing"
+                android:background="@drawable/enter_next_login"
+                android:text="确认"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+</RelativeLayout>

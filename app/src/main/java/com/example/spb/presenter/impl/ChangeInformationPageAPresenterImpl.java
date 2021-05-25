@@ -5,24 +5,139 @@ import android.content.res.AssetManager;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BasePresenter;
 import com.example.spb.entity.CityJsonBean;
+import com.example.spb.entity.User;
+import com.example.spb.model.InterTotal.SpbModelBasicInter;
+import com.example.spb.model.SpbAbstract.SpbModelAbstrate;
+import com.example.spb.model.impl.UserModelImpl;
+import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.inter.IChangeInformationPageAPresenter;
+import com.example.spb.presenter.littlefun.MyDateClass;
+import com.example.spb.presenter.littlefun.MyResolve;
 import com.example.spb.view.inter.IChangeInformationPageAView;
 import com.google.gson.Gson;
+import okhttp3.Response;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ChangeInformationPageAPresenterImpl extends BasePresenter<IChangeInformationPageAView> implements IChangeInformationPageAPresenter {
 
+    private SpbModelBasicInter userModel;
     private List<CityJsonBean> options1Items = new ArrayList<>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
     private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<>();
+    public String user_birth;
+    public String user_home;
+    public String user_profile;
+    public String user_name;
+    public StringBuffer user_favorite;
+    public List<String> uf;
+    public List<String> strings;
 
     public ChangeInformationPageAPresenterImpl() {
+        userModel = new UserModelImpl();
+        user_favorite = new StringBuffer();
+        uf = new ArrayList<>();
+    }
+
+    public void setUser_birth(Date user_birth) {
+        this.user_birth = MyDateClass.getStringDate(user_birth);
+    }
+
+    public void setUser_home(String user_home) {
+        this.user_home = user_home;
+    }
+
+    public void setUser_profile(String user_profile) {
+        this.user_profile = user_profile;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
+
+    public void getUser_favorite(String a) {
+        if (user_favorite == null || user_favorite.length() == 0){
+            user_favorite.append(a);
+        }
+    }
+
+    public void addFavorite(String a){
+        uf.add(a);
+    }
+
+    public void clearFavorite(String a){
+        uf.remove(a);
+    }
+
+    public boolean verificationString(String a){
+        strings = MyResolve.InFaTag(String.valueOf(user_favorite));
+        uf = new ArrayList<>();
+        uf.addAll(strings);
+        if (strings != null && strings.size() != 0){
+            return strings.contains(a);
+        }else {
+            return false;
+        }
+    }
+
+    public void setUser_favorite(){
+        user_favorite = new StringBuffer();
+        for (String a:uf){
+            user_favorite.append(a + "|");
+        }
+    }
+
+    public void deleteFa(){
+        uf = new ArrayList<>();
+    }
+
+    public User updateUser(String user_account){
+        User user = new User();
+        user.setUser_account(user_account);
+        if (user_name == null || user_name.equals("")){
+            user.setUser_name(getView().getUser_name());
+        }else {
+            user.setUser_name(user_name);
+        }
+        if (user_birth == null || user_birth.equals("")){
+            user.setUser_birth(getView().getUser_birth());
+        }else {
+            user.setUser_birth(user_birth);
+        }
+        user.setUser_favorite(String.valueOf(user_favorite));
+        if (user_profile == null || user_profile.equals("")){
+            user.setUser_profile(getView().getUser_profile());
+        }else {
+            user.setUser_profile(user_profile);
+        }
+        if (user_home == null || user_home.equals("")){
+            user.setUser_home(getView().getUser_home());
+        }else {
+            user.setUser_home(user_home);
+        }
+        userModel.updateData(userModel.DATEUSER_UPDATE_ONE, user, new MyCallBack() {
+            @Override
+            public void onSuccess(@NotNull Response response) {
+                try {
+                    String a = response.body().string();
+                    getView().response(user,Integer.valueOf(a));
+                } catch (IOException e) {
+                    getView().response(null,202);
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(int t) {
+
+            }
+        });
+        return user;
     }
 
     public List<CityJsonBean> getOptions1Items() {

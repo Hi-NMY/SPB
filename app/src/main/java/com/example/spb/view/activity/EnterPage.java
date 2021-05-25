@@ -14,6 +14,9 @@ import com.example.spb.view.littlefun.JumpIntent;
 import com.gyf.immersionbar.ImmersionBar;
 import org.litepal.LitePal;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class EnterPage extends BaseMVPActivity<IEnterPageAView, EnterPageAPresenterImpl> implements IEnterPageAView {
 
     private ImageView mBgimage;
@@ -50,13 +53,24 @@ public class EnterPage extends BaseMVPActivity<IEnterPageAView, EnterPageAPresen
             @Override
             public void run() {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
                     if (mPresenter.getFirstLogIn()){
                         Intent intent = new Intent(MyApplication.getContext(),FirstPage.class);
                         startActivity(intent);
                     }else {
-                        JumpIntent.startNewIntent(HomePage.class);
+                        mPresenter.initDate(EnterPage.this, new EnterPageAPresenterImpl.Jump() {
+                            @Override
+                            public void toJump() {
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                JumpIntent.startNewIntent(HomePage.class);
+                            }
+                        });
                     }
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

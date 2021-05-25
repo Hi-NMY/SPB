@@ -73,6 +73,8 @@ public class FirstPageAPresenterImpl extends BasePresenter<IFirstPageAView> impl
                                 user.setUser_ip(user1.getUser_ip());
                                 user.setUser_name(user1.getUser_name());
                                 user.setUser_token(user1.getUser_token());
+                                user.setStu_sex(user1.getStu_sex());
+                                user.setStu_name(user1.getStu_name());
                                 setUserMsg(user);
                                 handler.sendMessage(SendHandler.setMessage(getView().RESPONSE_SUCCESS_ONE,user));
                                 break;
@@ -109,6 +111,8 @@ public class FirstPageAPresenterImpl extends BasePresenter<IFirstPageAView> impl
         editor.putString(InValues.send(R.string.user_privacy),user.getUser_privacy());
         editor.putString(InValues.send(R.string.user_profile),user.getUser_profile());
         editor.putString(InValues.send(R.string.user_token),user.getUser_token());
+        editor.putString(InValues.send(R.string.stu_sex),user.getStu_sex());
+        editor.putString(InValues.send(R.string.stu_name),user.getStu_name());
         editor.apply();
     }
 

@@ -6,6 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="true"
+        android:focusableInTouchMode="true"
         tools:context=".view.activity.ChangeInformationPage">
 
     <fragment
@@ -47,6 +48,8 @@
                     android:layout_toRightOf="@+id/t1"
                     android:layout_toLeftOf="@id/x1"
                     android:background="@null"
+                    android:maxLength="10"
+                    android:maxLines="1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"/>
             <TextView
@@ -115,6 +118,7 @@
                     android:textColor="@color/qihei"
                     android:layout_toRightOf="@+id/t3"
                     android:layout_toLeftOf="@id/x3"
+                    android:maxLines="1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"/>
             <ImageView
@@ -152,6 +156,42 @@
                     android:layout_height="match_parent"/>
             <ImageView
                     android:id="@+id/x4"
+                    android:background="@drawable/right_grey"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="@dimen/icon_image_24"
+                    android:layout_height="@dimen/icon_image_24"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/r_sign"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spb_activity_bar_44">
+            <TextView
+                    android:id="@+id/t5"
+                    android:layout_marginRight="@dimen/margin_40"
+                    android:gravity="center"
+                    android:textSize="@dimen/font_16"
+                    android:textColor="@color/grey"
+                    android:text="个签"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+
+            <TextView
+                    android:id="@+id/changeinformation_sign"
+                    android:gravity="left|center"
+                    android:textSize="@dimen/font_16"
+                    android:textColor="@color/grey"
+                    android:layout_toRightOf="@+id/t5"
+                    android:layout_toLeftOf="@id/x5"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+            <ImageView
+                    android:id="@+id/x5"
                     android:background="@drawable/right_grey"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"

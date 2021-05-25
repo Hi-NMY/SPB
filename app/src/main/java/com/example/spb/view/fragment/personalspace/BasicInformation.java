@@ -1,18 +1,40 @@
 package com.example.spb.view.fragment.personalspace;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import androidx.core.content.ContextCompat;
 import com.example.spb.R;
+import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.presenter.impl.BasicInformationFPresenterImpl;
+import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.littlefun.MyDateClass;
+import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.view.activity.ChangeInformationPage;
+import com.example.spb.view.activity.PersonalSpacePage;
 import com.example.spb.view.inter.IBasicInformationFView;
 import com.example.spb.view.littlefun.JumpIntent;
+import com.zhy.view.flowlayout.FlowLayout;
+import com.zhy.view.flowlayout.TagAdapter;
+import com.zhy.view.flowlayout.TagFlowLayout;
 
 public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, BasicInformationFPresenterImpl> implements IBasicInformationFView, View.OnClickListener {
 
+    private PersonalSpacePage personalSpacePage;
     private TextView mBasicinformationChange;
+    private TextView mBasicinformationOnline;
+    private TextView mBasicinformationBirth;
+    private TextView mBasicinformationConstellation;
+    private TagFlowLayout mBasicinformationFavorite;
+    private TextView mBasicinformationHome;
+    private LayoutInflater layoutInflater;
+    private RefreshMsg refreshMsg;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,6 +53,8 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
 
     @Override
     protected BasicInformationFPresenterImpl createPresenter() {
+        refreshMsg = new RefreshMsg();
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_userMsg),refreshMsg);
         return new BasicInformationFPresenterImpl();
     }
 
@@ -41,18 +65,55 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
 
     @Override
     protected void initFragView(View view) {
-        mBasicinformationChange = (TextView)view.findViewById(R.id.basicinformation_change);
+        personalSpacePage = (PersonalSpacePage)getActivity();
+        layoutInflater = LayoutInflater.from(personalSpacePage);
+        mBasicinformationChange = (TextView) view.findViewById(R.id.basicinformation_change);
+        mBasicinformationOnline = (TextView) view.findViewById(R.id.basicinformation_online);
+        mBasicinformationHome = (TextView)view.findViewById(R.id.basicinformation_home);
+        mBasicinformationFavorite = (TagFlowLayout)view.findViewById(R.id.basicinformation_favorite);
+        mBasicinformationConstellation = (TextView)view.findViewById(R.id.basicinformation_constellation);
+        mBasicinformationBirth = (TextView)view.findViewById(R.id.basicinformation_birth);
         setMyListener();
     }
 
     @Override
     protected void initData() {
+        if (!personalSpacePage.getDataUserMsgPresenter().getUser_home().equals("")){
+            mBasicinformationHome.setText(personalSpacePage.getDataUserMsgPresenter().user_home);
+        }
 
+        if (!personalSpacePage.getDataUserMsgPresenter().getUser_birth().equals("")){
+            mBasicinformationBirth.setText(personalSpacePage.getDataUserMsgPresenter().user_birth);
+            mBasicinformationConstellation.setText(MyDateClass.getConstellation(personalSpacePage.getDataUserMsgPresenter().user_birth.substring(5)));
+        }
+
+        mBasicinformationFavorite.setAdapter(new TagAdapter<String>(mPresenter.setFavorite(personalSpacePage.getDataUserMsgPresenter().getUser_favorite())) {
+            @Override
+            public View getView(FlowLayout parent, int position, String o) {
+                View view = layoutInflater.inflate(R.layout.item_favorite_tag_one, mBasicinformationFavorite, false);
+                if (mPresenter.strings == null || mPresenter.strings.size() == 0){
+                    TextView textView = (TextView) view.findViewById(R.id.text);
+                    textView.setText("无");
+                }else {
+                    RelativeLayout relativeLayout = (RelativeLayout)view.findViewById(R.id.r);
+                    TextView textView = (TextView) view.findViewById(R.id.text);
+                    textView.setText(o);
+                    textView.setTextColor(ContextCompat.getColor(MyApplication.getContext(),R.color.theme_color));
+                    relativeLayout.setBackground(personalSpacePage.getDrawable(R.drawable.favorite_tag_two));
+                }
+                return view;
+            }
+        });
+
+        mBasicinformationHome.postInvalidate();
+        mBasicinformationFavorite.postInvalidate();
+        mBasicinformationConstellation.postInvalidate();
+        mBasicinformationBirth.postInvalidate();
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.basicinformation_change:
                 JumpIntent.startMyIntent(ChangeInformationPage.class);
                 break;
@@ -87,5 +148,12 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
     @Override
     public void setActivityBar() {
 
+    }
+
+    class RefreshMsg extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            initData();
+        }
     }
 }

@@ -11,12 +11,14 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
     protected T mPresenter;
 
     public static String user_account;
-    public DataAttentionTopicPresenter dataAttentionTopicPresenter;
-    public DataCollectBarPresenter dataCollectBarPresenter;
-    public DataDiaryPresenter dataDiaryPresenter;
-    public DataFollowPresenter dataFollowPresenter;
-    public DataFollowedPresenter dataFollowedPresenter;
-    public DataLikePresenter dataLikePresenter;
+    public static DataAttentionTopicPresenter dataAttentionTopicPresenter;
+    public static DataCollectBarPresenter dataCollectBarPresenter;
+    public static DataDiaryPresenter dataDiaryPresenter;
+    public static DataFollowPresenter dataFollowPresenter;
+    public static DataFollowedPresenter dataFollowedPresenter;
+    public static DataLikePresenter dataLikePresenter;
+    public static DataPostBarPresenter dataPostBarPresenter;
+    public static DataUserMsgPresenter dataUserMsgPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +55,8 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
         setDataFollowedPresenter();
         setDataFollowPresenter();
         setDataLikePresenter();
+        setDataPostBarPresenter();
+        setDataUserMsgPresenter();
     }
 
     public DataAttentionTopicPresenter getDataAttentionTopicPresenter() {
@@ -131,6 +135,32 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
 
     public void setDataLikePresenter() {
         this.dataLikePresenter = new DataLikePresenter(user_account);
+    }
+
+    public DataPostBarPresenter getDataPostBarPresenter() {
+        if (dataPostBarPresenter == null){
+            setDataPostBarPresenter();
+            return dataPostBarPresenter;
+        }else {
+            return dataPostBarPresenter;
+        }
+    }
+
+    public void setDataPostBarPresenter() {
+        this.dataPostBarPresenter = new DataPostBarPresenter(user_account);
+    }
+
+    public DataUserMsgPresenter getDataUserMsgPresenter() {
+        if (dataUserMsgPresenter == null){
+            setDataUserMsgPresenter();
+            return dataUserMsgPresenter;
+        }else {
+            return dataUserMsgPresenter;
+        }
+    }
+
+    public void setDataUserMsgPresenter() {
+        this.dataUserMsgPresenter = new DataUserMsgPresenter(user_account);
     }
 
     @Override

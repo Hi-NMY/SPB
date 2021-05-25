@@ -4,6 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:background="@color/qianbai"
         tools:context=".view.fragment.personalspace.BasicInformation">
     <RelativeLayout
@@ -83,7 +84,7 @@
                     android:textSize="@dimen/font_16"
                     android:layout_marginLeft="@dimen/margin_12"
                     android:textColor="@color/qihei"
-                    android:text="2021年03月01日"
+                    android:text="点击右上角，补充资料"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
         </RelativeLayout>
@@ -109,39 +110,13 @@
                     android:textSize="@dimen/font_16"
                     android:layout_marginLeft="@dimen/margin_12"
                     android:textColor="@color/qihei"
-                    android:text="水瓶座"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-        </RelativeLayout>
-        <RelativeLayout
-                android:id="@+id/r4"
-                android:layout_below="@id/r3"
-                android:layout_marginVertical="@dimen/margin_12"
-                android:layout_marginHorizontal="@dimen/margin_20"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            <TextView
-                    android:id="@+id/t4"
-                    android:textSize="@dimen/font_16"
-                    android:textColor="@color/grey"
-                    android:text="喜好："
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            <TextView
-                    android:id="@+id/basicinformation_favorite"
-                    android:layout_toRightOf="@+id/t4"
-                    android:layout_alignTop="@+id/t4"
-                    android:textSize="@dimen/font_16"
-                    android:layout_marginLeft="@dimen/margin_12"
-                    android:textColor="@color/qihei"
-                    android:text="干饭"
+                    android:text="点击右上角，补充资料"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
         </RelativeLayout>
         <RelativeLayout
                 android:id="@+id/r5"
-                android:layout_below="@id/r4"
+                android:layout_below="@id/r3"
                 android:layout_marginVertical="@dimen/margin_12"
                 android:layout_marginHorizontal="@dimen/margin_20"
                 android:layout_width="wrap_content"
@@ -162,9 +137,34 @@
                     android:textSize="@dimen/font_16"
                     android:textColor="@color/qihei"
                     android:layout_marginLeft="@dimen/margin_12"
-                    android:text="苏州"
+                    android:text="点击右上角，补充资料"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/r4"
+                android:layout_below="@id/r5"
+                android:layout_marginVertical="@dimen/margin_12"
+                android:layout_marginHorizontal="@dimen/margin_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:id="@+id/t4"
+                    android:textSize="@dimen/font_16"
+                    android:textColor="@color/grey"
+                    android:text="喜好："
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <com.zhy.view.flowlayout.TagFlowLayout
+                    android:id="@+id/basicinformation_favorite"
+                    android:layout_marginLeft="@dimen/margin_4"
+                    android:layout_toRightOf="@+id/t4"
+                    android:layout_alignTop="@+id/t4"
+                    android:layout_marginTop="@dimen/margin__8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+            </com.zhy.view.flowlayout.TagFlowLayout>
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

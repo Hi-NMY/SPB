@@ -21,12 +21,14 @@ public class ComponentDialog implements DialogInter {
     private View view;
     private Window window;
     private Activity activity;
+    public InitDialog initDialog;
 
     public ComponentDialog(Activity context,int viewId,InitDialog initDialog) {
         activity = context;
         builder = new AlertDialog.Builder(context);
         view = LayoutInflater.from(context).inflate(viewId,null);
         initView(view);
+        this.initDialog = initDialog;
         initDialog.initView(view);
         initDialog.initData();
         initDialog.initListener();
@@ -40,6 +42,7 @@ public class ComponentDialog implements DialogInter {
         builder = new AlertDialog.Builder(context,styleId);
         view = LayoutInflater.from(context).inflate(viewId,null);
         initView(view);
+        this.initDialog = initDialog;
         initDialog.initView(view);
         initDialog.initData();
         initDialog.initListener();
@@ -70,7 +73,7 @@ public class ComponentDialog implements DialogInter {
 
     @Override
     public void initData() {
-
+        initDialog.initData();
     }
 
     @Override

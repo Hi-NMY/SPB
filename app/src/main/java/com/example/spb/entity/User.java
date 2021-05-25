@@ -13,6 +13,8 @@ public class User {
     private String user_head_image;
     private String user_bg_image;
     private String user_privacy;
+    private String stu_sex;
+    private String stu_name;
     private String user_ip;
     private String user_token;
 
@@ -118,5 +120,21 @@ public class User {
 
     public void setUser_token(String user_token) {
         this.user_token = user_token;
+    }
+
+    public String getStu_sex() {
+        return stu_sex;
+    }
+
+    public void setStu_sex(String stu_sex) {
+        this.stu_sex = stu_sex;
+    }
+
+    public String getStu_name() {
+        return stu_name;
+    }
+
+    public void setStu_name(String stu_name) {
+        this.stu_name = stu_name;
     }
 }

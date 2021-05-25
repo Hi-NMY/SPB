@@ -1,10 +1,13 @@
 package com.example.spb.view.activity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
@@ -13,19 +16,29 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.example.spb.R;
+import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
+import com.example.spb.entity.Topic;
+import com.example.spb.entity.User;
 import com.example.spb.presenter.impl.ChangeInformationPageAPresenterImpl;
+import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MyDateClass;
+import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.view.Component.ComponentDialog;
+import com.example.spb.view.Component.EasyDialog;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
+import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.inter.IChangeInformationPageAView;
 import com.example.spb.view.littlefun.HideKeyboard;
 import com.gyf.immersionbar.ImmersionBar;
+import com.zhy.view.flowlayout.FlowLayout;
+import com.zhy.view.flowlayout.TagAdapter;
+import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPageAView, ChangeInformationPageAPresenterImpl>
         implements IChangeInformationPageAView, View.OnClickListener {
@@ -33,16 +46,30 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
     private FragmentSpbAvtivityBar bar;
 
     private DialogInter bottomDialog;
+    private DialogInter dialogSign;
+    private DialogInter loadingDialog;
     private RelativeLayout mRFavorite;
     private RelativeLayout mRBirth;
     private RelativeLayout mRHome;
     private TextView mChangeinformationBirth;
     private TextView mChangeinformationHome;
+    private EditText mChangeinformationUsername;
+    private TextView mChangeinformationFavorite;
+    private TextView mChangeinformationSign;
+    private RelativeLayout mRSign;
+    private TextView mX1;
+    private EditText mEditText;
+    private TextView mClickTrue;
+    private TextView mFavoriteClose;
+    private TextView mFavoriteNext;
+    private TagFlowLayout mFavoriteTag;
+    private LayoutInflater layoutInflater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_information_page);
+        layoutInflater = LayoutInflater.from(this);
         initActView();
     }
 
@@ -58,7 +85,13 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
         mRHome = (RelativeLayout) findViewById(R.id.r_home);
         mChangeinformationHome = (TextView) findViewById(R.id.changeinformation_home);
         mChangeinformationBirth = (TextView) findViewById(R.id.changeinformation_birth);
+        mChangeinformationUsername = (EditText) findViewById(R.id.changeinformation_username);
+        mChangeinformationFavorite = (TextView) findViewById(R.id.changeinformation_favorite);
+        mChangeinformationSign = (TextView) findViewById(R.id.changeinformation_sign);
+        mRSign = (RelativeLayout) findViewById(R.id.r_sign);
+        mX1 = (TextView) findViewById(R.id.x1);
         mPresenter.initCityJsonData();
+        initData();
         setMyListener();
         createDialog();
         setBar();
@@ -67,7 +100,39 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
 
     @Override
     protected void initData() {
+        mChangeinformationUsername.setText(getDataUserMsgPresenter().getUser_name());
+        if (!getDataUserMsgPresenter().getUser_birth().equals("")) {
+            mChangeinformationBirth.setText(getDataUserMsgPresenter().user_birth + "   " + MyDateClass.getConstellation(getDataUserMsgPresenter().user_birth.substring(5)));
+        }
+        mChangeinformationFavorite.setText(getDataUserMsgPresenter().getUser_favorite());
+        mChangeinformationHome.setText(getDataUserMsgPresenter().getUser_home());
+        mChangeinformationSign.setText(getDataUserMsgPresenter().getUser_profile());
+        mChangeinformationUsername.postInvalidate();
+        mChangeinformationBirth.postInvalidate();
+        mChangeinformationFavorite.postInvalidate();
+        mChangeinformationHome.postInvalidate();
+        mChangeinformationSign.postInvalidate();
+        mX1.setText(mChangeinformationUsername.getText().length() + "/10");
+    }
 
+    @Override
+    public String getUser_birth() {
+        return getDataUserMsgPresenter().user_birth;
+    }
+
+    @Override
+    public String getUser_home() {
+        return getDataUserMsgPresenter().user_home;
+    }
+
+    @Override
+    public String getUser_profile() {
+        return getDataUserMsgPresenter().user_profile;
+    }
+
+    @Override
+    public String getUser_name() {
+        return getDataUserMsgPresenter().user_name;
     }
 
     @Override
@@ -77,25 +142,121 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
 
     @Override
     public <T> void response(T response, int responseFlag) {
-
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                switch (responseFlag){
+                    case 200:
+                        getDataUserMsgPresenter().setUserMsg((User) response);
+                        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_userMsg),0,null);
+                        closeDialog(LOADINGDIALOG);
+                        finish();
+                        MyToastClass.ShowToast(MyApplication.getContext(),"修改成功");
+                        break;
+                    default:
+                        closeDialog(LOADINGDIALOG);
+                        MyToastClass.ShowToast(MyApplication.getContext(),"错误，请重试");
+                        break;
+                }
+            }
+        });
     }
 
     @Override
     public void createDialog() {
-        bottomDialog = new ComponentDialog(this, R.layout.dialog_favorite, R.style.dialogHomeSend, new ComponentDialog.InitDialog() {
+        loadingDialog = new EasyDialog(this, R.drawable.loading);
+        loadingDialog.setCancelable(false);
+        dialogSign = new ComponentDialog(this, R.layout.dialog_change_sign, new ComponentDialog.InitDialog() {
             @Override
             public void initView(View view) {
-
+                mEditText = (EditText) view.findViewById(R.id.edit_text);
+                mClickTrue = (TextView) view.findViewById(R.id.click_true);
             }
 
             @Override
             public void initData() {
-
+                mEditText.setText(mChangeinformationSign.getText());
             }
 
             @Override
             public void initListener() {
+                mClickTrue.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mChangeinformationSign.setText(mEditText.getText().toString());
+                        mPresenter.setUser_profile(mEditText.getText().toString());
+                        closeDialog(CHANGESIGN);
+                    }
+                });
+            }
+        });
+        dialogSign.setCancelable(true);
+        bottomDialog = new ComponentDialog(this, R.layout.dialog_favorite, R.style.dialogHomeSend, new ComponentDialog.InitDialog() {
+            @Override
+            public void initView(View view) {
+                mFavoriteClose = (TextView) view.findViewById(R.id.favorite_close);
+                mFavoriteNext = (TextView) view.findViewById(R.id.favorite_next);
+                mFavoriteTag = (TagFlowLayout) view.findViewById(R.id.favorite_tag);
+            }
 
+            @Override
+            public void initData() {
+                mPresenter.getUser_favorite(getDataUserMsgPresenter().getUser_favorite());
+                mFavoriteTag.setAdapter(new TagAdapter<String>(tagList) {
+                    @Override
+                    public View getView(FlowLayout parent, int position, String tag) {
+                        View view = layoutInflater.inflate(R.layout.item_favorite_tag_one, mFavoriteTag, false);
+                        TextView textView = (TextView) view.findViewById(R.id.text);
+                        textView.setText(tag);
+                        return view;
+                    }
+
+                    @Override
+                    public void onSelected(int position, View view) {
+                        super.onSelected(position, view);
+                        if (mPresenter.uf.size() == 9){
+                            MyToastClass.ShowToast(MyApplication.getContext(),"最多只能选择9个哦");
+                        }else {
+                            RelativeLayout relativeLayout = (RelativeLayout)view.findViewById(R.id.r);
+                            TextView textView = (TextView) view.findViewById(R.id.text);
+                            mPresenter.addFavorite(textView.getText().toString());
+                            textView.setTextColor(ContextCompat.getColor(MyApplication.getContext(),R.color.theme_color));
+                            relativeLayout.setBackground(getDrawable(R.drawable.favorite_tag_two));
+                        }
+                    }
+
+                    @Override
+                    public void unSelected(int position, View view) {
+                        super.unSelected(position, view);
+                        RelativeLayout relativeLayout = (RelativeLayout)view.findViewById(R.id.r);
+                        TextView textView = (TextView) view.findViewById(R.id.text);
+                        mPresenter.clearFavorite(textView.getText().toString());
+                        textView.setTextColor(ContextCompat.getColor(MyApplication.getContext(),R.color.grey));
+                        relativeLayout.setBackground(getDrawable(R.drawable.favorite_tag_one));
+                    }
+                });
+                for (int a = 0; a < titleTag.length;a++){
+                    if (mPresenter.verificationString(titleTag[a])){
+                        mFavoriteTag.getChildAt(a).performClick();
+                    }
+                }
+            }
+            @Override
+            public void initListener() {
+               mFavoriteClose.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       closeDialog(BOTTOMDIALOG);
+                       mPresenter.deleteFa();
+                   }
+               });
+               mFavoriteNext.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       closeDialog(BOTTOMDIALOG);
+                       mPresenter.setUser_favorite();
+                   }
+               });
             }
         });
         bottomDialog.setBottomStyle();
@@ -104,12 +265,33 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
 
     @Override
     public void showDialogS(int i) {
-        bottomDialog.showMyDialog();
+        switch (i) {
+            case CHANGESIGN:
+                dialogSign.showMyDialog();
+                break;
+            case BOTTOMDIALOG:
+                bottomDialog.showMyDialog();
+                bottomDialog.initData();
+                break;
+            case LOADINGDIALOG:
+                loadingDialog.showMyDialog();
+                break;
+        }
     }
 
     @Override
     public void closeDialog(int i) {
-
+        switch (i) {
+            case CHANGESIGN:
+                dialogSign.closeMyDialog();
+                break;
+            case BOTTOMDIALOG:
+                bottomDialog.closeMyDialog();
+                break;
+            case LOADINGDIALOG:
+                loadingDialog.closeMyDialog();
+                break;
+        }
     }
 
     @Override
@@ -117,6 +299,24 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
         mRFavorite.setOnClickListener(this);
         mRBirth.setOnClickListener(this);
         mRHome.setOnClickListener(this);
+        mRSign.setOnClickListener(this);
+        mChangeinformationUsername.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mPresenter.setUser_name(mChangeinformationUsername.getText().toString().trim());
+                mX1.setText(mChangeinformationUsername.getText().length() + "/10");
+            }
+        });
     }
 
     @Override
@@ -143,7 +343,8 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
         bar.barRightTxt1(RIGHTTXT, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
             public void onClick() {
-
+                showDialogS(LOADINGDIALOG);
+                mPresenter.updateUser(getDataUserMsgPresenter().getUser_account());
             }
         });
     }
@@ -164,6 +365,7 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
                 TimePickerView pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
                     @Override
                     public void onTimeSelect(Date date, View v) {
+                        mPresenter.setUser_birth(date);
                         mChangeinformationBirth.setText(MyDateClass.getStringDate(date) + "   " + MyDateClass.getConstellation(MyDateClass.getStringDateMonth(date)));
                     }
                 }).setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
@@ -195,7 +397,8 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
                                 && mPresenter.getOptions3Items().get(options1).get(options2).size() > 0 ?
                                 mPresenter.getOptions3Items().get(options1).get(options2).get(options3) : "";
 
-                        String tx = opt1tx + "   " + opt2tx + "   " + opt3tx;
+                        String tx = opt1tx + "-" + opt2tx + "-" + opt3tx;
+                        mPresenter.setUser_home(tx);
                         mChangeinformationHome.setText(tx);
                     }
                 })
@@ -211,8 +414,11 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
                         .setOutSideCancelable(true)//点击外部dismiss default true
                         .isRestoreItem(true)//切换时是否还原，设置默认选中第一项。
                         .build();
-                pvOptions.setPicker(mPresenter.getOptions1Items(), mPresenter.getOptions2Items(),mPresenter.getOptions3Items());//三级选择器
+                pvOptions.setPicker(mPresenter.getOptions1Items(), mPresenter.getOptions2Items(), mPresenter.getOptions3Items());//三级选择器
                 pvOptions.show();
+                break;
+            case R.id.r_sign:
+                showDialogS(CHANGESIGN);
                 break;
         }
     }
