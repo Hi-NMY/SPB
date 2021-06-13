@@ -268,7 +268,7 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
     }
 
     @Override
-    public void finishRefresh(int num) {
+    public void finishRRefresh(int num) {
 
     }
 }

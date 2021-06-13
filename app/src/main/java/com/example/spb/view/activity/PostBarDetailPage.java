@@ -1,16 +1,12 @@
 package com.example.spb.view.activity;
 
 import android.os.Bundle;
-import android.view.View;
 import com.example.spb.R;
-import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.PostBarDetailPageAPresenterImpl;
-import com.example.spb.presenter.inter.IPostBarDetailPageAPresenter;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
 import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;
 import com.example.spb.view.inter.IPostBarDetailPageAView;
-import com.example.spb.view.littlefun.JumpIntent;
 import com.gyf.immersionbar.ImmersionBar;
 
 public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, PostBarDetailPageAPresenterImpl> implements IPostBarDetailPageAView {
@@ -86,6 +82,6 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
                 finish();
             }
         });
-        bar.barCentralTxt(TITLE,null);
+        bar.barCentralTxt(TITLE, null);
     }
 }

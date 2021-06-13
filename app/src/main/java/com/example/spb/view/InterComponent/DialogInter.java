@@ -1,12 +1,15 @@
 package com.example.spb.view.InterComponent;
 
 import android.view.View;
+import androidx.appcompat.app.AlertDialog;
 
 public interface DialogInter {
 
     public void showMyDialog();
 
     public void closeMyDialog();
+
+    public AlertDialog returnAlertDialog();
 
     public View getDialogView();
 

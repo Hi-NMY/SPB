@@ -63,7 +63,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
-                <ListView
+                <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/topicpage_userat_list"
                         android:visibility="invisible"
                         android:layout_marginBottom="@dimen/margin_8"
@@ -104,14 +104,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
-                <ListView
+                <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/topicpage_guess_list"
                         android:visibility="invisible"
                         android:layout_marginBottom="@dimen/margin_8"
                         android:layout_marginTop="@dimen/margin_8"
                         android:layout_below="@id/t2"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/margin_64"/>
+                        android:layout_height="wrap_content"/>
             </RelativeLayout>
         </RelativeLayout>
 

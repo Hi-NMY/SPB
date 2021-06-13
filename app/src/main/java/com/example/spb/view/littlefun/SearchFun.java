@@ -15,18 +15,26 @@ public class SearchFun {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                if (s.toString().contains(" ")) {
+                    String[] str = s.toString().split(" ");
+                    StringBuffer sb = new StringBuffer();
+                    for (int i = 0; i < str.length; i++) {
+                        sb.append(str[i]);
+                    }
+                    editText.setText(sb.toString());
+                    editText.setSelection(start);
+                }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                goSearch.afterTextChangedSearch();
+                goSearch.afterTextChangedSearch(editText.getText().toString().trim());
             }
         });
     }
 
     public interface GoSearch{
-       void afterTextChangedSearch();
+       void afterTextChangedSearch(String text);
     }
 
 }

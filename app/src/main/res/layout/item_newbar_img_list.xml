@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-        android:paddingHorizontal="@dimen/margin_4"
+        android:paddingRight="@dimen/margin_4"
+        android:paddingTop="@dimen/margin_4"
         android:clipToPadding="false"
         android:clipChildren="false"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
+    <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/image_item_view"
-            android:maxWidth="@dimen/icon_image_72"
-            android:maxHeight="@dimen/icon_image_72"
-            android:layout_width="@dimen/icon_image_72"
-            android:layout_height="@dimen/icon_image_72"/>
+            app:riv_corner_radius="@dimen/corner_8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     <ImageView
             android:id="@+id/image_clear"

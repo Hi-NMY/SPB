@@ -15,11 +15,12 @@ public class RefreshTipAnima {
     static {
         animationa = AnimationUtils.loadAnimation(MyApplication.getContext(), R.anim.re_tip_anim);
         animationb = AnimationUtils.loadAnimation(MyApplication.getContext(), R.anim.re_tip_anim2);
+        animationa.setStartOffset(400);
         animationb.setStartOffset(600);
     }
 
     public static void tipAnimation(TextView textView,int num){
-        textView.setText("叮，又为您更新了"+ String.valueOf(num) +"条动态");
+        textView.setText("叮，已为你更新最新的帖子");
         textView.startAnimation(animationa);
         textView.setVisibility(View.VISIBLE);
         animationa.setAnimationListener(new Animation.AnimationListener() {

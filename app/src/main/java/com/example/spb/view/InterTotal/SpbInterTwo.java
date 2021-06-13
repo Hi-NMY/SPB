@@ -53,5 +53,5 @@ public interface SpbInterTwo {
      * @Auther  nmynmy
      * @Date  2021-02-05  23:42
      */
-    public void finishRefresh(int num);
+    public void finishRRefresh(int num);
 }

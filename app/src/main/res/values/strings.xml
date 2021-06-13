@@ -58,7 +58,8 @@
     <string name="Topic">http://nmy1206.natapp1.cc/Topic.php</string>
     <string name="SendNewPostBar">http://nmy1206.natapp1.cc/SendNewPostBar.php</string>
     <string name="User">http://nmy1206.natapp1.cc/User.php</string>
-
+    <string name="PostBar">http://nmy1206.natapp1.cc/PostBar.php</string>
 
     <string name="Bcr_refresh_userMsg">Bcr_refresh_userMsg</string>
+    <string name="Bcr_transfer_loc">Bcr_transfer_loc</string>
 </resources>

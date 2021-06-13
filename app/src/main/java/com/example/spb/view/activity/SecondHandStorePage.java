@@ -97,7 +97,7 @@ public class SecondHandStorePage extends BaseMVPActivity<ISecondHandStorePageAVi
     }
 
     @Override
-    public void finishRefresh(int num) {
+    public void finishRRefresh(int num) {
 
     }
 

@@ -38,7 +38,7 @@
                 android:value="arOOxotQnnPzmrI7Lw9X4o0dD2bIn8pT" >
         </meta-data>
 
-        <service android:name=".xserver.SpbLocationServer"
+        <service android:name="com.baidu.location.f"
                  android:enabled="true"
                  android:process=":remote">
         </service>

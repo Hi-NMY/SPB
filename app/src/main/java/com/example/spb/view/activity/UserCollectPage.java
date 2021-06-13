@@ -97,7 +97,7 @@ public class UserCollectPage extends BaseMVPActivity<IUserCollectPageAView,UserC
     }
 
     @Override
-    public void finishRefresh(int num) {
+    public void finishRRefresh(int num) {
 
     }
 }

@@ -19,6 +19,7 @@ import com.hitomi.tilibrary.style.index.NumberIndexIndicator;
 import com.hitomi.tilibrary.style.progress.ProgressBarIndicator;
 import com.hitomi.tilibrary.transfer.TransferConfig;
 import com.hitomi.tilibrary.transfer.Transferee;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.vansz.glideimageloader.GlideImageLoader;
 
 import java.util.ArrayList;
@@ -36,11 +37,11 @@ public class NewBarImageAdapter extends RecyclerView.Adapter<NewBarImageAdapter.
     private TransferConfig config;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView mImageItemView;
+        RoundedImageView mImageItemView;
         ImageView mImageClear;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mImageItemView = (ImageView)itemView.findViewById(R.id.image_item_view);
+            mImageItemView = (RoundedImageView)itemView.findViewById(R.id.image_item_view);
             mImageClear = (ImageView)itemView.findViewById(R.id.image_clear);
         }
     }
@@ -83,10 +84,8 @@ public class NewBarImageAdapter extends RecyclerView.Adapter<NewBarImageAdapter.
         String time = MyDateClass.showNowDate();
         Glide.with(MyApplication.getContext())
                 .load(imageDouble)
-                .override(72, 72)
                 .centerCrop()
-                .transform(new GlideRoundTransform(5))
-                .signature(new MediaStoreSignature(time, 1, 1))
+                .override(288,288)
                 .into(holder.mImageItemView);
 
         holder.mImageItemView.setOnClickListener(new View.OnClickListener() {

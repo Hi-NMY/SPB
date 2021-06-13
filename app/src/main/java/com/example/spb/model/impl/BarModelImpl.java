@@ -8,6 +8,7 @@ import com.example.spb.model.SpbAbstract.SpbModelAbstrate;
 import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MyResolve;
+import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -49,7 +50,14 @@ public class BarModelImpl extends SpbModelAbstrate implements SpbModelBasicInter
 
     @Override
     public void selectData(int fun, Bar data, MyCallBack callBack) {
-
+        switch (fun){
+            case DATABAR_SELECT_ONE:
+                requestBody = new FormBody.Builder()
+                        .add("fun", String.valueOf(fun))
+                        .build();
+                sendHttp(InValues.send(R.string.PostBar),requestBody,callBack);
+                break;
+        }
     }
 
     @Override

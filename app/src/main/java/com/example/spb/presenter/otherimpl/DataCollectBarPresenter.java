@@ -1,16 +1,9 @@
 package com.example.spb.presenter.otherimpl;
 
-import com.example.spb.entity.AttentionTopic;
 import com.example.spb.entity.CollectBar;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
-import com.example.spb.model.impl.AttentionTopicModelImpl;
 import com.example.spb.model.impl.CollectBarModelImpl;
-import com.example.spb.presenter.callback.MyCallBack;
-import com.example.spb.presenter.littlefun.MyDateClass;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import okhttp3.Response;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 

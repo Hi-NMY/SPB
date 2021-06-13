@@ -1,13 +1,18 @@
 package com.example.spb.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Topic {
 
+    @SerializedName("topic_id")
     private int id;
+
     private String topic_name;
     private int topic_barnum;
     private int topic_attentionnum;
     private String topic_slogan;
-    private String topiv_image;
+    private String topic_image;
+    public String topic_date;
 
     public int getId() {
         return id;
@@ -49,11 +54,19 @@ public class Topic {
         this.topic_slogan = topic_slogan;
     }
 
-    public String getTopiv_image() {
-        return topiv_image;
+    public String getTopic_image() {
+        return topic_image;
     }
 
-    public void setTopiv_image(String topiv_image) {
-        this.topiv_image = topiv_image;
+    public void setTopic_image(String topic_image) {
+        this.topic_image = topic_image;
+    }
+
+    public String getTopic_date() {
+        return topic_date;
+    }
+
+    public void setTopic_date(String topic_date) {
+        this.topic_date = topic_date;
     }
 }

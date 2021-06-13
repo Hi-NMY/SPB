@@ -19,22 +19,31 @@ public class SpbLocationServer {
         locationClient = new LocationClient(context);
         locationClient.registerLocationListener(locationListener);
         LocationClientOption locationClientOption = new LocationClientOption();
-        locationClientOption.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
+        locationClientOption.setLocationMode(LocationClientOption.LocationMode.Device_Sensors);
         locationClientOption.setCoorType("GCJ02");
         locationClientOption.setIsNeedAddress(true);
         locationClientOption.setNeedNewVersionRgc(true);
         locationClientOption.setIsNeedLocationPoiList(true);
         locationClientOption.setOpenGps(true);
         locationClient.setLocOption(locationClientOption);
-        locationClient.start();
     }
 
     public SpbLocationListener obtainListener(){
         return locationListener;
     }
 
+    public void stopGps(){
+        locationListener.nowCity = null;
+        locationListener.locType = 62;
+        locationListener.locationGpsList = null;
+        locationClient.stop();
+    }
+
+    public void startGps(){
+        locationClient.start();
+    }
+
     public String obtainNowCity(){
         return locationListener.nowCity;
     }
-
 }

@@ -118,8 +118,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/location_recycler"
-                android:layout_marginTop="@dimen/margin_12"
                 android:visibility="gone"
+                android:layout_marginTop="@dimen/margin_12"
                 android:layout_below="@+id/location_error_r"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>

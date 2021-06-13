@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:background="@color/qianbai"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
     <RelativeLayout
-            android:minHeight="100dp"
+            android:id="@+id/item_postbar_RA"
+            android:minHeight="140dp"
             android:layout_marginVertical="@dimen/margin_4"
             android:layout_marginHorizontal="@dimen/margin_8"
             android:background="@drawable/cardview_gb"
@@ -67,17 +67,9 @@
                 android:layout_width="@dimen/icon_image_32"
                 android:layout_height="@dimen/icon_image_32"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/item_postbar_imagelist"
-                android:layout_below="@id/item_postbar_user_headimg"
-                android:layout_toRightOf="@id/item_postbar_user_headimg"
-                android:layout_toLeftOf="@id/item_postbar_more"
-                android:layout_marginTop="@dimen/margin_8"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"/>
-
         <TextView
                 android:id="@+id/item_postbar_txt"
+                android:visibility="gone"
                 android:text="傻傻的贺卡是的哈水电卡dadadadad水电卡较\n好的卡号的"
                 android:lineSpacingMultiplier="1.5"
                 android:textSize="@dimen/font_16"
@@ -86,50 +78,95 @@
                 android:layout_marginRight="@dimen/margin_16"
                 android:layout_marginTop="@dimen/margin_4"
                 android:layout_marginBottom="@dimen/margin_8"
-                android:layout_below="@id/item_postbar_imagelist"
-                android:minHeight="50dp"
+                android:layout_below="@id/item_postbar_more"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 />
 
         <LinearLayout
-                android:id="@+id/item_postbar_voice"
-                android:layout_marginRight="@dimen/margin_28"
-                android:background="@drawable/bar_music_bg"
-                android:layout_toLeftOf="@id/item_postbar_more"
-                android:layout_toRightOf="@id/item_postbar_user_headimg"
+                android:id="@+id/llll"
                 android:layout_below="@id/item_postbar_txt"
+                android:orientation="vertical"
+                android:gravity="left"
+                android:layout_toRightOf="@id/item_postbar_user_headimg"
+                android:layout_toLeftOf="@id/item_postbar_more"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/icon_image_40">
-
-            <pl.droidsonroids.gif.GifImageView
-                    android:layout_marginRight="@dimen/margin_4"
-                    android:translationY="@dimen/margin__16"
-                    android:background="@drawable/loading_mu"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"/>
+                android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/item_postbar_imagelist"
+                    android:nestedScrollingEnabled="false"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
-        <TextView
+        <RelativeLayout
+                android:id="@+id/item_postbar_voice"
+                android:visibility="gone"
+                android:layout_marginRight="@dimen/margin_28"
+                android:layout_toLeftOf="@id/item_postbar_more"
+                android:layout_toRightOf="@id/item_postbar_user_headimg"
+                android:layout_below="@id/llll"
+                android:background="@drawable/bar_music_bg"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/icon_image_40">
+
+            <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/voice_gif"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_20"
+                    android:background="@drawable/icon_voice_gif"
+                    android:layout_width="@dimen/icon_image_24"
+                    android:layout_height="@dimen/icon_image_24"/>
+
+            <TextView
+                    android:id="@+id/voice_time"
+                    android:layout_marginLeft="@dimen/margin_8"
+                    android:layout_toRightOf="@+id/voice_gif"
+                    android:textColor="@color/beijing"
+                    android:textSize="@dimen/font_14"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+
+            <TextView
+                    android:layout_toRightOf="@id/voice_time"
+                    android:layout_marginLeft="@dimen/margin_2"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/beijing"
+                    android:textSize="@dimen/font_12"
+                    android:text="S"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+
+        </RelativeLayout>
+
+        <com.zhy.view.flowlayout.TagFlowLayout
                 android:id="@+id/item_postbar_topic"
                 android:layout_below="@id/item_postbar_voice"
-                android:layout_toRightOf="@id/item_postbar_user_headimg"
+                android:layout_marginLeft="@dimen/margin__12"
+                android:layout_alignLeft="@id/item_postbar_username"
+                android:layout_alignRight="@id/item_postbar_more"
                 android:layout_marginTop="@dimen/margin_8"
-                android:textSize="@dimen/font_14"
-                android:textColor="@color/theme_color2"
-                android:text="\#第一食堂"
+                app:max_select="0"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content">
+        </com.zhy.view.flowlayout.TagFlowLayout>
 
         <TextView
                 android:id="@+id/item_postbar_location"
+                android:visibility="gone"
                 android:layout_toRightOf="@id/item_postbar_user_headimg"
                 android:layout_below="@+id/item_postbar_topic"
                 android:layout_marginVertical="@dimen/margin_8"
                 android:textSize="@dimen/font_14"
                 android:textColor="@color/darkgrey"
-                android:text="上海"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -170,6 +207,7 @@
 
                 <TextView
                         android:id="@+id/item_postbar_comment_num"
+                        android:visibility="gone"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_12"
                         android:text="2365"
@@ -198,6 +236,7 @@
 
                 <TextView
                         android:id="@+id/item_postbar_like_num"
+                        android:visibility="gone"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_12"
                         android:text="2365"

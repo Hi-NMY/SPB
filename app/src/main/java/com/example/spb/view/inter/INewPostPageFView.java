@@ -12,6 +12,10 @@ public interface INewPostPageFView extends SpbInterTwo {
     int RESPONSE_TWO = 1;
     int RESPONSE_THREE = 2;
 
+    //关闭刷新
+    int FINISH_REFRESH = 1;
+    int FINISH_MORE = 2;
+
     <T> T request(int requestFlag);
 
     <T> void response(T response, int responseFlag);

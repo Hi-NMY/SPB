@@ -97,7 +97,7 @@ public class UserCoursePage extends BaseMVPActivity<IUserCoursePageAView,UserCou
     }
 
     @Override
-    public void finishRefresh(int num) {
+    public void finishRRefresh(int num) {
 
     }
 }

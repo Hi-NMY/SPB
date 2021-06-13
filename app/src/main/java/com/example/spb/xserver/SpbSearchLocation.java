@@ -11,14 +11,28 @@ import java.util.List;
 
 public class SpbSearchLocation {
 
-    private static String city;
-    private static String search;
-    private static SuggestionSearch suggestionSearch;
-    public static List<LocationGps> locationGpsList;
-    private static LocationGps locationGps;
-    public static void Search(String c, String s,OnReturn onReturn){
-        city = c;
-        search = s;
+    private String city;
+    private String search;
+    private SuggestionSearch suggestionSearch;
+    public List<LocationGps> locationGpsList;
+    private LocationGps locationGps;
+
+    public SpbSearchLocation(String city, String search) {
+        this.city = city;
+        this.search = search;
+    }
+
+    public void search(OnReturn onReturn){
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    Thread.sleep(200);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }).start();
         suggestionSearch = SuggestionSearch.newInstance();
         SuggestionSearchOption suggestionSearchOption = new SuggestionSearchOption();
         suggestionSearchOption.mCityLimit = true;
@@ -31,7 +45,7 @@ public class SpbSearchLocation {
                         for (int j = 0 ; j < suggestionResult.getAllSuggestions().size() ; j++){
                             locationGps = new LocationGps();
                             locationGps.setLocationName(suggestionResult.getAllSuggestions().get(j).getKey());
-                            locationGps.setLocationDetail(suggestionResult.getAllSuggestions().get(j).getCity());
+                            locationGps.setLocationDetail(suggestionResult.getAllSuggestions().get(j).getAddress());
                             locationGpsList.add(locationGps);
                         }
                     }
@@ -47,7 +61,11 @@ public class SpbSearchLocation {
                 .keyword(search));
     }
 
-    interface OnReturn{
+    public void stopSearchLoc(){
+        suggestionSearch.destroy();
+    }
+
+    public interface OnReturn{
         void onSuccess(List<LocationGps> locationGpsList);
         void onError();
     }

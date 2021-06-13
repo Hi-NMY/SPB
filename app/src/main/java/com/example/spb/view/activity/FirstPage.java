@@ -2,7 +2,6 @@ package com.example.spb.view.activity;
 
 import android.content.Intent;
 import android.graphics.Paint;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,7 +22,6 @@ import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.entity.User;
 import com.example.spb.presenter.impl.FirstPageAPresenterImpl;
-import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.Component.EasyDialog;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
@@ -33,11 +31,8 @@ import com.example.spb.view.inter.IFirstPageAView;
 import com.example.spb.view.littlefun.HideKeyboard;
 import com.example.spb.view.littlefun.JumpIntent;
 import com.example.spb.view.Component.MyToastClass;
-import com.example.spb.view.littlefun.RequestForAccess;
+import com.example.spb.presenter.littlefun.RequestForAccess;
 import com.gyf.immersionbar.ImmersionBar;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.UserInfo;
 
 public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresenterImpl> implements IFirstPageAView, View.OnClickListener {
 

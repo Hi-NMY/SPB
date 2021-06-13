@@ -1,6 +1,5 @@
 package com.example.spb.model.impl;
 
-import com.example.spb.entity.AttentionTopic;
 import com.example.spb.entity.CollectBar;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
 import com.example.spb.model.SpbAbstract.SpbModelAbstrate;

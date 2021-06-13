@@ -4,19 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.os.Build;
 import android.view.*;
 import androidx.appcompat.app.AlertDialog;
-import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.view.InterComponent.DialogInter;
 
-import java.util.List;
-
 public class ComponentDialog implements DialogInter {
 
-    private AlertDialog alertDialog;
+    public AlertDialog alertDialog;
     private AlertDialog.Builder builder;
     private View view;
     private Window window;
@@ -59,6 +55,11 @@ public class ComponentDialog implements DialogInter {
     @Override
     public void closeMyDialog() {
         alertDialog.dismiss();
+    }
+
+    @Override
+    public AlertDialog returnAlertDialog() {
+        return alertDialog;
     }
 
     @Override

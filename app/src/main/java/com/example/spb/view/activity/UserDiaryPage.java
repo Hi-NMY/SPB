@@ -97,7 +97,7 @@ public class UserDiaryPage extends BaseMVPActivity<IUserDiaryPageAView,UserDiary
     }
 
     @Override
-    public void finishRefresh(int num) {
+    public void finishRRefresh(int num) {
 
     }
 }

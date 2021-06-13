@@ -23,13 +23,16 @@
     </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
-
         <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/newpostpage_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
             <TextView
                     android:id="@+id/newpostpage_refresh_tip"
                     android:visibility="gone"
@@ -40,34 +43,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/icon_image_24"/>
 
-            <LinearLayout
-                    android:id="@+id/r"
-                    android:orientation="horizontal"
-                    android:layout_marginRight="180dp"
-                    android:background="@drawable/bar_music_bg"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/icon_image_40">
-
-                <pl.droidsonroids.gif.GifImageView
-                        android:id="@+id/item_postbar_voice"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/margin_20"
-                        android:background="@drawable/icon_voice_gif"
-                        android:layout_width="@dimen/icon_image_24"
-                        android:layout_height="@dimen/icon_image_24"/>
-
-            </LinearLayout>
-
-            <ImageView
-                    android:id="@+id/item_postbar_like_img"
-                    android:layout_below="@id/r"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/icon_like"
-                    android:layout_width="@dimen/icon_image_32"
-                    android:layout_height="@dimen/icon_image_32"/>
 
         </RelativeLayout>
-
     </androidx.core.widget.NestedScrollView>
 
     <RelativeLayout

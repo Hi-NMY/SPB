@@ -40,6 +40,11 @@ public class EasyDialog implements DialogInter {
     }
 
     @Override
+    public AlertDialog returnAlertDialog() {
+        return alertDialog;
+    }
+
+    @Override
     public View getDialogView() {
         return null;
     }

@@ -322,7 +322,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
     }
 
     @Override
-    public void finishRefresh(int num) {
+    public void finishRRefresh(int num) {
 
     }
 

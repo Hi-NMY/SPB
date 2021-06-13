@@ -1,8 +1,13 @@
 package com.example.spb.view.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -17,12 +22,14 @@ import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.entity.Topic;
 import com.example.spb.presenter.impl.SendNewBarPageAPresenterImpl;
+import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.view.Component.*;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.inter.ISendNewBarPageAView;
 import com.example.spb.view.littlefun.GIFShow;
 import com.example.spb.view.littlefun.HideKeyboard;
-import com.example.spb.view.littlefun.RequestForAccess;
+import com.example.spb.presenter.littlefun.RequestForAccess;
 import com.example.spb.view.littlefun.SearchFun;
 import com.gyf.immersionbar.ImmersionBar;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -111,17 +118,20 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
     private GifImageView mLocationLoading;
     private RelativeLayout mLocationErrorR;
     private RecyclerView mLocationRecycler;
+    private TransferLoc transferLoc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_new_bar_page);
-        setAccess();
+        transferLoc = new TransferLoc();
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_transfer_loc),transferLoc);
         layoutInflater = LayoutInflater.from(this);
         initActView();
+        setAccess();
     }
 
-    private boolean returnAccess = true;
+    private boolean returnAccess = false;
 
     private boolean setAccess() {
         RequestForAccess.setSendNewBarAccess(this, new RequestForAccess.OnReturn() {
@@ -305,6 +315,7 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
                         mLocationLoading.setVisibility(View.GONE);
                         break;
                     case SUCCESS_BAR:
+                        finish();
                         closeDialog(DIALOGLOADING);
                         break;
                     case ERROR_BAR:
@@ -344,13 +355,35 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
                         closeDialog(BOTTOMLOCATION);
                     }
                 });
-                SearchFun.search(mLocationSearchEdt, new SearchFun.GoSearch() {
+                mLocationErrorR.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void afterTextChangedSearch() {
-
+                    public void onClick(View v) {
+                        mLocationErrorR.setVisibility(View.GONE);
+                        mLocationLoading.setVisibility(View.VISIBLE);
+                        mPresenter.initLocationList(SendNewBarPage.this,new LinearLayoutManager(MyApplication.getContext()),mLocationRecycler);
                     }
                 });
-
+                SearchFun.search(mLocationSearchEdt, new SearchFun.GoSearch() {
+                    @Override
+                    public void afterTextChangedSearch(String text) {
+                        if (text.equals("")){
+                            mPresenter.initLocationList(SendNewBarPage.this,new LinearLayoutManager(MyApplication.getContext()),mLocationRecycler);
+                        }else {
+                            mPresenter.searchLocation(text,SendNewBarPage.this,new LinearLayoutManager(MyApplication.getContext()),mLocationRecycler);
+                        }
+                    }
+                });
+            }
+        });
+        bottomLocation.returnAlertDialog().setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    closeDialog(BOTTOMLOCATION);
+                    return true;
+                }else {
+                    return false;
+                }
             }
         });
         bottomLocation.setBottomStyle();
@@ -389,8 +422,8 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
                 });
                 SearchFun.search(mTopicSearchEdt, new SearchFun.GoSearch() {
                     @Override
-                    public void afterTextChangedSearch() {
-                        if (!mTopicSearchEdt.getText().toString().equals("")) {
+                    public void afterTextChangedSearch(String text) {
+                        if (!text.equals(" ")) {
                             mHotTopicR.setVisibility(View.GONE);
                             mSearchTopicR.setVisibility(View.VISIBLE);
                             mPresenter.searchTopic(mTopicSearchEdt.getText().toString().trim());
@@ -475,9 +508,10 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
 
     @Override
     public void showDialogS(int i) {
+        createDialog();
         switch (i) {
             case BOTTOMLOCATION:
-                mPresenter.initLocationList(SendNewBarPage.this, new LinearLayoutManager(MyApplication.getContext()),mLocationRecycler);
+                mPresenter.initLocationList(SendNewBarPage.this,new LinearLayoutManager(MyApplication.getContext()) ,mLocationRecycler);
                 bottomLocation.showMyDialog();
                 break;
             case BOTTOMTOPIC:
@@ -493,6 +527,7 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
     public void closeDialog(int i) {
         switch (i) {
             case BOTTOMLOCATION:
+                mPresenter.onStopGps();
                 bottomLocation.closeMyDialog();
                 break;
             case BOTTOMTOPIC:
@@ -737,6 +772,23 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
         super.onDestroy();
         if (mPresenter.newBarImageAdapter != null) {
             mPresenter.newBarImageAdapter.destroyTransFeree();
+        }
+        mPresenter.onStopGps();
+    }
+
+    class TransferLoc extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String loc = intent.getStringExtra("key_two");
+            int id = intent.getIntExtra("key_one",0);
+            if (id != 0){
+                titleTagList.set(0,loc);
+                mPresenter.setLoc(loc);
+            }else {
+                titleTagList.set(0,"我的位置");
+            }
+            initData();
+            closeDialog(BOTTOMLOCATION);
         }
     }
 }

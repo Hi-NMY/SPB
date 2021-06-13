@@ -9,7 +9,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.R;
+import com.example.spb.app.MyApplication;
 import com.example.spb.entity.LocationGps;
+import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.littlefun.SpbBroadcast;
+import com.example.spb.view.Component.MyToastClass;
 
 import java.util.List;
 
@@ -50,7 +54,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
     public void onBindViewHolder(@NonNull LocationAdapter.ViewHolder holder, int position) {
         location = locationList.get(position);
         holder.locationName.setText(location.getLocationName());
-        if (!location.getLocationName().equals("")){
+        if (location.getLocationDetail() != null && !location.getLocationDetail().equals("")){
             holder.locationDetail.setVisibility(View.VISIBLE);
             holder.locationDetail.setText(location.getLocationDetail());
         }else {
@@ -60,7 +64,8 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_transfer_loc)
+                        ,position,holder.locationName.getText().toString());
             }
         });
 

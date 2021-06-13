@@ -61,12 +61,16 @@ public class MyResolve {
         return imageDoubles;
     }
 
-    public static Bar InBar(Bar bar,String date){
+    public static Bar InBar(Bar bar,String date) throws Exception{
         String[] one = date.split("\\|");
         bar.setPb_one_id(one[0]);
-        bar.setPb_image_url(one[1]);
+        if(one[1] != null){
+            bar.setPb_image_url(one[1]);
+        }
+        if(one[3] != null){
+            bar.setPb_voice(one[3]);
+        }
         bar.setPb_date(one[2]);
-        bar.setPb_voice(one[3]);
         bar.setPb_thumb_num(0);
         bar.setPb_comment_num(0);
         return bar;

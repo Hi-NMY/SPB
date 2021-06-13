@@ -14,7 +14,7 @@ public class MyToastClass {
     private static View view;
     private static TextView textView;
 
-    public static void ShowToast(Context context, String value){
+    public static void ShowToast(Context context, Object value){
         if (view==null){
             view = LayoutInflater.from(context).inflate(R.layout.other_toast_mytoast,null);
         }
@@ -22,14 +22,14 @@ public class MyToastClass {
             textView = (TextView)view.findViewById(R.id.ToastText);
         }
         if (toast==null){
-            textView.setText(value);
+            textView.setText(String.valueOf(value));
             textView.postInvalidate();
             toast = new Toast(context);
             toast.setGravity(Gravity.CENTER,0,+300);
             toast.setDuration(Toast.LENGTH_SHORT);
             toast.setView(view);
         }else {
-            textView.setText(value);
+            textView.setText(String.valueOf(value));
             textView.postInvalidate();
         }
         toast.show();

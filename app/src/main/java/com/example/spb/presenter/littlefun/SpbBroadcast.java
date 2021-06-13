@@ -7,7 +7,7 @@ import android.content.IntentFilter;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class SpbBroadcast {
-    public static void sendReceiver(Context c, String intentName, int textone, String texttwo){
+    public static void sendReceiver(Context c, String intentName,int textone, String texttwo){
         LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(c);
         Intent intent = new Intent(intentName);
         intent.putExtra("key_one",textone);

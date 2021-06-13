@@ -42,11 +42,12 @@ public interface SpbModelBasicInter<T> {
 
     public static int DATATOPIC_SELECT_ONE = 710;
     public static int DATATOPIC_SELECT_TWO = 711;
+    public static int DATATOPIC_SELECT_THREE= 712;
 
     public static int DATABAR_ADD_ONE = 810;
-    public static int DATABAR_SELECT_TWO = 820;
-    public static int DATABAR_UPDATE_TWO = 830;
-    public static int DATABAR_DELETE_TWO = 840;
+    public static int DATABAR_SELECT_ONE = 820;
+    public static int DATABAR_UPDATE_ONE = 830;
+    public static int DATABAR_DELETE_ONE = 840;
 
     public void addData(int fun,T data, MyCallBack callBack);
 

@@ -221,7 +221,7 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
     }
 
     @Override
-    public void finishRefresh(int num) {
+    public void finishRRefresh(int num) {
 
     }
 }

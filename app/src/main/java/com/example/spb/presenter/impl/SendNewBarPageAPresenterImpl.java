@@ -26,6 +26,7 @@ import com.example.spb.presenter.littlefun.VoiceObtain;
 import com.example.spb.view.activity.SendNewBarPage;
 import com.example.spb.view.inter.ISendNewBarPageAView;
 import com.example.spb.xserver.SpbLocationServer;
+import com.example.spb.xserver.SpbSearchLocation;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -66,6 +67,7 @@ public class SendNewBarPageAPresenterImpl extends BasePresenter<ISendNewBarPageA
     public String locationName = "";
     public String newBarTxt = "";
     public Bar newBar;
+    private SpbSearchLocation spbSearchLocation;
 
     public SendNewBarPageAPresenterImpl() {
         topicModel = new TopicModelImpl();
@@ -95,8 +97,12 @@ public class SendNewBarPageAPresenterImpl extends BasePresenter<ISendNewBarPageA
                     String a = response.body().string();
                     switch (Integer.valueOf(a.substring(0,3))) {
                         case 200:
-//                            newBar = MyResolve.InBar(newBar,a.substring(3));
-//                            getView().response(null,getView().SUCCESS_BAR);
+                            try {
+                                newBar = MyResolve.InBar(newBar,a.substring(3));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            getView().response(null,getView().SUCCESS_BAR);
                             break;
                         default:
                             getView().response(null,getView().ERROR_BAR);
@@ -119,6 +125,9 @@ public class SendNewBarPageAPresenterImpl extends BasePresenter<ISendNewBarPageA
         newBarTxt = s;
     }
 
+    public void setLoc(String s){
+        locationName = s;
+    }
 
     public void obtainImage(List<LocalMedia> result){
         for (LocalMedia media : result) {
@@ -217,24 +226,35 @@ public class SendNewBarPageAPresenterImpl extends BasePresenter<ISendNewBarPageA
     }
 
     public void initLocationList(Activity activity, LinearLayoutManager linearLayoutManager, RecyclerView recyclerView){
-        obtainInterval = 500;
+        spbLocationServer = new SpbLocationServer(MyApplication.getContext());
+        obtainInterval = 1000;
         new Thread(new Runnable() {
             @Override
             public void run() {
                 Looper.prepare();
                 try {
-                    while ((spbLocationServer == null || spbLocationServer.obtainListener().locationGpsList == null) && obtainInterval < 5000){
-                        spbLocationServer = new SpbLocationServer(MyApplication.getContext());
+                    while ((spbLocationServer == null || spbLocationServer.obtainListener().locationGpsList == null) && obtainInterval < 2500){
+                        spbLocationServer.startGps();
                         Thread.sleep(obtainInterval);
-                        if (spbLocationServer.obtainListener().locationGpsList != null){
-                            locationGpsS = spbLocationServer.obtainListener().locationGpsList;
-                            setLocationList(activity, linearLayoutManager, recyclerView);
-                            getView().response(null,getView().RESPONSE_SEVEN);
+                        if (spbLocationServer.obtainListener().locType == 62){
+                            break;
                         }else {
-                            obtainInterval += 500;
+                            if (spbLocationServer.obtainListener().locationGpsList != null){
+                                locationGpsS = spbLocationServer.obtainListener().locationGpsList;
+                                activity.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        setLocationList(activity, linearLayoutManager, recyclerView);
+                                    }
+                                });
+                                getView().response(null,getView().RESPONSE_SEVEN);
+                            }else {
+                                obtainInterval += 500;
+                            }
                         }
                     }
-                    if (spbLocationServer == null || spbLocationServer.obtainListener().locationGpsList == null && obtainInterval >= 5000){
+                    if (((spbLocationServer == null || spbLocationServer.obtainListener().locationGpsList == null) && obtainInterval >= 2500)
+                            || spbLocationServer.obtainListener().locType == 62){
                         getView().response(null,getView().RESPONSE_EIGHT);
                     }
                 } catch (InterruptedException e) {
@@ -245,11 +265,36 @@ public class SendNewBarPageAPresenterImpl extends BasePresenter<ISendNewBarPageA
         }).start();
     }
 
+    public void searchLocation(String search , Activity activity, LinearLayoutManager linearLayoutManager, RecyclerView recyclerView){
+        if (spbLocationServer.obtainNowCity() != null){
+            spbSearchLocation = new SpbSearchLocation(spbLocationServer.obtainNowCity(),search);
+            spbSearchLocation.search(new SpbSearchLocation.OnReturn() {
+                @Override
+                public void onSuccess(List<LocationGps> locationGpsList) {
+                    locationGpsS = locationGpsList;
+                    setLocationList(activity, linearLayoutManager, recyclerView);
+                }
+
+                @Override
+                public void onError() {
+
+                }
+            });
+        }
+    }
+
     public void setLocationList(Activity activity, LinearLayoutManager linearLayoutManager, RecyclerView recyclerView){
         locationAdapter = new LocationAdapter(locationGpsS,activity);
-        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        if (recyclerView.getLayoutManager() == null){
+            recyclerView.setLayoutManager(linearLayoutManager);
+        }
         recyclerView.setAdapter(locationAdapter);
+    }
+
+    public void onStopGps(){
+        if (spbLocationServer != null){
+            spbLocationServer.stopGps();
+        }
     }
 
     public boolean startVoice(){

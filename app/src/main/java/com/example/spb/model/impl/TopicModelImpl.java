@@ -32,6 +32,12 @@ public class TopicModelImpl extends SpbModelAbstrate implements SpbModelBasicInt
                         .build();
                 sendHttp(InValues.send(R.string.Topic),requestBody,callBack);
                 break;
+            case DATATOPIC_SELECT_THREE:
+                requestBody = new FormBody.Builder()
+                        .add("fun",String.valueOf(fun))
+                        .build();
+                sendHttp(InValues.send(R.string.Topic),requestBody,callBack);
+                break;
         }
     }
 

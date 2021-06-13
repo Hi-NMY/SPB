@@ -164,7 +164,7 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
     }
 
     @Override
-    public void finishRefresh(int num) {
+    public void finishRRefresh(int num) {
 
     }
 

@@ -99,7 +99,7 @@ public class AttentionTopicPage extends BaseMVPActivity<IAttentionTopicPageAView
     }
 
     @Override
-    public void finishRefresh(int num) {
+    public void finishRRefresh(int num) {
 
     }
 }

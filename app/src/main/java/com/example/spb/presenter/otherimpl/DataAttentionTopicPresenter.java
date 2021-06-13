@@ -1,9 +1,9 @@
 package com.example.spb.presenter.otherimpl;
 
-import com.example.spb.entity.AttentionTopic;
+import com.example.spb.entity.Topic;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
-import com.example.spb.model.SpbAbstract.SpbModelAbstrate;
 import com.example.spb.model.impl.AttentionTopicModelImpl;
+import com.example.spb.model.impl.TopicModelImpl;
 import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.littlefun.MyDateClass;
 import com.google.gson.Gson;
@@ -18,20 +18,24 @@ public class DataAttentionTopicPresenter {
     private static int SUCCESS = 200;
 
     private SpbModelBasicInter attentionTopicModel;
-    public List<AttentionTopic> attentionTopicList;
-    private String account;
+    private SpbModelBasicInter topicModel;
+    public static List<Topic> attentionTopicList;
+    public static List<Topic> topics;
+    private static String account;
     private String a;
     private Gson gson;
 
     public DataAttentionTopicPresenter(String user_account) {
         account = user_account;
         attentionTopicModel = new AttentionTopicModelImpl();
+        topicModel = new TopicModelImpl();
         gson = new Gson();
         initDate();
+        obtainRandomTopic(null);
     }
 
     public void initDate(){
-        AttentionTopic attentionTopic = new AttentionTopic();
+        Topic attentionTopic = new Topic();
         attentionTopic.setTopic_date(MyDateClass.showNowDate());
         attentionTopic.setTopic_name(account);
         attentionTopicModel.selectData(SpbModelBasicInter.DATEATTENTIONTOPIC_SELECT_ONE, attentionTopic, new MyCallBack() {
@@ -40,7 +44,7 @@ public class DataAttentionTopicPresenter {
                 try {
                     a = response.body().string();
                     if (Integer.valueOf(a.substring(0,3)) == SUCCESS){
-                        attentionTopicList = gson.fromJson(a.substring(3),new TypeToken<List<AttentionTopic>>()
+                        attentionTopicList = gson.fromJson(a.substring(3),new TypeToken<List<Topic>>()
                         {}.getType());
                     }else {
 
@@ -57,4 +61,33 @@ public class DataAttentionTopicPresenter {
         });
     }
 
+    public void obtainRandomTopic(HotTopic hotTopic){
+        topicModel.selectData(SpbModelBasicInter.DATATOPIC_SELECT_THREE, null, new MyCallBack() {
+            @Override
+            public void onSuccess(@NotNull Response response) {
+                try {
+                    a = response.body().string();
+                    if (Integer.valueOf(a.substring(0,3)) == SUCCESS){
+                        topics = gson.fromJson(a.substring(3),new TypeToken<List<Topic>>()
+                        {}.getType());
+                        if (hotTopic != null){
+                            hotTopic.onReturn();
+                        }
+                    }else {
+
+                    }
+                } catch (Exception e) {
+
+                }
+            }
+            @Override
+            public void onError(int t) {
+
+            }
+        });
+    }
+
+    public interface HotTopic{
+        void onReturn();
+    }
 }
