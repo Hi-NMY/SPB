@@ -62,4 +62,10 @@
 
     <string name="Bcr_refresh_userMsg">Bcr_refresh_userMsg</string>
     <string name="Bcr_transfer_loc">Bcr_transfer_loc</string>
+    <string name="Bcr_refresh_topic">Bcr_refresh_topic</string>
+    <string name="Bcr_add_hottopicbar">Bcr_add_hottopicbar</string>
+    <string name="Bcr_add_newtopicbar">Bcr_add_newtopicbar</string>
+    <string name="Bcr_reUserPage_topicnum">Bcr_reUserPage_topicnum</string>
+
+    <string name="intent_Topic">intent_Topic</string>
 </resources>

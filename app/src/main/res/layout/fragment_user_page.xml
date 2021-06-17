@@ -91,7 +91,7 @@
 
                 <TextView
                         android:id="@+id/user_page_useronlineday"
-                        android:layout_marginHorizontal="@dimen/margin_12"
+                        android:layout_marginHorizontal="@dimen/margin_8"
                         android:layout_marginVertical="@dimen/margin_20"
                         android:layout_below="@id/user_page_user_headimg"
                         android:layout_alignLeft="@id/user_page_user_headimg"
@@ -114,7 +114,7 @@
 
                 <RelativeLayout
                         android:id="@+id/user_page_postbarnum_r"
-                        android:layout_margin="@dimen/margin_16"
+                        android:layout_margin="@dimen/margin_12"
                         android:layout_toRightOf="@id/user_page_useronlineday"
                         android:layout_below="@id/user_page_user_headimg"
                         android:layout_width="wrap_content"
@@ -145,7 +145,7 @@
 
                 <RelativeLayout
                         android:id="@+id/user_page_collectnum_r"
-                        android:layout_margin="@dimen/margin_16"
+                        android:layout_margin="@dimen/margin_12"
                         android:layout_toRightOf="@id/user_page_postbarnum_r"
                         android:layout_below="@id/user_page_user_headimg"
                         android:layout_width="wrap_content"
@@ -175,7 +175,7 @@
 
                 <RelativeLayout
                         android:id="@+id/user_page_attentionnum_r"
-                        android:layout_margin="@dimen/margin_16"
+                        android:layout_margin="@dimen/margin_12"
                         android:layout_toRightOf="@id/user_page_collectnum_r"
                         android:layout_below="@id/user_page_user_headimg"
                         android:layout_width="wrap_content"

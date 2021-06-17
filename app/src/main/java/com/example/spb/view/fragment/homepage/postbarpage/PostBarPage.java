@@ -226,7 +226,7 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
                 mPostbarAppbarlayout.setExpanded(true);
                 break;
             case R.id.sign_rlt:
-                JumpIntent.startMyIntent(TopicBarPage.class);
+
                 break;
         }
     }

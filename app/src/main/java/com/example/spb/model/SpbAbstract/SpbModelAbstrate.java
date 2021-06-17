@@ -37,7 +37,9 @@ public abstract class SpbModelAbstrate {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                callBack.onSuccess(response);
+                if (callBack != null){
+                    callBack.onSuccess(response);
+                }
                 clearBody();
             }
         });

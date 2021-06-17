@@ -38,12 +38,28 @@ public class TopicModelImpl extends SpbModelAbstrate implements SpbModelBasicInt
                         .build();
                 sendHttp(InValues.send(R.string.Topic),requestBody,callBack);
                 break;
+            case DATATOPIC_SELECT_FOUR:
+                requestBody = new FormBody.Builder()
+                        .add("fun",String.valueOf(fun))
+                        .add("topic_name",String.valueOf(data.getTopic_name()))
+                        .build();
+                sendHttp(InValues.send(R.string.Topic),requestBody,callBack);
+                break;
         }
     }
 
     @Override
     public void updateData(int fun, Topic data, MyCallBack callBack) {
-
+        switch (fun){
+            case DATATOPIC_UPDATE_ONE:
+                requestBody = new FormBody.Builder()
+                        .add("fun",String.valueOf(fun))
+                        .add("topic_id",String.valueOf(data.getId()))
+                        .add("iod_key",data.getTopic_slogan())
+                        .build();
+                sendHttp(InValues.send(R.string.Topic),requestBody,callBack);
+                break;
+        }
     }
 
     @Override

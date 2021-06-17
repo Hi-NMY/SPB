@@ -2,9 +2,11 @@ package com.example.spb.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Topic {
+import java.io.Serializable;
 
-    @SerializedName("topic_id")
+public class Topic implements Serializable {
+
+    @SerializedName(value = "id", alternate = {"topic_id"})
     private int id;
 
     private String topic_name;

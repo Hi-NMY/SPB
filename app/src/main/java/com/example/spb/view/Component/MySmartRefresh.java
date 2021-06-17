@@ -17,6 +17,7 @@ public class MySmartRefresh {
 
     public MySmartRefresh(SmartRefreshLayout smartRefreshLayout, GifImageView topGif,GifImageView bottomGif) {
         this.refreshLayout = smartRefreshLayout;
+        refreshLayout.setEnableAutoLoadMore(false);
         if (topGif != null){
             this.tGif = topGif;
             tgifShow = new GIFShow(tGif);
@@ -59,6 +60,18 @@ public class MySmartRefresh {
             bgifShow.resetGif();
         }
         refreshLayout.finishLoadMore();
+    }
+
+    public void closeRefresh(){
+        refreshLayout.setEnableRefresh(false);
+    }
+
+    public void closeLoadMore(){
+        refreshLayout.setEnableLoadMore(false);
+    }
+
+    public void autoRefresh(){
+          refreshLayout.autoRefresh();
     }
 
     public interface MyRefreshListener{

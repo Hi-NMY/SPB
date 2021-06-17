@@ -16,6 +16,7 @@ import com.example.spb.view.Component.MySmartRefresh;
 import com.example.spb.view.Component.RefreshTipAnima;
 import com.example.spb.view.activity.HomePage;
 import com.example.spb.view.inter.INewPostPageFView;
+import com.example.spb.view.littlefun.MyListAnimation;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import pl.droidsonroids.gif.GifImageView;
@@ -29,7 +30,6 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageF
     public HomePage homePage;
     private RecyclerView mNewpostpageRecyclerview;
     private PostBarAdapter postBarAdapter;
-    private GridLayoutManager gridLayoutManager;
     private TextView mNewpostpageRefreshTip;
 
     @Override
@@ -65,11 +65,7 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageF
         mNewpostpageRefresh = (SmartRefreshLayout) view.findViewById(R.id.newpostpage_refresh);
         mNewpostpageRecyclerview = (RecyclerView) view.findViewById(R.id.newpostpage_recyclerview);
         mNewpostpageRefreshTip = (TextView)view.findViewById(R.id.newpostpage_refresh_tip);
-        LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(homePage, R.anim.layout_animation);
-        controller.setOrder(LayoutAnimationController.ORDER_NORMAL);
-        gridLayoutManager = new GridLayoutManager(homePage, 1);
-        mNewpostpageRecyclerview.setLayoutManager(gridLayoutManager);
-        mNewpostpageRecyclerview.setLayoutAnimation(controller);
+        mNewpostpageRecyclerview = MyListAnimation.setListAnimation(homePage,mNewpostpageRecyclerview);
         mySmartRefresh = new MySmartRefresh(mNewpostpageRefresh, mNewpostpageRefreshTgif, mNewpostpageRefreshBgif);
         createRefresh();
         initData();

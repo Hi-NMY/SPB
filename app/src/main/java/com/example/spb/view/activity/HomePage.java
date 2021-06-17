@@ -13,6 +13,8 @@ import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.UserHomePageAPresenterImpl;
+import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
 import com.example.spb.view.InterComponent.DialogInter;
@@ -132,6 +134,7 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
                     fragmentTransaction.show(userPage);
                     PAGENUMBER = 4;
                 }
+                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_reUserPage_topicnum),0,null);
                 break;
         }
         fragmentTransaction.commitAllowingStateLoss();

@@ -40,6 +40,8 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
     private TextView mUserPageUsername;
     private ImageView mUserPageUsersex;
     private RefreshMsg refreshMsg;
+    private RefreshAttTopicNum refreshAttTopicNum;
+    private TextView mUserPageAttentionnum;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,7 +51,9 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
     @Override
     protected UserPageFPresenterImpl createPresenter() {
         refreshMsg = new RefreshMsg();
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(),InValues.send(R.string.Bcr_refresh_userMsg),refreshMsg);
+        refreshAttTopicNum = new RefreshAttTopicNum();
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_userMsg), refreshMsg);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_reUserPage_topicnum), refreshAttTopicNum);
         return new UserPageFPresenterImpl();
     }
 
@@ -60,14 +64,15 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
 
     @Override
     protected void initFragView(View view) {
-        homePage = (HomePage)getActivity();
+        homePage = (HomePage) getActivity();
         mUserPageUserR = (RelativeLayout) view.findViewById(R.id.user_page_userR);
         mUserPageUseronlinetip = (ImageView) view.findViewById(R.id.user_page_useronlinetip);
         mUserPageCollectnumR = (RelativeLayout) view.findViewById(R.id.user_page_collectnum_r);
         mUserPageAttentionnumR = (RelativeLayout) view.findViewById(R.id.user_page_attentionnum_r);
-        mUserPageUserHeadimg = (RoundedImageView)view.findViewById(R.id.user_page_user_headimg);
-        mUserPageUsername = (TextView)view.findViewById(R.id.user_page_username);
-        mUserPageUsersex = (ImageView)view.findViewById(R.id.user_page_usersex);
+        mUserPageUserHeadimg = (RoundedImageView) view.findViewById(R.id.user_page_user_headimg);
+        mUserPageUsername = (TextView) view.findViewById(R.id.user_page_username);
+        mUserPageUsersex = (ImageView) view.findViewById(R.id.user_page_usersex);
+        mUserPageAttentionnum = (TextView)view.findViewById(R.id.user_page_attentionnum);
         mR1 = (RelativeLayout) view.findViewById(R.id.r1);
         mR2 = (RelativeLayout) view.findViewById(R.id.r2);
         mR3 = (RelativeLayout) view.findViewById(R.id.r3);
@@ -79,16 +84,18 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
     @Override
     protected void initData() {
         mUserPageUsername.setText(homePage.getDataUserMsgPresenter().getUser_name());
-        if (homePage.getDataUserMsgPresenter().getStu_sex().equals("男")){
+        mUserPageAttentionnum.setText(String.valueOf(homePage.getDataAttentionTopicPresenter().attentionNum.size()));
+        if (homePage.getDataUserMsgPresenter().getStu_sex().equals("男")) {
             mUserPageUsersex.setImageResource(R.drawable.icon_boy);
-        }else {
+        } else {
             mUserPageUsersex.setImageResource(R.drawable.icon_girl);
         }
         Glide.with(this)
-                .load(InValues.send(R.string.httpHeader) +"/UserImageServer/" + homePage.getDataUserMsgPresenter().getUser_account() + "/HeadImage/myHeadImage.png")
+                .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + homePage.getDataUserMsgPresenter().getUser_account() + "/HeadImage/myHeadImage.png")
                 .centerCrop()
                 .into(mUserPageUserHeadimg);
         mUserPageUsername.postInvalidate();
+        mUserPageAttentionnum.postInvalidate();
     }
 
     @Override
@@ -198,11 +205,26 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
         }
     }
 
-    class RefreshMsg extends BroadcastReceiver{
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SpbBroadcast.destroyBrc(refreshMsg);
+        SpbBroadcast.destroyBrc(refreshAttTopicNum);
+    }
+
+    class RefreshMsg extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             mUserPageUsername.setText(homePage.getDataUserMsgPresenter().getUser_name());
             mUserPageUsername.postInvalidate();
+        }
+    }
+
+    class RefreshAttTopicNum extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mUserPageAttentionnum.setText(String.valueOf(homePage.getDataAttentionTopicPresenter().attentionTopicList.size()));
+            mUserPageAttentionnum.postInvalidate();
         }
     }
 }

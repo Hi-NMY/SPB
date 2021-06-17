@@ -19,7 +19,6 @@ import com.example.spb.entity.Topic;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MyDateClass;
 import com.example.spb.presenter.littlefun.MyResolve;
-import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.Component.ThumbAnima;
 import com.example.spb.view.activity.HomePage;
 import com.example.spb.view.activity.TopicBarPage;
@@ -33,10 +32,10 @@ import pl.droidsonroids.gif.GifImageView;
 
 import java.util.List;
 
-public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHolder> {
+public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHolder> {
 
     private Activity activity;
-    private HomePage homePage;
+    private TopicBarPage topicBarPage;
     private List<Bar> bars;
     private Bar bar;
     private LayoutInflater layoutInflater;
@@ -83,10 +82,10 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
         }
     }
 
-    public PostBarAdapter(Activity activity, List<Bar> bars) {
+    public TopicBarAdapter(Activity activity, List<Bar> bars) {
         this.activity = activity;
         this.bars = bars;
-        homePage = (HomePage)activity;
+        topicBarPage = (TopicBarPage)activity;
         layoutInflater = activity.getLayoutInflater();
         notifyDataSetChanged();
     }
@@ -127,7 +126,7 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
             holder.mItemPostbarLikeNum.setText(MyDateClass.sendMath(bar.getPb_thumb_num()));
         }
 
-        if (homePage.getDataLikePresenter().determineLike(bar.getPb_one_id())){
+        if (topicBarPage.getDataLikePresenter().determineLike(bar.getPb_one_id())){
             holder.mItemPostbarLikeImg.setBackground(MyApplication.getContext().getDrawable(R.drawable.icon_likeal));
         }
 

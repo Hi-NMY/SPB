@@ -10,10 +10,10 @@ public interface SpbModelBasicInter<T> {
     public static int DATEUSER_UPDATE_ONE = 940;
 
 
-    public static int DATEATTENTIONTOPIC_ADD_ONE = 110;
-    public static int DATEATTENTIONTOPIC_SELECT_ONE = 120;
-    public static int DATEATTENTIONTOPIC_UPDATE_ONE = 130;
-    public static int DATEATTENTIONTOPIC_DELETE_ONE = 140;
+    public static int DATAATTENTIONTOPIC_ADD_ONE = 110;
+    public static int DATAATTENTIONTOPIC_SELECT_ONE = 120;
+    public static int DATAATTENTIONTOPIC_UPDATE_ONE = 130;
+    public static int DATAATTENTIONTOPIC_DELETE_ONE = 140;
 
     public static int DATACOLLECTBAR_ADD_ONE = 210;
     public static int DATACOLLECTBAR_SELECT_ONE = 220;
@@ -40,12 +40,18 @@ public interface SpbModelBasicInter<T> {
     public static int DATALIKE_UPDATE_ONE = 630;
     public static int DATALIKE_DELETE_ONE = 640;
 
+    public static int DATATOPIC_ADD_ONE = 720;
     public static int DATATOPIC_SELECT_ONE = 710;
     public static int DATATOPIC_SELECT_TWO = 711;
     public static int DATATOPIC_SELECT_THREE= 712;
+    public static int DATATOPIC_SELECT_FOUR= 713;
+    public static int DATATOPIC_UPDATE_ONE = 730;
+    public static int DATATOPIC_DELETE_ONE = 740;
 
     public static int DATABAR_ADD_ONE = 810;
     public static int DATABAR_SELECT_ONE = 820;
+    public static int DATABAR_SELECT_TWO = 821;
+    public static int DATABAR_SELECT_THREE = 822;
     public static int DATABAR_UPDATE_ONE = 830;
     public static int DATABAR_DELETE_ONE = 840;
 

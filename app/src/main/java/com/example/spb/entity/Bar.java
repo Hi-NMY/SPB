@@ -1,6 +1,8 @@
 package com.example.spb.entity;
 
-public class Bar {
+import java.io.Serializable;
+
+public class Bar implements Serializable {
 
     private String user_name;
     private String user_account;

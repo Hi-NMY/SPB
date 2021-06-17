@@ -29,7 +29,9 @@ public class DataPostBarPresenter {
     }
 
     public void obtainNewBar(Handler handler){
-        barModel.selectData(barModel.DATABAR_SELECT_ONE, null, new MyCallBack() {
+        Bar bar = new Bar();
+        bar.setPb_date("1");
+        barModel.selectData(barModel.DATABAR_SELECT_ONE, bar, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
                 try {

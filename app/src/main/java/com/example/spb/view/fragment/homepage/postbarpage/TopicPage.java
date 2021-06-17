@@ -1,16 +1,20 @@
 package com.example.spb.view.fragment.homepage.postbarpage;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.R;
+import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.presenter.impl.TopicPageFPresenterImpl;
-import com.example.spb.presenter.otherimpl.DataAttentionTopicPresenter;
+import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.view.Component.MySmartRefresh;
 import com.example.spb.view.activity.HomePage;
 import com.example.spb.view.inter.ITopicPageFView;
@@ -20,16 +24,21 @@ import pl.droidsonroids.gif.GifImageView;
 
 public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresenterImpl> implements ITopicPageFView {
 
-    public SmartRefreshLayout mTopicpageRefresh;
+    private SmartRefreshLayout mTopicpageRefresh;
     private TextView mTopicpageGuessNext;
     private GifImageView mTopicpageRefreshGif;
     private MySmartRefresh mySmartRefresh;
     private HomePage homePage;
     private RecyclerView mTopicpageGuessList;
+    private TextView mTopicpageTipOne;
+    private RecyclerView mTopicpageUseratList;
+    private RefreshUserTopic refreshUserTopic;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        refreshUserTopic = new RefreshUserTopic();
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_topic),refreshUserTopic);
     }
 
     @Override
@@ -39,7 +48,21 @@ public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresen
 
     @Override
     public <T> void response(T response, int responseFlag) {
-
+        homePage.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                switch (responseFlag){
+                    case USERATTTOPIC_TRUE:
+                        mTopicpageTipOne.setVisibility(View.VISIBLE);
+                        mTopicpageUseratList.setVisibility(View.GONE);
+                        break;
+                    case USERATTTOPIC_FALSE:
+                        mTopicpageTipOne.setVisibility(View.GONE);
+                        mTopicpageUseratList.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -55,6 +78,8 @@ public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresen
     @Override
     protected void initFragView(View view) {
         homePage = (HomePage) getActivity();
+        mTopicpageTipOne = (TextView)view.findViewById(R.id.topicpage_tip_one);
+        mTopicpageUseratList = (RecyclerView)view.findViewById(R.id.topicpage_userat_list);
         mTopicpageGuessNext = (TextView) view.findViewById(R.id.topicpage_guess_next);
         mTopicpageRefresh = (SmartRefreshLayout) view.findViewById(R.id.topicpage_refresh);
         mTopicpageRefreshGif = (GifImageView) view.findViewById(R.id.topicpage_refresh_gif);
@@ -68,7 +93,23 @@ public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresen
 
     @Override
     protected void initData() {
-        mPresenter.setHotTopic(homePage,homePage.getDataAttentionTopicPresenter().topics,new GridLayoutManager(homePage,2),mTopicpageGuessList);
+        mPresenter.setHotTopic(homePage, homePage.getDataAttentionTopicPresenter().topics, new GridLayoutManager(homePage, 2), mTopicpageGuessList);
+        mPresenter.setUserAttTopic(homePage, homePage.getDataAttentionTopicPresenter().attentionTopicList
+                , new GridLayoutManager(homePage, 2), mTopicpageUseratList, new TopicPageFPresenterImpl.I() {
+                    @Override
+                    public void A() {
+
+                    }
+
+                    @Override
+                    public void onReturn(boolean a) {
+                        if (a){
+                            response(null,USERATTTOPIC_TRUE);
+                        }else {
+                            response(null,USERATTTOPIC_FALSE);
+                        }
+                    }
+                });
         mTopicpageGuessList.setVisibility(View.VISIBLE);
     }
 
@@ -93,7 +134,7 @@ public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresen
             @Override
             public void onClick(View v) {
                 mySmartRefresh.finishMyRefresh();
-                mPresenter.obtainHotTopic(homePage,null);
+                mPresenter.obtainHotTopic(homePage, null);
             }
         });
     }
@@ -118,6 +159,26 @@ public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresen
                     public void A() {
                         finishRRefresh(0);
                     }
+
+                    @Override
+                    public void onReturn(boolean a) {
+
+                    }
+                });
+                mPresenter.obtainUserAttTopic(homePage, new TopicPageFPresenterImpl.I() {
+                    @Override
+                    public void A() {
+
+                    }
+
+                    @Override
+                    public void onReturn(boolean a) {
+                        if (a){
+                            response(null,USERATTTOPIC_TRUE);
+                        }else {
+                            response(null,USERATTTOPIC_FALSE);
+                        }
+                    }
                 });
             }
 
@@ -131,5 +192,18 @@ public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresen
     @Override
     public void finishRRefresh(int num) {
         mySmartRefresh.finishMyRefresh();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SpbBroadcast.destroyBrc(refreshUserTopic);
+    }
+
+    class RefreshUserTopic extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mPresenter.refreshUserTopic();
+        }
     }
 }

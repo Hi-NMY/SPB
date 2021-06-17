@@ -11,7 +11,11 @@ import com.google.gson.reflect.TypeToken;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DataAttentionTopicPresenter {
 
@@ -21,24 +25,26 @@ public class DataAttentionTopicPresenter {
     private SpbModelBasicInter topicModel;
     public static List<Topic> attentionTopicList;
     public static List<Topic> topics;
+    public static List<Integer> attentionNum;
+    private int topicId = 0;
     private static String account;
     private String a;
     private Gson gson;
 
     public DataAttentionTopicPresenter(String user_account) {
         account = user_account;
+        attentionNum = new ArrayList<>();
         attentionTopicModel = new AttentionTopicModelImpl();
         topicModel = new TopicModelImpl();
         gson = new Gson();
-        initDate();
+        initDate(null);
         obtainRandomTopic(null);
     }
 
-    public void initDate(){
+    public void initDate(ReturnTopic returnTopic){
         Topic attentionTopic = new Topic();
-        attentionTopic.setTopic_date(MyDateClass.showNowDate());
         attentionTopic.setTopic_name(account);
-        attentionTopicModel.selectData(SpbModelBasicInter.DATEATTENTIONTOPIC_SELECT_ONE, attentionTopic, new MyCallBack() {
+        attentionTopicModel.selectData(SpbModelBasicInter.DATAATTENTIONTOPIC_SELECT_ONE, attentionTopic, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
                 try {
@@ -46,6 +52,15 @@ public class DataAttentionTopicPresenter {
                     if (Integer.valueOf(a.substring(0,3)) == SUCCESS){
                         attentionTopicList = gson.fromJson(a.substring(3),new TypeToken<List<Topic>>()
                         {}.getType());
+                        if (attentionTopicList != null && attentionTopicList.size() != 0){
+                            attentionNum = new ArrayList<>();
+                            for (Topic t:attentionTopicList){
+                                attentionNum.add(t.getId());
+                            }
+                        }
+                        if (returnTopic != null){
+                            returnTopic.onReturn();
+                        }
                     }else {
 
                     }
@@ -87,7 +102,83 @@ public class DataAttentionTopicPresenter {
         });
     }
 
+    public void addAttentionTopic(Topic topic,Topic t,ReturnTopic returnTopic){
+        topicId = t.getId();
+        attentionTopicModel.addData(attentionTopicModel.DATAATTENTIONTOPIC_ADD_ONE, t, new MyCallBack() {
+            @Override
+            public void onSuccess(@NotNull Response response) {
+                try {
+                    String a = response.body().string();
+                    if (a.equals("200")) {
+                        if (topicId != 0){
+                            attentionNum.add(topicId);
+                            attentionTopicList.add(0,topic);
+                            returnTopic.onReturn();
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(int t) {
+
+            }
+        });
+        Topic c = t;
+        c.setTopic_slogan("true");
+        topicModel.updateData(topicModel.DATATOPIC_UPDATE_ONE, c,null);
+    }
+
+    public void removeAttentionTopic(Topic topic,ReturnTopic returnTopic){
+        topicId = topic.getId();
+        attentionTopicModel.deleteData(attentionTopicModel.DATAATTENTIONTOPIC_DELETE_ONE, topic, new MyCallBack() {
+            @Override
+            public void onSuccess(@NotNull Response response) {
+                try {
+                    String a = response.body().string();
+                    if (a.equals("200")){
+                        attentionNum.removeIf(attentionNum -> attentionNum == topicId);
+                        attentionTopicList.removeIf(attentionTopicList -> attentionTopicList.getId() == topicId);
+                        returnTopic.onReturn();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(int t) {
+
+            }
+        });
+        Topic c = topic;
+        c.setTopic_slogan("false");
+        topicModel.updateData(topicModel.DATATOPIC_UPDATE_ONE, c,null);
+    }
+
+    public boolean determineAttention(int id){
+        if (attentionNum.stream().anyMatch(attentionNum -> attentionNum.equals(id))){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public Topic determineTopic(Topic t){
+        Topic c = attentionTopicList.stream().filter(attentionTopicList -> attentionTopicList.getTopic_name().equals(t.getTopic_name())).findAny().orElse(null);
+        if (c == null){
+            c = topics.stream().filter(attentionTopicList -> attentionTopicList.getTopic_name().equals(t.getTopic_name())).findAny().orElse(null);
+        }
+        return c;
+    }
+
     public interface HotTopic{
+        void onReturn();
+    }
+
+    public interface ReturnTopic{
         void onReturn();
     }
 }

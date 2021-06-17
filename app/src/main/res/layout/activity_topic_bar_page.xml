@@ -6,7 +6,6 @@
         android:id="@+id/topicbar_R_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/enterbg"
         tools:context=".view.activity.TopicBarPage">
 
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -21,6 +20,7 @@
                 android:layout_height="wrap_content">
 
             <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/topicbar_refresh_gif"
                     android:layout_centerInParent="true"
                     android:background="@drawable/loading4"
                     android:layout_width="@dimen/icon_image_64"
@@ -84,7 +84,7 @@
                                 android:layout_toRightOf="@id/topicbar_img"
                                 android:textSize="@dimen/font_16"
                                 android:textStyle="bold"
-                                android:textColor="@color/beijing"
+                                android:textColor="@color/qihei"
                                 android:text="撒大声地"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
@@ -95,7 +95,7 @@
                                 android:layout_below="@+id/topicbar_name"
                                 android:layout_toRightOf="@id/topicbar_img"
                                 android:textSize="@dimen/font_10"
-                                android:textColor="@color/beijing"
+                                android:textColor="@color/qihei"
                                 android:text="关注"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
@@ -105,7 +105,7 @@
                                 android:layout_alignTop="@id/topicbar_t"
                                 android:layout_toRightOf="@id/topicbar_t"
                                 android:textSize="@dimen/font_10"
-                                android:textColor="@color/beijing"
+                                android:textColor="@color/qihei"
                                 android:text="21.2w"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
@@ -115,7 +115,7 @@
                                 android:layout_alignTop="@id/topicbar_attention_num"
                                 android:layout_toRightOf="@id/topicbar_attention_num"
                                 android:textSize="@dimen/font_10"
-                                android:textColor="@color/beijing"
+                                android:textColor="@color/qihei"
                                 android:text="帖子"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
@@ -125,7 +125,7 @@
                                 android:layout_toRightOf="@id/topicbar_t2"
                                 android:layout_marginLeft="@dimen/margin_4"
                                 android:textSize="@dimen/font_10"
-                                android:textColor="@color/beijing"
+                                android:textColor="@color/qihei"
                                 android:text="20.6w"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
@@ -135,7 +135,7 @@
                                 android:layout_toRightOf="@id/topicbar_img"
                                 android:layout_alignBottom="@id/topicbar_img"
                                 android:textSize="@dimen/font_10"
-                                android:textColor="@color/beijing"
+                                android:textColor="@color/qihei"
                                 android:text="这个人很懒，什么也没写~"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
@@ -147,11 +147,11 @@
                                 android:layout_alignBottom="@id/topicbar_slogan"
                                 android:layout_alignParentRight="true"
                                 android:layout_marginRight="@dimen/margin_32"
-                                android:textColor="@color/qihei"
+                                android:textColor="@color/beijing"
                                 android:textSize="@dimen/font_12"
                                 android:text="关注"
                                 android:stateListAnimator="@null"
-                                android:background="@drawable/white_bg"
+                                android:background="@drawable/enter_next_login"
                                 android:layout_width="@dimen/icon_image_64"
                                 android:layout_height="wrap_content"/>
                     </RelativeLayout>
@@ -196,6 +196,31 @@
             </androidx.core.widget.NestedScrollView>
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+    <RelativeLayout
+            android:id="@+id/excess_r"
+            android:background="@color/beijing"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/gif"
+                android:layout_centerInParent="true"
+                android:background="@drawable/loading"
+                android:layout_width="@dimen/icon_image_64"
+                android:layout_height="@dimen/icon_image_64"
+                />
+
+        <TextView
+                android:textColor="@color/grey"
+                android:layout_marginTop="@dimen/margin_4"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/gif"
+                android:text="正在飞速加载数据"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
 
     <RelativeLayout
             android:id="@+id/topicbar_bar_R"

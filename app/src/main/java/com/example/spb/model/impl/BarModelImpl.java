@@ -54,6 +54,23 @@ public class BarModelImpl extends SpbModelAbstrate implements SpbModelBasicInter
             case DATABAR_SELECT_ONE:
                 requestBody = new FormBody.Builder()
                         .add("fun", String.valueOf(fun))
+                        .add("pb_date", data.getPb_date())
+                        .build();
+                sendHttp(InValues.send(R.string.PostBar),requestBody,callBack);
+                break;
+            case DATABAR_SELECT_TWO:
+                requestBody = new FormBody.Builder()
+                        .add("fun", String.valueOf(fun))
+                        .add("pb_topic",data.getPb_topic())
+                        .add("pb_thumb_num",data.getPb_article())
+                        .build();
+                sendHttp(InValues.send(R.string.PostBar),requestBody,callBack);
+                break;
+            case DATABAR_SELECT_THREE:
+                requestBody = new FormBody.Builder()
+                        .add("fun", String.valueOf(fun))
+                        .add("pb_topic",data.getPb_topic())
+                        .add("pb_date",data.getPb_date())
                         .build();
                 sendHttp(InValues.send(R.string.PostBar),requestBody,callBack);
                 break;

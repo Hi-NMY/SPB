@@ -19,70 +19,62 @@ import com.example.spb.view.activity.TopicBarPage;
 import com.example.spb.view.littlefun.JumpIntent;
 import com.makeramen.roundedimageview.RoundedImageView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class RandomTopicAdapter extends RecyclerView.Adapter<RandomTopicAdapter.ViewHolder> {
+public class AttentionTopicAdapter extends RecyclerView.Adapter<AttentionTopicAdapter.ViewHolder> {
 
-    private List<Topic> topics;
-    private Activity activity;
     private View view;
+    private Activity activity;
+    private List<Topic> attTopics;
     private Topic topic;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        RoundedImageView roundedImageView;
-        TextView topicName;
-        TextView hotNum;
-        RelativeLayout relativeLayout;
+        RoundedImageView mItemAtttopicListHeadimg;
+        TextView mItemAtttopicListTitle;
+        RelativeLayout mItemAtttopicListR;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            roundedImageView = (RoundedImageView)itemView.findViewById(R.id.item_topic_list_headimg);
-            topicName = (TextView)itemView.findViewById(R.id.item_topic_list_title);
-            hotNum = (TextView)itemView.findViewById(R.id.item_topic_list_attentionnum);
-            relativeLayout = (RelativeLayout)itemView.findViewById(R.id.item_topic_list_R);
+            mItemAtttopicListHeadimg = (RoundedImageView) itemView.findViewById(R.id.item_atttopic_list_headimg);
+            mItemAtttopicListTitle = (TextView) itemView.findViewById(R.id.item_atttopic_list_title);
+            mItemAtttopicListR = (RelativeLayout) itemView.findViewById(R.id.item_atttopic_list_R);
         }
     }
 
-    public RandomTopicAdapter(Activity activity,List<Topic> topics) {
+    public AttentionTopicAdapter(Activity activity,List<Topic> attTopics) {
         this.activity = activity;
-        this.topics = topics;
-        notifyDataSetChanged();
-    }
-
-    public void refreshTopic(List<Topic> topics) {
-        this.topics = new ArrayList<>();
-        this.topics = topics;
-        notifyDataSetChanged();
-    }
-
-    public void notifyData(){
-        notifyDataSetChanged();
+        this.attTopics = attTopics;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_topic_list,null);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_attention_topic_list, null);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        topic = topics.get(position);
-        holder.topicName.setText(topic.getTopic_name());
-        holder.hotNum.setText("热度  " + topic.getTopic_barnum());
+        topic = attTopics.get(position);
+        holder.mItemAtttopicListTitle.setText(topic.getTopic_name());
         Glide.with(activity)
                 .load(InValues.send(R.string.httpHeadert) + topic.getTopic_image())
-                .into(holder.roundedImageView);
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+                .into(holder.mItemAtttopicListHeadimg);
+        holder.mItemAtttopicListR.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                return true;
+            }
+        });
+        holder.mItemAtttopicListR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     JumpIntent.startMsgIntent(TopicBarPage.class, new JumpIntent.SetMsg() {
                         @Override
                         public void setMessage(Intent intent) {
-                            intent.putExtra(InValues.send(R.string.intent_Topic),topics.get(position));
+                            intent.putExtra(InValues.send(R.string.intent_Topic),attTopics.get(position));
                         }
                     });
                 }catch (Exception e){
@@ -94,6 +86,6 @@ public class RandomTopicAdapter extends RecyclerView.Adapter<RandomTopicAdapter.
 
     @Override
     public int getItemCount() {
-        return topics.size();
+        return attTopics.size();
     }
 }

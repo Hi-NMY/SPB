@@ -12,6 +12,10 @@ public interface ITopicPageFView extends SpbInterTwo {
     int RESPONSE_TWO = 1;
     int RESPONSE_THREE = 2;
 
+    //用户关注判断是否为null
+    int USERATTTOPIC_FALSE = 1;
+    int USERATTTOPIC_TRUE = 0;
+
     <T> T request(int requestFlag);
 
     <T> void response(T response, int responseFlag);

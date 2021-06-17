@@ -36,7 +36,7 @@
                     android:id="@+id/r1"
                     android:layout_marginTop="@dimen/margin_16"
                     android:layout_marginHorizontal="@dimen/margin_8"
-                    android:minHeight="100dp"
+                    android:minHeight="120dp"
                     android:background="@drawable/cardview_gb"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -65,12 +65,12 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/topicpage_userat_list"
-                        android:visibility="invisible"
+                        android:visibility="gone"
                         android:layout_marginBottom="@dimen/margin_8"
                         android:layout_marginTop="@dimen/margin_8"
                         android:layout_below="@id/t1"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/margin_64"/>
+                        android:layout_height="wrap_content"/>
 
             </RelativeLayout>
 
