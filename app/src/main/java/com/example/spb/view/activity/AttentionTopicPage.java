@@ -1,11 +1,19 @@
 package com.example.spb.view.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.R;
+import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
+import com.example.spb.entity.Topic;
 import com.example.spb.presenter.impl.AttentionTopicPageAPresenterImpl;
+import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.littlefun.MyDateClass;
+import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.presenter.otherimpl.DataAttentionTopicPresenter;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
 import com.example.spb.view.Component.MySmartRefresh;
@@ -24,11 +32,14 @@ public class AttentionTopicPage extends BaseMVPActivity<IAttentionTopicPageAView
     private RecyclerView mAttentiontopicRecyclerview;
     private SmartRefreshLayout mAttentiontopicRefresh;
     private MySmartRefresh mySmartRefresh;
+    private RefreshAttTopic refreshAttTopic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attention_topic_page);
+        refreshAttTopic = new RefreshAttTopic();
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_reAttTopic),refreshAttTopic);
         initActView();
     }
 
@@ -137,5 +148,41 @@ public class AttentionTopicPage extends BaseMVPActivity<IAttentionTopicPageAView
     @Override
     public void finishRRefresh(int num) {
         mySmartRefresh.finishMyRefresh();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SpbBroadcast.destroyBrc(refreshAttTopic);
+    }
+
+    class RefreshAttTopic extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getIntExtra("key_one",0) == 0){
+                getDataAttentionTopicPresenter().removeAttentionTopic(mPresenter.addAttentionAccount
+                        (getDataUserMsgPresenter().getUser_account(), (Topic) intent.getSerializableExtra("key_two")), new DataAttentionTopicPresenter.ReturnTopic() {
+                    @Override
+                    public void onReturn() {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(100);
+                                    SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_topic), 0, null);
+                                    SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_reUserPage_topicnum),0,null);
+                                    mPresenter.refreshAdapter();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
+                });
+            }else {
+                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_reUserPage_topicnum),0,null);
+                mPresenter.refreshAdapter();
+            }
+        }
     }
 }

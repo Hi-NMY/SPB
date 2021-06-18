@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -14,6 +15,8 @@ import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.entity.Topic;
 import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.littlefun.SpbBroadcast;
+import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.activity.TopicBarPage;
 import com.example.spb.view.littlefun.JumpIntent;
@@ -27,6 +30,10 @@ public class AttentionTopicAdapter extends RecyclerView.Adapter<AttentionTopicAd
     private Activity activity;
     private List<Topic> attTopics;
     private Topic topic;
+    private ComponentDialog componentDialog;
+    private Button mButtonRight;
+    private Button mButtonClose;
+    private TextView mTopicName;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView mItemAtttopicListHeadimg;
@@ -43,6 +50,10 @@ public class AttentionTopicAdapter extends RecyclerView.Adapter<AttentionTopicAd
     public AttentionTopicAdapter(Activity activity,List<Topic> attTopics) {
         this.activity = activity;
         this.attTopics = attTopics;
+    }
+
+    public void refreshA(){
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -63,7 +74,37 @@ public class AttentionTopicAdapter extends RecyclerView.Adapter<AttentionTopicAd
         holder.mItemAtttopicListR.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                componentDialog = new ComponentDialog(activity, R.layout.dialog_longclick_view, new ComponentDialog.InitDialog() {
+                    @Override
+                    public void initView(View view) {
+                        mButtonClose = (Button)view.findViewById(R.id.button_close);
+                        mButtonRight = (Button)view.findViewById(R.id.button_right);
+                        mTopicName = (TextView)view.findViewById(R.id.topic_name);
+                    }
 
+                    @Override
+                    public void initData() {
+                        mTopicName.setText(attTopics.get(position).getTopic_name());
+                    }
+
+                    @Override
+                    public void initListener() {
+                        mButtonClose.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                componentDialog.closeMyDialog();
+                            }
+                        });
+                        mButtonRight.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_reAttTopic),0,attTopics.get(position));
+                                componentDialog.closeMyDialog();
+                            }
+                        });
+                    }
+                });
+                componentDialog.showMyDialog();
                 return true;
             }
         });

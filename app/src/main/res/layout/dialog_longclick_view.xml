@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:background="@drawable/cardview_gb"
+            android:layout_marginHorizontal="@dimen/margin_64"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/topic_name"
+                android:layout_marginTop="@dimen/margin_12"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/lightgrey"
+                android:textSize="@dimen/font_14"
+                android:text="sadasdasd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:id="@+id/txt"
+                android:layout_marginTop="@dimen/margin_40"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/qihei"
+                android:text="取消关注该话题？"
+                android:textSize="@dimen/font_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+        <Button
+                android:id="@+id/button_close"
+                android:layout_marginVertical="@dimen/margin_16"
+                android:translationX="@dimen/margin__64"
+                android:layout_below="@+id/txt"
+                android:layout_centerHorizontal="true"
+                android:text="否"
+                android:background="@drawable/enter_next_login_false"
+                android:stateListAnimator="@null"
+                android:layout_width="@dimen/icon_image_72"
+                android:layout_height="@dimen/icon_image_36"/>
+
+        <Button
+                android:id="@+id/button_right"
+                android:layout_marginVertical="@dimen/margin_16"
+                android:translationX="@dimen/margin_64"
+                android:layout_below="@+id/txt"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/beijing"
+                android:text="是"
+                android:background="@drawable/enter_next_login"
+                android:stateListAnimator="@null"
+                android:layout_width="@dimen/icon_image_72"
+                android:layout_height="@dimen/icon_image_36"/>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -354,6 +354,7 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
                                 public void run() {
                                     mTopicbarAttentionNum.setText(MyDateClass.sendMath(Integer.valueOf(mTopicbarAttentionNum.getText().toString()) - 1));
                                     mTopicbarAttentionNum.postInvalidate();
+                                    SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_reAttTopic),1,null);
                                     SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_topic), 0, null);
                                 }
                             });
@@ -371,6 +372,7 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
                                 public void run() {
                                     mTopicbarAttentionNum.setText(MyDateClass.sendMath(Integer.valueOf(mTopicbarAttentionNum.getText().toString()) + 1));
                                     mTopicbarAttentionNum.postInvalidate();
+                                    SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_reAttTopic),1,null);
                                     SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_topic), 0, null);
                                 }
                             });

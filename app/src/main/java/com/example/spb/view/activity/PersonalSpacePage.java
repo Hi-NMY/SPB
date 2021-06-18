@@ -79,13 +79,14 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
     private ImageView mPersonalspaceUsersex;
     private TextView mPersonalspaceUsersign;
     private RefreshMsg refreshMsg;
+    private TextView mPersonalspaceUsertopicNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_space_page);
         refreshMsg = new RefreshMsg();
-        SpbBroadcast.obtainRecriver(this,InValues.send(R.string.Bcr_refresh_userMsg),refreshMsg);
+        SpbBroadcast.obtainRecriver(this, InValues.send(R.string.Bcr_refresh_userMsg), refreshMsg);
         initActView();
     }
 
@@ -107,6 +108,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         mPersonalspaceUsername = (TextView) findViewById(R.id.personalspace_username);
         mPersonalspaceUsersex = (ImageView) findViewById(R.id.personalspace_usersex);
         mPersonalspaceUsersign = (TextView) findViewById(R.id.personalspace_usersign);
+        mPersonalspaceUsertopicNum = (TextView) findViewById(R.id.personalspace_usertopic_num);
         mR1 = (RelativeLayout) findViewById(R.id.r1);
         mR2 = (RelativeLayout) findViewById(R.id.r2);
         mR3 = (RelativeLayout) findViewById(R.id.r3);
@@ -121,16 +123,19 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
     protected void initData() {
         mPersonalspaceUsername.setText(getDataUserMsgPresenter().getUser_name());
         mPersonalspaceUsersign.setText(getDataUserMsgPresenter().getUser_profile());
-        if (getDataUserMsgPresenter().getStu_sex().equals("男")){
+        mPersonalspaceUsertopicNum.setText(String.valueOf(getDataAttentionTopicPresenter().attentionTopicList.size()));
+        if (getDataUserMsgPresenter().getStu_sex().equals("男")) {
             mPersonalspaceUsersex.setImageResource(R.drawable.icon_boy);
-        }else {
+        } else {
             mPersonalspaceUsersex.setImageResource(R.drawable.icon_girl);
         }
         Glide.with(this)
-                .load(InValues.send(R.string.httpHeader) +"/UserImageServer/" + getDataUserMsgPresenter().getUser_account() + "/HeadImage/myHeadImage.png")
+                .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + getDataUserMsgPresenter().getUser_account() + "/HeadImage/myHeadImage.png")
                 .centerCrop()
                 .into(mPersonalspaceUserHeadimg);
         mPersonalspaceUsername.postInvalidate();
+        mPersonalspaceUsersign.postInvalidate();
+        mPersonalspaceUsertopicNum.postInvalidate();
     }
 
     private void intFollowViewPager() {
@@ -355,7 +360,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         }
     }
 
-    class RefreshMsg extends BroadcastReceiver{
+    class RefreshMsg extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             mPersonalspaceUsername.setText(getDataUserMsgPresenter().getUser_name());

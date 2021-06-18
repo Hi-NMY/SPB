@@ -25,4 +25,15 @@ public class AttentionTopicPageAPresenterImpl extends BasePresenter<IAttentionTo
             recyclerView.setAdapter(attentionTopicAdapter);
         }
     }
+
+    public void refreshAdapter(){
+        if (attentionTopicAdapter != null){
+            attentionTopicAdapter.refreshA();
+        }
+    }
+
+    public Topic addAttentionAccount(String user_account, Topic topic) {
+        topic.setTopic_slogan(user_account);
+        return topic;
+    }
 }

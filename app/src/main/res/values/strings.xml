@@ -66,6 +66,7 @@
     <string name="Bcr_add_hottopicbar">Bcr_add_hottopicbar</string>
     <string name="Bcr_add_newtopicbar">Bcr_add_newtopicbar</string>
     <string name="Bcr_reUserPage_topicnum">Bcr_reUserPage_topicnum</string>
+    <string name="Bcr_reAttTopic">Bcr_reAttTopic</string>
 
     <string name="intent_Topic">intent_Topic</string>
 </resources>
