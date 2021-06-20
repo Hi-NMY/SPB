@@ -15,6 +15,15 @@ public class HotTopicBarFPresenterImpl extends BasePresenter<IHotTopicBarFView> 
 
     private TopicBarPage topicBarPage;
     private TopicBarAdapter topicBarAdapter;
+    private String tName;
+
+    public void settName(String tName) {
+        this.tName = tName;
+    }
+
+    public String gettName() {
+        return tName;
+    }
 
     public HotTopicBarFPresenterImpl(TopicBarPage t) {
         this.topicBarPage = t;
@@ -23,6 +32,7 @@ public class HotTopicBarFPresenterImpl extends BasePresenter<IHotTopicBarFView> 
     public void addHotTopicList(List<Bar> b, RecyclerView recyclerView,boolean fun){
         if (topicBarAdapter == null && fun){
             topicBarAdapter = new TopicBarAdapter(topicBarPage,b);
+            topicBarAdapter.setNowTopicId(gettName());
             recyclerView.setAdapter(topicBarAdapter);
             recyclerView.startLayoutAnimation();
         }else {

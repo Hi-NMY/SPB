@@ -38,6 +38,15 @@ public class SpbBroadcast {
         localBroadcastManager.sendBroadcast(intent);
     }
 
+    public static void sendReceiver(Context c, String intentName,int textone,String texttwo, Serializable textthree){
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(c);
+        Intent intent = new Intent(intentName);
+        intent.putExtra("key_one",textone);
+        intent.putExtra("key_two",texttwo);
+        intent.putExtra("key_three",textthree);
+        localBroadcastManager.sendBroadcast(intent);
+    }
+
     public static void obtainRecriver(Context c, String actionName, BroadcastReceiver receiver){
         broadcastReceiver = receiver;
         localBroadcastManager = LocalBroadcastManager.getInstance(c);

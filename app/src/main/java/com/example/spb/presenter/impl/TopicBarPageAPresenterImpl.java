@@ -32,6 +32,11 @@ public class TopicBarPageAPresenterImpl extends BasePresenter<ITopicBarPageAView
     private Bar cacheBar = null;
     private int hotBarsNum = 0;
     private String newBarsDate = null;
+    private String topiCName;
+
+    public void setTopiCName(String topiCName) {
+        this.topiCName = topiCName;
+    }
 
     public TopicBarPageAPresenterImpl() {
         topicModel = new TopicModelImpl();
@@ -106,10 +111,10 @@ public class TopicBarPageAPresenterImpl extends BasePresenter<ITopicBarPageAView
                             Thread.sleep(100);
                             if (cacheBar.getPb_article().equals("null")){
                                 SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_hottopicbar)
-                                        ,0,(Serializable)hotBars);
+                                        ,0,topiCName,(Serializable)hotBars);
                             }else {
                                 SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_hottopicbar)
-                                        ,1,(Serializable)hotBars);
+                                        ,1,topiCName,(Serializable)hotBars);
                             }
                         }
                         if (stopRefresh != null){
@@ -141,10 +146,10 @@ public class TopicBarPageAPresenterImpl extends BasePresenter<ITopicBarPageAView
                             Thread.sleep(100);
                             if (cacheBar.getPb_date().equals("1")){
                                 SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_newtopicbar)
-                                        ,0,(Serializable)newBars);
+                                        ,0,topiCName,(Serializable)newBars);
                             }else {
                                 SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_newtopicbar)
-                                        ,1,(Serializable)newBars);
+                                        ,1,topiCName,(Serializable)newBars);
                             }
                         }
                     }else {

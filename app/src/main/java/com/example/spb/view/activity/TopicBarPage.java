@@ -126,6 +126,7 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
                     @Override
                     public void run() {
                         topic = t;
+                        mPresenter.setTopiCName(topic.getTopic_name());
                         mPresenter.returnAttentionKey(getDataAttentionTopicPresenter().determineAttention(topic.getId()));
                         mExcessR.setVisibility(View.GONE);
                         initData();

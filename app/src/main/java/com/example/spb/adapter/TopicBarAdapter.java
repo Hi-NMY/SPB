@@ -19,6 +19,7 @@ import com.example.spb.entity.Topic;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MyDateClass;
 import com.example.spb.presenter.littlefun.MyResolve;
+import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.Component.ThumbAnima;
 import com.example.spb.view.activity.HomePage;
 import com.example.spb.view.activity.TopicBarPage;
@@ -41,6 +42,7 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
     private LayoutInflater layoutInflater;
     private GridLayoutManager gridLayoutManager;
     private PostBarImgAdapter postBarImgAdapter;
+    private String nowTopicName;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView mItemPostbarUserHeadimg;
@@ -88,6 +90,11 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
         topicBarPage = (TopicBarPage)activity;
         layoutInflater = activity.getLayoutInflater();
         notifyDataSetChanged();
+    }
+
+
+    public void setNowTopicId(String a){
+        this.nowTopicName = a;
     }
 
     @NonNull
@@ -177,13 +184,17 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
                     textView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //跳转话题详细页
-                            JumpIntent.startMsgIntent(TopicBarPage.class, new JumpIntent.SetMsg() {
-                                @Override
-                                public void setMessage(Intent intent) {
-                                    intent.putExtra(InValues.send(R.string.intent_Topic),o);
-                                }
-                            });
+                            if (nowTopicName != null && o.getTopic_name().equals(nowTopicName)) {
+                                MyToastClass.ShowToast(MyApplication.getContext(),"正在浏览该话题噢");
+                            }else {
+                                //跳转话题详细页
+                                JumpIntent.startMsgIntent(TopicBarPage.class, new JumpIntent.SetMsg() {
+                                    @Override
+                                    public void setMessage(Intent intent) {
+                                        intent.putExtra(InValues.send(R.string.intent_Topic),o);
+                                    }
+                                });
+                            }
                         }
                     });
                     return view;

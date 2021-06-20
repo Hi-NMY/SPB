@@ -136,7 +136,9 @@ public class NewTopicBar extends BaseMVPFragment<INewTopicBarFView, NewTopicBarF
         @Override
         public void onReceive(Context context, Intent intent) {
             int a = intent.getIntExtra("key_one",0);
-            List<Bar> bars = (List<Bar>) intent.getSerializableExtra("key_two");
+            String name = intent.getStringExtra("key_two");
+            List<Bar> bars = (List<Bar>) intent.getSerializableExtra("key_three");
+            mPresenter.settName(name);
             if (a == 0){
                 mPresenter.addNewTopicList(bars,mNewtopicbarRecyclerview,true);
             }else {
