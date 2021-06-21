@@ -24,6 +24,8 @@ import com.example.spb.view.Component.ThumbAnima;
 import com.example.spb.view.activity.HomePage;
 import com.example.spb.view.activity.TopicBarPage;
 import com.example.spb.view.littlefun.BarImageInFlater;
+import com.example.spb.view.littlefun.EasyVoice;
+import com.example.spb.view.littlefun.GIFShow;
 import com.example.spb.view.littlefun.JumpIntent;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.zhy.view.flowlayout.FlowLayout;
@@ -198,6 +200,52 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
             holder.mItemPostbarImagelist.setLayoutManager(gridLayoutManager);
             postBarImgAdapter = new PostBarImgAdapter(activity,MyResolve.InDoubleImage(bar.getPb_image_url()));
             holder.mItemPostbarImagelist.setAdapter(postBarImgAdapter);
+        }
+
+        final GIFShow[] gifShow = new GIFShow[1];
+        if(bar.getPb_voice() != null && !bar.getPb_voice().equals("")){
+            holder.mItemPostbarVoice.setVisibility(View.VISIBLE);
+            gifShow[0] = new GIFShow(holder.mVoiceGif);
+            EasyVoice easyVoice = new EasyVoice(InValues.send(R.string.httpHeadert) + bar.getPb_voice(), new EasyVoice.OnVoice() {
+                @Override
+                public void onStart(int time) {
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            holder.mVoiceTime.setText(String.valueOf(time));
+                            holder.mVoiceTime.postInvalidate();
+                            gifShow[0].startGif();
+                        }
+                    });
+                }
+
+                @Override
+                public void onStop(int cacheTime) {
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            holder.mVoiceTime.setText(String.valueOf(cacheTime));
+                            gifShow[0] = new GIFShow(holder.mVoiceGif);
+                        }
+                    });
+                }
+
+                @Override
+                public void onDestroy() {
+
+                }
+            });
+            holder.mVoiceTime.setText(String.valueOf(easyVoice.getVoiceTime()));
+            holder.mItemPostbarVoice.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (easyVoice.isVoicePlayerKey()){
+                        easyVoice.startPlayer();
+                    }else {
+                        easyVoice.stopPlayer();
+                    }
+                }
+            });
         }
     }
 
