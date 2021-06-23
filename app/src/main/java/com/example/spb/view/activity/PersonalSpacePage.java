@@ -8,23 +8,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.*;
+import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.signature.MediaStoreSignature;
 import com.example.spb.R;
 import com.example.spb.adapter.FragmentViewPageAdapter;
+import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
+import com.example.spb.entity.User;
 import com.example.spb.presenter.impl.PersonalSpacePageAPresenterImpl;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
-import com.example.spb.view.Component.ComponentDialog;
-import com.example.spb.view.Component.FragmentSpbAvtivityBar;
-import com.example.spb.view.Component.SelectImage;
+import com.example.spb.view.Component.*;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.InterComponent.SpbSelectImage;
 import com.example.spb.view.fragment.personalspace.BasicInformation;
@@ -38,6 +39,8 @@ import com.gyf.immersionbar.ImmersionBar;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.listener.OnResultCallbackListener;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
@@ -47,6 +50,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
+import pl.droidsonroids.gif.GifImageView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -80,11 +84,22 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
     private TextView mPersonalspaceUsersign;
     private RefreshMsg refreshMsg;
     private TextView mPersonalspaceUsertopicNum;
+    private String userAccount = null;
+    private User toUser;
+    private RelativeLayout mExcessR;
+    private Button mPersonalspaceAttentionBtn;
+    private static String USERNAME = "";
+    private SmartRefreshLayout mPersonalspaceRefresh;
+    private MySmartRefresh mySmartRefresh;
+    private GifImageView personalspace_refresh_tgif;
+    private TextView mPersonalspaceUserattentionNum;
+    private TextView mPersonalspaceUserfansNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_space_page);
+        userAccount = getIntent().getStringExtra(InValues.send(R.string.intent_User_account));
         refreshMsg = new RefreshMsg();
         SpbBroadcast.obtainRecriver(this, InValues.send(R.string.Bcr_refresh_userMsg), refreshMsg);
         initActView();
@@ -99,6 +114,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
     protected void initActView() {
         setBar();
         spbSelectImage = new SelectImage(this);
+        mExcessR = (RelativeLayout) findViewById(R.id.excess_r);
         mPersonalspaceIdt = (MagicIndicator) findViewById(R.id.personalspace_idt);
         mPersonalspaceViewpager = (ViewPager) findViewById(R.id.personalspace_viewpager);
         mPersonalspaceScrollview = (NestedScrollView) findViewById(R.id.personalspace_scrollview);
@@ -109,33 +125,103 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         mPersonalspaceUsersex = (ImageView) findViewById(R.id.personalspace_usersex);
         mPersonalspaceUsersign = (TextView) findViewById(R.id.personalspace_usersign);
         mPersonalspaceUsertopicNum = (TextView) findViewById(R.id.personalspace_usertopic_num);
+        mPersonalspaceAttentionBtn = (Button) findViewById(R.id.personalspace_attention_btn);
+        mPersonalspaceRefresh = (SmartRefreshLayout) findViewById(R.id.personalspace_refresh);
+        personalspace_refresh_tgif = (GifImageView) findViewById(R.id.personalspace_refresh_tgif);
+        mPersonalspaceUserattentionNum = (TextView) findViewById(R.id.personalspace_userattention_num);
+        mPersonalspaceUserfansNum = (TextView) findViewById(R.id.personalspace_userfans_num);
         mR1 = (RelativeLayout) findViewById(R.id.r1);
         mR2 = (RelativeLayout) findViewById(R.id.r2);
         mR3 = (RelativeLayout) findViewById(R.id.r3);
-        initData();
         intFollowViewPager();
         setActivityBar();
         setMyListener();
         createDialog();
+        createRefresh();
+        if (userAccount != null && !userAccount.equals("") && !userAccount.equals(getDataUserMsgPresenter().getUser_account())) {
+            mPresenter.getUser(userAccount, new PersonalSpacePageAPresenterImpl.OnReturn() {
+                @Override
+                public void onReturn(User user) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            toUser = user;
+                            initUserDate();
+                            mExcessR.setVisibility(View.GONE);
+                        }
+                    });
+                }
+            });
+            mPresenter.getFollowNum(userAccount, new PersonalSpacePageAPresenterImpl.OnReturnNum() {
+                @Override
+                public void onReturn(int num) {
+                    mPersonalspaceUserattentionNum.setText(String.valueOf(num));
+                    mPersonalspaceUserattentionNum.postInvalidate();
+                }
+            });
+            mPresenter.getFollowedNum(userAccount, new PersonalSpacePageAPresenterImpl.OnReturnNum() {
+                @Override
+                public void onReturn(int num) {
+                    mPersonalspaceUserfansNum.setText(String.valueOf(num));
+                    mPersonalspaceUserfansNum.postInvalidate();
+                }
+            });
+        } else {
+            mExcessR.setVisibility(View.GONE);
+            initData();
+        }
     }
 
     @Override
     protected void initData() {
+        USERNAME = dataUserMsgPresenter.user_name;
         mPersonalspaceUsername.setText(getDataUserMsgPresenter().getUser_name());
         mPersonalspaceUsersign.setText(getDataUserMsgPresenter().getUser_profile());
         mPersonalspaceUsertopicNum.setText(String.valueOf(getDataAttentionTopicPresenter().attentionTopicList.size()));
+        mPersonalspaceUserattentionNum.setText(String.valueOf(getDataFollowPresenter().followList.size()));
+        mPersonalspaceUserfansNum.setText(String.valueOf(getDataFollowedPresenter().followedList.size()));
         if (getDataUserMsgPresenter().getStu_sex().equals("男")) {
             mPersonalspaceUsersex.setImageResource(R.drawable.icon_boy);
         } else {
             mPersonalspaceUsersex.setImageResource(R.drawable.icon_girl);
         }
-        Glide.with(this)
+        Glide.with(MyApplication.getContext())
                 .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + getDataUserMsgPresenter().getUser_account() + "/HeadImage/myHeadImage.png")
+                .placeholder(R.drawable.logo2)
+                .error(R.drawable.logo2)
+                .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()),1,1))
                 .centerCrop()
                 .into(mPersonalspaceUserHeadimg);
         mPersonalspaceUsername.postInvalidate();
         mPersonalspaceUsersign.postInvalidate();
         mPersonalspaceUsertopicNum.postInvalidate();
+        mPersonalspaceUserattentionNum.postInvalidate();
+        mPersonalspaceUserfansNum.postInvalidate();
+    }
+
+    private void initUserDate() {
+        USERNAME = toUser.getUser_name();
+        mR3.setVisibility(View.GONE);
+        mR1.setClickable(false);
+        mR2.setClickable(false);
+        mPersonalspaceAttentionBtn.setVisibility(View.VISIBLE);
+        mPersonalspaceUsername.setText(toUser.getUser_name());
+        mPersonalspaceUsersign.setText(toUser.getUser_profile());
+        if (toUser.getStu_sex().equals("男")) {
+            mPersonalspaceUsersex.setImageResource(R.drawable.icon_boy);
+        } else {
+            mPersonalspaceUsersex.setImageResource(R.drawable.icon_girl);
+        }
+        Glide.with(this)
+                .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + toUser.getUser_account() + "/HeadImage/myHeadImage.png")
+                .placeholder(R.drawable.logo2)
+                .error(R.drawable.logo2)
+                .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()),1,1))
+                .centerCrop()
+                .into(mPersonalspaceUserHeadimg);
+        mPersonalspaceUsername.postInvalidate();
+        mPersonalspaceUsersign.postInvalidate();
+        SpbBroadcast.sendReceiver(this, InValues.send(R.string.Bcr_UserSpace_user), 0, toUser);
     }
 
     private void intFollowViewPager() {
@@ -147,7 +233,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         fragmentManager = getSupportFragmentManager();
 
         pagerAdapter = new FragmentViewPageAdapter(fragmentManager, fragments, 3);
-
+        mPersonalspaceViewpager.setOffscreenPageLimit(2);
         mPersonalspaceViewpager.setAdapter(pagerAdapter);
         highViewPager();
     }
@@ -203,7 +289,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                 int persent = -i * 2 / 3;
                 if (persent > 255) {
                     persent = 255;
-                    bar.barCentralTxt(dataUserMsgPresenter.user_name, new FragmentSpbAvtivityBar.OnMyClick() {
+                    bar.barCentralTxt(USERNAME, new FragmentSpbAvtivityBar.OnMyClick() {
                         @Override
                         public void onClick() {
                             mPersonalspaceAppbarlayout.setExpanded(true);
@@ -228,7 +314,24 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
 
     @Override
     public <T> void response(T response, int responseFlag) {
-
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                switch (responseFlag){
+                    case RETURN_HEADIMAGE:
+                        MyToastClass.ShowToast(MyApplication.getContext(),"头像更换成功");
+                        SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_refresh_headimg),0,null);
+                        Glide.with(MyApplication.getContext())
+                                .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + getDataUserMsgPresenter().getUser_account() + "/HeadImage/myHeadImage.png")
+                                .placeholder(R.drawable.logo2)
+                                .error(R.drawable.logo2)
+                                .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()),1,1))
+                                .centerCrop()
+                                .into(mPersonalspaceUserHeadimg);
+                        break;
+                }
+            }
+        });
     }
 
     private TextView mDialogCamera;
@@ -267,7 +370,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                         spbSelectImage.selectOneImg(IMAGENAME, new OnResultCallbackListener<LocalMedia>() {
                             @Override
                             public void onResult(List<LocalMedia> result) {
-                                mPresenter.getHeadImage(result);
+                                mPresenter.getHeadImage(getDataUserMsgPresenter().getUser_account(),result);
                             }
 
                             @Override
@@ -297,6 +400,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
     public void setMyListener() {
         mPersonalspaceAppbarlayout.addOnOffsetChangedListener(listenViewMove());
         mPersonalspaceUserHeadimg.setOnClickListener(this);
+        mPersonalspaceAttentionBtn.setOnClickListener(this);
         mR1.setOnClickListener(this);
         mR2.setOnClickListener(this);
         mR3.setOnClickListener(this);
@@ -323,7 +427,18 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
 
     @Override
     public void createRefresh() {
+        mySmartRefresh = new MySmartRefresh(mPersonalspaceRefresh, personalspace_refresh_tgif, null);
+        mySmartRefresh.setMyRefreshListener(new MySmartRefresh.MyRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
 
+            }
+
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+
+            }
+        });
     }
 
     @Override
@@ -335,7 +450,11 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.personalspace_user_headimg:
-                showDialogS(0);
+                if (toUser != null) {
+
+                } else {
+                    showDialogS(0);
+                }
                 break;
             case R.id.r1:
                 JumpIntent.startMsgIntent(AttentionUserPage.class, new JumpIntent.SetMsg() {
@@ -356,7 +475,6 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
             case R.id.r3:
                 JumpIntent.startMyIntent(AttentionTopicPage.class);
                 break;
-
         }
     }
 

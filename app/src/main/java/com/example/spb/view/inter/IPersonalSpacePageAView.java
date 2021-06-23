@@ -12,7 +12,8 @@ public interface IPersonalSpacePageAView extends SpbInterTwo {
     int RESPONSE_TWO = 1;
     int RESPONSE_THREE = 2;
 
-    String USERNAME = "";
+    int RETURN_HEADIMAGE = 0;
+
     String IMAGENAME = "UserHeadImage.png";
     String DIALOGTITLE = "设置头像";
     String STRINGEXTRA = "SELECTNUM";

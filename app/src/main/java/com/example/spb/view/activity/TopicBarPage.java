@@ -189,7 +189,7 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
         fragmentManager = getSupportFragmentManager();
 
         pagerAdapter = new FragmentViewPageAdapter(fragmentManager, fragments, 3);
-
+        mTopicbarViewpager.setOffscreenPageLimit(2);
         mTopicbarViewpager.setAdapter(pagerAdapter);
         highViewPager();
     }

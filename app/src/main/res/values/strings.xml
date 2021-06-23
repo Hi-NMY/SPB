@@ -67,6 +67,10 @@
     <string name="Bcr_add_newtopicbar">Bcr_add_newtopicbar</string>
     <string name="Bcr_reUserPage_topicnum">Bcr_reUserPage_topicnum</string>
     <string name="Bcr_reAttTopic">Bcr_reAttTopic</string>
+    <string name="Bcr_UserSpace_user">Bcr_UserSpace_user</string>
+    <string name="Bcr_refresh_headimg">Bcr_refresh_headimg</string>
 
     <string name="intent_Topic">intent_Topic</string>
+    <string name="intent_Bar">intent_Bar</string>
+    <string name="intent_User_account">intent_User_account</string>
 </resources>

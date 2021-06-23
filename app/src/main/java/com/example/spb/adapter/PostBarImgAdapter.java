@@ -36,6 +36,7 @@ public class PostBarImgAdapter extends RecyclerView.Adapter<PostBarImgAdapter.Vi
     private TransferConfig config;
     private List<String> minImageList;
     private List<String> maxImageList;
+    private boolean isDetail = false;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView mImageItemView;
@@ -64,6 +65,10 @@ public class PostBarImgAdapter extends RecyclerView.Adapter<PostBarImgAdapter.Vi
                 .create();
     }
 
+    public void isDetail(boolean a){
+        this.isDetail = a;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -78,39 +83,47 @@ public class PostBarImgAdapter extends RecyclerView.Adapter<PostBarImgAdapter.Vi
         if (transferee == null){
             transferee = Transferee.getDefault(activity);
         }
-        switch (newBarImageList.size()){
-            case 1:
-                Glide.with(MyApplication.getContext())
-                        .load(minImageList.get(position))
-                        .placeholder(R.drawable.enterbg)
-                        .fallback(R.drawable.enterbg)
-                        .error(R.drawable.enterbg)
-                        .override(528, 528)
-                        .centerCrop()
-                        .into(holder.mImageItemView);
-                break;
-            case 3:
-                Glide.with(MyApplication.getContext())
-                        .load(minImageList.get(position))
-                        .placeholder(R.drawable.enterbg)
-                        .fallback(R.drawable.enterbg)
-                        .error(R.drawable.enterbg)
-                        .override(300, 300)
-                        .centerCrop()
-                        .into(holder.mImageItemView);
-                break;
-            default:
-                Glide.with(MyApplication.getContext())
-                        .load(minImageList.get(position))
-                        .placeholder(R.drawable.enterbg)
-                        .fallback(R.drawable.enterbg)
-                        .error(R.drawable.enterbg)
-                        .override(360, 360)
-                        .centerCrop()
-                        .into(holder.mImageItemView);
-                break;
+        if (isDetail){
+            Glide.with(MyApplication.getContext())
+                    .load(minImageList.get(position))
+                    .placeholder(R.drawable.enterbg)
+                    .fallback(R.drawable.enterbg)
+                    .error(R.drawable.enterbg)
+                    .into(holder.mImageItemView);
+        }else {
+            switch (newBarImageList.size()){
+                case 1:
+                    Glide.with(MyApplication.getContext())
+                            .load(minImageList.get(position))
+                            .placeholder(R.drawable.enterbg)
+                            .fallback(R.drawable.enterbg)
+                            .error(R.drawable.enterbg)
+                            .override(528, 528)
+                            .centerCrop()
+                            .into(holder.mImageItemView);
+                    break;
+                case 3:
+                    Glide.with(MyApplication.getContext())
+                            .load(minImageList.get(position))
+                            .placeholder(R.drawable.enterbg)
+                            .fallback(R.drawable.enterbg)
+                            .error(R.drawable.enterbg)
+                            .override(300, 300)
+                            .centerCrop()
+                            .into(holder.mImageItemView);
+                    break;
+                default:
+                    Glide.with(MyApplication.getContext())
+                            .load(minImageList.get(position))
+                            .placeholder(R.drawable.enterbg)
+                            .fallback(R.drawable.enterbg)
+                            .error(R.drawable.enterbg)
+                            .override(360, 360)
+                            .centerCrop()
+                            .into(holder.mImageItemView);
+                    break;
+            }
         }
-
         holder.mImageItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -56,8 +56,9 @@ public class UserModelImpl extends SpbModelAbstrate implements SpbModelBasicInte
     @Override
     public void updateData(int fun, User data, MyCallBack callBack) {
         switch (fun){
-            case DATEUSER_UPDATE_ONE:
+            case DATAUSER_UPDATE_ONE:
                 requestBody = new FormBody.Builder()
+                        .add("fun",String.valueOf(fun))
                         .add("user_account", data.getUser_account())
                         .add("user_name", data.getUser_name())
                         .add("user_birth", data.getUser_birth())
@@ -65,6 +66,17 @@ public class UserModelImpl extends SpbModelAbstrate implements SpbModelBasicInte
                         .add("user_home", data.getUser_home())
                         .add("user_profile", data.getUser_profile())
                         .build();
+                sendHttp(InValues.send(R.string.User),requestBody,callBack);
+                break;
+            case DATAUSER_UPDATE_TWO:
+                File file = new File(data.getUser_head_image());
+                builder = new MultipartBody.Builder()
+                        .setType(MultipartBody.FORM)
+                        .addFormDataPart("fun",String.valueOf(fun))
+                        .addFormDataPart("user_account",data.getUser_account())
+                        .addFormDataPart("user_head_image",file.getName(),RequestBody.Companion.create(file
+                                ,MediaType.Companion.parse("image/png")));
+                requestBody = builder.build();
                 sendHttp(InValues.send(R.string.User),requestBody,callBack);
                 break;
         }

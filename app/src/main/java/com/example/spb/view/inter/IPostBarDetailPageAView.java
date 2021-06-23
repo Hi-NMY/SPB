@@ -1,8 +1,9 @@
 package com.example.spb.view.inter;
 
 import com.example.spb.view.InterTotal.SpbInterOne;
+import com.example.spb.view.InterTotal.SpbInterTwo;
 
-public interface IPostBarDetailPageAView extends SpbInterOne {
+public interface IPostBarDetailPageAView extends SpbInterTwo {
     //请求标记
     int REQUEST_ONE = 0;
     int REQUEST_TWO = 1;

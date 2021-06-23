@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.MediaStoreSignature;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.entity.Bar;
@@ -22,6 +23,8 @@ import com.example.spb.presenter.littlefun.MyResolve;
 import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.Component.ThumbAnima;
 import com.example.spb.view.activity.HomePage;
+import com.example.spb.view.activity.PersonalSpacePage;
+import com.example.spb.view.activity.PostBarDetailPage;
 import com.example.spb.view.activity.TopicBarPage;
 import com.example.spb.view.littlefun.BarImageInFlater;
 import com.example.spb.view.littlefun.JumpIntent;
@@ -111,6 +114,7 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
         holder.mItemPostbarUsername.setText(bar.getUser_name());
         Glide.with(activity)
                 .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + bar.getUser_account() + "/HeadImage/myHeadImage.png")
+                .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()),1,1))
                 .into(holder.mItemPostbarUserHeadimg);
         if (bar.getPb_article() != null && !bar.getPb_article().equals("")){
             holder.mItemPostbarTxt.setVisibility(View.VISIBLE);
@@ -141,6 +145,12 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 //直接跳转动态详细
+                JumpIntent.startMsgIntent(PostBarDetailPage.class, new JumpIntent.SetMsg() {
+                    @Override
+                    public void setMessage(Intent intent) {
+                        intent.putExtra(InValues.send(R.string.intent_Bar),bars.get(position));
+                    }
+                });
             }
         });
 
@@ -148,6 +158,12 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 //跳转用户主页
+                JumpIntent.startMsgIntent(PersonalSpacePage.class, new JumpIntent.SetMsg() {
+                    @Override
+                    public void setMessage(Intent intent) {
+                        intent.putExtra(InValues.send(R.string.intent_User_account),bars.get(position).getUser_account());
+                    }
+                });
             }
         });
 

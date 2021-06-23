@@ -120,7 +120,7 @@ public class ChangeInformationPageAPresenterImpl extends BasePresenter<IChangeIn
         }else {
             user.setUser_home(user_home);
         }
-        userModel.updateData(userModel.DATEUSER_UPDATE_ONE, user, new MyCallBack() {
+        userModel.updateData(userModel.DATAUSER_UPDATE_ONE, user, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
                 try {

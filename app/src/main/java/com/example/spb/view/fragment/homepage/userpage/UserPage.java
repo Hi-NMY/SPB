@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.MediaStoreSignature;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPFragment;
@@ -42,6 +43,7 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
     private RefreshMsg refreshMsg;
     private RefreshAttTopicNum refreshAttTopicNum;
     private TextView mUserPageAttentionnum;
+    private RefreshHeadImg refreshHeadImg;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,8 +54,10 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
     protected UserPageFPresenterImpl createPresenter() {
         refreshMsg = new RefreshMsg();
         refreshAttTopicNum = new RefreshAttTopicNum();
+        refreshHeadImg = new RefreshHeadImg();
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_userMsg), refreshMsg);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_reUserPage_topicnum), refreshAttTopicNum);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_headimg), refreshHeadImg);
         return new UserPageFPresenterImpl();
     }
 
@@ -93,6 +97,7 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
         Glide.with(this)
                 .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + homePage.getDataUserMsgPresenter().getUser_account() + "/HeadImage/myHeadImage.png")
                 .centerCrop()
+                .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()),1,1))
                 .into(mUserPageUserHeadimg);
         mUserPageUsername.postInvalidate();
         mUserPageAttentionnum.postInvalidate();
@@ -210,6 +215,7 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
         super.onDestroy();
         SpbBroadcast.destroyBrc(refreshMsg);
         SpbBroadcast.destroyBrc(refreshAttTopicNum);
+        SpbBroadcast.destroyBrc(refreshHeadImg);
     }
 
     class RefreshMsg extends BroadcastReceiver {
@@ -225,6 +231,17 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
         public void onReceive(Context context, Intent intent) {
             mUserPageAttentionnum.setText(String.valueOf(homePage.getDataAttentionTopicPresenter().attentionTopicList.size()));
             mUserPageAttentionnum.postInvalidate();
+        }
+    }
+
+    class RefreshHeadImg extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Glide.with(MyApplication.getContext())
+                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + homePage.getDataUserMsgPresenter().getUser_account() + "/HeadImage/myHeadImage.png")
+                    .centerCrop()
+                    .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()),1,1))
+                    .into(mUserPageUserHeadimg);
         }
     }
 }

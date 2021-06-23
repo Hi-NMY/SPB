@@ -7,7 +7,8 @@ public interface SpbModelBasicInter<T> {
     public static int REGISTEREDPAGE = 910;
     public static int FIRSTPAGE_ONE = 920;
     public static int FIRSTPAGE_TWO = 930;
-    public static int DATEUSER_UPDATE_ONE = 940;
+    public static int DATAUSER_UPDATE_ONE = 940;
+    public static int DATAUSER_UPDATE_TWO = 941;
 
 
     public static int DATAATTENTIONTOPIC_ADD_ONE = 110;

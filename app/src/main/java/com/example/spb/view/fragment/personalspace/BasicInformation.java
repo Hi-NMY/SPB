@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPFragment;
+import com.example.spb.entity.User;
 import com.example.spb.presenter.impl.BasicInformationFPresenterImpl;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MyDateClass;
@@ -35,6 +36,8 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
     private TextView mBasicinformationHome;
     private LayoutInflater layoutInflater;
     private RefreshMsg refreshMsg;
+    private UserToUser userToUser;
+    private User toUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +57,9 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
     @Override
     protected BasicInformationFPresenterImpl createPresenter() {
         refreshMsg = new RefreshMsg();
+        userToUser = new UserToUser();
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_userMsg),refreshMsg);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_UserSpace_user),userToUser);
         return new BasicInformationFPresenterImpl();
     }
 
@@ -88,6 +93,41 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
         }
 
         mBasicinformationFavorite.setAdapter(new TagAdapter<String>(mPresenter.setFavorite(personalSpacePage.getDataUserMsgPresenter().getUser_favorite())) {
+            @Override
+            public View getView(FlowLayout parent, int position, String o) {
+                View view = layoutInflater.inflate(R.layout.item_favorite_tag_one, mBasicinformationFavorite, false);
+                if (mPresenter.strings == null || mPresenter.strings.size() == 0){
+                    TextView textView = (TextView) view.findViewById(R.id.text);
+                    textView.setText("无");
+                }else {
+                    RelativeLayout relativeLayout = (RelativeLayout)view.findViewById(R.id.r);
+                    TextView textView = (TextView) view.findViewById(R.id.text);
+                    textView.setText(o);
+                    textView.setTextColor(ContextCompat.getColor(MyApplication.getContext(),R.color.theme_color));
+                    relativeLayout.setBackground(personalSpacePage.getDrawable(R.drawable.favorite_tag_two));
+                }
+                return view;
+            }
+        });
+
+        mBasicinformationHome.postInvalidate();
+        mBasicinformationFavorite.postInvalidate();
+        mBasicinformationConstellation.postInvalidate();
+        mBasicinformationBirth.postInvalidate();
+    }
+
+    private void initUserData(){
+        mBasicinformationChange.setVisibility(View.GONE);
+        if (!toUser.getUser_home().equals("")){
+            mBasicinformationHome.setText(toUser.getUser_home());
+        }
+
+        if (!toUser.getUser_birth().equals("")){
+            mBasicinformationBirth.setText(toUser.getUser_birth());
+            mBasicinformationConstellation.setText(MyDateClass.getConstellation(toUser.getUser_birth().substring(5)));
+        }
+
+        mBasicinformationFavorite.setAdapter(new TagAdapter<String>(mPresenter.setFavorite(toUser.getUser_favorite())) {
             @Override
             public View getView(FlowLayout parent, int position, String o) {
                 View view = layoutInflater.inflate(R.layout.item_favorite_tag_one, mBasicinformationFavorite, false);
@@ -154,6 +194,14 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
         @Override
         public void onReceive(Context context, Intent intent) {
             initData();
+        }
+    }
+
+    class UserToUser extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            toUser = (User) intent.getSerializableExtra("key_two");
+            initUserData();
         }
     }
 }

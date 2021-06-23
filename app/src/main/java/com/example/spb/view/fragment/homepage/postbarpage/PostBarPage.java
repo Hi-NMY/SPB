@@ -146,7 +146,7 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
         fragmentManager = getChildFragmentManager();
 
         pagerAdapter = new FragmentViewPageAdapter(fragmentManager, fragments, 3);
-
+        mPostbarPageViewpager.setOffscreenPageLimit(2);
         mPostbarPageViewpager.setAdapter(pagerAdapter);
         highViewPager();
     }
