@@ -224,7 +224,6 @@
                                             android:layout_height="wrap_content"/>
                                 </RelativeLayout>
                             </LinearLayout>
-
                         </RelativeLayout>
                     </com.google.android.material.appbar.CollapsingToolbarLayout>
                 </com.google.android.material.appbar.AppBarLayout>
@@ -239,6 +238,7 @@
                     android:layout_height="match_parent">
 
                 <RelativeLayout
+                        android:descendantFocusability="blocksDescendants"
                         android:clipChildren="false"
                         android:clipToPadding="false"
                         android:layout_width="match_parent"

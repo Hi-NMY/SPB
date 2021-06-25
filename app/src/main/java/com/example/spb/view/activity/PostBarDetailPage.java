@@ -22,7 +22,10 @@ import com.example.spb.presenter.impl.PostBarDetailPageAPresenterImpl;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MyDateClass;
 import com.example.spb.presenter.littlefun.MyResolve;
+import com.example.spb.presenter.littlefun.SpbBroadcast;
+import com.example.spb.presenter.otherimpl.DataLikePresenter;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
+import com.example.spb.view.Component.ThumbAnima;
 import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;
 import com.example.spb.view.inter.IPostBarDetailPageAView;
 import com.example.spb.view.littlefun.BarImageInFlater;
@@ -192,6 +195,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
     @Override
     public void setMyListener() {
         mPostbarDetailAttentionbtn.setOnClickListener(this);
+        mPostbarDetailLikeImg.setOnClickListener(this);
     }
 
     @Override
@@ -237,6 +241,30 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
         switch (v.getId()) {
             case R.id.postbar_detail_attentionbtn:
 
+                break;
+            case R.id.postbar_detail_like_img:
+                getDataLikePresenter().updateLikeData(barData.getPb_one_id()
+                        , getDataUserMsgPresenter().getUser_account(),barData.getUser_account(), new DataLikePresenter.OnReturn() {
+                            @Override
+                            public void removeLike() {
+                                barData.setPb_thumb_num(barData.getPb_thumb_num() - 1);
+                                mPostbarDetailLikeImg.setBackground(MyApplication.getContext().getDrawable(R.drawable.icon_like));
+                                if (barData.getPb_thumb_num() == 0){
+                                    mPostbarDetailLikeNum.setVisibility(View.INVISIBLE);
+                                }
+                                mPostbarDetailLikeNum.setText(MyDateClass.sendMath(barData.getPb_thumb_num()));
+                                SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_refresh_thumb),-1,barData.getPb_one_id());
+                            }
+
+                            @Override
+                            public void addLike() {
+                                barData.setPb_thumb_num(barData.getPb_thumb_num() + 1);
+                                ThumbAnima.thumbAnimation(mPostbarDetailLikeImg);
+                                mPostbarDetailLikeNum.setVisibility(View.VISIBLE);
+                                mPostbarDetailLikeNum.setText(MyDateClass.sendMath(barData.getPb_thumb_num()));
+                                SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_refresh_thumb),+1,barData.getPb_one_id());
+                            }
+                        });
                 break;
         }
     }

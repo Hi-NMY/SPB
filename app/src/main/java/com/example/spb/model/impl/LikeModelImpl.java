@@ -13,7 +13,16 @@ public class LikeModelImpl extends SpbModelAbstrate implements SpbModelBasicInte
 
     @Override
     public void addData(int fun, Like data, MyCallBack callBack) {
-
+        switch (fun){
+            case DATALIKE_ADD_ONE:
+                requestBody = new FormBody.Builder()
+                        .add("pb_one_id", data.getPb_one_id())
+                        .add("user_account", data.getCacheAccount())
+                        .add("fun", String.valueOf(fun))
+                        .build();
+                sendHttp(InValues.send(R.string.Like),requestBody,callBack);
+                break;
+        }
     }
 
     @Override
@@ -21,7 +30,7 @@ public class LikeModelImpl extends SpbModelAbstrate implements SpbModelBasicInte
         switch (fun){
             case DATALIKE_SELECT_ONE:
                 requestBody = new FormBody.Builder()
-                        .add("user_account", data.getPb_one_id())
+                        .add("user_account", data.getCacheAccount())
                         .add("fun", String.valueOf(fun))
                         .build();
                 sendHttp(InValues.send(R.string.Like),requestBody,callBack);
@@ -36,6 +45,15 @@ public class LikeModelImpl extends SpbModelAbstrate implements SpbModelBasicInte
 
     @Override
     public void deleteData(int fun, Like data, MyCallBack callBack) {
-
+        switch (fun){
+            case DATALIKE_DELETE_ONE:
+                requestBody = new FormBody.Builder()
+                        .add("pb_one_id", data.getPb_one_id())
+                        .add("user_account", data.getCacheAccount())
+                        .add("fun", String.valueOf(fun))
+                        .build();
+                sendHttp(InValues.send(R.string.Like),requestBody,callBack);
+                break;
+        }
     }
 }

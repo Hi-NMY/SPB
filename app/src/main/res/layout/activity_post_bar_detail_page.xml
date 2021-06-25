@@ -95,14 +95,23 @@
                         android:layout_height="wrap_content"
                         />
 
-                <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/postbar_detail_imagelist"
-                        android:nestedScrollingEnabled="false"
-                        android:visibility="gone"
+                <LinearLayout
+                        android:id="@+id/llll"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/margin_2"
                         android:layout_below="@id/postbar_detail_txt"
                         android:layout_marginTop="@dimen/margin_12"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/postbar_detail_imagelist"
+                            android:visibility="gone"
+                            android:nestedScrollingEnabled="false"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                </LinearLayout>
 
                 <RelativeLayout
                         android:id="@+id/postbar_detail_voice"
@@ -110,7 +119,7 @@
                         android:layout_marginTop="@dimen/margin_16"
                         android:layout_marginRight="@dimen/margin_64"
                         android:layout_toLeftOf="@+id/postbar_detail_attentionbtn"
-                        android:layout_below="@id/postbar_detail_imagelist"
+                        android:layout_below="@id/llll"
                         android:background="@drawable/bar_music_bg"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/icon_image_40">

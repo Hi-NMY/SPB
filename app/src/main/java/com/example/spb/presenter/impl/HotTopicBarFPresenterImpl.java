@@ -1,6 +1,7 @@
 package com.example.spb.presenter.impl;
 
 import android.app.Activity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.adapter.TopicBarAdapter;
 import com.example.spb.base.BasePresenter;
@@ -30,13 +31,20 @@ public class HotTopicBarFPresenterImpl extends BasePresenter<IHotTopicBarFView> 
     }
 
     public void addHotTopicList(List<Bar> b, RecyclerView recyclerView,boolean fun){
-        if (topicBarAdapter == null && fun){
+        if (topicBarAdapter == null || fun){
             topicBarAdapter = new TopicBarAdapter(topicBarPage,b);
             topicBarAdapter.setNowTopicId(gettName());
             recyclerView.setAdapter(topicBarAdapter);
+            ((DefaultItemAnimator)recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
             recyclerView.startLayoutAnimation();
         }else {
             //获取更多
+        }
+    }
+
+    public void refreshThumb(int num,String pbId){
+        if (topicBarAdapter != null){
+            topicBarAdapter.refreshLikeItem(num,pbId);
         }
     }
 }

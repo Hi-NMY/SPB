@@ -1,12 +1,10 @@
 package com.example.spb.adapter;
 
 import android.app.Activity;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
@@ -84,6 +82,10 @@ public class PostBarImgAdapter extends RecyclerView.Adapter<PostBarImgAdapter.Vi
             transferee = Transferee.getDefault(activity);
         }
         if (isDetail){
+            RelativeLayout.LayoutParams paramses = (RelativeLayout.LayoutParams) holder.mImageItemView.getLayoutParams();
+            paramses.width = WindowManager.LayoutParams.MATCH_PARENT;
+            paramses.height = WindowManager.LayoutParams.MATCH_PARENT;
+            holder.mImageItemView.setLayoutParams(paramses);
             Glide.with(MyApplication.getContext())
                     .load(minImageList.get(position))
                     .placeholder(R.drawable.enterbg)

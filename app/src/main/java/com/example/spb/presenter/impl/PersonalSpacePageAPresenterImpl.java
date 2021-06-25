@@ -1,15 +1,21 @@
 package com.example.spb.presenter.impl;
 
+import com.example.spb.R;
+import com.example.spb.app.MyApplication;
 import com.example.spb.base.BasePresenter;
+import com.example.spb.entity.Bar;
 import com.example.spb.entity.Follow;
 import com.example.spb.entity.Followed;
 import com.example.spb.entity.User;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
+import com.example.spb.model.impl.BarModelImpl;
 import com.example.spb.model.impl.FollowModelImpl;
 import com.example.spb.model.impl.FollowedModelImpl;
 import com.example.spb.model.impl.UserModelImpl;
 import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.inter.IPersonalSpacePageAPresenter;
+import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.view.inter.IPersonalSpacePageAView;
 import com.example.spb.view.inter.IUserRegisteredPageAView;
 import com.google.gson.Gson;
@@ -19,6 +25,7 @@ import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpacePageAView> implements IPersonalSpacePageAPresenter {
@@ -27,9 +34,11 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
     private SpbModelBasicInter userModel;
     private SpbModelBasicInter followedModel;
     private SpbModelBasicInter followModel;
+    private SpbModelBasicInter barModel;
     private User user;
 
     public PersonalSpacePageAPresenterImpl() {
+        barModel = new BarModelImpl();
         userModel = new UserModelImpl();
         followedModel = new FollowedModelImpl();
         followModel = new FollowModelImpl();
@@ -145,11 +154,42 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
         });
     }
 
+    public void obtainPersonalBar(String account,OnReturnBar onReturnBar){
+        Bar bar = new Bar();
+        bar.setUser_account(account);
+        bar.setPb_date("1");
+        barModel.selectData(barModel.DATABAR_SELECT_FOUR, bar, new MyCallBack() {
+            @Override
+            public void onSuccess(@NotNull Response response) {
+                try {
+                    String a = response.body().string();
+                    if (Integer.valueOf(a.substring(0,3)) == 200){
+                        List<Bar> bars = new Gson().fromJson(a.substring(3),new TypeToken<List<Bar>>(){}.getType());
+                        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_personal_bar)
+                                ,0,(Serializable)bars);
+                        onReturnBar.onReturn();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(int t) {
+
+            }
+        });
+    }
+
     public interface OnReturn{
         void onReturn(User user);
     }
 
     public interface OnReturnNum{
         void onReturn(int num);
+    }
+
+    public interface OnReturnBar{
+        void onReturn();
     }
 }

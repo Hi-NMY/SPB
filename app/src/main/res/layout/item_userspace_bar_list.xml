@@ -6,6 +6,7 @@
                 android:layout_height="wrap_content">
 
     <RelativeLayout
+            android:id="@+id/item_postbar_RA"
             android:minHeight="100dp"
             android:layout_marginVertical="@dimen/margin_4"
             android:layout_marginHorizontal="@dimen/margin_8"
@@ -26,59 +27,97 @@
         <ImageView
                 android:id="@+id/item_userspace_bar_more"
                 android:src="@drawable/icon_more"
-                android:layout_marginTop="@dimen/margin_12"
+                android:layout_marginTop="@dimen/margin_8"
                 android:layout_alignParentRight="true"
-                android:layout_marginHorizontal="@dimen/margin_12"
                 android:layout_width="@dimen/icon_image_32"
                 android:layout_height="@dimen/icon_image_32"/>
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/item_userspace_bar_imagelist"
+                android:visibility="gone"
+                android:nestedScrollingEnabled="false"
                 android:layout_marginHorizontal="@dimen/margin_12"
                 android:layout_below="@id/item_userspace_bar_postdate"
-                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginTop="@dimen/margin_12"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"/>
+                android:layout_height="wrap_content"/>
 
         <TextView
                 android:id="@+id/item_userspace_bar_txt"
-                android:text="傻傻的贺卡是的哈水电卡dadadadad水电卡较\n好的卡号的"
+                android:visibility="gone"
+                android:text=""
                 android:lineSpacingMultiplier="1.5"
                 android:textSize="@dimen/font_16"
                 android:textColor="@color/black"
                 android:layout_marginLeft="@dimen/margin_12"
                 android:layout_marginRight="@dimen/margin_24"
-                android:layout_marginTop="@dimen/margin_4"
+                android:layout_marginTop="@dimen/margin_12"
                 android:layout_marginBottom="@dimen/margin_8"
                 android:layout_below="@id/item_userspace_bar_imagelist"
-                android:minHeight="50dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 />
 
-        <View
+        <RelativeLayout
                 android:id="@+id/item_userspace_bar_voice"
-                android:layout_marginHorizontal="@dimen/margin_12"
-                android:layout_marginRight="@dimen/margin_28"
-                android:background="@color/theme_color"
+                android:visibility="gone"
+                android:layout_marginLeft="@dimen/margin_12"
+                android:layout_marginRight="@dimen/margin_64"
+                android:layout_marginTop="@dimen/margin_8"
                 android:layout_toLeftOf="@id/item_userspace_bar_more"
                 android:layout_below="@id/item_userspace_bar_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/icon_image_40"/>
+                android:background="@drawable/bar_music_bg"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/icon_image_40">
 
-        <TextView
+            <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/voice_gif"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_20"
+                    android:background="@drawable/icon_voice_gif"
+                    android:layout_width="@dimen/icon_image_24"
+                    android:layout_height="@dimen/icon_image_24"/>
+
+            <TextView
+                    android:id="@+id/voice_time"
+                    android:layout_marginLeft="@dimen/margin_8"
+                    android:layout_toRightOf="@+id/voice_gif"
+                    android:textColor="@color/beijing"
+                    android:textSize="@dimen/font_14"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+
+            <TextView
+                    android:layout_toRightOf="@id/voice_time"
+                    android:layout_marginLeft="@dimen/margin_2"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/beijing"
+                    android:textSize="@dimen/font_12"
+                    android:text="S"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+
+        </RelativeLayout>
+
+        <com.zhy.view.flowlayout.TagFlowLayout
                 android:id="@+id/item_userspace_bar_topic"
                 android:layout_below="@id/item_userspace_bar_voice"
-                android:layout_marginHorizontal="@dimen/margin_12"
                 android:layout_marginTop="@dimen/margin_8"
-                android:textSize="@dimen/font_14"
-                android:textColor="@color/theme_color2"
-                android:text="\#第一食堂"
+                android:translationX="@dimen/margin__12"
+                android:layout_alignLeft="@id/item_userspace_bar_postdate"
+                android:layout_toLeftOf="@id/item_userspace_bar_more"
+                app:max_select="0"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content">
+        </com.zhy.view.flowlayout.TagFlowLayout>
 
         <TextView
                 android:id="@+id/item_userspace_bar_location"
+                android:visibility="gone"
                 android:layout_marginHorizontal="@dimen/margin_12"
                 android:layout_below="@+id/item_userspace_bar_topic"
                 android:layout_marginVertical="@dimen/margin_8"
@@ -127,7 +166,7 @@
                         android:id="@+id/item_postbar_discuss_num"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_12"
-                        android:text="2365"
+                        android:text=""
                         android:gravity="center"
                         android:layout_alignBottom="@id/item_postbar_discuss_img"
                         android:layout_alignTop="@+id/item_postbar_discuss_img"
@@ -155,7 +194,7 @@
                         android:id="@+id/item_postbar_like_num"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_12"
-                        android:text="2365"
+                        android:text=""
                         android:gravity="center"
                         android:layout_alignBottom="@id/item_postbar_like_img"
                         android:layout_alignTop="@+id/item_postbar_like_img"

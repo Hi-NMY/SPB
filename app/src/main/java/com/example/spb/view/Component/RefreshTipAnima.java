@@ -15,7 +15,7 @@ public class RefreshTipAnima {
     static {
         animationa = AnimationUtils.loadAnimation(MyApplication.getContext(), R.anim.re_tip_anim);
         animationb = AnimationUtils.loadAnimation(MyApplication.getContext(), R.anim.re_tip_anim2);
-        animationa.setStartOffset(400);
+        animationa.setStartOffset(300);
         animationb.setStartOffset(600);
     }
 

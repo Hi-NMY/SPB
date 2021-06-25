@@ -105,7 +105,7 @@
             android:layout_below="@id/sendnewbar_voice_r"
             android:layout_toRightOf="@id/sendnewbar_image_list"
             android:layout_marginHorizontal="@dimen/margin_8"
-            android:layout_marginVertical="@dimen/margin_16"
+            android:layout_marginVertical="@dimen/margin_20"
             android:src="@drawable/icon_addimage"
             android:layout_width="@dimen/icon_image_72"
             android:layout_height="@dimen/icon_image_72"/>

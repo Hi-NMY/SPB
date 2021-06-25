@@ -39,7 +39,9 @@ public interface SpbModelBasicInter<T> {
     public static int DATALIKE_ADD_ONE = 610;
     public static int DATALIKE_SELECT_ONE = 620;
     public static int DATALIKE_UPDATE_ONE = 630;
+    public static int DATALIKE_UPDATE_TWO = 631;
     public static int DATALIKE_DELETE_ONE = 640;
+    public static int DATALIKE_DELETE_TWO = 641;
 
     public static int DATATOPIC_ADD_ONE = 720;
     public static int DATATOPIC_SELECT_ONE = 710;
@@ -53,7 +55,9 @@ public interface SpbModelBasicInter<T> {
     public static int DATABAR_SELECT_ONE = 820;
     public static int DATABAR_SELECT_TWO = 821;
     public static int DATABAR_SELECT_THREE = 822;
+    public static int DATABAR_SELECT_FOUR = 823;
     public static int DATABAR_UPDATE_ONE = 830;
+    public static int DATABAR_UPDATE_TWO = 831;
     public static int DATABAR_DELETE_ONE = 840;
 
     public void addData(int fun,T data, MyCallBack callBack);

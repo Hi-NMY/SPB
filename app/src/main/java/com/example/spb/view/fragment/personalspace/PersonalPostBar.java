@@ -1,19 +1,47 @@
 package com.example.spb.view.fragment.personalspace;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import androidx.fragment.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.R;
+import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPFragment;
+import com.example.spb.entity.Bar;
 import com.example.spb.presenter.impl.PersonalPostBarFPresenterImpl;
-import com.example.spb.presenter.inter.IPersonalPostBarFPresenter;
+import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.littlefun.SpbBroadcast;
+import com.example.spb.view.Component.MySmartRefresh;
+import com.example.spb.view.activity.PersonalSpacePage;
 import com.example.spb.view.inter.IPersonalPostBarFView;
+import com.example.spb.view.littlefun.MyListAnimation;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import pl.droidsonroids.gif.GifImageView;
 
-public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView,PersonalPostBarFPresenterImpl> implements IPersonalPostBarFView {
+import java.util.List;
+
+public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView, PersonalPostBarFPresenterImpl> implements IPersonalPostBarFView {
+
+    private RefreshThumb refreshThumb;
+    private AddPersonalBar addPersonalBar;
+    private RecyclerView mPersonalBarRecyclerview;
+    private GifImageView mPersonalBarMoreGif;
+    private SmartRefreshLayout mPersonalBarRefresh;
+    private MySmartRefresh mySmartRefresh;
+    private PersonalSpacePage personalSpacePage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        personalSpacePage = (PersonalSpacePage)getActivity();
+        refreshThumb = new RefreshThumb();
+        addPersonalBar = new AddPersonalBar();
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_personal_bar), addPersonalBar);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_thumb), refreshThumb);
     }
 
     @Override
@@ -28,7 +56,7 @@ public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView,Perso
 
     @Override
     protected PersonalPostBarFPresenterImpl createPresenter() {
-        return new PersonalPostBarFPresenterImpl();
+        return new PersonalPostBarFPresenterImpl(personalSpacePage);
     }
 
     @Override
@@ -38,11 +66,97 @@ public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView,Perso
 
     @Override
     protected void initFragView(View view) {
-
+        mPersonalBarRecyclerview = (RecyclerView)view.findViewById(R.id.personal_bar_recyclerview);
+        mPersonalBarMoreGif = (GifImageView)view.findViewById(R.id.personal_bar_more_gif);
+        mPersonalBarRefresh = (SmartRefreshLayout)view.findViewById(R.id.personal_bar_refresh);
+        mPersonalBarRecyclerview = MyListAnimation.setListAnimation(personalSpacePage,mPersonalBarRecyclerview);
+        createRefresh();
     }
 
     @Override
     protected void initData() {
 
+    }
+
+
+    @Override
+    public void createDialog() {
+
+    }
+
+    @Override
+    public void showDialogS(int i) {
+
+    }
+
+    @Override
+    public void closeDialog(int i) {
+
+    }
+
+    @Override
+    public void setMyListener() {
+
+    }
+
+    @Override
+    public void setBar() {
+
+    }
+
+    @Override
+    public void setActivityBar() {
+
+    }
+
+    @Override
+    public void createRefresh() {
+        mySmartRefresh = new MySmartRefresh(mPersonalBarRefresh,null,mPersonalBarMoreGif);
+        mySmartRefresh.setMyRefreshListener(new MySmartRefresh.MyRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+
+            }
+
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+
+            }
+        });
+        mySmartRefresh.closeRefresh();
+    }
+
+    @Override
+    public void finishRRefresh(int num) {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SpbBroadcast.destroyBrc(refreshThumb);
+        SpbBroadcast.destroyBrc(addPersonalBar);
+    }
+
+    class AddPersonalBar extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int a = intent.getIntExtra("key_one",0);
+            List<Bar> bars = (List<Bar>) intent.getSerializableExtra("key_two");
+            if (a == 0){
+                mPresenter.addPersonalBarList(bars,mPersonalBarRecyclerview,true);
+            }else {
+                mPresenter.addPersonalBarList(bars,mPersonalBarRecyclerview,false);
+            }
+        }
+    }
+
+    class RefreshThumb extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int a = intent.getIntExtra("key_one", 0);
+            String pbId = intent.getStringExtra("key_two");
+            mPresenter.refreshThumb(a,pbId);
+        }
     }
 }

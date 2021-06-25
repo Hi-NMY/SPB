@@ -3,6 +3,7 @@ package com.example.spb.entity;
 public class Like {
 
     public int id;
+    public String cacheAccount;
     public String pb_one_id;
 
     public int getId() {
@@ -11,6 +12,14 @@ public class Like {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCacheAccount() {
+        return cacheAccount;
+    }
+
+    public void setCacheAccount(String cacheAccount) {
+        this.cacheAccount = cacheAccount;
     }
 
     public String getPb_one_id() {

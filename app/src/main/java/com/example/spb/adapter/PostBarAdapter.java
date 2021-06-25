@@ -20,6 +20,8 @@ import com.example.spb.entity.Topic;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MyDateClass;
 import com.example.spb.presenter.littlefun.MyResolve;
+import com.example.spb.presenter.littlefun.SpbBroadcast;
+import com.example.spb.presenter.otherimpl.DataLikePresenter;
 import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.Component.ThumbAnima;
 import com.example.spb.view.activity.HomePage;
@@ -47,6 +49,7 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
     private LayoutInflater layoutInflater;
     private GridLayoutManager gridLayoutManager;
     private PostBarImgAdapter postBarImgAdapter;
+    private String cacheKey = "";
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView mItemPostbarUserHeadimg;
@@ -91,9 +94,21 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
     public PostBarAdapter(Activity activity, List<Bar> bars) {
         this.activity = activity;
         this.bars = bars;
+        cacheKey = MyDateClass.showNowDate();
         homePage = (HomePage)activity;
         layoutInflater = activity.getLayoutInflater();
         notifyDataSetChanged();
+    }
+
+    public void refreshLikeItem(int num,String pbId){
+        Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(pbId)).findAny().orElse(null);
+        if (cachebar != null){
+            int a = bars.indexOf(cachebar);
+            if (a != -1){
+                bars.get(a).setPb_thumb_num(bars.get(a).getPb_thumb_num() + num);
+                notifyItemChanged(a);
+            }
+        }
     }
 
     @NonNull
@@ -108,10 +123,15 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         bar = bars.get(position);
         holder.mItemPostbarUsername.setText(bar.getUser_name());
-        Glide.with(activity)
-                .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + bar.getUser_account() + "/HeadImage/myHeadImage.png")
-                .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()),1,1))
-                .into(holder.mItemPostbarUserHeadimg);
+
+        if(holder.mItemPostbarUserHeadimg.getTag() == null || !holder.mItemPostbarUserHeadimg.getTag().equals(cacheKey)){
+            Glide.with(activity)
+                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + bar.getUser_account() + "/HeadImage/myHeadImage.png")
+                    .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()),1,1))
+                    .into(holder.mItemPostbarUserHeadimg);
+            holder.mItemPostbarUserHeadimg.setTag(cacheKey);
+        }
+
         if (bar.getPb_article() != null && !bar.getPb_article().equals("")){
             holder.mItemPostbarTxt.setVisibility(View.VISIBLE);
             holder.mItemPostbarTxt.setText(bar.getPb_article());
@@ -126,11 +146,15 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
         if (bar.getPb_comment_num() != 0){
             holder.mItemPostbarCommentNum.setVisibility(View.VISIBLE);
             holder.mItemPostbarCommentNum.setText(MyDateClass.sendMath(bar.getPb_comment_num()));
+        }else {
+            holder.mItemPostbarCommentNum.setVisibility(View.INVISIBLE);
         }
 
         if (bar.getPb_thumb_num() != 0){
             holder.mItemPostbarLikeNum.setVisibility(View.VISIBLE);
             holder.mItemPostbarLikeNum.setText(MyDateClass.sendMath(bar.getPb_thumb_num()));
+        }else {
+            holder.mItemPostbarLikeNum.setVisibility(View.INVISIBLE);
         }
 
         if (homePage.getDataLikePresenter().determineLike(bar.getPb_one_id())){
@@ -180,7 +204,20 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 //执行点赞动画。更改数据
-                ThumbAnima.thumbAnimation(holder.mItemPostbarLikeImg);
+                homePage.getDataLikePresenter().updateLikeData(bars.get(position).getPb_one_id()
+                        , homePage.getDataUserMsgPresenter().getUser_account(),bars.get(position).getUser_account(), new DataLikePresenter.OnReturn() {
+                    @Override
+                    public void removeLike() {
+                        holder.mItemPostbarLikeImg.setBackground(MyApplication.getContext().getDrawable(R.drawable.icon_like));
+                        SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_refresh_thumb),-1,bars.get(position).getPb_one_id());
+                    }
+
+                    @Override
+                    public void addLike() {
+                        ThumbAnima.thumbAnimation(holder.mItemPostbarLikeImg);
+                        SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_refresh_thumb),+1,bars.get(position).getPb_one_id());
+                    }
+                });
             }
         });
 
@@ -218,51 +255,52 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
             holder.mItemPostbarImagelist.setAdapter(postBarImgAdapter);
         }
 
-        final GIFShow[] gifShow = new GIFShow[1];
-        if(bar.getPb_voice() != null && !bar.getPb_voice().equals("")){
+//        final GIFShow[] gifShow = new GIFShow[1];
+        if(bar.getPb_voice() != null && !bar.getPb_voice().equals("")) {
             holder.mItemPostbarVoice.setVisibility(View.VISIBLE);
-            gifShow[0] = new GIFShow(holder.mVoiceGif);
-            EasyVoice easyVoice = new EasyVoice(InValues.send(R.string.httpHeadert) + bar.getPb_voice(), new EasyVoice.OnVoice() {
-                @Override
-                public void onStart(int time) {
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            holder.mVoiceTime.setText(String.valueOf(time));
-                            holder.mVoiceTime.postInvalidate();
-                            gifShow[0].startGif();
-                        }
-                    });
-                }
-
-                @Override
-                public void onStop(int cacheTime) {
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            holder.mVoiceTime.setText(String.valueOf(cacheTime));
-                            gifShow[0] = new GIFShow(holder.mVoiceGif);
-                        }
-                    });
-                }
-
-                @Override
-                public void onDestroy() {
-
-                }
-            });
-            holder.mVoiceTime.setText(String.valueOf(easyVoice.getVoiceTime()));
-            holder.mItemPostbarVoice.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (easyVoice.isVoicePlayerKey()){
-                        easyVoice.startPlayer();
-                    }else {
-                        easyVoice.stopPlayer();
-                    }
-                }
-            });
         }
+//            gifShow[0] = new GIFShow(holder.mVoiceGif);
+//            EasyVoice easyVoice = new EasyVoice(InValues.send(R.string.httpHeadert) + bar.getPb_voice(), new EasyVoice.OnVoice() {
+//                @Override
+//                public void onStart(int time) {
+//                    activity.runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            holder.mVoiceTime.setText(String.valueOf(time));
+//                            holder.mVoiceTime.postInvalidate();
+//                            gifShow[0].startGif();
+//                        }
+//                    });
+//                }
+//
+//                @Override
+//                public void onStop(int cacheTime) {
+//                    activity.runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            holder.mVoiceTime.setText(String.valueOf(cacheTime));
+//                            gifShow[0] = new GIFShow(holder.mVoiceGif);
+//                        }
+//                    });
+//                }
+//
+//                @Override
+//                public void onDestroy() {
+//
+//                }
+//            });
+//            holder.mVoiceTime.setText(String.valueOf(easyVoice.getVoiceTime()));
+//            holder.mItemPostbarVoice.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (easyVoice.isVoicePlayerKey()){
+//                        easyVoice.startPlayer();
+//                    }else {
+//                        easyVoice.stopPlayer();
+//                    }
+//                }
+//            });
+//        }
     }
 
     @Override

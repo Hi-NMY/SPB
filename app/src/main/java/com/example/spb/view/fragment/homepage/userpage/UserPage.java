@@ -184,7 +184,12 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.user_page_userR:
-                JumpIntent.startMyIntent(PersonalSpacePage.class);
+                JumpIntent.startMsgIntent(PersonalSpacePage.class, new JumpIntent.SetMsg() {
+                    @Override
+                    public void setMessage(Intent intent) {
+                        intent.putExtra(InValues.send(R.string.intent_User_account),homePage.getDataUserMsgPresenter().getUser_account());
+                    }
+                });
                 break;
             case R.id.user_page_useronlinetip:
                 showDialogS(0);

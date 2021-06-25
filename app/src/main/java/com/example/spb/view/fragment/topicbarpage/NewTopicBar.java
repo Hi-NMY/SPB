@@ -32,12 +32,15 @@ public class NewTopicBar extends BaseMVPFragment<INewTopicBarFView, NewTopicBarF
     private SmartRefreshLayout mNewtopicbarRefresh;
     private MySmartRefresh mySmartRefresh;
     private TopicBarPage topicBarPage;
+    private RefreshThumb refreshThumb;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         topicBarPage = (TopicBarPage) getActivity();
         addNewTopicBar = new AddNewTopicBar();
+        refreshThumb = new RefreshThumb();
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_thumb), refreshThumb);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_newtopicbar), addNewTopicBar);
     }
 
@@ -144,6 +147,15 @@ public class NewTopicBar extends BaseMVPFragment<INewTopicBarFView, NewTopicBarF
             }else {
                 mPresenter.addNewTopicList(bars,mNewtopicbarRecyclerview,false);
             }
+        }
+    }
+
+    class RefreshThumb extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int a = intent.getIntExtra("key_one",0);
+            String pbId = intent.getStringExtra("key_two");
+            mPresenter.refreshThumb(a,pbId);
         }
     }
 }

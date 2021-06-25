@@ -20,6 +20,8 @@ import com.example.spb.entity.Topic;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MyDateClass;
 import com.example.spb.presenter.littlefun.MyResolve;
+import com.example.spb.presenter.littlefun.SpbBroadcast;
+import com.example.spb.presenter.otherimpl.DataLikePresenter;
 import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.Component.ThumbAnima;
 import com.example.spb.view.activity.HomePage;
@@ -46,6 +48,7 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
     private GridLayoutManager gridLayoutManager;
     private PostBarImgAdapter postBarImgAdapter;
     private String nowTopicName;
+    private String cacheKey = "";
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView mItemPostbarUserHeadimg;
@@ -90,14 +93,25 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
     public TopicBarAdapter(Activity activity, List<Bar> bars) {
         this.activity = activity;
         this.bars = bars;
+        cacheKey = MyDateClass.showNowDate();
         topicBarPage = (TopicBarPage)activity;
         layoutInflater = activity.getLayoutInflater();
         notifyDataSetChanged();
     }
 
-
     public void setNowTopicId(String a){
         this.nowTopicName = a;
+    }
+
+    public void refreshLikeItem(int num,String pbId){
+        Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(pbId)).findAny().orElse(null);
+        if (cachebar != null){
+            int a = bars.indexOf(cachebar);
+            if (a != -1){
+                bars.get(a).setPb_thumb_num(bars.get(a).getPb_thumb_num() + num);
+                notifyItemChanged(a);
+            }
+        }
     }
 
     @NonNull
@@ -112,10 +126,13 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         bar = bars.get(position);
         holder.mItemPostbarUsername.setText(bar.getUser_name());
-        Glide.with(activity)
-                .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + bar.getUser_account() + "/HeadImage/myHeadImage.png")
-                .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()),1,1))
-                .into(holder.mItemPostbarUserHeadimg);
+        if(holder.mItemPostbarUserHeadimg.getTag() == null || !holder.mItemPostbarUserHeadimg.getTag().equals(cacheKey)) {
+            Glide.with(activity)
+                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + bar.getUser_account() + "/HeadImage/myHeadImage.png")
+                    .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
+                    .into(holder.mItemPostbarUserHeadimg);
+            holder.mItemPostbarUserHeadimg.setTag(cacheKey);
+        }
         if (bar.getPb_article() != null && !bar.getPb_article().equals("")){
             holder.mItemPostbarTxt.setVisibility(View.VISIBLE);
             holder.mItemPostbarTxt.setText(bar.getPb_article());
@@ -130,11 +147,15 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
         if (bar.getPb_comment_num() != 0){
             holder.mItemPostbarCommentNum.setVisibility(View.VISIBLE);
             holder.mItemPostbarCommentNum.setText(MyDateClass.sendMath(bar.getPb_comment_num()));
+        }else {
+            holder.mItemPostbarCommentNum.setVisibility(View.INVISIBLE);
         }
 
         if (bar.getPb_thumb_num() != 0){
             holder.mItemPostbarLikeNum.setVisibility(View.VISIBLE);
             holder.mItemPostbarLikeNum.setText(MyDateClass.sendMath(bar.getPb_thumb_num()));
+        }else {
+            holder.mItemPostbarLikeNum.setVisibility(View.INVISIBLE);
         }
 
         if (topicBarPage.getDataLikePresenter().determineLike(bar.getPb_one_id())){
@@ -184,7 +205,20 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 //执行点赞动画。更改数据
-                ThumbAnima.thumbAnimation(holder.mItemPostbarLikeImg);
+                topicBarPage.getDataLikePresenter().updateLikeData(bars.get(position).getPb_one_id()
+                        , topicBarPage.getDataUserMsgPresenter().getUser_account(),bars.get(position).getUser_account(), new DataLikePresenter.OnReturn() {
+                            @Override
+                            public void removeLike() {
+                                holder.mItemPostbarLikeImg.setBackground(MyApplication.getContext().getDrawable(R.drawable.icon_like));
+                                SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_refresh_thumb),-1,bars.get(position).getPb_one_id());
+                            }
+
+                            @Override
+                            public void addLike() {
+                                ThumbAnima.thumbAnimation(holder.mItemPostbarLikeImg);
+                                SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_refresh_thumb),+1,bars.get(position).getPb_one_id());
+                            }
+                        });
             }
         });
 
