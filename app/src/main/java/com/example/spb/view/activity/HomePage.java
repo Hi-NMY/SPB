@@ -94,47 +94,33 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
         }
         fragmentTransaction = fragmentManager.beginTransaction();
         hideFragments(fragmentTransaction);
+        if (userPage == null || videoPage == null || messagePage == null || postBarPage == null){
+            userPage = new UserPage();
+            fragmentTransaction.add(R.id.homepage_fragment, userPage);
+            videoPage = new VideoPage();
+            fragmentTransaction.add(R.id.homepage_fragment, videoPage);
+            messagePage = new MessagePage();
+            fragmentTransaction.add(R.id.homepage_fragment, messagePage);
+            postBarPage = new PostBarPage();
+            fragmentTransaction.add(R.id.homepage_fragment, postBarPage);
+        }
         switch (index) {
             case 1:
-                if (postBarPage == null) {
-                    postBarPage = new PostBarPage();
-                    fragmentTransaction.add(R.id.homepage_fragment, postBarPage);
-                    PAGENUMBER = 1;
-                } else {
-                    fragmentTransaction.show(postBarPage);
-                    PAGENUMBER = 1;
-                }
+                fragmentTransaction.show(postBarPage);
+                PAGENUMBER = 1;
                 break;
             case 2:
-                if (videoPage == null) {
-                    videoPage = new VideoPage();
-                    fragmentTransaction.add(R.id.homepage_fragment, videoPage);
-                    PAGENUMBER = 2;
-                } else {
-                    fragmentTransaction.show(videoPage);
-                    PAGENUMBER = 2;
-                }
+                fragmentTransaction.show(videoPage);
+                PAGENUMBER = 2;
                 break;
             case 3:
-                if (messagePage == null) {
-                    messagePage = new MessagePage();
-                    fragmentTransaction.add(R.id.homepage_fragment, messagePage);
-                    PAGENUMBER = 3;
-                } else {
-                    fragmentTransaction.show(messagePage);
-                    PAGENUMBER = 3;
-                }
+                fragmentTransaction.show(messagePage);
+                PAGENUMBER = 3;
                 break;
             case 4:
-                if (userPage == null) {
-                    userPage = new UserPage();
-                    fragmentTransaction.add(R.id.homepage_fragment, userPage);
-                    PAGENUMBER = 4;
-                } else {
-                    fragmentTransaction.show(userPage);
-                    PAGENUMBER = 4;
-                }
-                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_reUserPage_topicnum),0,null);
+                fragmentTransaction.show(userPage);
+                PAGENUMBER = 4;
+                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_reUserPage_Datanum),0,null);
                 break;
         }
         fragmentTransaction.commitAllowingStateLoss();

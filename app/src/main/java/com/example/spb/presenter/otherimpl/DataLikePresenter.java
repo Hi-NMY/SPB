@@ -85,7 +85,7 @@ public class DataLikePresenter {
     }
 
     public boolean determineLike(String id){
-        if (likeList.stream().anyMatch(likeList -> likeList.getPb_one_id().equals(id))){
+        if (likeList != null && likeList.stream().anyMatch(likeList -> likeList.getPb_one_id().equals(id))){
             return true;
         }else {
             return false;

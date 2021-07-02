@@ -13,4 +13,31 @@
             android:name="com.example.spb.view.Component.FragmentSpbAvtivityBar"
             android:layout_height="@dimen/spb_activity_bar_44"/>
 
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/usercollect_refresh"
+            android:layout_below="@id/usercollect_actbar"
+            android:background="@color/qianbai"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <RelativeLayout
+                android:minHeight="@dimen/icon_image_64"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/usercollect_refresh_tgif"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/loading4"
+                    android:layout_width="@dimen/icon_image_64"
+                    android:layout_height="@dimen/icon_image_64"
+                    />
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/usercollect_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 </RelativeLayout>

@@ -1,6 +1,8 @@
 package com.example.spb.view.inter;
 
-public interface IAttentionPageFView {
+import com.example.spb.view.InterTotal.SpbInterTwo;
+
+public interface IAttentionPageFView extends SpbInterTwo {
     //请求标记
     int REQUEST_ONE = 0;
     int REQUEST_TWO = 1;
@@ -9,6 +11,10 @@ public interface IAttentionPageFView {
     int RESPONSE_ONE = 0;
     int RESPONSE_TWO = 1;
     int RESPONSE_THREE = 2;
+
+    //关闭刷新
+    int FINISH_REFRESH = 1;
+    int FINISH_MORE = 2;
 
     <T> T request(int requestFlag);
 

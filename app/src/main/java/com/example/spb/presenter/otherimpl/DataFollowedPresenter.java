@@ -31,7 +31,7 @@ public class DataFollowedPresenter {
         initDate();
     }
 
-    private void initDate() {
+    public void initDate() {
         Followed followed = new Followed();
         followed.setUser_account(account);
         followedModel.selectData(SpbModelBasicInter.DATAFOLLOWED_SELECT_ONE, followed, new MyCallBack() {
@@ -55,5 +55,13 @@ public class DataFollowedPresenter {
 
             }
         });
+    }
+
+    public int obtainFollowedNum(){
+        if (followedList != null){
+            return followedList.size();
+        }else {
+            return 0;
+        }
     }
 }

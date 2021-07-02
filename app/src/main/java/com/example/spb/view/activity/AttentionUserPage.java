@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.RelativeLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
@@ -16,8 +17,6 @@ import com.example.spb.presenter.impl.AttentionUserPageAPresenterImpl;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
 import com.example.spb.view.fragment.attentionuser.Follow;
 import com.example.spb.view.fragment.attentionuser.Followed;
-import com.example.spb.view.fragment.personalspace.BasicInformation;
-import com.example.spb.view.fragment.personalspace.PersonalPostBar;
 import com.example.spb.view.inter.IAttentionUserPageAView;
 import com.example.spb.view.littlefun.ScaleTransitionPagerTitleView;
 import com.gyf.immersionbar.ImmersionBar;
@@ -49,12 +48,13 @@ public class AttentionUserPage extends BaseMVPActivity<IAttentionUserPageAView, 
 
     private MagicIndicator mAttentionuserIdt;
     private ViewPager mAttentionuserViewpager;
+    private RelativeLayout mExcessR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attention_user_page);
-        NUM = getIntent().getIntExtra(SELECTNUM,0);
+        NUM = getIntent().getIntExtra(SELECTNUM, 0);
         initActView();
     }
 
@@ -67,16 +67,45 @@ public class AttentionUserPage extends BaseMVPActivity<IAttentionUserPageAView, 
     protected void initActView() {
         mAttentionuserIdt = (MagicIndicator) findViewById(R.id.attentionuser_idt);
         mAttentionuserViewpager = (ViewPager) findViewById(R.id.attentionuser_viewpager);
+        mExcessR = (RelativeLayout) findViewById(R.id.excess_r);
         intFollowViewPager();
         setActivityBar();
         setBar();
         setMyListener();
         createDialog();
+        initData();
     }
 
     @Override
     protected void initData() {
-
+        mPresenter.addFollowList(getDataUserMsgPresenter().getUser_account(), new AttentionUserPageAPresenterImpl.OnReturn() {
+            @Override
+            public void onReturn() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (NUM == 0){
+                            mExcessR.setVisibility(View.GONE);
+                        }
+                    }
+                });
+            }
+        });
+        getDataFollowPresenter().initDate();
+        mPresenter.addFollowedList(getDataUserMsgPresenter().getUser_account(), new AttentionUserPageAPresenterImpl.OnReturn() {
+            @Override
+            public void onReturn() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (NUM == 1){
+                            mExcessR.setVisibility(View.GONE);
+                        }
+                    }
+                });
+            }
+        });
+        getDataFollowedPresenter().initDate();
     }
 
     private void intFollowViewPager() {

@@ -36,6 +36,10 @@
     <string name="stu_sex">stu_sex</string>
     <string name="stu_name">stu_name</string>
 
+    <string name="Shared_userBar_Num">Shared_userBar_Num</string>
+    <string name="userBar_num">userBar_num</string>
+
+
 
 
     <string name="httpHeader">http://nmy1206.natapp1.cc</string>
@@ -59,20 +63,29 @@
     <string name="SendNewPostBar">http://nmy1206.natapp1.cc/SendNewPostBar.php</string>
     <string name="User">http://nmy1206.natapp1.cc/User.php</string>
     <string name="PostBar">http://nmy1206.natapp1.cc/PostBar.php</string>
+    <string name="CollectBar">http://nmy1206.natapp1.cc/CollectBar.php</string>
 
     <string name="Bcr_refresh_userMsg">Bcr_refresh_userMsg</string>
     <string name="Bcr_transfer_loc">Bcr_transfer_loc</string>
     <string name="Bcr_refresh_topic">Bcr_refresh_topic</string>
     <string name="Bcr_add_hottopicbar">Bcr_add_hottopicbar</string>
     <string name="Bcr_add_newtopicbar">Bcr_add_newtopicbar</string>
-    <string name="Bcr_reUserPage_topicnum">Bcr_reUserPage_topicnum</string>
+    <string name="Bcr_reUserPage_Datanum">Bcr_reUserPage_Datanum</string>
     <string name="Bcr_reAttTopic">Bcr_reAttTopic</string>
     <string name="Bcr_UserSpace_user">Bcr_UserSpace_user</string>
     <string name="Bcr_refresh_headimg">Bcr_refresh_headimg</string>
     <string name="Bcr_refresh_thumb">Bcr_refresh_thumb</string>
     <string name="Bcr_add_personal_bar">Bcr_add_personal_bar</string>
+    <string name="Bcr_add_new_bar">Bcr_add_new_bar</string>
+    <string name="Bcr_re_Follow">Bcr_re_Follow</string>
+    <string name="Bcr_add_Follow">Bcr_add_Follow</string>
+    <string name="Bcr_add_Followed">Bcr_add_Followed</string>
+    <string name="Bcr_add_FollowUserBar">Bcr_add_FollowUserBar</string>
+    <string name="Bcr_add_CollectBar">Bcr_add_CollectBar</string>
+
 
     <string name="intent_Topic">intent_Topic</string>
     <string name="intent_Bar">intent_Bar</string>
     <string name="intent_User_account">intent_User_account</string>
+    <string name="intent_keyboard_start">intent_keyboard_start</string>
 </resources>

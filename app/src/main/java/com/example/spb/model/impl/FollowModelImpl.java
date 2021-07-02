@@ -13,7 +13,16 @@ public class FollowModelImpl extends SpbModelAbstrate implements SpbModelBasicIn
 
     @Override
     public void addData(int fun, Follow data, MyCallBack callBack) {
-
+        switch (fun){
+            case DATAFOLLOW_ADD_ONE:
+                requestBody = new FormBody.Builder()
+                        .add("cache_account", data.getUser_account())
+                        .add("user_account", data.getCache_account())
+                        .add("fun", String.valueOf(fun))
+                        .build();
+                sendHttp(InValues.send(R.string.Follow),requestBody,callBack);
+                break;
+        }
     }
 
     @Override
@@ -21,9 +30,15 @@ public class FollowModelImpl extends SpbModelAbstrate implements SpbModelBasicIn
         switch (fun){
             case DATAFOLLOW_SELECT_ONE:
                 requestBody = new FormBody.Builder()
-                        .add("id", String.valueOf(data.getId()))
                         .add("user_account", data.getUser_account())
                         .add("fun", String.valueOf(fun))
+                        .build();
+                sendHttp(InValues.send(R.string.Follow),requestBody,callBack);
+                break;
+            case DATAFOLLOW_SELECT_TWO:
+                requestBody = new FormBody.Builder()
+                        .add("fun", String.valueOf(fun))
+                        .add("user_account", data.getUser_account())
                         .build();
                 sendHttp(InValues.send(R.string.Follow),requestBody,callBack);
                 break;
@@ -37,6 +52,15 @@ public class FollowModelImpl extends SpbModelAbstrate implements SpbModelBasicIn
 
     @Override
     public void deleteData(int fun, Follow data, MyCallBack callBack) {
-
+        switch (fun){
+            case DATAFOLLOW_DELETE_ONE:
+                requestBody = new FormBody.Builder()
+                        .add("cache_account", data.getUser_account())
+                        .add("user_account", data.getCache_account())
+                        .add("fun", String.valueOf(fun))
+                        .build();
+                sendHttp(InValues.send(R.string.Follow),requestBody,callBack);
+                break;
+        }
     }
 }

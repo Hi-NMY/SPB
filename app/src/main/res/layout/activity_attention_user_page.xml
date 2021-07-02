@@ -24,4 +24,28 @@
             android:layout_below="@id/attentionuser_idt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
+    <RelativeLayout
+            android:id="@+id/excess_r"
+            android:background="@color/beijing"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/gif"
+                android:layout_centerInParent="true"
+                android:background="@drawable/loading"
+                android:layout_width="@dimen/icon_image_64"
+                android:layout_height="@dimen/icon_image_64"
+                />
+
+        <TextView
+                android:textColor="@color/grey"
+                android:layout_marginTop="@dimen/margin_4"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/gif"
+                android:text="正在飞速加载数据"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </RelativeLayout>
 </RelativeLayout>

@@ -16,6 +16,7 @@ import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.presenter.impl.UserPageFPresenterImpl;
 import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.littlefun.MyDateClass;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.activity.*;
@@ -41,23 +42,30 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
     private TextView mUserPageUsername;
     private ImageView mUserPageUsersex;
     private RefreshMsg refreshMsg;
-    private RefreshAttTopicNum refreshAttTopicNum;
+    private RefreshDataNum refreshDataNum;
     private TextView mUserPageAttentionnum;
     private RefreshHeadImg refreshHeadImg;
+    private TextView mUserPagePostbarnum;
+    private TextView mUserPageFollow;
+    private TextView mUserPageFollowed;
+    private RefreshFollowNum refreshFollowNum;
+    private TextView mUserPageCollectnum;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        refreshMsg = new RefreshMsg();
+        refreshDataNum = new RefreshDataNum();
+        refreshHeadImg = new RefreshHeadImg();
+        refreshFollowNum = new RefreshFollowNum();
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_re_Follow), refreshFollowNum);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_userMsg), refreshMsg);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_reUserPage_Datanum), refreshDataNum);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_headimg), refreshHeadImg);
     }
 
     @Override
     protected UserPageFPresenterImpl createPresenter() {
-        refreshMsg = new RefreshMsg();
-        refreshAttTopicNum = new RefreshAttTopicNum();
-        refreshHeadImg = new RefreshHeadImg();
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_userMsg), refreshMsg);
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_reUserPage_topicnum), refreshAttTopicNum);
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_headimg), refreshHeadImg);
         return new UserPageFPresenterImpl();
     }
 
@@ -72,11 +80,15 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
         mUserPageUserR = (RelativeLayout) view.findViewById(R.id.user_page_userR);
         mUserPageUseronlinetip = (ImageView) view.findViewById(R.id.user_page_useronlinetip);
         mUserPageCollectnumR = (RelativeLayout) view.findViewById(R.id.user_page_collectnum_r);
+        mUserPageCollectnum = (TextView) view.findViewById(R.id.user_page_collectnum);
         mUserPageAttentionnumR = (RelativeLayout) view.findViewById(R.id.user_page_attentionnum_r);
         mUserPageUserHeadimg = (RoundedImageView) view.findViewById(R.id.user_page_user_headimg);
         mUserPageUsername = (TextView) view.findViewById(R.id.user_page_username);
         mUserPageUsersex = (ImageView) view.findViewById(R.id.user_page_usersex);
-        mUserPageAttentionnum = (TextView)view.findViewById(R.id.user_page_attentionnum);
+        mUserPageAttentionnum = (TextView) view.findViewById(R.id.user_page_attentionnum);
+        mUserPagePostbarnum = (TextView) view.findViewById(R.id.user_page_postbarnum);
+        mUserPageFollow = (TextView) view.findViewById(R.id.user_page_follow);
+        mUserPageFollowed = (TextView) view.findViewById(R.id.user_page_followed);
         mR1 = (RelativeLayout) view.findViewById(R.id.r1);
         mR2 = (RelativeLayout) view.findViewById(R.id.r2);
         mR3 = (RelativeLayout) view.findViewById(R.id.r3);
@@ -89,6 +101,8 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
     protected void initData() {
         mUserPageUsername.setText(homePage.getDataUserMsgPresenter().getUser_name());
         mUserPageAttentionnum.setText(String.valueOf(homePage.getDataAttentionTopicPresenter().attentionNum.size()));
+        mUserPageFollow.setText("关注 " + MyDateClass.sendMath(homePage.getDataFollowPresenter().obtainFollowNum()));
+        mUserPageFollowed.setText("被关注 " + MyDateClass.sendMath(homePage.getDataFollowedPresenter().obtainFollowedNum()));
         if (homePage.getDataUserMsgPresenter().getStu_sex().equals("男")) {
             mUserPageUsersex.setImageResource(R.drawable.icon_boy);
         } else {
@@ -97,8 +111,10 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
         Glide.with(this)
                 .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + homePage.getDataUserMsgPresenter().getUser_account() + "/HeadImage/myHeadImage.png")
                 .centerCrop()
-                .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()),1,1))
+                .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                 .into(mUserPageUserHeadimg);
+        mUserPageFollow.postInvalidate();
+        mUserPageFollowed.postInvalidate();
         mUserPageUsername.postInvalidate();
         mUserPageAttentionnum.postInvalidate();
     }
@@ -187,7 +203,7 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
                 JumpIntent.startMsgIntent(PersonalSpacePage.class, new JumpIntent.SetMsg() {
                     @Override
                     public void setMessage(Intent intent) {
-                        intent.putExtra(InValues.send(R.string.intent_User_account),homePage.getDataUserMsgPresenter().getUser_account());
+                        intent.putExtra(InValues.send(R.string.intent_User_account), homePage.getDataUserMsgPresenter().getUser_account());
                     }
                 });
                 break;
@@ -219,7 +235,7 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
     public void onDestroy() {
         super.onDestroy();
         SpbBroadcast.destroyBrc(refreshMsg);
-        SpbBroadcast.destroyBrc(refreshAttTopicNum);
+        SpbBroadcast.destroyBrc(refreshDataNum);
         SpbBroadcast.destroyBrc(refreshHeadImg);
     }
 
@@ -231,22 +247,45 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
         }
     }
 
-    class RefreshAttTopicNum extends BroadcastReceiver {
+    class RefreshDataNum extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            mUserPageAttentionnum.setText(String.valueOf(homePage.getDataAttentionTopicPresenter().attentionTopicList.size()));
+            //获取关注话题数量
+            mUserPageAttentionnum.setText(String.valueOf(homePage.getDataAttentionTopicPresenter().obtainAttentionTopicNum()));
             mUserPageAttentionnum.postInvalidate();
+            //获取关注话题数量
+            mUserPageCollectnum.setText(String.valueOf(homePage.getDataCollectBarPresenter().obtainCollectNum()));
+            mUserPageCollectnum.postInvalidate();
+            //获取帖子数量
+            mPresenter.obtainBarNum(new UserPageFPresenterImpl.OnReturn() {
+                @Override
+                public void onReturn(int num) {
+                    mUserPagePostbarnum.setText(String.valueOf(num));
+                    mUserPagePostbarnum.postInvalidate();
+                }
+            });
+            //获取收藏数量
         }
     }
 
-    class RefreshHeadImg extends BroadcastReceiver{
+    class RefreshHeadImg extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             Glide.with(MyApplication.getContext())
                     .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + homePage.getDataUserMsgPresenter().getUser_account() + "/HeadImage/myHeadImage.png")
                     .centerCrop()
-                    .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()),1,1))
+                    .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                     .into(mUserPageUserHeadimg);
+        }
+    }
+
+    class RefreshFollowNum extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mUserPageFollow.setText("关注 " + MyDateClass.sendMath(homePage.getDataFollowPresenter().obtainFollowNum()));
+            mUserPageFollowed.setText("被关注 " + MyDateClass.sendMath(homePage.getDataFollowedPresenter().obtainFollowedNum()));
+            mUserPageFollow.postInvalidate();
+            mUserPageFollowed.postInvalidate();
         }
     }
 }

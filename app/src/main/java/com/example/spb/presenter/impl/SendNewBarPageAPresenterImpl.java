@@ -1,11 +1,13 @@
 package com.example.spb.presenter.impl;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Looper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.spb.R;
 import com.example.spb.adapter.LocationAdapter;
 import com.example.spb.adapter.NewBarImageAdapter;
 import com.example.spb.app.MyApplication;
@@ -19,10 +21,7 @@ import com.example.spb.model.impl.BarModelImpl;
 import com.example.spb.model.impl.TopicModelImpl;
 import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.inter.ISendNewBarPageAPresenter;
-import com.example.spb.presenter.littlefun.MyDateClass;
-import com.example.spb.presenter.littlefun.MyResolve;
-import com.example.spb.presenter.littlefun.ObtainUserShared;
-import com.example.spb.presenter.littlefun.VoiceObtain;
+import com.example.spb.presenter.littlefun.*;
 import com.example.spb.view.activity.SendNewBarPage;
 import com.example.spb.view.inter.ISendNewBarPageAView;
 import com.example.spb.xserver.SpbLocationServer;
@@ -103,6 +102,10 @@ public class SendNewBarPageAPresenterImpl extends BasePresenter<ISendNewBarPageA
                                 e.printStackTrace();
                             }
                             getView().response(null,getView().SUCCESS_BAR);
+                            SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_userBar_Num));
+                            SharedPreferences.Editor editor = MySharedPreferences.saveShared(InValues.send(R.string.Shared_userBar_Num));
+                            editor.putInt(InValues.send(R.string.userBar_num),sharedPreferences.getInt(InValues.send(R.string.userBar_num),0) + 1);
+                            editor.apply();
                             break;
                         default:
                             getView().response(null,getView().ERROR_BAR);

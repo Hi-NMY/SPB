@@ -20,6 +20,8 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
     public static DataPostBarPresenter dataPostBarPresenter;
     public static DataUserMsgPresenter dataUserMsgPresenter;
 
+    public static String deletePbId = "";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +59,14 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
         setDataLikePresenter();
         setDataPostBarPresenter();
         setDataUserMsgPresenter();
+    }
+
+    public static String getDeletePbId() {
+        return deletePbId;
+    }
+
+    public static void setDeletePbId(String deletePbId) {
+        BaseMVPActivity.deletePbId = deletePbId;
     }
 
     public DataAttentionTopicPresenter getDataAttentionTopicPresenter() {

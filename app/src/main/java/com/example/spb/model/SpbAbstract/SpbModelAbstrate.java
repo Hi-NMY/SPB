@@ -27,10 +27,10 @@ public abstract class SpbModelAbstrate {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 if (e instanceof SocketTimeoutException) {
-                    callBack.onError(MyCallBack.ERROR_ONE);
+                    callBack.onError(MyCallBack.ERROR_LONGTIME);
                 }
                 if (e instanceof ConnectException) {
-                    callBack.onError(MyCallBack.ERROR_TWO);
+                    callBack.onError(MyCallBack.ERROR_CONNECTION);
                 }
                 clearBody();
             }

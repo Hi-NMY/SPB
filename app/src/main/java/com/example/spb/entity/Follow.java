@@ -1,9 +1,12 @@
 package com.example.spb.entity;
 
-public class Follow {
+import java.io.Serializable;
+
+public class Follow implements Serializable {
 
     public int id;
     public String user_account;
+    public String cache_account;
 
     public int getId() {
         return id;
@@ -21,4 +24,11 @@ public class Follow {
         this.user_account = user_accountl;
     }
 
+    public String getCache_account() {
+        return cache_account;
+    }
+
+    public void setCache_account(String cache_account) {
+        this.cache_account = cache_account;
+    }
 }

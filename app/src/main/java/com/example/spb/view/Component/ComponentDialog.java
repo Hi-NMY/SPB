@@ -13,13 +13,16 @@ import com.example.spb.view.InterComponent.DialogInter;
 public class ComponentDialog implements DialogInter {
 
     public AlertDialog alertDialog;
-    private AlertDialog.Builder builder;
-    private View view;
-    private Window window;
-    private Activity activity;
+    public AlertDialog.Builder builder;
+    public View view;
+    public Window window;
+    public Activity activity;
     public InitDialog initDialog;
 
-    public ComponentDialog(Activity context,int viewId,InitDialog initDialog) {
+    public ComponentDialog(Activity context) {
+    }
+
+    public ComponentDialog(Activity context, int viewId, InitDialog initDialog) {
         activity = context;
         builder = new AlertDialog.Builder(context);
         view = LayoutInflater.from(context).inflate(viewId,null);

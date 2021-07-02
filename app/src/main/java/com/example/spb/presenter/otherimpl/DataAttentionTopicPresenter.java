@@ -159,7 +159,7 @@ public class DataAttentionTopicPresenter {
     }
 
     public boolean determineAttention(int id){
-        if (attentionNum.stream().anyMatch(attentionNum -> attentionNum.equals(id))){
+        if (attentionNum != null && attentionNum.stream().anyMatch(attentionNum -> attentionNum.equals(id))){
             return true;
         }else {
             return false;
@@ -172,6 +172,14 @@ public class DataAttentionTopicPresenter {
             c = topics.stream().filter(attentionTopicList -> attentionTopicList.getTopic_name().equals(t.getTopic_name())).findAny().orElse(null);
         }
         return c;
+    }
+
+    public int obtainAttentionTopicNum(){
+        if (attentionTopicList == null){
+            return 0;
+        }else {{
+            return attentionTopicList.size();
+        }}
     }
 
     public interface HotTopic{

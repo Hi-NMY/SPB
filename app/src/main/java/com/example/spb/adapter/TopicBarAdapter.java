@@ -22,6 +22,7 @@ import com.example.spb.presenter.littlefun.MyDateClass;
 import com.example.spb.presenter.littlefun.MyResolve;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.presenter.otherimpl.DataLikePresenter;
+import com.example.spb.view.Component.BarMoreOperateDialog;
 import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.Component.ThumbAnima;
 import com.example.spb.view.activity.HomePage;
@@ -49,6 +50,7 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
     private PostBarImgAdapter postBarImgAdapter;
     private String nowTopicName;
     private String cacheKey = "";
+    private BarMoreOperateDialog barMoreOperateDialog;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView mItemPostbarUserHeadimg;
@@ -99,6 +101,11 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
         notifyDataSetChanged();
     }
 
+    public void addMoreTopicBar(List<Bar> moreBars){
+        this.bars.addAll(moreBars);
+        notifyItemRangeChanged(bars.size() - moreBars.size(), bars.size() + 1);
+    }
+
     public void setNowTopicId(String a){
         this.nowTopicName = a;
     }
@@ -110,6 +117,18 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
             if (a != -1){
                 bars.get(a).setPb_thumb_num(bars.get(a).getPb_thumb_num() + num);
                 notifyItemChanged(a);
+            }
+        }
+    }
+
+    public void deleteBar(String pbId){
+        Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(pbId)).findAny().orElse(null);
+        if (cachebar != null){
+            int a = bars.indexOf(cachebar);
+            if (a != -1){
+                bars.remove(a);
+                notifyItemRemoved(a);
+                notifyItemRangeChanged(a, bars.size() + 1);
             }
         }
     }
@@ -192,6 +211,19 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 //显示dialog更多功能
+                barMoreOperateDialog = new BarMoreOperateDialog(activity);
+                barMoreOperateDialog.setData(topicBarPage.getDataFollowPresenter().determineFollow(bars.get(position).getUser_account()),
+                        topicBarPage.getDataCollectBarPresenter().determineCollect(bars.get(position).getPb_one_id()),bars.get(position).getPb_one_id(),bars.get(position).getUser_account());
+                if (!bars.get(position).getUser_account().equals(topicBarPage.getDataUserMsgPresenter().getUser_account())){
+                    barMoreOperateDialog.funChat();
+                    barMoreOperateDialog.funCollect();
+                    barMoreOperateDialog.funFOllow();
+                    barMoreOperateDialog.funReport();
+                }else {
+                    barMoreOperateDialog.funCollect();
+                    barMoreOperateDialog.funReport();
+                }
+                barMoreOperateDialog.showMyDialog();
             }
         });
 

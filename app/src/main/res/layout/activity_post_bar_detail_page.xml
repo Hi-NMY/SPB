@@ -6,12 +6,14 @@
         android:id="@+id/postbar_detail_R"
         android:focusable="true"
         android:focusableInTouchMode="true"
+        android:fitsSystemWindows="true"
         android:clipChildren="false"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.activity.PostBarDetailPage">
     <androidx.core.widget.NestedScrollView
             android:layout_below="@+id/postbar_detail_bar"
+            android:layout_above="@id/postbar_detail_bottom_commentR"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -300,9 +302,58 @@
                     android:layout_height="wrap_content"/>
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
+
     <fragment
             android:id="@+id/postbar_detail_bar"
             android:name="com.example.spb.view.Component.FragmentSpbAvtivityBar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/spb_activity_bar_44"/>
+
+    <RelativeLayout
+            android:id="@+id/postbar_detail_bottom_commentR"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_alignParentBottom="true"
+            android:background="@color/beijing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <EditText
+                    android:id="@+id/comment_text"
+                    android:layout_centerVertical="true"
+                    android:lineSpacingMultiplier="1.2"
+                    android:layout_marginVertical="@dimen/margin_12"
+                    android:layout_gravity="center"
+                    android:textColor="@color/ziti"
+                    android:layout_marginLeft="@dimen/margin_12"
+                    android:layout_weight="5"
+                    android:textSize="@dimen/font_16"
+                    android:hint="请输入评论"
+                    android:text=""
+                    android:background="@null"
+                    android:layout_width="312dp"
+                    android:maxWidth="300dp"
+                    android:maxHeight="240dp"
+                    android:layout_height="wrap_content"/>
+
+            <Button
+                    android:id="@+id/comment_send"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:text="发送"
+                    android:background="@drawable/enter_next_login"
+                    android:stateListAnimator="@null"
+                    android:textColor="@color/beijing"
+                    android:layout_margin="@dimen/margin_8"
+                    android:layout_width="@dimen/icon_image_72"
+                    android:layout_height="@dimen/icon_image_32"/>
+        </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

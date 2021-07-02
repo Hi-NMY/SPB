@@ -72,7 +72,8 @@
         </activity>
         <activity android:name=".view.activity.PersonalSpacePage">
         </activity>
-        <activity android:name=".view.activity.PostBarDetailPage">
+        <activity android:name=".view.activity.PostBarDetailPage"
+                  android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
                 android:name=".view.activity.HomePage"

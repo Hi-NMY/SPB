@@ -86,16 +86,17 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
     private TextView mPersonalspaceUsersign;
     private RefreshMsg refreshMsg;
     private TextView mPersonalspaceUsertopicNum;
-    private String userAccount = null;
+    public String userAccount = null;
     private User toUser;
     private RelativeLayout mExcessR;
     private Button mPersonalspaceAttentionBtn;
-    private static String USERNAME = "";
+    private String USERNAME = "";
     private SmartRefreshLayout mPersonalspaceRefresh;
     private MySmartRefresh mySmartRefresh;
     private GifImageView personalspace_refresh_tgif;
     private TextView mPersonalspaceUserattentionNum;
     private TextView mPersonalspaceUserfansNum;
+    private RefreshFollow refreshFollow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +105,8 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         cacheDate = MyDateClass.showNowDate();
         userAccount = getIntent().getStringExtra(InValues.send(R.string.intent_User_account));
         refreshMsg = new RefreshMsg();
+        refreshFollow = new RefreshFollow();
+        SpbBroadcast.obtainRecriver(this, InValues.send(R.string.Bcr_re_Follow), refreshFollow);
         SpbBroadcast.obtainRecriver(this, InValues.send(R.string.Bcr_refresh_userMsg), refreshMsg);
         initActView();
     }
@@ -116,6 +119,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
     @Override
     protected void initActView() {
         setBar();
+        mPresenter.setUserFollowKey(getDataFollowPresenter().determineFollow(userAccount));
         spbSelectImage = new SelectImage(this);
         mExcessR = (RelativeLayout) findViewById(R.id.excess_r);
         mPersonalspaceIdt = (MagicIndicator) findViewById(R.id.personalspace_idt);
@@ -202,12 +206,12 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
 
     @Override
     protected void initData() {
-        USERNAME = dataUserMsgPresenter.user_name;
         mPersonalspaceUsername.setText(getDataUserMsgPresenter().getUser_name());
+        USERNAME = mPersonalspaceUsername.getText().toString();
         mPersonalspaceUsersign.setText(getDataUserMsgPresenter().getUser_profile());
         mPersonalspaceUsertopicNum.setText(String.valueOf(getDataAttentionTopicPresenter().attentionTopicList.size()));
-        mPersonalspaceUserattentionNum.setText(String.valueOf(getDataFollowPresenter().followList.size()));
-        mPersonalspaceUserfansNum.setText(String.valueOf(getDataFollowedPresenter().followedList.size()));
+        mPersonalspaceUserattentionNum.setText(String.valueOf(getDataFollowPresenter().obtainFollowNum()));
+        mPersonalspaceUserfansNum.setText(String.valueOf(getDataFollowedPresenter().obtainFollowedNum()));
         if (getDataUserMsgPresenter().getStu_sex().equals("男")) {
             mPersonalspaceUsersex.setImageResource(R.drawable.icon_boy);
         } else {
@@ -231,9 +235,15 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
     }
 
     private void initUserDate() {
-        USERNAME = toUser.getUser_name();
         mPersonalspaceUsername.setText(toUser.getUser_name());
         mPersonalspaceUsersign.setText(toUser.getUser_profile());
+        USERNAME = mPersonalspaceUsername.getText().toString();
+        //获取用户关注和粉丝
+        if (mPresenter.isUserFollowKey()){
+            yesAtt();
+        }else {
+            noAtt();
+        }
         if (toUser.getStu_sex().equals("男")) {
             mPersonalspaceUsersex.setImageResource(R.drawable.icon_boy);
         } else {
@@ -481,6 +491,16 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         mySmartRefresh.finishMyRefresh();
     }
 
+    public void yesAtt() {
+        mPersonalspaceAttentionBtn.setBackground(getDrawable(R.drawable.already_attention));
+        mPersonalspaceAttentionBtn.setText("已关注");
+    }
+
+    public void noAtt() {
+        mPersonalspaceAttentionBtn.setBackground(getDrawable(R.drawable.enter_next_login));
+        mPersonalspaceAttentionBtn.setText("关注");
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -510,7 +530,23 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
             case R.id.r3:
                 JumpIntent.startMyIntent(AttentionTopicPage.class);
                 break;
+            case R.id.personalspace_attention_btn:
+                if (mPresenter.isUserFollowKey()){
+                    noAtt();
+                    getDataFollowPresenter().removeFollow(userAccount);
+                }else {
+                    yesAtt();
+                    getDataFollowPresenter().addFollow(userAccount);
+                }
+                break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SpbBroadcast.destroyBrc(refreshFollow);
+        SpbBroadcast.destroyBrc(refreshMsg);
     }
 
     class RefreshMsg extends BroadcastReceiver {
@@ -520,6 +556,20 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
             mPersonalspaceUsersign.setText(getDataUserMsgPresenter().getUser_profile());
             mPersonalspaceUsername.postInvalidate();
             mPersonalspaceUsersign.postInvalidate();
+        }
+    }
+
+    class RefreshFollow extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int a = intent.getIntExtra("key_one",0);
+            if (a == 0){
+                mPresenter.setUserFollowKey(true);
+                MyToastClass.ShowToast(MyApplication.getContext(),"关注成功");
+            }else {
+                mPresenter.setUserFollowKey(false);
+                MyToastClass.ShowToast(MyApplication.getContext(),"取消关注");
+            }
         }
     }
 }

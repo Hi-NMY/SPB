@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="@drawable/dialog_bottom_bg"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <View
+            android:layout_marginTop="@dimen/margin_12"
+            android:layout_gravity="center"
+            android:background="@drawable/enter_next_login_false"
+            android:layout_width="@dimen/margin_40"
+            android:layout_height="@dimen/margin_8"/>
+
+    <HorizontalScrollView
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <RelativeLayout
+                android:paddingVertical="@dimen/margin_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <RelativeLayout
+                    android:id="@+id/chat_R"
+                    android:visibility="gone"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:background="@drawable/icon_circle_gb2"
+                    android:layout_width="@dimen/icon_image_56"
+                    android:layout_height="@dimen/icon_image_56">
+
+                <ImageView
+                        android:id="@+id/chat_icon"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/icon_chat"
+                        android:layout_width="@dimen/icon_image_44"
+                        android:layout_height="@dimen/icon_image_44"/>
+
+            </RelativeLayout>
+
+            <TextView
+                    android:id="@+id/chat_txt"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:layout_below="@id/chat_R"
+                    android:gravity="center"
+                    android:layout_alignRight="@+id/chat_R"
+                    android:layout_alignLeft="@id/chat_R"
+                    android:textColor="@color/qihei"
+                    android:text="私聊"
+                    android:textSize="@dimen/font_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <RelativeLayout
+                    android:id="@+id/follow_R"
+                    android:visibility="gone"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_toRightOf="@id/chat_R"
+                    android:background="@drawable/icon_circle_gb3"
+                    android:layout_width="@dimen/icon_image_56"
+                    android:layout_height="@dimen/icon_image_56">
+
+                <ImageView
+                        android:id="@+id/follow_icon"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/icon_follow_dialog"
+                        android:layout_width="@dimen/icon_image_44"
+                        android:layout_height="@dimen/icon_image_44"/>
+
+            </RelativeLayout>
+
+            <TextView
+                    android:id="@+id/follow_txt"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:layout_below="@id/follow_R"
+                    android:gravity="center"
+                    android:layout_alignRight="@+id/follow_R"
+                    android:layout_alignLeft="@id/follow_R"
+                    android:textColor="@color/qihei"
+                    android:text="关注"
+                    android:textSize="@dimen/font_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <RelativeLayout
+                    android:id="@+id/report_R"
+                    android:visibility="gone"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_toRightOf="@id/delete_R"
+                    android:background="@drawable/icon_circle_gb"
+                    android:layout_width="@dimen/icon_image_56"
+                    android:layout_height="@dimen/icon_image_56">
+
+                <ImageView
+                        android:id="@+id/report_icon"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/icon_report_dialog"
+                        android:layout_width="@dimen/icon_image_44"
+                        android:layout_height="@dimen/icon_image_44"/>
+
+            </RelativeLayout>
+
+            <TextView
+                    android:id="@+id/report_txt"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:layout_below="@id/report_R"
+                    android:gravity="center"
+                    android:layout_alignRight="@+id/report_R"
+                    android:layout_alignLeft="@id/report_R"
+                    android:textColor="@color/qihei"
+                    android:text="举报"
+                    android:textSize="@dimen/font_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <RelativeLayout
+                    android:id="@+id/collect_R"
+                    android:visibility="gone"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_toRightOf="@id/follow_R"
+                    android:background="@drawable/icon_circle_gb"
+                    android:layout_width="@dimen/icon_image_56"
+                    android:layout_height="@dimen/icon_image_56">
+
+                <ImageView
+                        android:id="@+id/collect_icon"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/icon_collect_dialog"
+                        android:layout_width="@dimen/icon_image_44"
+                        android:layout_height="@dimen/icon_image_44"/>
+
+            </RelativeLayout>
+
+            <TextView
+                    android:id="@+id/collect_txt"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:layout_below="@id/collect_R"
+                    android:gravity="center"
+                    android:layout_alignRight="@+id/collect_R"
+                    android:layout_alignLeft="@id/collect_R"
+                    android:textColor="@color/qihei"
+                    android:text="收藏"
+                    android:textSize="@dimen/font_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <RelativeLayout
+                    android:id="@+id/delete_R"
+                    android:visibility="gone"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_toRightOf="@id/collect_R"
+                    android:background="@drawable/icon_circle_gb"
+                    android:layout_width="@dimen/icon_image_56"
+                    android:layout_height="@dimen/icon_image_56">
+
+                <ImageView
+                        android:id="@+id/delete_icon"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/icon_delete"
+                        android:layout_width="@dimen/icon_image_44"
+                        android:layout_height="@dimen/icon_image_44"/>
+
+            </RelativeLayout>
+
+            <TextView
+                    android:id="@+id/delete_txt"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:layout_below="@id/delete_R"
+                    android:gravity="center"
+                    android:layout_alignRight="@+id/delete_R"
+                    android:layout_alignLeft="@id/delete_R"
+                    android:textColor="@color/qihei"
+                    android:text="删帖"
+                    android:textSize="@dimen/font_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+    </HorizontalScrollView>
+
+    <View
+            android:layout_gravity="center"
+            android:background="@color/qianbai"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_8"/>
+
+    <Button
+            android:id="@+id/close_dialog"
+            android:textSize="@dimen/font_16"
+            android:textColor="@color/qihei"
+            android:text="取消"
+            android:stateListAnimator="@null"
+            android:background="@color/beijing"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/icon_image_44"/>
+</LinearLayout>

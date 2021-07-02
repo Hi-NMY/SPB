@@ -18,6 +18,7 @@ public interface SpbModelBasicInter<T> {
 
     public static int DATACOLLECTBAR_ADD_ONE = 210;
     public static int DATACOLLECTBAR_SELECT_ONE = 220;
+    public static int DATACOLLECTBAR_SELECT_TWO = 221;
     public static int DATACOLLECTBAR_UPDATE_ONE = 230;
     public static int DATACOLLECTBAR_DELETE_ONE = 240;
 
@@ -28,11 +29,13 @@ public interface SpbModelBasicInter<T> {
 
     public static int DATAFOLLOWED_ADD_ONE = 410;
     public static int DATAFOLLOWED_SELECT_ONE = 420;
+    public static int DATAFOLLOWED_SELECT_TWO = 421;
     public static int DATAFOLLOWED_UPDATE_ONE = 430;
     public static int DATAFOLLOWED_DELETE_ONE = 440;
 
     public static int DATAFOLLOW_ADD_ONE = 510;
     public static int DATAFOLLOW_SELECT_ONE = 520;
+    public static int DATAFOLLOW_SELECT_TWO = 521;
     public static int DATAFOLLOW_UPDATE_ONE = 530;
     public static int DATAFOLLOW_DELETE_ONE = 540;
 
@@ -56,6 +59,8 @@ public interface SpbModelBasicInter<T> {
     public static int DATABAR_SELECT_TWO = 821;
     public static int DATABAR_SELECT_THREE = 822;
     public static int DATABAR_SELECT_FOUR = 823;
+    public static int DATABAR_SELECT_FIVE = 824;
+    public static int DATABAR_SELECT_SIX = 825;
     public static int DATABAR_UPDATE_ONE = 830;
     public static int DATABAR_UPDATE_TWO = 831;
     public static int DATABAR_DELETE_ONE = 840;

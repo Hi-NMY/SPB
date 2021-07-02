@@ -201,7 +201,9 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
         @Override
         public void onReceive(Context context, Intent intent) {
             toUser = (User) intent.getSerializableExtra("key_two");
-            initUserData();
+            if (toUser.getUser_account().equals(personalSpacePage.userAccount)){
+                initUserData();
+            }
         }
     }
 }

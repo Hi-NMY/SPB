@@ -119,7 +119,7 @@ public class NewTopicBar extends BaseMVPFragment<INewTopicBarFView, NewTopicBarF
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
+                mPresenter.obtainNewTopicBar();
             }
         });
     }
@@ -142,10 +142,20 @@ public class NewTopicBar extends BaseMVPFragment<INewTopicBarFView, NewTopicBarF
             String name = intent.getStringExtra("key_two");
             List<Bar> bars = (List<Bar>) intent.getSerializableExtra("key_three");
             mPresenter.settName(name);
-            if (a == 0){
-                mPresenter.addNewTopicList(bars,mNewtopicbarRecyclerview,true);
-            }else {
-                mPresenter.addNewTopicList(bars,mNewtopicbarRecyclerview,false);
+            if (bars != null && bars.size() != 0){
+                mPresenter.setCacheDate(bars.get(bars.size() - 1).getPb_date());
+            }
+            switch (a){
+                case 1:
+                    mPresenter.addNewTopicList(bars,mNewtopicbarRecyclerview,false);
+                    finishRRefresh(0);
+                    break;
+                case 0:
+                    mPresenter.addNewTopicList(bars,mNewtopicbarRecyclerview,true);
+                    break;
+                case 3:
+                    mPresenter.deleteBarData(topicBarPage.getDeletePbId());
+                    break;
             }
         }
     }

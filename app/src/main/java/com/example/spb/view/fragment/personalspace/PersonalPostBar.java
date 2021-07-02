@@ -120,7 +120,7 @@ public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView, Pers
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
+                mPresenter.obtainMorePersonalBar(personalSpacePage.getDataUserMsgPresenter().getUser_account());
             }
         });
         mySmartRefresh.closeRefresh();
@@ -128,7 +128,7 @@ public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView, Pers
 
     @Override
     public void finishRRefresh(int num) {
-
+        mySmartRefresh.finishMyLoadMore();
     }
 
     @Override
@@ -142,11 +142,24 @@ public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView, Pers
         @Override
         public void onReceive(Context context, Intent intent) {
             int a = intent.getIntExtra("key_one",0);
-            List<Bar> bars = (List<Bar>) intent.getSerializableExtra("key_two");
-            if (a == 0){
-                mPresenter.addPersonalBarList(bars,mPersonalBarRecyclerview,true);
-            }else {
-                mPresenter.addPersonalBarList(bars,mPersonalBarRecyclerview,false);
+            List<Bar> bars = (List<Bar>) intent.getSerializableExtra("key_three");
+            String account = intent.getStringExtra("key_two");
+            if(account.equals(personalSpacePage.userAccount)){
+                if (bars != null && bars.size() != 0){
+                    mPresenter.setCacheDate(bars.get(bars.size() - 1).getPb_date());
+                }
+                switch (a){
+                    case 1:
+                        mPresenter.addPersonalBarList(bars,mPersonalBarRecyclerview,false);
+                        finishRRefresh(0);
+                        break;
+                    case 0:
+                        mPresenter.addPersonalBarList(bars,mPersonalBarRecyclerview,true);
+                        break;
+                    case 3:
+                        mPresenter.deleteBarData(personalSpacePage.getDeletePbId());
+                        break;
+                }
             }
         }
     }

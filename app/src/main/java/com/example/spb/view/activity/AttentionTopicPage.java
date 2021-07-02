@@ -170,7 +170,7 @@ public class AttentionTopicPage extends BaseMVPActivity<IAttentionTopicPageAView
                                 try {
                                     Thread.sleep(100);
                                     SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_topic), 0, null);
-                                    SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_reUserPage_topicnum),0,null);
+                                    SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_reUserPage_Datanum),0,null);
                                     mPresenter.refreshAdapter();
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
@@ -180,7 +180,7 @@ public class AttentionTopicPage extends BaseMVPActivity<IAttentionTopicPageAView
                     }
                 });
             }else {
-                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_reUserPage_topicnum),0,null);
+                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_reUserPage_Datanum),0,null);
                 mPresenter.refreshAdapter();
             }
         }

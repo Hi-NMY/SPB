@@ -142,11 +142,18 @@ public class HotTopicBar extends BaseMVPFragment<IHotTopicBarFView, HotTopicBarF
             int a = intent.getIntExtra("key_one",0);
             String name = intent.getStringExtra("key_two");
             List<Bar> bars = (List<Bar>) intent.getSerializableExtra("key_three");
-            mPresenter.settName(name);
-            if (a == 0){
-                mPresenter.addHotTopicList(bars,mHottopicbarRecyclerview,true);
-            }else {
-                mPresenter.addHotTopicList(bars,mHottopicbarRecyclerview,false);
+            switch (a){
+                case 1:
+                    mPresenter.settName(name);
+                    mPresenter.addHotTopicList(bars,mHottopicbarRecyclerview,false);
+                    break;
+                case 0:
+                    mPresenter.settName(name);
+                    mPresenter.addHotTopicList(bars,mHottopicbarRecyclerview,true);
+                    break;
+                case 3:
+                    mPresenter.deleteBarData(topicBarPage.getDeletePbId());
+                    break;
             }
         }
     }

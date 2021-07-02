@@ -15,32 +15,13 @@ import java.util.List;
 
 public class NewPostPageFPresenterImpl extends BasePresenter<INewPostPageFView> implements INewPostPageFPresenter {
 
-    private Activity activity;
-    private OnReturn onReturn;
+    private HomePage homePage;
 
-    private Handler obtainNewBarhandler = new Handler() {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    onReturn.onReturn();
-                }
-            });
-        }
-    };
-
-    public NewPostPageFPresenterImpl(Activity activity) {
-        this.activity = activity;
+    public NewPostPageFPresenterImpl(HomePage activity) {
+        this.homePage = activity;
     }
 
-    public void obtainNewBar(HomePage homePage,OnReturn onReturn) {
-        this.onReturn = onReturn;
-        homePage.getDataPostBarPresenter().obtainNewBar(obtainNewBarhandler);
-    }
-
-    public interface OnReturn{
-        void onReturn();
+    public void obtainNewBar(boolean loadFun) {
+        homePage.getDataPostBarPresenter().obtainNewBar(loadFun);
     }
 }

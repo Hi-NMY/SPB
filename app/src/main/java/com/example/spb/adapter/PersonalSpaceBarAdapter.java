@@ -20,6 +20,7 @@ import com.example.spb.presenter.littlefun.MyDateClass;
 import com.example.spb.presenter.littlefun.MyResolve;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.presenter.otherimpl.DataLikePresenter;
+import com.example.spb.view.Component.BarMoreOperateDialog;
 import com.example.spb.view.Component.ThumbAnima;
 import com.example.spb.view.activity.PersonalSpacePage;
 import com.example.spb.view.activity.PostBarDetailPage;
@@ -43,6 +44,7 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
     private GridLayoutManager gridLayoutManager;
     private PostBarImgAdapter postBarImgAdapter;
     private PersonalSpacePage personalSpacePage;
+    private BarMoreOperateDialog barMoreOperateDialog;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView mItemUserspaceBarPostdate;
@@ -87,6 +89,12 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
         this.bars = bars;
         personalSpacePage = (PersonalSpacePage)activity;
         layoutInflater = activity.getLayoutInflater();
+        notifyDataSetChanged();
+    }
+
+    public void addMorePersonalBar(List<Bar> moreBars){
+        this.bars.addAll(moreBars);
+        notifyItemRangeChanged(bars.size() - moreBars.size(), bars.size() + 1);
     }
 
     public void refreshLikeItem(int num,String pbId){
@@ -96,6 +104,18 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
             if (a != -1){
                 bars.get(a).setPb_thumb_num(bars.get(a).getPb_thumb_num() + num);
                 notifyItemChanged(a);
+            }
+        }
+    }
+
+    public void deleteBar(String pbId){
+        Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(pbId)).findAny().orElse(null);
+        if (cachebar != null){
+            int a = bars.indexOf(cachebar);
+            if (a != -1){
+                bars.remove(a);
+                notifyItemRemoved(a);
+                notifyItemRangeChanged(a, bars.size() + 1);
             }
         }
     }
@@ -114,12 +134,18 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
         if (bar.getPb_article() != null && !bar.getPb_article().equals("")){
             holder.mItemUserspaceBarTxt.setVisibility(View.VISIBLE);
             holder.mItemUserspaceBarTxt.setText(bar.getPb_article());
+        }else {
+            holder.mItemUserspaceBarTxt.setVisibility(View.GONE);
+            holder.mItemUserspaceBarTxt.setText("");
         }
         holder.mItemUserspaceBarPostdate.setText(MyDateClass.showDateClass(bar.getPb_date()));
 
         if (bar.getPb_location() != null && !bar.getPb_location().equals("")){
             holder.mItemUserspaceBarLocation.setVisibility(View.VISIBLE);
             holder.mItemUserspaceBarLocation.setText(bar.getPb_location());
+        }else {
+            holder.mItemUserspaceBarLocation.setVisibility(View.GONE);
+            holder.mItemUserspaceBarLocation.setText("");
         }
 
         if (bar.getPb_comment_num() != 0){
@@ -138,6 +164,8 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
 
         if (personalSpacePage.getDataLikePresenter().determineLike(bar.getPb_one_id())){
             holder.mItemPostbarLikeImg.setBackground(MyApplication.getContext().getDrawable(R.drawable.icon_likeal));
+        }else {
+            holder.mItemPostbarLikeImg.setBackground(MyApplication.getContext().getDrawable(R.drawable.icon_like));
         }
 
         holder.mItempostBarRa.setOnClickListener(new View.OnClickListener() {
@@ -156,6 +184,20 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
             @Override
             public void onClick(View v) {
                 //显示dialog更多功能
+                barMoreOperateDialog = new BarMoreOperateDialog(activity);
+                barMoreOperateDialog.setData(personalSpacePage.getDataFollowPresenter().determineFollow(bars.get(position).getUser_account()),
+                        personalSpacePage.getDataCollectBarPresenter().determineCollect(bars.get(position).getPb_one_id()),bars.get(position).getPb_one_id(),bars.get(position).getUser_account());
+                if (!bars.get(position).getUser_account().equals(personalSpacePage.getDataUserMsgPresenter().getUser_account())){
+                    barMoreOperateDialog.funChat();
+                    barMoreOperateDialog.funCollect();
+                    barMoreOperateDialog.funFOllow();
+                    barMoreOperateDialog.funReport();
+                }else {
+                    barMoreOperateDialog.funDeleteBar(null);
+                    barMoreOperateDialog.funCollect();
+                    barMoreOperateDialog.funReport();
+                }
+                barMoreOperateDialog.showMyDialog();
             }
         });
 
@@ -218,6 +260,8 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
             holder.mItemUserspaceBarImagelist.setLayoutManager(gridLayoutManager);
             postBarImgAdapter = new PostBarImgAdapter(activity,MyResolve.InDoubleImage(bar.getPb_image_url()));
             holder.mItemUserspaceBarImagelist.setAdapter(postBarImgAdapter);
+        }else {
+            holder.mItemUserspaceBarImagelist.setVisibility(View.GONE);
         }
     }
 

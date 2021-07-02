@@ -5,6 +5,7 @@ public class CollectBar {
     public int id;
     public String pb_one_id;
     public String user_account;
+    public String cache_account;
 
     public int getId() {
         return id;
@@ -28,5 +29,13 @@ public class CollectBar {
 
     public void setUser_account(String user_account) {
         this.user_account = user_account;
+    }
+
+    public String getCache_account() {
+        return cache_account;
+    }
+
+    public void setCache_account(String cache_account) {
+        this.cache_account = cache_account;
     }
 }

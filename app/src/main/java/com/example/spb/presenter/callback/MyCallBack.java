@@ -5,9 +5,9 @@ import org.jetbrains.annotations.NotNull;
 
 public interface MyCallBack{
     //超时
-    int ERROR_ONE = 1;
+    int ERROR_LONGTIME = 1;
     //连接错误
-    int ERROR_TWO = 2;
+    int ERROR_CONNECTION = 2;
 
     void onSuccess(@NotNull Response response);
 

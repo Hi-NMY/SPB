@@ -29,6 +29,8 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import pl.droidsonroids.gif.GifImageView;
 
+import java.util.List;
+
 public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageFPresenterImpl> implements INewPostPageFView {
 
     private GifImageView mNewpostpageRefreshTgif;
@@ -40,11 +42,15 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageF
     private PostBarAdapter postBarAdapter;
     private TextView mNewpostpageRefreshTip;
     private RefreshThumb refreshThumb;
+    private AddNewPostBar addNewPostBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        homePage = (HomePage) getActivity();
         refreshThumb = new RefreshThumb();
+        addNewPostBar = new AddNewPostBar();
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_new_bar),addNewPostBar);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_thumb),refreshThumb);
     }
 
@@ -60,7 +66,7 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageF
 
     @Override
     protected NewPostPageFPresenterImpl createPresenter() {
-        return new NewPostPageFPresenterImpl(getActivity());
+        return new NewPostPageFPresenterImpl(homePage);
     }
 
     @Override
@@ -70,7 +76,6 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageF
 
     @Override
     protected void initFragView(View view) {
-        homePage = (HomePage) getActivity();
         mNewpostpageRefreshTgif = (GifImageView) view.findViewById(R.id.newpostpage_refresh_tgif);
         mNewpostpageRefreshBgif = (GifImageView) view.findViewById(R.id.newpostpage_refresh_bgif);
         mNewpostpageRefresh = (SmartRefreshLayout) view.findViewById(R.id.newpostpage_refresh);
@@ -125,18 +130,12 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageF
         mySmartRefresh.setMyRefreshListener(new MySmartRefresh.MyRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.obtainNewBar(homePage, new NewPostPageFPresenterImpl.OnReturn() {
-                    @Override
-                    public void onReturn() {
-                        finishRRefresh(FINISH_REFRESH);
-                        initData();
-                    }
-                });
+                mPresenter.obtainNewBar(true);
             }
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
+                mPresenter.obtainNewBar(false);
             }
         });
     }
@@ -158,6 +157,7 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageF
     public void onDestroy() {
         super.onDestroy();
         SpbBroadcast.destroyBrc(refreshThumb);
+        SpbBroadcast.destroyBrc(addNewPostBar);
     }
 
     class RefreshThumb extends BroadcastReceiver{
@@ -166,6 +166,29 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageF
             int a = intent.getIntExtra("key_one",0);
             String pbId = intent.getStringExtra("key_two");
             postBarAdapter.refreshLikeItem(a,pbId);
+        }
+    }
+
+    class AddNewPostBar extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int a = intent.getIntExtra("key_one",0);
+            List<Bar> moreBars = (List<Bar>) intent.getSerializableExtra("key_two");
+            switch (a){
+                case 1:
+                    if (postBarAdapter != null){
+                        postBarAdapter.addMorePostBar(moreBars);
+                    }
+                    finishRRefresh(FINISH_MORE);
+                    break;
+                case 0:
+                    initData();
+                    finishRRefresh(FINISH_REFRESH);
+                    break;
+                case 3:
+                    postBarAdapter.deleteBar(homePage.getDeletePbId());
+                    break;
+            }
         }
     }
 }

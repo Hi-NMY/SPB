@@ -90,14 +90,8 @@ public class TopicBarPageAPresenterImpl extends BasePresenter<ITopicBarPageAView
     public void obtainTopicBarList(Topic topic,boolean fun,StopRefresh stopRefresh){
         cacheBar = new Bar();
         cacheBar.setPb_topic(topic.getTopic_name());
-        if (fun){
-            cacheBar.setPb_date("1");
-            cacheBar.setPb_article("null");
-        }else {
-            cacheBar.setPb_date(newBarsDate);
-            cacheBar.setPb_article(String.valueOf(hotBarsNum));
-        }
-
+        cacheBar.setPb_date("1");
+        cacheBar.setPb_article("null");
         barModel.selectData(barModel.DATABAR_SELECT_TWO, cacheBar, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
@@ -147,9 +141,6 @@ public class TopicBarPageAPresenterImpl extends BasePresenter<ITopicBarPageAView
                             if (cacheBar.getPb_date().equals("1")){
                                 SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_newtopicbar)
                                         ,0,topiCName,(Serializable)newBars);
-                            }else {
-                                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_newtopicbar)
-                                        ,1,topiCName,(Serializable)newBars);
                             }
                         }
                     }else {

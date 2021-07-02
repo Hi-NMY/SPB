@@ -36,12 +36,21 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
     private SpbModelBasicInter followModel;
     private SpbModelBasicInter barModel;
     private User user;
+    private boolean userFollowKey = false;
 
     public PersonalSpacePageAPresenterImpl() {
         barModel = new BarModelImpl();
         userModel = new UserModelImpl();
         followedModel = new FollowedModelImpl();
         followModel = new FollowModelImpl();
+    }
+
+    public boolean isUserFollowKey() {
+        return userFollowKey;
+    }
+
+    public void setUserFollowKey(boolean userFollowKey) {
+        this.userFollowKey = userFollowKey;
     }
 
     public void getHeadImage(String account,List<LocalMedia> result){
@@ -166,7 +175,7 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
                     if (Integer.valueOf(a.substring(0,3)) == 200){
                         List<Bar> bars = new Gson().fromJson(a.substring(3),new TypeToken<List<Bar>>(){}.getType());
                         SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_personal_bar)
-                                ,0,(Serializable)bars);
+                                ,0,account,(Serializable)bars);
                         onReturnBar.onReturn();
                     }
                 } catch (IOException e) {

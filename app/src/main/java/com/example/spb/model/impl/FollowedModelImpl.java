@@ -27,6 +27,13 @@ public class FollowedModelImpl extends SpbModelAbstrate implements SpbModelBasic
                         .build();
                 sendHttp(InValues.send(R.string.Followed),requestBody,callBack);
                 break;
+            case DATAFOLLOWED_SELECT_TWO:
+                requestBody = new FormBody.Builder()
+                        .add("fun", String.valueOf(fun))
+                        .add("user_account", data.getUser_account())
+                        .build();
+                sendHttp(InValues.send(R.string.Followed),requestBody,callBack);
+                break;
         }
     }
 

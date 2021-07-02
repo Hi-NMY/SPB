@@ -78,11 +78,11 @@ public class PostBarImgAdapter extends RecyclerView.Adapter<PostBarImgAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.mImageClear.setVisibility(View.GONE);
+        RelativeLayout.LayoutParams paramses = (RelativeLayout.LayoutParams) holder.mImageItemView.getLayoutParams();
         if (transferee == null){
             transferee = Transferee.getDefault(activity);
         }
         if (isDetail){
-            RelativeLayout.LayoutParams paramses = (RelativeLayout.LayoutParams) holder.mImageItemView.getLayoutParams();
             paramses.width = WindowManager.LayoutParams.MATCH_PARENT;
             paramses.height = WindowManager.LayoutParams.MATCH_PARENT;
             holder.mImageItemView.setLayoutParams(paramses);
@@ -95,6 +95,9 @@ public class PostBarImgAdapter extends RecyclerView.Adapter<PostBarImgAdapter.Vi
         }else {
             switch (newBarImageList.size()){
                 case 1:
+                    paramses.width = 528;
+                    paramses.height = 528;
+                    holder.mImageItemView.setLayoutParams(paramses);
                     Glide.with(MyApplication.getContext())
                             .load(minImageList.get(position))
                             .placeholder(R.drawable.enterbg)
@@ -105,6 +108,9 @@ public class PostBarImgAdapter extends RecyclerView.Adapter<PostBarImgAdapter.Vi
                             .into(holder.mImageItemView);
                     break;
                 case 3:
+                    paramses.width = 300;
+                    paramses.height = 300;
+                    holder.mImageItemView.setLayoutParams(paramses);
                     Glide.with(MyApplication.getContext())
                             .load(minImageList.get(position))
                             .placeholder(R.drawable.enterbg)
@@ -115,6 +121,9 @@ public class PostBarImgAdapter extends RecyclerView.Adapter<PostBarImgAdapter.Vi
                             .into(holder.mImageItemView);
                     break;
                 default:
+                    paramses.width = 360;
+                    paramses.height = 360;
+                    holder.mImageItemView.setLayoutParams(paramses);
                     Glide.with(MyApplication.getContext())
                             .load(minImageList.get(position))
                             .placeholder(R.drawable.enterbg)

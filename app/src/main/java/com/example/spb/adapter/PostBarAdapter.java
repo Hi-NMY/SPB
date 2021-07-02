@@ -22,8 +22,10 @@ import com.example.spb.presenter.littlefun.MyDateClass;
 import com.example.spb.presenter.littlefun.MyResolve;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.presenter.otherimpl.DataLikePresenter;
+import com.example.spb.view.Component.BarMoreOperateDialog;
 import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.Component.ThumbAnima;
+import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.activity.HomePage;
 import com.example.spb.view.activity.PersonalSpacePage;
 import com.example.spb.view.activity.PostBarDetailPage;
@@ -38,6 +40,7 @@ import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 import pl.droidsonroids.gif.GifImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHolder> {
@@ -50,6 +53,7 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
     private GridLayoutManager gridLayoutManager;
     private PostBarImgAdapter postBarImgAdapter;
     private String cacheKey = "";
+    private BarMoreOperateDialog barMoreOperateDialog;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView mItemPostbarUserHeadimg;
@@ -100,6 +104,11 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
         notifyDataSetChanged();
     }
 
+    public void addMorePostBar(List<Bar> moreBars){
+        this.bars.addAll(moreBars);
+        notifyItemRangeChanged(bars.size() - moreBars.size(), bars.size() + 1);
+    }
+
     public void refreshLikeItem(int num,String pbId){
         Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(pbId)).findAny().orElse(null);
         if (cachebar != null){
@@ -107,6 +116,20 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
             if (a != -1){
                 bars.get(a).setPb_thumb_num(bars.get(a).getPb_thumb_num() + num);
                 notifyItemChanged(a);
+            }
+        }
+    }
+
+    public void deleteBar(String pbId){
+        if (bars != null && bars.size() != 0){
+            Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(pbId)).findAny().orElse(null);
+            if (cachebar != null){
+                int a = bars.indexOf(cachebar);
+                if (a != -1){
+                    bars.remove(a);
+                    notifyItemRemoved(a);
+                    notifyItemRangeChanged(a, bars.size() + 1);
+                }
             }
         }
     }
@@ -191,13 +214,33 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 //显示dialog更多功能
+                barMoreOperateDialog = new BarMoreOperateDialog(activity);
+                barMoreOperateDialog.setData(homePage.getDataFollowPresenter().determineFollow(bars.get(position).getUser_account()),
+                        homePage.getDataCollectBarPresenter().determineCollect(bars.get(position).getPb_one_id()),bars.get(position).getPb_one_id(),bars.get(position).getUser_account());
+                if (!bars.get(position).getUser_account().equals(homePage.getDataUserMsgPresenter().getUser_account())){
+                    barMoreOperateDialog.funChat();
+                    barMoreOperateDialog.funCollect();
+                    barMoreOperateDialog.funFOllow();
+                    barMoreOperateDialog.funReport();
+                }else {
+                    barMoreOperateDialog.funCollect();
+                    barMoreOperateDialog.funReport();
+                }
+                barMoreOperateDialog.showMyDialog();
             }
         });
 
         holder.mItemPostbarCommentR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //跳转动态详细并拉起键盘评论
+                //直接跳转动态详细
+                JumpIntent.startMsgIntent(PostBarDetailPage.class, new JumpIntent.SetMsg() {
+                    @Override
+                    public void setMessage(Intent intent) {
+                        intent.putExtra(InValues.send(R.string.intent_Bar),bars.get(position));
+                        intent.putExtra(InValues.send(R.string.intent_keyboard_start),true);
+                    }
+                });
             }
         });
         holder.mItemPostbarLikeR.setOnClickListener(new View.OnClickListener() {
@@ -305,6 +348,10 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return bars.size();
+        if (bars == null){
+            return 0;
+        }else {
+            return bars.size();
+        }
     }
 }
