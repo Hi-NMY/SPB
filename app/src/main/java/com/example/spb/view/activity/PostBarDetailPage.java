@@ -18,6 +18,7 @@ import com.example.spb.adapter.PostBarImgAdapter;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.entity.Bar;
+import com.example.spb.entity.Comment;
 import com.example.spb.entity.Topic;
 import com.example.spb.presenter.impl.PostBarDetailPageAPresenterImpl;
 import com.example.spb.presenter.littlefun.InValues;
@@ -25,20 +26,19 @@ import com.example.spb.presenter.littlefun.MyDateClass;
 import com.example.spb.presenter.littlefun.MyResolve;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.presenter.otherimpl.DataLikePresenter;
-import com.example.spb.view.Component.BarMoreOperateDialog;
-import com.example.spb.view.Component.FragmentSpbAvtivityBar;
-import com.example.spb.view.Component.MyToastClass;
-import com.example.spb.view.Component.ThumbAnima;
+import com.example.spb.view.Component.*;
+import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;
 import com.example.spb.view.inter.IPostBarDetailPageAView;
-import com.example.spb.view.littlefun.HideKeyboard;
-import com.example.spb.view.littlefun.JumpIntent;
+import com.example.spb.view.littlefun.*;
 import com.gyf.immersionbar.ImmersionBar;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 import pl.droidsonroids.gif.GifImageView;
+
+import java.util.List;
 
 public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, PostBarDetailPageAPresenterImpl> implements IPostBarDetailPageAView, View.OnClickListener {
 
@@ -70,12 +70,19 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
     private boolean keyboardStartKey = false;
     private ImageView mPostbarDetailCommentImg;
     private BarMoreOperateDialog barMoreOperateDialog;
+    private EasyVoice e;
+    private GIFShow gifShow;
+    private RelativeLayout mExcessR;
+    private BarComment barComment;
+    private DialogInter easyDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_bar_detail_page);
         refreshFollow = new RefreshFollow();
+        barComment = new BarComment();
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment), barComment);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_re_Follow), refreshFollow);
         layoutInflater = this.getLayoutInflater();
         barData = (Bar) getIntent().getSerializableExtra(InValues.send(R.string.intent_Bar));
@@ -85,11 +92,12 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
 
     @Override
     protected PostBarDetailPageAPresenterImpl createPresenter() {
-        return new PostBarDetailPageAPresenterImpl();
+        return new PostBarDetailPageAPresenterImpl(this);
     }
 
     @Override
     protected void initActView() {
+        mPresenter.setBarUser(barData.getUser_account());
         mPresenter.setUserFollowKey(getDataFollowPresenter().determineFollow(barData.getUser_account()));
         mPostbarDetailUserHeadimg = (RoundedImageView) findViewById(R.id.postbar_detail_user_headimg);
         mPostbarDetailUsername = (TextView) findViewById(R.id.postbar_detail_username);
@@ -110,11 +118,14 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
         mPostbarDetailLikeR = (RelativeLayout) findViewById(R.id.postbar_detail_like_R);
         mPostbarDetailDiscussNum = (TextView) findViewById(R.id.postbar_detail_discuss_num);
         mPostbarDetailDiscussList = (RecyclerView) findViewById(R.id.postbar_detail_discuss_list);
+        mPostbarDetailDiscussList = MyListAnimation.setListAnimation(this,mPostbarDetailDiscussList);
         mCommentText = (EditText) findViewById(R.id.comment_text);
         mCommentSend = (Button) findViewById(R.id.comment_send);
         mPostbarDetailBottomCommentR = (RelativeLayout) findViewById(R.id.postbar_detail_bottom_commentR);
+        mExcessR = (RelativeLayout) findViewById(R.id.excess_r);
+        gifShow = new GIFShow(mVoiceGif);
         barMoreOperateDialog = new BarMoreOperateDialog(this);
-        if (keyboardStartKey){
+        if (keyboardStartKey) {
             showKeyBoard();
         }
         setMyListener();
@@ -127,6 +138,8 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
 
     @Override
     protected void initData() {
+        mPresenter.setCommentpbid(barData.getPb_one_id());
+        mPresenter.obtainComment();
         Glide.with(this)
                 .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + barData.getUser_account() + "/HeadImage/myHeadImage.png")
                 .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
@@ -155,6 +168,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
             mPostbarDetailImagelist.setAdapter(postBarImgAdapter);
         }
         if (barData.getPb_voice() != null && !barData.getPb_voice().equals("")) {
+            mVoiceTime.setText(String.valueOf(EasyVoice.getVoiceTime(InValues.send(R.string.httpHeadert) + barData.getPb_voice())));
             mPostbarDetailVoice.setVisibility(View.VISIBLE);
         }
         if (barData.getPb_topic() != null && !barData.getPb_topic().equals("") && !barData.getPb_topic().equals("null")) {
@@ -198,7 +212,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
         }
     }
 
-    public void showKeyBoard(){
+    public void showKeyBoard() {
         mCommentText.setFocusable(true);
         mCommentText.setFocusableInTouchMode(true);
         mCommentText.requestFocus();
@@ -217,14 +231,15 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
 
     @Override
     public void createDialog() {
+        easyDialog = new EasyDialog(this,R.drawable.loading);
         barMoreOperateDialog = new BarMoreOperateDialog(PostBarDetailPage.this);
         barMoreOperateDialog.setData(getDataFollowPresenter().determineFollow(barData.getUser_account()),
-                getDataCollectBarPresenter().determineCollect(barData.getPb_one_id()),barData.getPb_one_id(),barData.getUser_account());
-        if (!barData.getUser_account().equals(getDataUserMsgPresenter().getUser_account())){
+                getDataCollectBarPresenter().determineCollect(barData.getPb_one_id()), barData.getPb_one_id(), barData.getUser_account());
+        if (!barData.getUser_account().equals(getDataUserMsgPresenter().getUser_account())) {
             barMoreOperateDialog.funChat();
             barMoreOperateDialog.funCollect();
             barMoreOperateDialog.funReport();
-        }else {
+        } else {
             barMoreOperateDialog.funCollect();
             barMoreOperateDialog.funReport();
             barMoreOperateDialog.funDeleteBar(new BarMoreOperateDialog.DeleteReturn() {
@@ -234,7 +249,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            MyToastClass.ShowToast(MyApplication.getContext(),"帖子已被删除");
+                            MyToastClass.ShowToast(MyApplication.getContext(), "帖子已被删除");
                         }
                     });
                 }
@@ -244,12 +259,26 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
 
     @Override
     public void showDialogS(int i) {
-        barMoreOperateDialog.showMyDialog();
+        switch (i){
+            case EASYDIALOG:
+                easyDialog.showMyDialog();
+                break;
+            case BARMOREOPERATEDIALOG:
+                barMoreOperateDialog.showMyDialog();
+                break;
+        }
     }
 
     @Override
     public void closeDialog(int i) {
-
+        switch (i){
+            case EASYDIALOG:
+                easyDialog.closeMyDialog();
+                break;
+            case BARMOREOPERATEDIALOG:
+                barMoreOperateDialog.closeMyDialog();
+                break;
+        }
     }
 
     public void yesAtt() {
@@ -269,6 +298,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
         mCommentSend.setOnClickListener(this);
         mPostbarDetailCommentImg.setOnClickListener(this);
         mPostbarDetailUserHeadimg.setOnClickListener(this);
+        mPostbarDetailVoice.setOnClickListener(this);
         mCommentText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -314,7 +344,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
             @Override
             public void onClick() {
                 createDialog();
-                showDialogS(0);
+                showDialogS(BARMOREOPERATEDIALOG);
             }
         });
         bar.barCentralTxt(TITLE, null);
@@ -367,18 +397,36 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
                         });
                 break;
             case R.id.postbar_detail_comment_img:
-                showKeyBoard();
+                mCommentText.setHint("请输入内容");
+                mPresenter.setCommenttouser("");
+                mCommentText.setFocusable(true);
+                mCommentText.setFocusableInTouchMode(true);
+                mCommentText.requestFocus();
+                mCommentText.setText("");
+                cacheCommentName = "";
+                HideKeyboard.showboard(mCommentText);
                 break;
             case R.id.postbar_detail_user_headimg:
                 JumpIntent.startMsgIntent(PersonalSpacePage.class, new JumpIntent.SetMsg() {
                     @Override
                     public void setMessage(Intent intent) {
-                        intent.putExtra(InValues.send(R.string.intent_User_account),barData.getUser_account());
+                        intent.putExtra(InValues.send(R.string.intent_User_account), barData.getUser_account());
                     }
                 });
                 break;
+            case R.id.postbar_detail_voice:
+                if (e == null) {
+                    e = toVoice(barData.getPb_voice(), mVoiceTime, gifShow);
+                }
+                if (e.isVoicePlayerKey()) {
+                    e.startPlayer();
+                } else {
+                    e.stopPlayer();
+                }
+                break;
             case R.id.comment_send:
-
+                mPresenter.sendNewComment(getDataUserMsgPresenter().getUser_account(),barData.getUser_account());
+                showDialogS(EASYDIALOG);
                 break;
         }
     }
@@ -387,6 +435,18 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
     protected void onDestroy() {
         super.onDestroy();
         SpbBroadcast.destroyBrc(refreshFollow);
+        SpbBroadcast.destroyBrc(barComment);
+        if (e != null) {
+            e.stopPlayer();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (e != null) {
+            e.stopPlayer();
+        }
     }
 
     class RefreshFollow extends BroadcastReceiver {
@@ -399,6 +459,81 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
             } else {
                 mPresenter.setUserFollowKey(false);
                 MyToastClass.ShowToast(MyApplication.getContext(), "取消关注");
+            }
+        }
+    }
+
+    private String cacheCommentName = "";
+
+    class BarComment extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int a = intent.getIntExtra("key_one",-1);
+            String num = intent.getStringExtra("key_two");
+            switch (a){
+                case 0:
+                    List<Comment> comments = (List<Comment>)intent.getSerializableExtra("key_three");
+                    mPresenter.setCommentList(comments,mPostbarDetailDiscussList);
+                    mExcessR.setVisibility(View.GONE);
+                    barData.setPb_comment_num(comments.size());
+                    if (barData.getPb_comment_num() <= 0){
+                        mPostbarDetailDiscussNum.setVisibility(View.GONE);
+                        mPostbarDetailCommentNum.setVisibility(View.GONE);
+                    }else {
+                        mPostbarDetailDiscussNum.setVisibility(View.VISIBLE);
+                        mPostbarDetailCommentNum.setVisibility(View.VISIBLE);
+                    }
+                    mPostbarDetailCommentNum.setText(String.valueOf(barData.getPb_comment_num()));
+                    mPostbarDetailDiscussNum.setText(String.valueOf(barData.getPb_comment_num()));
+                    mPostbarDetailCommentNum.postInvalidate();
+                    mPostbarDetailDiscussNum.postInvalidate();
+                    break;
+                case 1:
+                    Comment comment = (Comment)intent.getSerializableExtra("key_three");
+                    if (comment != null){
+                        comment.setUser_name(getDataUserMsgPresenter().getUser_name());
+                        if (!cacheCommentName.equals("")){
+                            comment.setUser_toname(cacheCommentName);
+                        }
+                        mPresenter.addOneComment(comment);
+                    }
+                    closeDialog(EASYDIALOG);
+                    barData.setPb_comment_num(barData.getPb_comment_num() + Integer.valueOf(num));
+                    if (barData.getPb_comment_num() <= 0){
+                        mPostbarDetailDiscussNum.setVisibility(View.GONE);
+                        mPostbarDetailCommentNum.setVisibility(View.GONE);
+                    }else {
+                        mPostbarDetailDiscussNum.setVisibility(View.VISIBLE);
+                        mPostbarDetailCommentNum.setVisibility(View.VISIBLE);
+                    }
+                    mPostbarDetailCommentNum.setText(String.valueOf(barData.getPb_comment_num()));
+                    mPostbarDetailDiscussNum.setText(String.valueOf(barData.getPb_comment_num()));
+                    mPostbarDetailCommentNum.postInvalidate();
+                    mPostbarDetailDiscussNum.postInvalidate();
+                    mCommentText.setFocusable(false);
+                    mCommentText.setFocusableInTouchMode(true);
+                    mCommentText.requestFocus();
+                    mCommentText.setText("");
+                    HideKeyboard.hideboard(mCommentText);
+                    break;
+                case 3:
+                    mCommentText.setHint("回复:" + num.substring(9));
+                    cacheCommentName = num.substring(9);
+                    mPresenter.setCommenttouser(num.substring(0,9));
+                    mCommentText.setFocusable(true);
+                    mCommentText.setFocusableInTouchMode(true);
+                    mCommentText.requestFocus();
+                    mCommentText.setText("");
+                    HideKeyboard.showboard(mCommentText);
+                    break;
+                case 4:
+                    Comment c = (Comment)intent.getSerializableExtra("key_three");
+                    if (!c.getComment_user().equals(getDataUserMsgPresenter().getUser_account()) && !barData.getUser_account().equals(getDataUserMsgPresenter().getUser_account())){
+                        MyToastClass.ShowToast(MyApplication.getContext(),"不能删除别人的评论哦");
+                    }else{
+                        mPresenter.removeComment(c.getComment_id(),barData.getUser_account());
+                    }
+                    break;
             }
         }
     }

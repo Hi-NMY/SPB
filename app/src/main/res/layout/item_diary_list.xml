@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/qianbai"
                 android:clipChildren="false"
                 android:clipToPadding="false"
@@ -26,18 +26,18 @@
                 android:textColor="@color/qihei"
                 android:textStyle="bold"
                 android:textSize="@dimen/font_22"
-                android:text="2021"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
         <TextView
                 android:id="@+id/diary_date_month"
                 android:layout_marginLeft="@dimen/margin_16"
-                android:translationY="@dimen/margin__8"
+                android:translationY="@dimen/margin__4"
                 android:textColor="@color/qihei"
                 android:textStyle="bold"
                 android:textSize="@dimen/font_22"
-                android:text="0302"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -47,10 +47,9 @@
                 android:layout_marginLeft="@dimen/margin_20"
                 android:textColor="@color/qihei"
                 android:textSize="@dimen/font_14"
-                android:text="星期三"
+                android:text=""
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="MissingConstraints"/>
+                android:layout_height="wrap_content"/>
 
         <TextView
                 android:id="@+id/diary_date_time"
@@ -60,22 +59,20 @@
                 android:layout_marginTop="@dimen/margin_2"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/font_12"
-                android:text="黄昏"
+                android:text=""
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="MissingConstraints"/>
+                android:layout_height="wrap_content"/>
 
         <ImageView
                 android:id="@+id/diary_weather"
-                android:background="@color/qihei"
                 android:layout_alignTop="@id/diary_date_time"
                 android:layout_toRightOf="@id/diary_date_time"
                 android:layout_marginLeft="@dimen/margin_12"
                 android:layout_width="@dimen/icon_image_24"
                 android:layout_height="@dimen/icon_image_24"
-                tools:ignore="MissingConstraints"/>
+                android:translationY="@dimen/margin__4"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
                 android:layout_below="@+id/diary_date_week"
                 android:layout_marginHorizontal="@dimen/margin_20"
                 android:layout_marginVertical="@dimen/margin_20"
@@ -84,29 +81,20 @@
 
             <TextView
                     android:id="@+id/diary_message"
-                    android:textColor="@color/grey"
+                    android:textColor="@color/qihei"
                     android:textSize="@dimen/font_16"
-                    android:text="第三、你、\n方发\n阿萨\n大大大\n大所的在\n下次行n\政\n村\naaadafassadadsasdadaddasdsadadasddadadafdada\ndasfdfd\nsfsfsdfsf\nsfsfada"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    tools:ignore="MissingConstraints"/>
+                    android:text=""
+                    android:layout_toLeftOf="@id/diary_img"
+                    android:layout_marginRight="@dimen/margin_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
-            <ImageView
+            <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/diary_img"
-                    android:background="@color/qihei"
-                    android:layout_width="78dp"
-                    android:layout_height="64dp"
-                    tools:ignore="MissingConstraints"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-            <!--            <TextView-->
-            <!--                    android:id="@+id/diary_tip"-->
-            <!--                    android:layout_margin="@dimen/margin_8"-->
-            <!--                    android:textColor="@color/grey"-->
-            <!--                    android:textSize="@dimen/font_10"-->
-            <!--                    android:text="长按即可删除日记"-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    tools:ignore="MissingConstraints"/>-->
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_alignParentRight="true"
+                    app:riv_corner_radius="@dimen/corner_8"
+                    android:layout_width="128dp"
+                    android:layout_height="128dp"/>
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

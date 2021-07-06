@@ -104,6 +104,11 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
             postBarPage = new PostBarPage();
             fragmentTransaction.add(R.id.homepage_fragment, postBarPage);
         }
+
+        if (index != PAGENUMBER){
+            SpbBroadcast.sendReceiver(this,InValues.send(R.string.Bcr_stop_voice),0,null);
+        }
+
         switch (index) {
             case 1:
                 fragmentTransaction.show(postBarPage);
@@ -282,7 +287,7 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
                 bar.barRightImg1(R.drawable.adduser_icon, new FragmentSpbAvtivityBar.OnMyClick() {
                     @Override
                     public void onClick() {
-
+                        JumpIntent.startMyIntent(SearchUserPage.class);
                     }
                 });
                 bar.barRightImg2(R.drawable.scancode_icon, new FragmentSpbAvtivityBar.OnMyClick() {
@@ -360,5 +365,17 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
             finish();
             System.exit(0);
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SpbBroadcast.sendReceiver(this,InValues.send(R.string.Bcr_stop_voice),0,null);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SpbBroadcast.sendReceiver(this,InValues.send(R.string.Bcr_stop_voice),0,null);
     }
 }

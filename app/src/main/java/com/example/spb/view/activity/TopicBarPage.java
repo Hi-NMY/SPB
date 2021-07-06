@@ -236,6 +236,22 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
         mTopicbarIdt.setNavigator(commonNavigator);
         ViewPagerHelper.bind(mTopicbarIdt, mTopicbarViewpager);
         mTopicbarViewpager.setCurrentItem(1);
+        mTopicbarViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_stop_voice),0,null);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private AppBarLayout.OnOffsetChangedListener listenViewMove() {
@@ -383,5 +399,17 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
                 }
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SpbBroadcast.sendReceiver(this,InValues.send(R.string.Bcr_stop_voice),0,null);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SpbBroadcast.sendReceiver(this,InValues.send(R.string.Bcr_stop_voice),0,null);
     }
 }

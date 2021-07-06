@@ -54,6 +54,9 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
     private PostBarImgAdapter postBarImgAdapter;
     private String cacheKey = "";
     private BarMoreOperateDialog barMoreOperateDialog;
+    private int cachePosition = -1;
+    private EasyVoice e;
+    private String commentIDKey = "";
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView mItemPostbarUserHeadimg;
@@ -101,7 +104,6 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
         cacheKey = MyDateClass.showNowDate();
         homePage = (HomePage)activity;
         layoutInflater = activity.getLayoutInflater();
-        notifyDataSetChanged();
     }
 
     public void addMorePostBar(List<Bar> moreBars){
@@ -120,6 +122,28 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
         }
     }
 
+    public void refreshCommentItem(int num){
+        Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(commentIDKey)).findAny().orElse(null);
+        if (cachebar != null){
+            int a = bars.indexOf(cachebar);
+            if (a != -1){
+                bars.get(a).setPb_comment_num(bars.get(a).getPb_comment_num() + num);
+                notifyItemChanged(a);
+            }
+        }
+    }
+
+    public void refreshNowCommentItem(int num){
+        Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(commentIDKey)).findAny().orElse(null);
+        if (cachebar != null){
+            int a = bars.indexOf(cachebar);
+            if (a != -1){
+                bars.get(a).setPb_comment_num(num);
+                notifyItemChanged(a);
+            }
+        }
+    }
+
     public void deleteBar(String pbId){
         if (bars != null && bars.size() != 0){
             Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(pbId)).findAny().orElse(null);
@@ -130,6 +154,26 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
                     notifyItemRemoved(a);
                     notifyItemRangeChanged(a, bars.size() + 1);
                 }
+            }
+        }
+    }
+
+    public void refreshVoiceView(int position){
+        if (position != 0){
+            notifyItemChanged(0,position - 1);
+        }
+        notifyItemChanged(position + 1,bars.size() - 1);
+    }
+
+    public void refreshNoewVoice(int position){
+        if (cachePosition != -1){
+            if (e != null){
+                e.stopPlayer();
+            }
+            if (position == -1){
+                notifyItemChanged(cachePosition);
+            }else {
+                notifyItemChanged(position);
             }
         }
     }
@@ -191,6 +235,7 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
                 JumpIntent.startMsgIntent(PostBarDetailPage.class, new JumpIntent.SetMsg() {
                     @Override
                     public void setMessage(Intent intent) {
+                        commentIDKey = bars.get(position).getPb_one_id();
                         intent.putExtra(InValues.send(R.string.intent_Bar),bars.get(position));
                     }
                 });
@@ -237,6 +282,7 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
                 JumpIntent.startMsgIntent(PostBarDetailPage.class, new JumpIntent.SetMsg() {
                     @Override
                     public void setMessage(Intent intent) {
+                        commentIDKey = bars.get(position).getPb_one_id();
                         intent.putExtra(InValues.send(R.string.intent_Bar),bars.get(position));
                         intent.putExtra(InValues.send(R.string.intent_keyboard_start),true);
                     }
@@ -298,52 +344,36 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
             holder.mItemPostbarImagelist.setAdapter(postBarImgAdapter);
         }
 
-//        final GIFShow[] gifShow = new GIFShow[1];
         if(bar.getPb_voice() != null && !bar.getPb_voice().equals("")) {
             holder.mItemPostbarVoice.setVisibility(View.VISIBLE);
+            /**
+             *   数字加载！耗时操作！造成数据呈现卡顿！
+             * @Auther  nmynmy
+             * @Date  2021-07-06  21:26
+             */
+           // holder.mVoiceTime.setText(String.valueOf(EasyVoice.getVoiceTime(InValues.send(R.string.httpHeadert) + bar.getPb_voice())));
+            GIFShow gifShow = new GIFShow(holder.mVoiceGif);
+            holder.mItemPostbarVoice.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    refreshVoiceView(position);
+                    if (e == null || position != cachePosition){
+                        if (e != null){
+                            e.stopPlayer();
+                        }
+                        e = homePage.toVoice(bars.get(position).getPb_voice(),holder.mVoiceTime,gifShow);
+                        cachePosition = position;
+                    }
+                    if (e.isVoicePlayerKey()){
+                        e.startPlayer();
+                    }else {
+                        refreshNoewVoice(position);
+                    }
+                }
+            });
+        }else {
+            holder.mItemPostbarVoice.setVisibility(View.GONE);
         }
-//            gifShow[0] = new GIFShow(holder.mVoiceGif);
-//            EasyVoice easyVoice = new EasyVoice(InValues.send(R.string.httpHeadert) + bar.getPb_voice(), new EasyVoice.OnVoice() {
-//                @Override
-//                public void onStart(int time) {
-//                    activity.runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            holder.mVoiceTime.setText(String.valueOf(time));
-//                            holder.mVoiceTime.postInvalidate();
-//                            gifShow[0].startGif();
-//                        }
-//                    });
-//                }
-//
-//                @Override
-//                public void onStop(int cacheTime) {
-//                    activity.runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            holder.mVoiceTime.setText(String.valueOf(cacheTime));
-//                            gifShow[0] = new GIFShow(holder.mVoiceGif);
-//                        }
-//                    });
-//                }
-//
-//                @Override
-//                public void onDestroy() {
-//
-//                }
-//            });
-//            holder.mVoiceTime.setText(String.valueOf(easyVoice.getVoiceTime()));
-//            holder.mItemPostbarVoice.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (easyVoice.isVoicePlayerKey()){
-//                        easyVoice.startPlayer();
-//                    }else {
-//                        easyVoice.stopPlayer();
-//                    }
-//                }
-//            });
-//        }
     }
 
     @Override

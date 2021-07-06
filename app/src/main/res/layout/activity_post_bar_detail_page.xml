@@ -15,7 +15,7 @@
             android:layout_below="@+id/postbar_detail_bar"
             android:layout_above="@id/postbar_detail_bottom_commentR"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
         <RelativeLayout
                 android:layout_width="match_parent"
@@ -299,15 +299,9 @@
                     android:layout_marginHorizontal="@dimen/margin_12"
                     android:layout_below="@+id/cR"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="match_parent"/>
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
-
-    <fragment
-            android:id="@+id/postbar_detail_bar"
-            android:name="com.example.spb.view.Component.FragmentSpbAvtivityBar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/spb_activity_bar_44"/>
 
     <RelativeLayout
             android:id="@+id/postbar_detail_bottom_commentR"
@@ -356,4 +350,34 @@
                     android:layout_height="@dimen/icon_image_32"/>
         </LinearLayout>
     </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/excess_r"
+            android:background="@color/beijing"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/gif"
+                android:layout_centerInParent="true"
+                android:background="@drawable/loading"
+                android:layout_width="@dimen/icon_image_64"
+                android:layout_height="@dimen/icon_image_64"
+                />
+
+        <TextView
+                android:textColor="@color/grey"
+                android:layout_marginTop="@dimen/margin_4"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/gif"
+                android:text="正在飞速加载数据"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <fragment
+            android:id="@+id/postbar_detail_bar"
+            android:name="com.example.spb.view.Component.FragmentSpbAvtivityBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spb_activity_bar_44"/>
 </RelativeLayout>

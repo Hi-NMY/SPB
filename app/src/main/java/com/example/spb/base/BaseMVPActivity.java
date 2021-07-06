@@ -1,10 +1,15 @@
 package com.example.spb.base;
 
 import android.os.Bundle;
+import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.spb.R;
+import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.otherimpl.*;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
+import com.example.spb.view.littlefun.EasyVoice;
+import com.example.spb.view.littlefun.GIFShow;
 
 public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppCompatActivity {
 
@@ -171,6 +176,40 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
 
     public void setDataUserMsgPresenter() {
         this.dataUserMsgPresenter = new DataUserMsgPresenter(user_account);
+    }
+
+
+    public EasyVoice toVoice(String url, TextView textView, GIFShow gif){
+        EasyVoice easyVoice = new EasyVoice(InValues.send(R.string.httpHeadert) + url, new EasyVoice.OnVoice() {
+            @Override
+            public void onStart(int time) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        gif.startGif();
+                        textView.setText(String.valueOf(time));
+                        textView.postInvalidate();
+                    }
+                });
+            }
+
+            @Override
+            public void onStop(int cacheTime) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        gif.stopGif();
+                        textView.setText(String.valueOf(cacheTime));
+                    }
+                });
+            }
+
+            @Override
+            public void onDestroy() {
+
+            }
+        });
+        return easyVoice;
     }
 
     @Override

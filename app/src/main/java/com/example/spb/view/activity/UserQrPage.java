@@ -2,15 +2,21 @@ package com.example.spb.view.activity;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.View;
+import android.util.DisplayMetrics;
 import android.widget.ImageView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.MediaStoreSignature;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.UserQrPageAPresenterImpl;
+import com.example.spb.presenter.littlefun.DataEncryption;
+import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.littlefun.MyDateClass;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
 import com.example.spb.view.inter.IUserQrPageAView;
 import com.gyf.immersionbar.ImmersionBar;
 import com.king.zxing.util.CodeUtils;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 public class UserQrPage extends BaseMVPActivity<IUserQrPageAView, UserQrPageAPresenterImpl> implements IUserQrPageAView {
 
@@ -19,15 +25,38 @@ public class UserQrPage extends BaseMVPActivity<IUserQrPageAView, UserQrPageAPre
     private FragmentSpbAvtivityBar bar;
 
     private String TITLETXT = "我的二维码";
+    private int height;
+    private RoundedImageView mUserHeadimg;
+    private String cacheDate = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_qr_page);
+        cacheDate = MyDateClass.showNowDate();
+        DisplayMetrics metric = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metric);
+        int width = metric.widthPixels;  //宽度（PX）
+        height = metric.heightPixels;  //高度（PX）
+        if (height < 2000) {
+            height = 500;
+        } else {
+            height = 650;
+        }
         initActView();
         //生成二维码
-        qrBitmap = CodeUtils.createQRCode("123123", 400);
-        mMyQrCode.setImageBitmap(qrBitmap);
+        mPresenter.obtainDate(new UserQrPageAPresenterImpl.OnReturn() {
+            @Override
+            public void onReturn() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        qrBitmap = CodeUtils.createQRCode(DataEncryption.intoData(getDataUserMsgPresenter().getUser_account() + mPresenter.getDate()), height);
+                        mMyQrCode.setImageBitmap(qrBitmap);
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -38,6 +67,17 @@ public class UserQrPage extends BaseMVPActivity<IUserQrPageAView, UserQrPageAPre
     @Override
     protected void initActView() {
         mMyQrCode = (ImageView) findViewById(R.id.my_qrCode);
+        mUserHeadimg = (RoundedImageView) findViewById(R.id.user_headimg);
+        if(mUserHeadimg.getTag() == null || !mUserHeadimg.getTag().equals(cacheDate)) {
+            Glide.with(this)
+                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + getDataUserMsgPresenter().getUser_account() + "/HeadImage/myHeadImage.png")
+                    .placeholder(R.drawable.logo2)
+                    .error(R.drawable.logo2)
+                    .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()),1,1))
+                    .centerCrop()
+                    .into(mUserHeadimg);
+            mUserHeadimg.setTag(cacheDate);
+        }
         setActivityBar();
         setBar();
         setMyListener();
@@ -82,9 +122,6 @@ public class UserQrPage extends BaseMVPActivity<IUserQrPageAView, UserQrPageAPre
     @Override
     public void setBar() {
         ImmersionBar.with(this)
-                .statusBarDarkFont(true)
-                .fitsSystemWindows(true)
-                .statusBarColor(R.color.beijing)
                 .init();
     }
 
@@ -92,7 +129,7 @@ public class UserQrPage extends BaseMVPActivity<IUserQrPageAView, UserQrPageAPre
     public void setActivityBar() {
         bar = setMyActivityBar(R.id.userqr_actbar);
         bar.setBarBackground(R.color.TransColor);
-        bar.barCentralTxt(TITLETXT,null);
+        bar.barCentralTxt(TITLETXT, null);
         bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
             public void onClick() {

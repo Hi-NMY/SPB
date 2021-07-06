@@ -43,6 +43,20 @@ public class EasyVoice {
         return voiceTime;
     }
 
+    public static int getVoiceTime(String url) {
+        int Time = 0;
+        try {
+            MediaPlayer mediaPlayer = new MediaPlayer();
+            mediaPlayer.setDataSource(url);
+            mediaPlayer.prepare();
+            Time = mediaPlayer.getDuration()/1000;
+            mediaPlayer.release();
+            return Time;
+        } catch (IOException e) {
+            return 0;
+        }
+    }
+
     public boolean isVoicePlayerKey() {
         return voicePlayerKey;
     }

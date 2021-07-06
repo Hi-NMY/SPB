@@ -100,9 +100,27 @@ public class NewTopicBarFPresenterImpl extends BasePresenter<INewTopicBarFView> 
         });
     }
 
+    public void stopVoice(){
+        if (topicBarAdapter != null){
+            topicBarAdapter.refreshNoewVoice(-1);
+        }
+    }
+
     public void refreshThumb(int num,String pbId){
         if (topicBarAdapter != null){
             topicBarAdapter.refreshLikeItem(num,pbId);
+        }
+    }
+
+    public void refreshComment(int num){
+        if (topicBarAdapter != null){
+            topicBarAdapter.refreshCommentItem(num);
+        }
+    }
+
+    public void refreshNowComment(int num){
+        if (topicBarAdapter != null){
+            topicBarAdapter.refreshNowCommentItem(num);
         }
     }
 }

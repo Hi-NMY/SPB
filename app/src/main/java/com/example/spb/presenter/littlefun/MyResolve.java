@@ -2,6 +2,7 @@ package com.example.spb.presenter.littlefun;
 
 import android.widget.ImageButton;
 import com.example.spb.entity.Bar;
+import com.example.spb.entity.Comment;
 import com.example.spb.entity.ImageDouble;
 import com.example.spb.entity.Topic;
 
@@ -85,5 +86,19 @@ public class MyResolve {
             }
         }
         return tags;
+    }
+
+    public static Comment InComment(String date){
+        String[] one = date.split("\\|");
+        Comment comment = new Comment();
+        comment.setPb_one_id(one[0]);
+        comment.setComment_art(one[1]);
+        comment.setComment_date(one[2]);
+        comment.setComment_user(one[3]);
+        if(one[4] != null){
+            comment.setComment_touser(one[4]);
+        }
+        comment.setComment_id(Integer.valueOf(one[5]));
+        return comment;
     }
 }

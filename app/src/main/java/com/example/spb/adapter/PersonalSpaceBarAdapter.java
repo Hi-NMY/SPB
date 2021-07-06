@@ -26,6 +26,8 @@ import com.example.spb.view.activity.PersonalSpacePage;
 import com.example.spb.view.activity.PostBarDetailPage;
 import com.example.spb.view.activity.TopicBarPage;
 import com.example.spb.view.littlefun.BarImageInFlater;
+import com.example.spb.view.littlefun.EasyVoice;
+import com.example.spb.view.littlefun.GIFShow;
 import com.example.spb.view.littlefun.JumpIntent;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -45,6 +47,9 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
     private PostBarImgAdapter postBarImgAdapter;
     private PersonalSpacePage personalSpacePage;
     private BarMoreOperateDialog barMoreOperateDialog;
+    private int cachePosition = -1;
+    private EasyVoice e;
+    private String commentIDKey = "";
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView mItemUserspaceBarPostdate;
@@ -108,6 +113,28 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
         }
     }
 
+    public void refreshCommentItem(int num){
+        Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(commentIDKey)).findAny().orElse(null);
+        if (cachebar != null){
+            int a = bars.indexOf(cachebar);
+            if (a != -1){
+                bars.get(a).setPb_comment_num(bars.get(a).getPb_comment_num() + num);
+                notifyItemChanged(a);
+            }
+        }
+    }
+
+    public void refreshNowCommentItem(int num){
+        Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(commentIDKey)).findAny().orElse(null);
+        if (cachebar != null){
+            int a = bars.indexOf(cachebar);
+            if (a != -1){
+                bars.get(a).setPb_comment_num(num);
+                notifyItemChanged(a);
+            }
+        }
+    }
+
     public void deleteBar(String pbId){
         Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(pbId)).findAny().orElse(null);
         if (cachebar != null){
@@ -119,6 +146,35 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
             }
         }
     }
+
+    public void refreshVoiceView(int position){
+        if (position != 0){
+            notifyItemChanged(0,position - 1);
+        }
+        notifyItemChanged(position + 1,bars.size() - 1);
+    }
+
+    public void refreshNoewVoice(int position){
+        if (cachePosition != -1){
+            if (e != null){
+                e.stopPlayer();
+            }
+            if (position == -1){
+                /**
+                 *暂时解决卡顿问题。必现一次卡顿。待解决！
+                 * @Auther  nmynmy
+                 * @Date  2021-07-05  21:41
+                 */
+                if (e != null){
+                    notifyItemChanged(cachePosition,0);
+                    e = null;
+                }
+            }else {
+                notifyItemChanged(position,0);
+            }
+        }
+    }
+
 
     @NonNull
     @Override
@@ -175,6 +231,7 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
                 JumpIntent.startMsgIntent(PostBarDetailPage.class, new JumpIntent.SetMsg() {
                     @Override
                     public void setMessage(Intent intent) {
+                        commentIDKey = bars.get(position).getPb_one_id();
                         intent.putExtra(InValues.send(R.string.intent_Bar),bars.get(position));
                     }
                 });
@@ -205,6 +262,14 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
             @Override
             public void onClick(View v) {
                 //跳转动态详细并拉起键盘评论
+                JumpIntent.startMsgIntent(PostBarDetailPage.class, new JumpIntent.SetMsg() {
+                    @Override
+                    public void setMessage(Intent intent) {
+                        commentIDKey = bars.get(position).getPb_one_id();
+                        intent.putExtra(InValues.send(R.string.intent_Bar),bars.get(position));
+                        intent.putExtra(InValues.send(R.string.intent_keyboard_start),true);
+                    }
+                });
             }
         });
         holder.mItemPostbarLikeR.setOnClickListener(new View.OnClickListener() {
@@ -263,6 +328,33 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
         }else {
             holder.mItemUserspaceBarImagelist.setVisibility(View.GONE);
         }
+
+        if(bar.getPb_voice() != null && !bar.getPb_voice().equals("")) {
+            holder.mItemUserspaceBarVoice.setVisibility(View.VISIBLE);
+            holder.mVoiceTime.setText(String.valueOf(EasyVoice.getVoiceTime(InValues.send(R.string.httpHeadert) + bar.getPb_voice())));
+            GIFShow gifShow = new GIFShow(holder.mVoiceGif);
+            holder.mItemUserspaceBarVoice.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    refreshVoiceView(position);
+                    if (e == null || position != cachePosition){
+                        if (e != null){
+                            e.stopPlayer();
+                        }
+                        e = personalSpacePage.toVoice(bars.get(position).getPb_voice(),holder.mVoiceTime,gifShow);
+                        cachePosition = position;
+                    }
+                    if (e.isVoicePlayerKey()){
+                        e.startPlayer();
+                    }else {
+                        refreshNoewVoice(position);
+                    }
+                }
+            });
+        }else {
+            holder.mItemUserspaceBarVoice.setVisibility(View.GONE);
+        }
+
     }
 
     @Override

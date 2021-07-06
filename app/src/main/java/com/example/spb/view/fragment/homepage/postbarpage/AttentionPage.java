@@ -14,6 +14,7 @@ import com.example.spb.adapter.PostBarAdapter;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.entity.Bar;
+import com.example.spb.entity.Comment;
 import com.example.spb.presenter.impl.AttentionPageFPresenterImpl;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
@@ -41,6 +42,8 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
     private RefreshThumb refreshThumb;
     private DataRefresh dataRefresh;
     private PostBarAdapter postBarAdapter;
+    private RemoveVoice removeVoice;
+    private RefreshComment refreshComment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,10 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
         refreshFollowUserBar = new RefreshFollowUserBar();
         refreshThumb = new RefreshThumb();
         dataRefresh = new DataRefresh();
+        removeVoice = new RemoveVoice();
+        refreshComment = new RefreshComment();
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment),refreshComment);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_stop_voice),removeVoice);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_re_Follow),dataRefresh);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_thumb),refreshThumb);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_FollowUserBar),refreshFollowUserBar);
@@ -159,6 +166,8 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
         SpbBroadcast.destroyBrc(refreshFollowUserBar);
         SpbBroadcast.destroyBrc(refreshThumb);
         SpbBroadcast.destroyBrc(dataRefresh);
+        SpbBroadcast.destroyBrc(removeVoice);
+        SpbBroadcast.destroyBrc(refreshComment);
     }
 
     class RefreshThumb extends BroadcastReceiver{
@@ -167,6 +176,23 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
             int a = intent.getIntExtra("key_one",0);
             String pbId = intent.getStringExtra("key_two");
             postBarAdapter.refreshLikeItem(a,pbId);
+        }
+    }
+
+    class RefreshComment extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int a = intent.getIntExtra("key_one",-1);
+            String num = intent.getStringExtra("key_two");
+            switch (a){
+                case 0:
+                    List<Comment> comments = (List<Comment>)intent.getSerializableExtra("key_three");
+                    postBarAdapter.refreshNowCommentItem(comments.size());
+                    break;
+                case 1:
+                    postBarAdapter.refreshCommentItem(Integer.valueOf(num));
+                    break;
+            }
         }
     }
 
@@ -194,6 +220,13 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
         @Override
         public void onReceive(Context context, Intent intent) {
             homePage.getDataPostBarPresenter().obtainFollowUserBar(true);
+        }
+    }
+
+    class RemoveVoice extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            postBarAdapter.refreshNoewVoice(-1);
         }
     }
 }

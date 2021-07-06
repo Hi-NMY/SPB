@@ -324,6 +324,22 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         mPersonalspaceIdt.setNavigator(commonNavigator);
         ViewPagerHelper.bind(mPersonalspaceIdt, mPersonalspaceViewpager);
         mPersonalspaceViewpager.setCurrentItem(1);
+        mPersonalspaceViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_stop_voice),0,null);
+            }
+        });
     }
 
     private AppBarLayout.OnOffsetChangedListener listenViewMove() {
@@ -547,6 +563,13 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         super.onDestroy();
         SpbBroadcast.destroyBrc(refreshFollow);
         SpbBroadcast.destroyBrc(refreshMsg);
+        SpbBroadcast.sendReceiver(this,InValues.send(R.string.Bcr_stop_voice),0,null);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SpbBroadcast.sendReceiver(this,InValues.send(R.string.Bcr_stop_voice),0,null);
     }
 
     class RefreshMsg extends BroadcastReceiver {

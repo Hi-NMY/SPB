@@ -15,6 +15,10 @@ public interface IPostBarDetailPageAView extends SpbInterTwo {
 
     String TITLE = "帖子";
 
+    //dialog
+    int EASYDIALOG = 0;
+    int BARMOREOPERATEDIALOG = 1;
+
     <T> T request(int requestFlag);
 
     <T> void response(T response, int responseFlag);

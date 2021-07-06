@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
@@ -35,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center|left"
-                    android:text="null"
+                    android:text=""
                     android:textColor="@color/qihei"
                     android:textSize="@dimen/font_14"/>
 
@@ -46,11 +46,24 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center|left"
-                    android:text="null"
+                    android:text=""
                     android:textColor="@color/grey"
                     android:textSize="@dimen/font_12"/>
 
         </LinearLayout>
+
+        <TextView
+                android:id="@+id/item_comment_floor"
+                android:layout_marginTop="@dimen/margin_8"
+                android:gravity="center"
+                android:layout_alignRight="@id/item_comment_user_headimg"
+                android:layout_alignLeft="@id/item_comment_user_headimg"
+                android:layout_below="@id/item_comment_user_headimg"
+                android:textSize="@dimen/font_10"
+                android:textColor="@color/grey"
+                android:text=""
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         <TextView
                 android:id="@+id/item_comment_txt"
@@ -59,6 +72,7 @@
                 android:layout_marginTop="@dimen/margin_8"
                 android:layout_marginHorizontal="@dimen/margin_8"
                 android:lineSpacingMultiplier="1.5"
+                android:textSize="@dimen/font_14"
                 android:layout_toRightOf="@+id/item_comment_user_headimg"
                 android:layout_below="@+id/item_comment_llt"
                 android:layout_width="match_parent"
@@ -70,7 +84,7 @@
             android:layout_below="@id/item_comment_R"
             android:background="@color/lightgray"
             android:layout_width="match_parent"
-            android:alpha="0.3"
+            android:alpha="0.5"
             android:layout_height="0.5dp"/>
 
 </RelativeLayout>

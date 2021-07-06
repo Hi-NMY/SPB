@@ -106,9 +106,6 @@ public class TopicBarPageAPresenterImpl extends BasePresenter<ITopicBarPageAView
                             if (cacheBar.getPb_article().equals("null")){
                                 SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_hottopicbar)
                                         ,0,topiCName,(Serializable)hotBars);
-                            }else {
-                                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_hottopicbar)
-                                        ,1,topiCName,(Serializable)hotBars);
                             }
                         }
                         if (stopRefresh != null){

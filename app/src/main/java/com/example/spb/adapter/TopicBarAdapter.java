@@ -30,6 +30,8 @@ import com.example.spb.view.activity.PersonalSpacePage;
 import com.example.spb.view.activity.PostBarDetailPage;
 import com.example.spb.view.activity.TopicBarPage;
 import com.example.spb.view.littlefun.BarImageInFlater;
+import com.example.spb.view.littlefun.EasyVoice;
+import com.example.spb.view.littlefun.GIFShow;
 import com.example.spb.view.littlefun.JumpIntent;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.zhy.view.flowlayout.FlowLayout;
@@ -51,6 +53,9 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
     private String nowTopicName;
     private String cacheKey = "";
     private BarMoreOperateDialog barMoreOperateDialog;
+    private int cachePosition = -1;
+    private EasyVoice e;
+    private String commentIDKey = "";
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView mItemPostbarUserHeadimg;
@@ -121,6 +126,28 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
         }
     }
 
+    public void refreshCommentItem(int num){
+        Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(commentIDKey)).findAny().orElse(null);
+        if (cachebar != null){
+            int a = bars.indexOf(cachebar);
+            if (a != -1){
+                bars.get(a).setPb_comment_num(bars.get(a).getPb_comment_num() + num);
+                notifyItemChanged(a);
+            }
+        }
+    }
+
+    public void refreshNowCommentItem(int num){
+        Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(commentIDKey)).findAny().orElse(null);
+        if (cachebar != null){
+            int a = bars.indexOf(cachebar);
+            if (a != -1){
+                bars.get(a).setPb_comment_num(num);
+                notifyItemChanged(a);
+            }
+        }
+    }
+
     public void deleteBar(String pbId){
         Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(pbId)).findAny().orElse(null);
         if (cachebar != null){
@@ -129,6 +156,26 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
                 bars.remove(a);
                 notifyItemRemoved(a);
                 notifyItemRangeChanged(a, bars.size() + 1);
+            }
+        }
+    }
+
+    public void refreshVoiceView(int position){
+        if (position != 0){
+            notifyItemChanged(0,position - 1);
+        }
+        notifyItemChanged(position + 1,bars.size() - 1);
+    }
+
+    public void refreshNoewVoice(int position){
+        if (cachePosition != -1){
+            if (e != null){
+                e.stopPlayer();
+            }
+            if (position == -1){
+                notifyItemChanged(cachePosition);
+            }else {
+                notifyItemChanged(position);
             }
         }
     }
@@ -188,6 +235,7 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
                 JumpIntent.startMsgIntent(PostBarDetailPage.class, new JumpIntent.SetMsg() {
                     @Override
                     public void setMessage(Intent intent) {
+                        commentIDKey = bars.get(position).getPb_one_id();
                         intent.putExtra(InValues.send(R.string.intent_Bar),bars.get(position));
                     }
                 });
@@ -231,6 +279,14 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 //跳转动态详细并拉起键盘评论
+                JumpIntent.startMsgIntent(PostBarDetailPage.class, new JumpIntent.SetMsg() {
+                    @Override
+                    public void setMessage(Intent intent) {
+                        commentIDKey = bars.get(position).getPb_one_id();
+                        intent.putExtra(InValues.send(R.string.intent_Bar),bars.get(position));
+                        intent.putExtra(InValues.send(R.string.intent_keyboard_start),true);
+                    }
+                });
             }
         });
         holder.mItemPostbarLikeR.setOnClickListener(new View.OnClickListener() {
@@ -290,6 +346,32 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
             holder.mItemPostbarImagelist.setLayoutManager(gridLayoutManager);
             postBarImgAdapter = new PostBarImgAdapter(activity,MyResolve.InDoubleImage(bar.getPb_image_url()));
             holder.mItemPostbarImagelist.setAdapter(postBarImgAdapter);
+        }
+
+        if(bar.getPb_voice() != null && !bar.getPb_voice().equals("")) {
+            holder.mItemPostbarVoice.setVisibility(View.VISIBLE);
+            holder.mVoiceTime.setText(String.valueOf(EasyVoice.getVoiceTime(InValues.send(R.string.httpHeadert) + bar.getPb_voice())));
+            GIFShow gifShow = new GIFShow(holder.mVoiceGif);
+            holder.mItemPostbarVoice.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    refreshVoiceView(position);
+                    if (e == null || position != cachePosition){
+                        if (e != null){
+                            e.stopPlayer();
+                        }
+                        e = topicBarPage.toVoice(bars.get(position).getPb_voice(),holder.mVoiceTime,gifShow);
+                        cachePosition = position;
+                    }
+                    if (e.isVoicePlayerKey()){
+                        e.startPlayer();
+                    }else {
+                        refreshNoewVoice(position);
+                    }
+                }
+            });
+        }else {
+            holder.mItemPostbarVoice.setVisibility(View.GONE);
         }
     }
 

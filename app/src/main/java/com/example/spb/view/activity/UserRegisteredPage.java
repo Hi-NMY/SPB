@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -19,6 +21,7 @@ import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.entity.User;
 import com.example.spb.presenter.impl.UserRegisteredPageAPresenterImpl;
+import com.example.spb.presenter.littlefun.RemoveNullCharacter;
 import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.Component.EasyDialog;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
@@ -241,6 +244,70 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
         mRegStarBtn.setOnClickListener(this);
         mRegPasswordEye.setOnClickListener(this);
         mRegisteredUserHeadimg.setOnClickListener(this);
+        mRegUserName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                RemoveNullCharacter.setRemoveNull(mRegUserName,s).setSelection(mRegUserName.getText().length());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        mRegUserAccount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                RemoveNullCharacter.setRemoveNull(mRegUserAccount,s).setSelection(mRegUserAccount.getText().length());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        mRegUserPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                RemoveNullCharacter.setRemoveNull(mRegUserPassword,s).setSelection(mRegUserPassword.getText().length());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        mRegUserPasswordAgain.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                RemoveNullCharacter.setRemoveNull(mRegUserPasswordAgain,s).setSelection(mRegUserPasswordAgain.getText().length());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override

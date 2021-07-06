@@ -7,8 +7,15 @@
         android:layout_height="match_parent"
         tools:context=".view.activity.UserQrPage">
 
+    <ImageView
+            android:src="@drawable/qr_bg"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
     <fragment
             android:id="@+id/userqr_actbar"
+            android:layout_marginTop="@dimen/StatusBar_height"
             android:layout_width="match_parent"
             android:name="com.example.spb.view.Component.FragmentSpbAvtivityBar"
             android:layout_height="@dimen/spb_activity_bar_44"/>
@@ -16,9 +23,23 @@
     <ImageView
             android:id="@+id/my_qrCode"
             android:scaleType="center"
+            android:translationX="@dimen/margin_2"
+            android:translationY="@dimen/margin__28"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="25dp"
             android:src="@color/qianbai"
-            android:layout_width="150dp"
-            android:layout_height="150dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/user_headimg"
+            android:translationX="@dimen/margin_2"
+            android:layout_centerInParent="true"
+            android:translationY="-188dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/enterbg"
+            android:layout_width="@dimen/icon_image_72"
+            android:layout_height="@dimen/icon_image_72"
+            app:riv_oval="true"/>
 
 </RelativeLayout>

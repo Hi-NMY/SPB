@@ -1,5 +1,6 @@
 package com.example.spb.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
@@ -10,11 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
+import com.example.spb.presenter.littlefun.DataEncryption;
+import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
 import com.example.spb.view.Component.SelectImage;
 import com.example.spb.view.InterTotal.SpbInterOne;
 import com.example.spb.view.littlefun.JumpIntent;
 import com.example.spb.view.Component.MyToastClass;
+import com.example.spb.xserver.ObtainServerDate;
 import com.gyf.immersionbar.ImmersionBar;
 import com.king.zxing.CaptureHelper;
 import com.king.zxing.Intents;
@@ -25,6 +29,8 @@ import com.king.zxing.util.CodeUtils;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.listener.OnResultCallbackListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class QRPage extends AppCompatActivity implements SpbInterOne, OnCaptureCallback {
@@ -44,17 +50,30 @@ public class QRPage extends AppCompatActivity implements SpbInterOne, OnCaptureC
     private CaptureHelper mCaptureHelper;
     private ImageView mIvImg;
 
+    private String cacheDate = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_q_r_page);
+        setDate();
         initUI();
         mCaptureHelper.onCreate();
     }
 
-    /**
-     * 初始化
-     */
+    public void setDate(){
+        ObtainServerDate.obtainDate(new ObtainServerDate.OnReturn() {
+            @Override
+            public void onReturn(String date) {
+                cacheDate = date;
+            }
+        });
+    }
+
+    public String getCacheDate() {
+        return cacheDate;
+    }
+
     public void initUI() {
         setBar();
         setActivityBar();
@@ -84,48 +103,22 @@ public class QRPage extends AppCompatActivity implements SpbInterOne, OnCaptureC
         mCaptureHelper.setOnCaptureCallback(this);
     }
 
-    /**
-     * {@link #viewfinderView} 的 ID
-     *
-     * @return 默认返回{@code R.id.viewfinderView}, 如果不需要扫码框可以返回0
-     */
     public int getViewfinderViewId() {
         return R.id.viewfinderView;
     }
 
-
-    /**
-     * 预览界面{@link #surfaceView} 的ID
-     *
-     * @return
-     */
     public int getSurfaceViewId() {
         return R.id.surfaceView;
     }
 
-    /**
-     * 获取 {@link #ivTorch} 的ID
-     *
-     * @return 默认返回{@code R.id.ivTorch}, 如果不需要手电筒按钮可以返回0
-     */
     public int getIvTorchId() {
         return 0;
     }
 
-    /**
-     * Get {@link CaptureHelper}
-     *
-     * @return {@link #mCaptureHelper}
-     */
     public CaptureHelper getCaptureHelper() {
         return mCaptureHelper;
     }
 
-    /**
-     * Get {@link CameraManager} use {@link #getCaptureHelper()#getCameraManager()}
-     *
-     * @return {@link #mCaptureHelper#getCameraManager()}
-     */
     @Deprecated
     public CameraManager getCameraManager() {
         return mCaptureHelper.getCameraManager();
@@ -163,8 +156,44 @@ public class QRPage extends AppCompatActivity implements SpbInterOne, OnCaptureC
      */
     @Override
     public boolean onResultCallback(String result) {
-        finish();
-        MyToastClass.ShowToast(MyApplication.getContext(),result);
+        try {
+            String a = DataEncryption.outData(result);
+            String account = a.substring(0,9);
+            String date = a.substring(9);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date now = format.parse(getCacheDate());
+            Date old = format.parse(date);
+            if (old.getTime() > now.getTime()){
+                finish();
+                //跳转用户主页
+                JumpIntent.startMsgIntent(PersonalSpacePage.class, new JumpIntent.SetMsg() {
+                    @Override
+                    public void setMessage(Intent intent) {
+                        intent.putExtra(InValues.send(R.string.intent_User_account),account);
+                    }
+                });
+            }else {
+                long between = now.getTime() - old.getTime();
+                long day = between / (24 * 60 * 60 * 1000);
+                long hour = (between / (60 * 60 * 1000) - day * 24);
+                long min = ((between / (60 * 1000)) - day * 24 * 60 - hour * 60);
+                long s = (between / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+                if ((min * 60 + s) > 120){
+                    MyToastClass.ShowToast(this,"二维码超时，请重试");
+                }else {
+                    finish();
+                    //跳转用户主页
+                    JumpIntent.startMsgIntent(PersonalSpacePage.class, new JumpIntent.SetMsg() {
+                        @Override
+                        public void setMessage(Intent intent) {
+                            intent.putExtra(InValues.send(R.string.intent_User_account),account);
+                        }
+                    });
+                }
+            }
+        }catch (Exception e){
+            MyToastClass.ShowToast(this,"错误，请重试");
+        }
         return true;
     }
 
@@ -219,6 +248,7 @@ public class QRPage extends AppCompatActivity implements SpbInterOne, OnCaptureC
                             selectImgFile = m.getRealPath();
                         }
                         finish();
+                        //解析结果
                         MyToastClass.ShowToast(MyApplication.getContext(),CodeUtils.parseCode(selectImgFile));
                     }
 

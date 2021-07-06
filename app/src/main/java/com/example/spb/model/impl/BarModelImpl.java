@@ -119,6 +119,22 @@ public class BarModelImpl extends SpbModelAbstrate implements SpbModelBasicInter
                         .build();
                 sendHttp(InValues.send(R.string.PostBar),requestBody,callBack);
                 break;
+            case DATABAR_UPDATE_THREE:
+                requestBody = new FormBody.Builder()
+                        .add("pb_one_id", data.getPb_one_id())
+                        .add("fun", String.valueOf(fun))
+                        .add("user_account", data.getUser_account())
+                        .build();
+                sendHttp(InValues.send(R.string.PostBar),requestBody,callBack);
+                break;
+            case DATABAR_UPDATE_FOUR:
+                requestBody = new FormBody.Builder()
+                        .add("fun", String.valueOf(fun))
+                        .add("pb_one_id", data.getPb_one_id())
+                        .add("user_account", data.getUser_account())
+                        .build();
+                sendHttp(InValues.send(R.string.PostBar),requestBody,callBack);
+                break;
         }
     }
 

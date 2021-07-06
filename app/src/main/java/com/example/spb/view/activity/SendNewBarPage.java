@@ -573,8 +573,12 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
         bar.barRightTxt1(SENDTITLE, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
             public void onClick() {
-                showDialogS(DIALOGLOADING);
-                mPresenter.sendNewMessage();
+                if (mSendnewbarTxt.getText().toString().trim().equals("")){
+                    MyToastClass.ShowToast(MyApplication.getContext(),"内容不能为空噢");
+                }else {
+                    showDialogS(DIALOGLOADING);
+                    mPresenter.sendNewMessage();
+                }
             }
         });
         bar.barCentralTxt(TITLE, null);

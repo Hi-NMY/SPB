@@ -7,6 +7,7 @@ public interface SpbModelBasicInter<T> {
     public static int REGISTEREDPAGE = 910;
     public static int FIRSTPAGE_ONE = 920;
     public static int FIRSTPAGE_TWO = 930;
+    public static int FIRSTPAGE_THREE = 931;
     public static int DATAUSER_UPDATE_ONE = 940;
     public static int DATAUSER_UPDATE_TWO = 941;
 
@@ -63,7 +64,14 @@ public interface SpbModelBasicInter<T> {
     public static int DATABAR_SELECT_SIX = 825;
     public static int DATABAR_UPDATE_ONE = 830;
     public static int DATABAR_UPDATE_TWO = 831;
+    public static int DATABAR_UPDATE_THREE = 832;
+    public static int DATABAR_UPDATE_FOUR = 833;
     public static int DATABAR_DELETE_ONE = 840;
+
+    public static int DATACOMMENT_ADD_ONE = 910;
+    public static int DATACOMMENT_SELECT_ONE = 920;
+    public static int DATACOMMENT_UPDATE_ONE = 930;
+    public static int DATACOMMENT_DELETE_ONE = 940;
 
     public void addData(int fun,T data, MyCallBack callBack);
 

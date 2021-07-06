@@ -18,6 +18,8 @@ import com.example.spb.adapter.FragmentViewPageAdapter;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.presenter.impl.PostBarPageFPresenterImpl;
+import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.view.activity.TopicBarPage;
 import com.example.spb.view.inter.IPostBarPageFView;
 import com.example.spb.view.littlefun.JumpIntent;
@@ -178,7 +180,7 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
 
                 badgePagerTitleView.setInnerPagerTitleView(simplePagerTitleView);
 
-                if (index == 0) {
+                if (index == 1) {
                     ImageView badgeImageView = (ImageView) LayoutInflater.from(context).inflate(R.layout.other_simple_red_dot, null);
                     badgePagerTitleView.setBadgeView(badgeImageView);
                     badgePagerTitleView.setXBadgeRule(new BadgeRule(BadgeAnchor.CONTENT_RIGHT, -UIUtil.dip2px(context, 6)));
@@ -207,6 +209,22 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
         mPostbarPageIdt.setNavigator(commonNavigator);
         ViewPagerHelper.bind(mPostbarPageIdt, mPostbarPageViewpager);
         mPostbarPageViewpager.setCurrentItem(1);
+        mPostbarPageViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_stop_voice),0,null);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override

@@ -101,9 +101,27 @@ public class PersonalPostBarFPresenterImpl extends BasePresenter<IPersonalPostBa
         });
     }
 
+    public void stopvoice(){
+        if (personalSpaceBarAdapter != null){
+            personalSpaceBarAdapter.refreshNoewVoice(-1);
+        }
+    }
+
     public void refreshThumb(int num,String pbId){
         if (personalSpaceBarAdapter != null){
             personalSpaceBarAdapter.refreshLikeItem(num,pbId);
+        }
+    }
+
+    public void refreshComment(int num){
+        if (personalSpaceBarAdapter != null){
+            personalSpaceBarAdapter.refreshCommentItem(num);
+        }
+    }
+
+    public void refreshNowComment(int num){
+        if (personalSpaceBarAdapter != null){
+            personalSpaceBarAdapter.refreshNowCommentItem(num);
         }
     }
 }

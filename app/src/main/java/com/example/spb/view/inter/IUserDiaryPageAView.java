@@ -13,6 +13,11 @@ public interface IUserDiaryPageAView extends SpbInterTwo {
     int RESPONSE_THREE = 2;
 
     String TITLE = "日记";
+    String IMAGENAME = "Diary";
+
+    //dialog
+    int EASYDIALOG = 0;
+    int COMPONENTDIALOG = 1;
 
     <T> T request(int requestFlag);
 

@@ -3,6 +3,7 @@ package com.example.spb.view.littlefun;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import com.example.spb.presenter.littlefun.RemoveNullCharacter;
 
 public class SearchFun {
 
@@ -15,15 +16,7 @@ public class SearchFun {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().contains(" ")) {
-                    String[] str = s.toString().split(" ");
-                    StringBuffer sb = new StringBuffer();
-                    for (int i = 0; i < str.length; i++) {
-                        sb.append(str[i]);
-                    }
-                    editText.setText(sb.toString());
-                    editText.setSelection(start);
-                }
+                RemoveNullCharacter.setRemoveNull(editText,s).setSelection(editText.getText().length());
             }
 
             @Override

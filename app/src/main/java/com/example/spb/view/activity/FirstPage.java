@@ -22,6 +22,7 @@ import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.entity.User;
 import com.example.spb.presenter.impl.FirstPageAPresenterImpl;
+import com.example.spb.presenter.littlefun.RemoveNullCharacter;
 import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.Component.EasyDialog;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
@@ -187,7 +188,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                RemoveNullCharacter.setRemoveNull(mAccountNumberEdit,s).setSelection(mAccountNumberEdit.getText().length());
             }
 
             @Override
@@ -217,7 +218,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                RemoveNullCharacter.setRemoveNull(mPasswordNumberEdit,s).setSelection(mPasswordNumberEdit.getText().length());
             }
 
             @Override

@@ -13,4 +13,46 @@
             android:name="com.example.spb.view.Component.FragmentSpbAvtivityBar"
             android:layout_height="@dimen/spb_activity_bar_44"/>
 
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/userdiary_refresh"
+            android:layout_below="@id/userdiary_actbar"
+            android:background="@color/qianbai"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <RelativeLayout
+                android:minHeight="@dimen/icon_image_64"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/userdiary_refresh_tgif"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/loading4"
+                    android:layout_width="@dimen/icon_image_64"
+                    android:layout_height="@dimen/icon_image_64"
+                    />
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/userdiary_recyclerview"
+                android:layout_marginTop="@dimen/margin_4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+    <TextView
+            android:id="@+id/t1"
+            android:paddingTop="@dimen/margin_4"
+            android:background="@color/qianbai"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/userdiary_actbar"
+            android:text="*长按删除日记"
+            android:textColor="@color/lightgray"
+            android:textSize="@dimen/font_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
 </RelativeLayout>

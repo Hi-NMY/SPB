@@ -7,6 +7,7 @@ public class Diary {
     public int dia_weather;
     public String dia_message;
     public String dia_image;
+    public String cacheAccount;
 
     public int getId() {
         return id;
@@ -46,5 +47,13 @@ public class Diary {
 
     public void setDia_image(String dia_image) {
         this.dia_image = dia_image;
+    }
+
+    public String getCacheAccount() {
+        return cacheAccount;
+    }
+
+    public void setCacheAccount(String cacheAccount) {
+        this.cacheAccount = cacheAccount;
     }
 }

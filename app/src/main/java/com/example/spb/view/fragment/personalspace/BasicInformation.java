@@ -96,7 +96,7 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
             @Override
             public View getView(FlowLayout parent, int position, String o) {
                 View view = layoutInflater.inflate(R.layout.item_favorite_tag_one, mBasicinformationFavorite, false);
-                if (mPresenter.strings == null || mPresenter.strings.size() == 0){
+                if (mPresenter.strings == null || mPresenter.strings.size() == 0 || mPresenter.strings.get(0).equals("null")){
                     TextView textView = (TextView) view.findViewById(R.id.text);
                     textView.setText("无");
                 }else {
@@ -118,20 +118,25 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
 
     private void initUserData(){
         mBasicinformationChange.setVisibility(View.GONE);
-        if (!toUser.getUser_home().equals("")){
+        if (toUser.getUser_home() != null && !toUser.getUser_home().equals("")){
             mBasicinformationHome.setText(toUser.getUser_home());
+        }else {
+            mBasicinformationHome.setText("一个神秘的地方");
         }
 
-        if (!toUser.getUser_birth().equals("")){
+        if (toUser.getUser_birth() != null && !toUser.getUser_birth().equals("")){
             mBasicinformationBirth.setText(toUser.getUser_birth());
             mBasicinformationConstellation.setText(MyDateClass.getConstellation(toUser.getUser_birth().substring(5)));
+        }else {
+            mBasicinformationBirth.setText("无");
+            mBasicinformationConstellation.setText("无");
         }
 
         mBasicinformationFavorite.setAdapter(new TagAdapter<String>(mPresenter.setFavorite(toUser.getUser_favorite())) {
             @Override
             public View getView(FlowLayout parent, int position, String o) {
                 View view = layoutInflater.inflate(R.layout.item_favorite_tag_one, mBasicinformationFavorite, false);
-                if (mPresenter.strings == null || mPresenter.strings.size() == 0){
+                if (mPresenter.strings == null || mPresenter.strings.size() == 0 || mPresenter.strings.get(0).equals("null")){
                     TextView textView = (TextView) view.findViewById(R.id.text);
                     textView.setText("无");
                 }else {

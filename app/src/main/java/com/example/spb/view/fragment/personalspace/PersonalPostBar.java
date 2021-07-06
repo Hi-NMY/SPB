@@ -11,11 +11,13 @@ import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.entity.Bar;
+import com.example.spb.entity.Comment;
 import com.example.spb.presenter.impl.PersonalPostBarFPresenterImpl;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.view.Component.MySmartRefresh;
 import com.example.spb.view.activity.PersonalSpacePage;
+import com.example.spb.view.fragment.homepage.postbarpage.AttentionPage;
 import com.example.spb.view.inter.IPersonalPostBarFView;
 import com.example.spb.view.littlefun.MyListAnimation;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
@@ -33,6 +35,8 @@ public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView, Pers
     private SmartRefreshLayout mPersonalBarRefresh;
     private MySmartRefresh mySmartRefresh;
     private PersonalSpacePage personalSpacePage;
+    private RemoveVoice removeVoice;
+    private RefreshComment refreshComment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,10 @@ public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView, Pers
         personalSpacePage = (PersonalSpacePage)getActivity();
         refreshThumb = new RefreshThumb();
         addPersonalBar = new AddPersonalBar();
+        removeVoice = new RemoveVoice();
+        refreshComment = new RefreshComment();
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment),refreshComment);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_stop_voice), removeVoice);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_personal_bar), addPersonalBar);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_thumb), refreshThumb);
     }
@@ -136,6 +144,8 @@ public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView, Pers
         super.onDestroy();
         SpbBroadcast.destroyBrc(refreshThumb);
         SpbBroadcast.destroyBrc(addPersonalBar);
+        SpbBroadcast.destroyBrc(removeVoice);
+        SpbBroadcast.destroyBrc(refreshComment);
     }
 
     class AddPersonalBar extends BroadcastReceiver {
@@ -170,6 +180,30 @@ public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView, Pers
             int a = intent.getIntExtra("key_one", 0);
             String pbId = intent.getStringExtra("key_two");
             mPresenter.refreshThumb(a,pbId);
+        }
+    }
+
+    class RefreshComment extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int a = intent.getIntExtra("key_one",-1);
+            String num = intent.getStringExtra("key_two");
+            switch (a){
+                case 0:
+                    List<Comment> comments = (List<Comment>)intent.getSerializableExtra("key_three");
+                    mPresenter.refreshNowComment(comments.size());
+                    break;
+                case 1:
+                    mPresenter.refreshComment(Integer.valueOf(num));
+                    break;
+            }
+        }
+    }
+
+    class RemoveVoice extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mPresenter.stopvoice();
         }
     }
 }

@@ -5,7 +5,7 @@
 
     <RelativeLayout
             android:background="@drawable/cardview_gb"
-            android:layout_marginHorizontal="@dimen/margin_64"
+            android:layout_marginHorizontal="@dimen/margin_40"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -24,7 +24,7 @@
                 android:layout_marginTop="@dimen/margin_16"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/qihei"
-                android:text="取消关注 ？"
+                android:text="取消关注"
                 android:textSize="@dimen/font_16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -39,8 +39,8 @@
                 android:text="否"
                 android:background="@drawable/enter_next_login_false"
                 android:stateListAnimator="@null"
-                android:layout_width="@dimen/icon_image_72"
-                android:layout_height="@dimen/icon_image_36"/>
+                android:layout_width="@dimen/icon_image_64"
+                android:layout_height="@dimen/margin_28"/>
 
         <Button
                 android:id="@+id/button_right"
@@ -52,8 +52,8 @@
                 android:text="是"
                 android:background="@drawable/enter_next_login"
                 android:stateListAnimator="@null"
-                android:layout_width="@dimen/icon_image_72"
-                android:layout_height="@dimen/icon_image_36"/>
+                android:layout_width="@dimen/icon_image_64"
+                android:layout_height="@dimen/margin_28"/>
     </RelativeLayout>
 
 </RelativeLayout>

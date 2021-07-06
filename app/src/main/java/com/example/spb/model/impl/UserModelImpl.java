@@ -50,6 +50,13 @@ public class UserModelImpl extends SpbModelAbstrate implements SpbModelBasicInte
                         .build();
                 sendHttp(InValues.send(R.string.VerifyPassword),requestBody,callBack);
                 break;
+            case FIRSTPAGE_THREE:
+                requestBody = new FormBody.Builder()
+                        .add("fun",String.valueOf(fun))
+                        .add("search_key", data.getUser_name())
+                        .build();
+                sendHttp(InValues.send(R.string.User),requestBody,callBack);
+                break;
         }
     }
 

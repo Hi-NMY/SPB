@@ -7,8 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.R;
-import com.example.spb.adapter.AttentionTopicAdapter;
-import com.example.spb.adapter.CollectBarAdapter;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.entity.Bar;

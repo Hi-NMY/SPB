@@ -74,7 +74,7 @@ public class HotTopicBarFPresenterImpl extends BasePresenter<IHotTopicBarFView> 
     public void obtainMoreHotTopicBar(){
         Bar cacheBar = new Bar();
         cacheBar.setPb_topic(tName);
-        cacheBar.setPb_article(String.valueOf(cacheNum));
+        cacheBar.setPb_article(String.valueOf(getCacheNum()));
         barModel.selectData(barModel.DATABAR_SELECT_TWO, cacheBar, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
@@ -84,6 +84,7 @@ public class HotTopicBarFPresenterImpl extends BasePresenter<IHotTopicBarFView> 
                         List<Bar> hotBars = new Gson().fromJson(a.substring(3),new TypeToken<List<Bar>>()
                         {}.getType());
                         if (hotBars != null && hotBars.size() != 0){
+                            hotBars.remove(0);
                             SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_hottopicbar)
                                     ,1,tName,(Serializable)hotBars);
                         }
@@ -102,9 +103,27 @@ public class HotTopicBarFPresenterImpl extends BasePresenter<IHotTopicBarFView> 
         });
     }
 
+    public void stopVoice(){
+        if (topicBarAdapter != null){
+            topicBarAdapter.refreshNoewVoice(-1);
+        }
+    }
+
     public void refreshThumb(int num,String pbId){
         if (topicBarAdapter != null){
             topicBarAdapter.refreshLikeItem(num,pbId);
+        }
+    }
+
+    public void refreshComment(int num){
+        if (topicBarAdapter != null){
+            topicBarAdapter.refreshCommentItem(num);
+        }
+    }
+
+    public void refreshNowComment(int num){
+        if (topicBarAdapter != null){
+            topicBarAdapter.refreshNowCommentItem(num);
         }
     }
 }

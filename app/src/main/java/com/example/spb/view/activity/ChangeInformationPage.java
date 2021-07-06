@@ -23,6 +23,7 @@ import com.example.spb.entity.User;
 import com.example.spb.presenter.impl.ChangeInformationPageAPresenterImpl;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MyDateClass;
+import com.example.spb.presenter.littlefun.RemoveNullCharacter;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.Component.EasyDialog;
@@ -308,7 +309,7 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                RemoveNullCharacter.setRemoveNull(mChangeinformationUsername,s).setSelection(mChangeinformationUsername.getText().length());
             }
 
             @Override
