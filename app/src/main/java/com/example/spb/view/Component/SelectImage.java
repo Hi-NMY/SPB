@@ -78,6 +78,35 @@ public class SelectImage implements SpbSelectImage {
     }
 
     @Override
+    public void selectOneImg2(String imgName, OnResultCallbackListener onResultCallbackListener) {
+        PictureSelector.create(activity)
+                .openGallery(PictureMimeType.ofImage())
+                .imageEngine(GlideEngine.createGlideEngine())
+                .selectionMode(PictureConfig.SINGLE)
+                .isSingleDirectReturn(false)
+                .setPictureStyle(mPictureParameterStyle)
+                .setPictureCropStyle(mCropParameterStyle)
+                .isCamera(false)
+                .isZoomAnim(true)
+                .maxSelectNum(1)
+                .minSelectNum(1)
+                .isPreviewImage(true)
+                .isEnableCrop(true)//是否开启裁剪
+                .isCompress(true)
+                .withAspectRatio(1,2)
+                .freeStyleCropEnabled(false)
+                .showCropFrame(true)
+                .scaleEnabled(true)
+                .isDragFrame(true)
+                .synOrAsy(false)
+                .setLanguage(LanguageConfig.CHINESE)
+                .cameraFileName(System.currentTimeMillis()+imgName)//自定义拍照文件名，
+                .renameCompressFile(System.currentTimeMillis()+imgName)//自定义压缩文件名，
+                .renameCropFileName(System.currentTimeMillis()+imgName)//自定义裁剪文件名，
+                .forResult(PictureConfig.CHOOSE_REQUEST,onResultCallbackListener);
+    }
+
+    @Override
     public void selectMoreImg(String imgName,int maxPosition, OnResultCallbackListener onResultCallbackListener) {
         PictureSelector.create(activity)
                 .openGallery(PictureMimeType.ofImage())
@@ -119,6 +148,28 @@ public class SelectImage implements SpbSelectImage {
                 .isPreviewImage(true)
                 .isEnableCrop(true)//是否开启裁剪
                 .withAspectRatio(1,1)
+                .freeStyleCropEnabled(false)
+                .showCropFrame(true)
+                .scaleEnabled(true)
+                .isDragFrame(true)
+                .isCompress(true)
+                .synOrAsy(false)
+                .setLanguage(LanguageConfig.CHINESE)
+                .cameraFileName(System.currentTimeMillis()+imgName)//自定义拍照文件名，
+                .renameCompressFile(System.currentTimeMillis()+imgName)//自定义压缩文件名，
+                .renameCropFileName(System.currentTimeMillis()+imgName)//自定义裁剪文件名，
+                .forResult(PictureConfig.REQUEST_CAMERA,onResultCallbackListener);
+    }
+
+    @Override
+    public void selectCameraImg2(String imgName, OnResultCallbackListener onResultCallbackListener) {
+        PictureSelector.create(activity)
+                .openCamera(PictureMimeType.ofImage())
+                .imageEngine(GlideEngine.createGlideEngine())
+                .selectionMode(PictureConfig.SINGLE)
+                .isPreviewImage(true)
+                .isEnableCrop(true)//是否开启裁剪
+                .withAspectRatio(1,2)
                 .freeStyleCropEnabled(false)
                 .showCropFrame(true)
                 .scaleEnabled(true)

@@ -84,7 +84,6 @@ public class UserDiaryPage extends BaseMVPActivity<IUserDiaryPageAView, UserDiar
 
     @Override
     protected void initActView() {
-        imageViews = new ArrayList<>();
         selectImage = new SelectImage(this);
         mUserdiaryRefreshTgif = (GifImageView) findViewById(R.id.userdiary_refresh_tgif);
         mUserdiaryRecyclerview = (RecyclerView) findViewById(R.id.userdiary_recyclerview);
@@ -136,6 +135,7 @@ public class UserDiaryPage extends BaseMVPActivity<IUserDiaryPageAView, UserDiar
                 mDiarysendMessage = (EditText) view.findViewById(R.id.diarysend_message);
                 mDiarysendImg = (RoundedImageView) view.findViewById(R.id.diarysend_img);
                 mEnterBtn = (Button) view.findViewById(R.id.enter_btn);
+                imageViews = new ArrayList<>();
                 imageViews.add(mDiarysendWeather1);
                 imageViews.add(mDiarysendWeather2);
                 imageViews.add(mDiarysendWeather3);
@@ -323,9 +323,6 @@ public class UserDiaryPage extends BaseMVPActivity<IUserDiaryPageAView, UserDiar
             List<Diary> diaryList = (List<Diary>) intent.getSerializableExtra("key_two");
             switch (a) {
                 case 0:
-                    if (easyDialog != null){
-                        easyDialog.closeMyDialog();
-                    }
                     mySmartRefresh.finishMyRefresh();
                     mPresenter.addDiary(diaryList,mUserdiaryRecyclerview);
                     break;
@@ -333,6 +330,9 @@ public class UserDiaryPage extends BaseMVPActivity<IUserDiaryPageAView, UserDiar
 
                     break;
                 case 2:
+                    if (easyDialog != null){
+                        closeDialog(EASYDIALOG);
+                    }
                     closeDialog(COMPONENTDIALOG);
                     createDialog();
                     break;

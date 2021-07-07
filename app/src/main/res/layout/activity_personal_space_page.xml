@@ -317,6 +317,18 @@
                 android:background="@drawable/enter_next_login"
                 android:layout_width="@dimen/icon_image_56"
                 android:layout_height="wrap_content"/>
-    </RelativeLayout>
 
+        <ImageView
+                android:id="@+id/personalspace_message_btn"
+                android:visibility="gone"
+                android:src="@drawable/icon_sendmessage"
+                android:layout_toLeftOf="@id/personalspace_attention_btn"
+                android:layout_alignTop="@id/personalspace_bar"
+                android:layout_alignBottom="@id/personalspace_bar"
+                android:layout_marginVertical="@dimen/margin_8"
+                android:layout_marginRight="@dimen/margin_8"
+                android:background="@drawable/already_attention"
+                android:layout_width="@dimen/icon_image_36"
+                android:layout_height="@dimen/icon_image_36"/>
+    </RelativeLayout>
 </RelativeLayout>

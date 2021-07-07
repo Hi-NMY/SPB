@@ -86,6 +86,17 @@ public class UserModelImpl extends SpbModelAbstrate implements SpbModelBasicInte
                 requestBody = builder.build();
                 sendHttp(InValues.send(R.string.User),requestBody,callBack);
                 break;
+            case DATAUSER_UPDATE_THREE:
+                File file1 = new File(data.getUser_bg_image());
+                builder = new MultipartBody.Builder()
+                        .setType(MultipartBody.FORM)
+                        .addFormDataPart("fun",String.valueOf(fun))
+                        .addFormDataPart("user_account",data.getUser_account())
+                        .addFormDataPart("user_bg_image",file1.getName(),RequestBody.Companion.create(file1
+                                ,MediaType.Companion.parse("image/png")));
+                requestBody = builder.build();
+                sendHttp(InValues.send(R.string.User),requestBody,callBack);
+                break;
         }
     }
 

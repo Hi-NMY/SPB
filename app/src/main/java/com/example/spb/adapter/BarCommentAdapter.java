@@ -98,8 +98,16 @@ public class BarCommentAdapter extends RecyclerView.Adapter<BarCommentAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         comment = comments.get(position);
         holder.mItemCommentDate.setText(MyDateClass.showDateClass(comment.getComment_date()));
-        holder.mItemCommentUsername.setText(comment.getUser_name());
         holder.mItemCommentFloor.setText(comment.getComment_id() + "楼");
+
+        if (comment.getComment_user().equals(cacheBarUser)){
+            holder.mItemCommentUsername.setText("楼主");
+            SpannableStringBuilder builder = new SpannableStringBuilder(holder.mItemCommentUsername.getText().toString());
+            builder.setSpan(new ForegroundColorSpan(ContextCompat.getColor(baseMVPActivity,R.color.theme_color)), 0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            holder.mItemCommentUsername.setText(builder);
+        }else {
+            holder.mItemCommentUsername.setText(comment.getUser_name());
+        }
 
         if (comment.getComment_touser() != null && !comment.getComment_touser().equals("")){
             if (comment.getComment_touser().equals(cacheBarUser)){

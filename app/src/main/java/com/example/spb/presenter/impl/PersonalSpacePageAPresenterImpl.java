@@ -31,6 +31,7 @@ import java.util.List;
 public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpacePageAView> implements IPersonalSpacePageAPresenter {
 
     private String headImgPath;
+    private String bgImgPath;
     private SpbModelBasicInter userModel;
     private SpbModelBasicInter followedModel;
     private SpbModelBasicInter followModel;
@@ -71,6 +72,37 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
                     String a = response.body().string();
                     if (isAttachView() && Integer.valueOf(a) == 200){
                         getView().response(headImgPath, getView().RESPONSE_SUCCESS);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(int t) {
+
+            }
+        });
+    }
+
+    public void getBgImage(String account,List<LocalMedia> result){
+        for (LocalMedia media : result) {
+            if (media.isCompressed()){
+                bgImgPath = media.getCompressPath();
+            }else {
+                bgImgPath = media.getCutPath();
+            }
+        }
+        User user = new User();
+        user.setUser_account(account);
+        user.setUser_bg_image(bgImgPath);
+        userModel.updateData(userModel.DATAUSER_UPDATE_THREE, user, new MyCallBack() {
+            @Override
+            public void onSuccess(@NotNull Response response) {
+                try {
+                    String a = response.body().string();
+                    if (isAttachView() && Integer.valueOf(a) == 200){
+                        getView().response(bgImgPath, getView().RESPONSE_SUCCESS);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

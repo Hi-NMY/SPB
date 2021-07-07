@@ -74,15 +74,6 @@ dependencies {
 
     implementation 'com.github.hackware1993:MagicIndicator:1.7.0'    //高级ViewPage滑动
 
-//    //基础工具库     RxTool
-//    implementation 'com.github.tamsiree.RxTool:RxKit:v2.6.2'
-//    //UI库
-//    implementation 'com.github.tamsiree.RxTool:RxUI:v2.6.2'
-//    //相机库
-//    implementation 'com.github.tamsiree.RxTool:RxCamera:v2.6.2'
-//    //功能库（Zxing扫描与生成二维码条形码）
-//    implementation 'com.github.tamsiree.RxTool:RxFeature:v2.6.2'
-
     implementation 'com.makeramen:roundedimageview:2.3.0'    //圆角图片
 
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.6.0'  //图片选择器

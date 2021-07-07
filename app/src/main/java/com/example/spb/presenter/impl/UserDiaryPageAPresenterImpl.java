@@ -96,6 +96,8 @@ public class UserDiaryPageAPresenterImpl extends BasePresenter<IUserDiaryPageAVi
         diary.setDia_message(getMessgae());
         diary.setDia_weather(getWeather());
         baseMVPActivity.getDataDiaryPresenter().addNewDiary(diary);
+        setImagePath("");
+        setMessgae("");
     }
 
     public void addDiary(List<Diary> d, RecyclerView recyclerView){
