@@ -261,7 +261,8 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
                 //显示dialog更多功能
                 barMoreOperateDialog = new BarMoreOperateDialog(activity);
                 barMoreOperateDialog.setData(homePage.getDataFollowPresenter().determineFollow(bars.get(position).getUser_account()),
-                        homePage.getDataCollectBarPresenter().determineCollect(bars.get(position).getPb_one_id()),bars.get(position).getPb_one_id(),bars.get(position).getUser_account());
+                        homePage.getDataCollectBarPresenter().determineCollect(bars.get(position).getPb_one_id()),
+                        bars.get(position).getPb_one_id(),bars.get(position).getUser_account(),bars.get(position).getUser_name());
                 if (!bars.get(position).getUser_account().equals(homePage.getDataUserMsgPresenter().getUser_account())){
                     barMoreOperateDialog.funChat();
                     barMoreOperateDialog.funCollect();

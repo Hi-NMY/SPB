@@ -226,7 +226,7 @@ public class UserDiaryPage extends BaseMVPActivity<IUserDiaryPageAView, UserDiar
                 mEnterBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (mPresenter.getMessgae().equals("")){
+                        if (mPresenter.getMessgae() == null || mPresenter.getMessgae().equals("")){
                             MyToastClass.ShowToast(MyApplication.getContext(),"请写入内容");
                         }else {
                             showDialogS(EASYDIALOG);

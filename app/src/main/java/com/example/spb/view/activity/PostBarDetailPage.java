@@ -3,12 +3,14 @@ package com.example.spb.view.activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
@@ -21,10 +23,7 @@ import com.example.spb.entity.Bar;
 import com.example.spb.entity.Comment;
 import com.example.spb.entity.Topic;
 import com.example.spb.presenter.impl.PostBarDetailPageAPresenterImpl;
-import com.example.spb.presenter.littlefun.InValues;
-import com.example.spb.presenter.littlefun.MyDateClass;
-import com.example.spb.presenter.littlefun.MyResolve;
-import com.example.spb.presenter.littlefun.SpbBroadcast;
+import com.example.spb.presenter.littlefun.*;
 import com.example.spb.presenter.otherimpl.DataLikePresenter;
 import com.example.spb.view.Component.*;
 import com.example.spb.view.InterComponent.DialogInter;
@@ -33,6 +32,7 @@ import com.example.spb.view.inter.IPostBarDetailPageAView;
 import com.example.spb.view.littlefun.*;
 import com.gyf.immersionbar.ImmersionBar;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -75,6 +75,8 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
     private RelativeLayout mExcessR;
     private BarComment barComment;
     private DialogInter easyDialog;
+    private StandardGSYVideoPlayer mDetailPlayer;
+    private CardView mVideoCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +101,8 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
     protected void initActView() {
         mPresenter.setBarUser(barData.getUser_account());
         mPresenter.setUserFollowKey(getDataFollowPresenter().determineFollow(barData.getUser_account()));
+        mDetailPlayer = (StandardGSYVideoPlayer) findViewById(R.id.detail_player);
+        mVideoCard = (CardView) findViewById(R.id.video_card);
         mPostbarDetailUserHeadimg = (RoundedImageView) findViewById(R.id.postbar_detail_user_headimg);
         mPostbarDetailUsername = (TextView) findViewById(R.id.postbar_detail_username);
         mPostbarDetailPostdate = (TextView) findViewById(R.id.postbar_detail_postdate);
@@ -118,7 +122,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
         mPostbarDetailLikeR = (RelativeLayout) findViewById(R.id.postbar_detail_like_R);
         mPostbarDetailDiscussNum = (TextView) findViewById(R.id.postbar_detail_discuss_num);
         mPostbarDetailDiscussList = (RecyclerView) findViewById(R.id.postbar_detail_discuss_list);
-        mPostbarDetailDiscussList = MyListAnimation.setListAnimation(this,mPostbarDetailDiscussList);
+        mPostbarDetailDiscussList = MyListAnimation.setListAnimation(this, mPostbarDetailDiscussList);
         mCommentText = (EditText) findViewById(R.id.comment_text);
         mCommentSend = (Button) findViewById(R.id.comment_send);
         mPostbarDetailBottomCommentR = (RelativeLayout) findViewById(R.id.postbar_detail_bottom_commentR);
@@ -210,6 +214,20 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
         if (getDataLikePresenter().determineLike(barData.getPb_one_id())) {
             mPostbarDetailLikeImg.setBackground(MyApplication.getContext().getDrawable(R.drawable.icon_likeal));
         }
+
+        if (barData.getPb_video() != null){
+            mVideoCard.setVisibility(View.VISIBLE);
+                VideoTool.gethttpBitmap(MyApplication.getContext(), 0
+                        , InValues.send(R.string.httpHeadert) + barData.getPb_video(), new VideoTool.OnReturnBitmap() {
+                            @Override
+                            public void onReturn(Bitmap bitmap, int position) {
+                                VideoTool videoTool = new VideoTool(PostBarDetailPage.this,MyApplication.getContext(),mDetailPlayer);
+                                videoTool.creatVideo(InValues.send(R.string.httpHeadert) + barData.getPb_video(),bitmap);
+                            }
+                        });
+
+
+        }
     }
 
     public void showKeyBoard() {
@@ -231,10 +249,10 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
 
     @Override
     public void createDialog() {
-        easyDialog = new EasyDialog(this,R.drawable.loading);
+        easyDialog = new EasyDialog(this, R.drawable.loading);
         barMoreOperateDialog = new BarMoreOperateDialog(PostBarDetailPage.this);
         barMoreOperateDialog.setData(getDataFollowPresenter().determineFollow(barData.getUser_account()),
-                getDataCollectBarPresenter().determineCollect(barData.getPb_one_id()), barData.getPb_one_id(), barData.getUser_account());
+                getDataCollectBarPresenter().determineCollect(barData.getPb_one_id()), barData.getPb_one_id(), barData.getUser_account(), barData.getUser_name());
         if (!barData.getUser_account().equals(getDataUserMsgPresenter().getUser_account())) {
             barMoreOperateDialog.funChat();
             barMoreOperateDialog.funCollect();
@@ -259,7 +277,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
 
     @Override
     public void showDialogS(int i) {
-        switch (i){
+        switch (i) {
             case EASYDIALOG:
                 easyDialog.showMyDialog();
                 break;
@@ -271,7 +289,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
 
     @Override
     public void closeDialog(int i) {
-        switch (i){
+        switch (i) {
             case EASYDIALOG:
                 easyDialog.closeMyDialog();
                 break;
@@ -425,7 +443,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
                 }
                 break;
             case R.id.comment_send:
-                mPresenter.sendNewComment(getDataUserMsgPresenter().getUser_account(),barData.getUser_account());
+                mPresenter.sendNewComment(getDataUserMsgPresenter().getUser_account(), barData.getUser_account());
                 showDialogS(EASYDIALOG);
                 break;
         }
@@ -465,21 +483,21 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
 
     private String cacheCommentName = "";
 
-    class BarComment extends BroadcastReceiver{
+    class BarComment extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int a = intent.getIntExtra("key_one",-1);
+            int a = intent.getIntExtra("key_one", -1);
             String num = intent.getStringExtra("key_two");
-            switch (a){
+            switch (a) {
                 case 0:
-                    List<Comment> comments = (List<Comment>)intent.getSerializableExtra("key_three");
-                    mPresenter.setCommentList(comments,mPostbarDetailDiscussList);
+                    List<Comment> comments = (List<Comment>) intent.getSerializableExtra("key_three");
+                    mPresenter.setCommentList(comments, mPostbarDetailDiscussList);
                     mExcessR.setVisibility(View.GONE);
                     barData.setPb_comment_num(comments.size());
-                    if (barData.getPb_comment_num() <= 0){
+                    if (barData.getPb_comment_num() <= 0) {
                         mPostbarDetailDiscussNum.setVisibility(View.GONE);
                         mPostbarDetailCommentNum.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         mPostbarDetailDiscussNum.setVisibility(View.VISIBLE);
                         mPostbarDetailCommentNum.setVisibility(View.VISIBLE);
                     }
@@ -489,20 +507,20 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
                     mPostbarDetailDiscussNum.postInvalidate();
                     break;
                 case 1:
-                    Comment comment = (Comment)intent.getSerializableExtra("key_three");
-                    if (comment != null){
+                    Comment comment = (Comment) intent.getSerializableExtra("key_three");
+                    if (comment != null) {
                         comment.setUser_name(getDataUserMsgPresenter().getUser_name());
-                        if (!cacheCommentName.equals("")){
+                        if (!cacheCommentName.equals("")) {
                             comment.setUser_toname(cacheCommentName);
                         }
                         mPresenter.addOneComment(comment);
                     }
                     closeDialog(EASYDIALOG);
                     barData.setPb_comment_num(barData.getPb_comment_num() + Integer.valueOf(num));
-                    if (barData.getPb_comment_num() <= 0){
+                    if (barData.getPb_comment_num() <= 0) {
                         mPostbarDetailDiscussNum.setVisibility(View.GONE);
                         mPostbarDetailCommentNum.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         mPostbarDetailDiscussNum.setVisibility(View.VISIBLE);
                         mPostbarDetailCommentNum.setVisibility(View.VISIBLE);
                     }
@@ -519,7 +537,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
                 case 3:
                     mCommentText.setHint("回复:" + num.substring(9));
                     cacheCommentName = num.substring(9);
-                    mPresenter.setCommenttouser(num.substring(0,9));
+                    mPresenter.setCommenttouser(num.substring(0, 9));
                     mCommentText.setFocusable(true);
                     mCommentText.setFocusableInTouchMode(true);
                     mCommentText.requestFocus();
@@ -527,11 +545,11 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
                     HideKeyboard.showboard(mCommentText);
                     break;
                 case 4:
-                    Comment c = (Comment)intent.getSerializableExtra("key_three");
-                    if (!c.getComment_user().equals(getDataUserMsgPresenter().getUser_account()) && !barData.getUser_account().equals(getDataUserMsgPresenter().getUser_account())){
-                        MyToastClass.ShowToast(MyApplication.getContext(),"不能删除别人的评论哦");
-                    }else{
-                        mPresenter.removeComment(c.getComment_id(),barData.getUser_account());
+                    Comment c = (Comment) intent.getSerializableExtra("key_three");
+                    if (!c.getComment_user().equals(getDataUserMsgPresenter().getUser_account()) && !barData.getUser_account().equals(getDataUserMsgPresenter().getUser_account())) {
+                        MyToastClass.ShowToast(MyApplication.getContext(), "不能删除别人的评论哦");
+                    } else {
+                        mPresenter.removeComment(c.getComment_id(), barData.getUser_account());
                     }
                     break;
             }

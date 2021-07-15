@@ -2,6 +2,8 @@ package com.example.spb.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -261,7 +263,8 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
                 //显示dialog更多功能
                 barMoreOperateDialog = new BarMoreOperateDialog(activity);
                 barMoreOperateDialog.setData(topicBarPage.getDataFollowPresenter().determineFollow(bars.get(position).getUser_account()),
-                        topicBarPage.getDataCollectBarPresenter().determineCollect(bars.get(position).getPb_one_id()),bars.get(position).getPb_one_id(),bars.get(position).getUser_account());
+                        topicBarPage.getDataCollectBarPresenter().determineCollect(bars.get(position).getPb_one_id()),
+                        bars.get(position).getPb_one_id(),bars.get(position).getUser_account(),bars.get(position).getUser_name());
                 if (!bars.get(position).getUser_account().equals(topicBarPage.getDataUserMsgPresenter().getUser_account())){
                     barMoreOperateDialog.funChat();
                     barMoreOperateDialog.funCollect();

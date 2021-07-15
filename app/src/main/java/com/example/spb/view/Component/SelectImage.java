@@ -136,7 +136,22 @@ public class SelectImage implements SpbSelectImage {
 
     @Override
     public void selectVideo(String videoName, OnResultCallbackListener onResultCallbackListener) {
-
+        PictureSelector.create(activity)
+                .openGallery(PictureMimeType.ofVideo())
+                .imageEngine(GlideEngine.createGlideEngine())
+                .selectionMode(PictureConfig.SINGLE)
+                .isSingleDirectReturn(false)
+                .setPictureStyle(mPictureParameterStyle)
+                .setPictureCropStyle(mCropParameterStyle)
+                .isCamera(false)
+                .isZoomAnim(true)
+                .maxVideoSelectNum(1)
+                .minVideoSelectNum(1)
+                .videoMaxSecond(300)
+                .previewVideo(true)
+                .isCompress(true)
+                .renameCompressFile(System.currentTimeMillis()+videoName)
+                .forResult(PictureConfig.CHOOSE_REQUEST,onResultCallbackListener);
     }
 
     @Override

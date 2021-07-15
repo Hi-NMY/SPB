@@ -1,11 +1,14 @@
 package com.example.spb.view.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -14,9 +17,11 @@ import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.UserHomePageAPresenterImpl;
 import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.littlefun.RequestForAccess;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
+import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;
 import com.example.spb.view.fragment.homepage.messagepage.MessagePage;
@@ -25,10 +30,9 @@ import com.example.spb.view.fragment.homepage.userpage.UserPage;
 import com.example.spb.view.fragment.homepage.videopage.VideoPage;
 import com.example.spb.view.inter.IUserHomePageAView;
 import com.example.spb.view.littlefun.JumpIntent;
-import com.example.spb.view.Component.MyToastClass;
-import com.example.spb.presenter.littlefun.RequestForAccess;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gyf.immersionbar.ImmersionBar;
+import com.shuyu.gsyvideoplayer.GSYVideoManager;
 
 
 public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAPresenterImpl> implements IUserHomePageAView, View.OnClickListener {
@@ -55,10 +59,15 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
     private RelativeLayout mGoodsRlt;
     private View bar2;
 
+    private NewMessage newMessage;
+    private View mViewNewMessage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home_page);
+        newMessage = new NewMessage();
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_new_messasge), newMessage);
         initActView();
         selectionFragment(1);
     }
@@ -71,6 +80,7 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
     @Override
     protected void initActView() {
         bar2 = (View) findViewById(R.id.homepage_bar);
+        mViewNewMessage = (View) findViewById(R.id.view_newMessage);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.homepage_bottom_btn);
         mHomepageSend = (RelativeLayout) findViewById(R.id.homepage_send);
         mHomepageSend.bringToFront();
@@ -94,7 +104,7 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
         }
         fragmentTransaction = fragmentManager.beginTransaction();
         hideFragments(fragmentTransaction);
-        if (userPage == null || videoPage == null || messagePage == null || postBarPage == null){
+        if (userPage == null || videoPage == null || messagePage == null || postBarPage == null) {
             userPage = new UserPage();
             fragmentTransaction.add(R.id.homepage_fragment, userPage);
             videoPage = new VideoPage();
@@ -105,8 +115,8 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
             fragmentTransaction.add(R.id.homepage_fragment, postBarPage);
         }
 
-        if (index != PAGENUMBER){
-            SpbBroadcast.sendReceiver(this,InValues.send(R.string.Bcr_stop_voice),0,null);
+        if (index != PAGENUMBER) {
+            SpbBroadcast.sendReceiver(this, InValues.send(R.string.Bcr_stop_voice), 0, null);
         }
 
         switch (index) {
@@ -119,17 +129,18 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
                 PAGENUMBER = 2;
                 break;
             case 3:
+                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_new_messasge),1,null);
                 fragmentTransaction.show(messagePage);
                 PAGENUMBER = 3;
                 break;
             case 4:
                 fragmentTransaction.show(userPage);
                 PAGENUMBER = 4;
-                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_reUserPage_Datanum),0,null);
+                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_reUserPage_Datanum), 0, null);
                 break;
         }
         fragmentTransaction.commitAllowingStateLoss();
-        if (index == 1){
+        if (index == 1) {
             bar2.setVisibility(View.GONE);
             bar = null;
         } else {
@@ -203,9 +214,9 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
         dialogHomeSend = new ComponentDialog(this, R.layout.dialog_homesend, R.style.dialogHomeSend, new ComponentDialog.InitDialog() {
             @Override
             public void initView(View view) {
-                mPostbarRlt = (RelativeLayout)view.findViewById(R.id.postbar_Rlt);
-                mVideoRlt = (RelativeLayout)view.findViewById(R.id.video_Rlt);
-                mGoodsRlt = (RelativeLayout)view.findViewById(R.id.goods_Rlt);
+                mPostbarRlt = (RelativeLayout) view.findViewById(R.id.postbar_Rlt);
+                mVideoRlt = (RelativeLayout) view.findViewById(R.id.video_Rlt);
+                mGoodsRlt = (RelativeLayout) view.findViewById(R.id.goods_Rlt);
             }
 
             @Override
@@ -225,7 +236,8 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
                 mVideoRlt.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        JumpIntent.startMyIntent(SendNewVideo.class);
+                        closeDialog(0);
                     }
                 });
                 mGoodsRlt.setOnClickListener(new View.OnClickListener() {
@@ -267,7 +279,7 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
 
     @Override
     public void setActivityBar() {
-        if (bar == null){
+        if (bar == null) {
             bar = setMyActivityBar(R.id.homepage_bar);
         }
         bar.setBarBackground(R.color.qianbai);
@@ -296,7 +308,7 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
                         RequestForAccess.setCameraAccess(HomePage.this, new RequestForAccess.OnReturn() {
                             @Override
                             public void allTrue() {
-                                startActivityForResult(new Intent(MyApplication.getContext(), QRPage.class),1);
+                                startActivityForResult(new Intent(MyApplication.getContext(), QRPage.class), 1);
                             }
 
                             @Override
@@ -307,7 +319,7 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
                             @Override
                             public void allFalse() {
                                 finish();
-                                MyToastClass.ShowToast(MyApplication.getContext(),STRINGACCESS);
+                                MyToastClass.ShowToast(MyApplication.getContext(), STRINGACCESS);
                             }
 
                             @Override
@@ -317,7 +329,7 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
 
                             @Override
                             public void low() {
-                                startActivityForResult(new Intent(MyApplication.getContext(), QRPage.class),1);
+                                startActivityForResult(new Intent(MyApplication.getContext(), QRPage.class), 1);
                             }
                         });
                     }
@@ -368,14 +380,35 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
     }
 
     @Override
+    public void onBackPressed() {
+        if (GSYVideoManager.backFromWindowFull(MyApplication.getContext())) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
-        SpbBroadcast.sendReceiver(this,InValues.send(R.string.Bcr_stop_voice),0,null);
+        SpbBroadcast.sendReceiver(this, InValues.send(R.string.Bcr_stop_voice), 0, null);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        SpbBroadcast.sendReceiver(this,InValues.send(R.string.Bcr_stop_voice),0,null);
+        SpbBroadcast.destroyBrc(newMessage);
+        SpbBroadcast.sendReceiver(this, InValues.send(R.string.Bcr_stop_voice), 0, null);
+    }
+
+    class NewMessage extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int key = intent.getIntExtra("key_one",0);
+            if (key == 0){
+                mViewNewMessage.setVisibility(View.VISIBLE);
+            }else{
+                mViewNewMessage.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 }

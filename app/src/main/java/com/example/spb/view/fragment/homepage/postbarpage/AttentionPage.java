@@ -90,7 +90,6 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
         mAttentionpageRefresh = (SmartRefreshLayout) view.findViewById(R.id.attentionpage_refresh);
         mAttentionpageRecyclerview = MyListAnimation.setListAnimation(homePage,mAttentionpageRecyclerview);
         createRefresh();
-        initData();
     }
 
     @Override

@@ -12,6 +12,7 @@ import com.example.spb.presenter.littlefun.MySharedPreferences;
 import com.example.spb.view.Component.FragmentSpbAvtivityBar;
 import com.example.spb.view.inter.ISetUpPageAView;
 import com.gyf.immersionbar.ImmersionBar;
+import io.rong.imkit.RongIM;
 
 public class SetUpPage extends BaseMVPActivity<ISetUpPageAView, SetUpPageAPresenterImpl> implements ISetUpPageAView {
 
@@ -39,6 +40,7 @@ public class SetUpPage extends BaseMVPActivity<ISetUpPageAView, SetUpPageAPresen
                 SharedPreferences.Editor editor = MySharedPreferences.saveShared(InValues.send(R.string.Shared_FirstLogIn));
                 editor.putBoolean(InValues.send(R.string.FirstLogIn_login),true);
                 editor.commit();
+                RongIM.getInstance().logout();
             }
         });
         setActivityBar();

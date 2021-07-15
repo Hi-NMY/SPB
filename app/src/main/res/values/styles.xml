@@ -8,6 +8,14 @@
         <item name="colorAccent">@color/gray</item>
     </style>
 
+    <style name="EnterPageBg" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/enterbg</item>
+    </style>
+
+    <style name="NoBackgroundTheme" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
     <style name="dialogHomeSend_anim">
         <item name="android:windowEnterAnimation">@anim/homesend_show</item>
         <item name="android:windowExitAnimation">@anim/homesend_dismiss</item>

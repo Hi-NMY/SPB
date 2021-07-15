@@ -9,6 +9,7 @@ import com.example.spb.entity.Topic;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
 import com.example.spb.model.impl.BarModelImpl;
 import com.example.spb.model.impl.TopicModelImpl;
+import com.example.spb.model.impl.VideoModelImpl;
 import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.inter.ITopicBarPageAPresenter;
 import com.example.spb.presenter.littlefun.InValues;
@@ -29,9 +30,11 @@ public class TopicBarPageAPresenterImpl extends BasePresenter<ITopicBarPageAView
     public boolean attentionKey = false;
     private SpbModelBasicInter topicModel;
     private SpbModelBasicInter barModel;
+    private SpbModelBasicInter videoModel;
     private Bar cacheBar = null;
     private int hotBarsNum = 0;
     private String newBarsDate = null;
+    private String newVideosDate = null;
     private String topiCName;
 
     public void setTopiCName(String topiCName) {
@@ -41,6 +44,7 @@ public class TopicBarPageAPresenterImpl extends BasePresenter<ITopicBarPageAView
     public TopicBarPageAPresenterImpl() {
         topicModel = new TopicModelImpl();
         barModel = new BarModelImpl();
+        videoModel = new VideoModelImpl();
     }
 
     public void returnAttentionKey(boolean b) {
@@ -115,7 +119,7 @@ public class TopicBarPageAPresenterImpl extends BasePresenter<ITopicBarPageAView
 
                     }
                 } catch (Exception e) {
-                    MyToastClass.ShowToast(MyApplication.getContext(),"此话题还没有帖子");
+
                 }
             }
 
@@ -144,7 +148,37 @@ public class TopicBarPageAPresenterImpl extends BasePresenter<ITopicBarPageAView
 
                     }
                 } catch (Exception e) {
-                    MyToastClass.ShowToast(MyApplication.getContext(),"此话题还没有帖子");
+
+                }
+            }
+
+            @Override
+            public void onError(int t) {
+
+            }
+        });
+
+        videoModel.selectData(videoModel.DATAVIDEO_SELECT_THREE, cacheBar, new MyCallBack() {
+            @Override
+            public void onSuccess(@NotNull Response response) {
+                try {
+                    String a = response.body().string();
+                    if (Integer.valueOf(a.substring(0,3)) == 200){
+                        List<Bar> newBars = new Gson().fromJson(a.substring(3),new TypeToken<List<Bar>>()
+                        {}.getType());
+                        if (newBars != null && newBars.size() != 0){
+                            newVideosDate = newBars.get(newBars.size() - 1).getPb_date();
+                            Thread.sleep(100);
+                            if (cacheBar.getPb_date().equals("1")){
+                                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_newtopicvideo)
+                                        ,0,topiCName,(Serializable)newBars);
+                            }
+                        }
+                    }else {
+
+                    }
+                } catch (Exception e) {
+
                 }
             }
 

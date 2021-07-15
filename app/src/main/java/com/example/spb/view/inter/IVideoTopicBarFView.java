@@ -1,6 +1,8 @@
 package com.example.spb.view.inter;
 
-public interface IVideoTopicBarFView {
+import com.example.spb.view.InterTotal.SpbInterTwo;
+
+public interface IVideoTopicBarFView extends SpbInterTwo {
     //请求标记
     int REQUEST_ONE = 0;
     int REQUEST_TWO = 1;

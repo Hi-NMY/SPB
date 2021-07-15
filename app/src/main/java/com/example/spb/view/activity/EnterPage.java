@@ -1,17 +1,23 @@
 package com.example.spb.view.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.EnterPageAPresenterImpl;
+import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.view.inter.IEnterPageAView;
 import com.example.spb.view.littlefun.GlideRoundTransform;
 import com.example.spb.view.littlefun.JumpIntent;
 import com.gyf.immersionbar.ImmersionBar;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 import org.litepal.LitePal;
 
 import java.util.concurrent.ExecutorService;
@@ -66,7 +72,26 @@ public class EnterPage extends BaseMVPActivity<IEnterPageAView, EnterPageAPresen
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
-                                JumpIntent.startNewIntent(HomePage.class);
+                                RongIM.connect(getDataUserMsgPresenter().getUser_token(), new RongIMClient.ConnectCallback() {
+                                    @Override
+                                    public void onSuccess(String s) {
+                                        UserInfo userInfo = new UserInfo(getDataUserMsgPresenter().getUser_account(),getDataUserMsgPresenter().getUser_name(), Uri.parse(InValues
+                                                .send(R.string.httpHeader) +"/UserImageServer/"+getDataUserMsgPresenter().getUser_account()+"/HeadImage/myHeadImage.png"));
+                                        RongIM.getInstance().setCurrentUserInfo(userInfo);
+                                        Log.d("rongLink","true");
+                                    }
+
+                                    @Override
+                                    public void onError(RongIMClient.ConnectionErrorCode connectionErrorCode) {
+
+                                    }
+
+                                    @Override
+                                    public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus databaseOpenStatus) {
+                                        JumpIntent.startNewIntent(HomePage.class);
+                                        finish();
+                                    }
+                                });
                             }
                         });
                     }

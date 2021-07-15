@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:background="@color/beijing"
+        tools:context=".view.activity.SendNewVideo">
+
+    <fragment
+            android:id="@+id/sendnewvideo_actbar"
+            android:layout_width="match_parent"
+            android:name="com.example.spb.view.Component.FragmentSpbAvtivityBar"
+            android:layout_height="@dimen/spb_activity_bar_44"/>
+
+    <View
+            android:id="@+id/view"
+            android:layout_below="@+id/sendnewvideo_actbar"
+            android:alpha="0.5"
+            android:background="@color/lightgrey"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+
+    <EditText
+            android:id="@+id/sendnewvideo_txt"
+            android:layout_below="@+id/view"
+            android:hint="开始吧，请随意发挥......."
+            android:maxLength="900"
+            android:paddingTop="@dimen/margin_16"
+            android:layout_marginHorizontal="@dimen/margin_16"
+            android:gravity="left|top"
+            android:lineSpacingMultiplier="1.8"
+            android:textSize="@dimen/font_14"
+            android:background="@color/beijing"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"/>
+
+    <androidx.cardview.widget.CardView
+            android:id="@+id/video_card"
+            android:visibility="gone"
+            app:cardElevation="0dp"
+            app:cardCornerRadius="@dimen/corner_8"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_marginHorizontal="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_below="@+id/sendnewvideo_txt"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
+                    android:id="@+id/detail_player"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            <TextView
+                    android:id="@+id/video_delete"
+                    android:layout_margin="@dimen/margin_4"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/beijing"
+                    android:text="删除"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/sendnewvideo_add"
+            android:layout_below="@id/sendnewvideo_txt"
+            android:layout_marginHorizontal="@dimen/margin_12"
+            android:layout_marginVertical="@dimen/margin_20"
+            android:src="@drawable/icon_addimage"
+            android:layout_width="@dimen/icon_image_72"
+            android:layout_height="@dimen/icon_image_72"/>
+
+    <RelativeLayout
+            android:id="@+id/bottom_r"
+            android:background="@color/beijing"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <com.zhy.view.flowlayout.TagFlowLayout
+                android:id="@+id/selectTopic_flowlayout"
+                android:layout_marginVertical="@dimen/margin_8"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                app:max_select="0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+        </com.zhy.view.flowlayout.TagFlowLayout>
+
+        <View
+                android:id="@+id/view5"
+                android:alpha="0.5"
+                android:layout_below="@id/selectTopic_flowlayout"
+                android:background="@color/lightgrey"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"/>
+
+        <com.zhy.view.flowlayout.TagFlowLayout
+                android:id="@+id/bottom_flowlayout"
+                android:layout_below="@id/view5"
+                android:layout_marginVertical="@dimen/margin_8"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                app:max_select="2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+        </com.zhy.view.flowlayout.TagFlowLayout>
+    </RelativeLayout>
+</RelativeLayout>

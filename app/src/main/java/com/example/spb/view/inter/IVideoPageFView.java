@@ -1,6 +1,8 @@
 package com.example.spb.view.inter;
 
-public interface IVideoPageFView {
+import com.example.spb.view.InterTotal.SpbInterTwo;
+
+public interface IVideoPageFView extends SpbInterTwo {
     //请求标记
     int REQUEST_ONE = 0;
     int REQUEST_TWO = 1;
@@ -9,6 +11,11 @@ public interface IVideoPageFView {
     int RESPONSE_ONE = 0;
     int RESPONSE_TWO = 1;
     int RESPONSE_THREE = 2;
+
+    //关闭刷新
+    int FINISH_REFRESH = 1;
+    int FINISH_MORE = 2;
+
 
     <T> T request(int requestFlag);
 

@@ -165,7 +165,7 @@ public class UserDiaryAdapter extends RecyclerView.Adapter<UserDiaryAdapter.View
         holder.mDiaryImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                config.setNowThumbnailIndex(position);
+                config.setNowThumbnailIndex(stringspath.indexOf(InValues.send(R.string.httpHeadert) + diary.getDia_image()));
                 transferee.apply(config).show();
             }
         });

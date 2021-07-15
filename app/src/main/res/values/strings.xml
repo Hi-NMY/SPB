@@ -63,18 +63,22 @@
     <string name="PostBar">http://nmy1206.natapp1.cc/PostBar.php</string>
     <string name="CollectBar">http://nmy1206.natapp1.cc/CollectBar.php</string>
     <string name="Comment">http://nmy1206.natapp1.cc/Comment.php</string>
+    <string name="SendNewVideo">http://nmy1206.natapp1.cc/SendNewVideo.php</string>
+    <string name="Video">http://nmy1206.natapp1.cc/Video.php</string>
 
     <string name="Bcr_refresh_userMsg">Bcr_refresh_userMsg</string>
     <string name="Bcr_transfer_loc">Bcr_transfer_loc</string>
     <string name="Bcr_refresh_topic">Bcr_refresh_topic</string>
     <string name="Bcr_add_hottopicbar">Bcr_add_hottopicbar</string>
     <string name="Bcr_add_newtopicbar">Bcr_add_newtopicbar</string>
+    <string name="Bcr_add_newtopicvideo">Bcr_add_newtopicvideo</string>
     <string name="Bcr_reUserPage_Datanum">Bcr_reUserPage_Datanum</string>
     <string name="Bcr_reAttTopic">Bcr_reAttTopic</string>
     <string name="Bcr_UserSpace_user">Bcr_UserSpace_user</string>
     <string name="Bcr_refresh_headimg">Bcr_refresh_headimg</string>
     <string name="Bcr_refresh_thumb">Bcr_refresh_thumb</string>
     <string name="Bcr_add_personal_bar">Bcr_add_personal_bar</string>
+    <string name="Bcr_add_personal_videobar">Bcr_add_personal_videobar</string>
     <string name="Bcr_add_new_bar">Bcr_add_new_bar</string>
     <string name="Bcr_re_Follow">Bcr_re_Follow</string>
     <string name="Bcr_add_Follow">Bcr_add_Follow</string>
@@ -84,6 +88,8 @@
     <string name="Bcr_add_Diary">Bcr_add_Diary</string>
     <string name="Bcr_stop_voice">Bcr_stop_voice</string>
     <string name="Bcr_add_comment">Bcr_comment</string>
+    <string name="Bcr_new_messasge">Bcr_new_messasge</string>
+    <string name="Bcr_add_new_video">Bcr_add_new_video</string>
 
 
     <string name="intent_Topic">intent_Topic</string>

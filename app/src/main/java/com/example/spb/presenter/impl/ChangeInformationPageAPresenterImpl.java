@@ -2,6 +2,8 @@ package com.example.spb.presenter.impl;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.net.Uri;
+import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BasePresenter;
 import com.example.spb.entity.CityJsonBean;
@@ -11,10 +13,13 @@ import com.example.spb.model.SpbAbstract.SpbModelAbstrate;
 import com.example.spb.model.impl.UserModelImpl;
 import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.inter.IChangeInformationPageAPresenter;
+import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MyDateClass;
 import com.example.spb.presenter.littlefun.MyResolve;
 import com.example.spb.view.inter.IChangeInformationPageAView;
 import com.google.gson.Gson;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -138,6 +143,12 @@ public class ChangeInformationPageAPresenterImpl extends BasePresenter<IChangeIn
             }
         });
         return user;
+    }
+
+    public void updateRong(String account,String name){
+        UserInfo userInfo = new UserInfo(account, name,
+                Uri.parse(InValues.send(R.string.httpHeader) + "/UserImageServer/" + account + "/HeadImage/myHeadImage.png"));
+        RongIM.getInstance().refreshUserInfoCache(userInfo);
     }
 
     public List<CityJsonBean> getOptions1Items() {

@@ -84,7 +84,7 @@ public class SendNewBarPageAPresenterImpl extends BasePresenter<ISendNewBarPageA
     public void sendNewMessage(){
         newBar.setUser_account(ObtainUserShared.getUserAccount());
         newBar.setPb_voice(voicePath);
-        newBar.setPb_topic(String.valueOf(topicZ));
+        newBar.setPb_topic(topicZ == null ? "":String.valueOf(topicZ));
         newBar.setPb_one_id(ObtainUserShared.getUserAccount());
         newBar.setPb_location(locationName);
         newBar.setPb_image_url(String.valueOf(MyResolve.OutDoubleImage(barImage)));

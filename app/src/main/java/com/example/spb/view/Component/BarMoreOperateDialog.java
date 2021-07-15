@@ -21,6 +21,8 @@ import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MySharedPreferences;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.view.activity.HomePage;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 
@@ -51,6 +53,7 @@ public class BarMoreOperateDialog extends ComponentDialog {
     public boolean collectKey = false;
     public String barOneId = "";
     public String userAccount = "";
+    public String userName = "";
     private BaseMVPActivity baseMVPActivity;
     private ComponentDialog componentDialog;
     private SpbModelBasicInter barModel;
@@ -100,11 +103,20 @@ public class BarMoreOperateDialog extends ComponentDialog {
         this.userAccount = userAccount;
     }
 
-    public void setData(boolean followKey, boolean collectKey, String barOneId,String userAccount){
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setData(boolean followKey, boolean collectKey, String barOneId, String userAccount,String name){
         setFollowKey(followKey);
         setCollectKey(collectKey);
         setBarOneId(barOneId);
         setUserAccount(userAccount);
+        setUserName(name);
     }
 
     @Override
@@ -133,6 +145,15 @@ public class BarMoreOperateDialog extends ComponentDialog {
     public void funChat(){
         mChatR.setVisibility(View.VISIBLE);
         mChatTxt.setVisibility(View.VISIBLE);
+        mChatR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Conversation.ConversationType conversationType  = Conversation.ConversationType.PRIVATE;
+                String targetId = getUserAccount();
+                String title = getUserName();
+                RongIM.getInstance().startConversation(baseMVPActivity , conversationType, targetId, title, null);
+            }
+        });
     }
 
     public void funFOllow(){
@@ -239,6 +260,8 @@ public class BarMoreOperateDialog extends ComponentDialog {
                                             if (Integer.valueOf(a) == 200){
                                                 //删帖Bcr
                                                 SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_add_personal_bar),3,getUserAccount(),null);
+                                                SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_add_personal_videobar),3,getUserAccount(),null);
+                                                SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_add_new_video),3,null);
                                                 SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_add_new_bar),3,null);
                                                 SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_add_newtopicbar),3,getUserAccount(),null);
                                                 SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_add_hottopicbar),3,null,null);

@@ -1,5 +1,7 @@
 package com.example.spb.entity;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 public class Bar implements Serializable {
@@ -11,10 +13,13 @@ public class Bar implements Serializable {
     private String pb_article;
     private String pb_image_url;
     private String pb_voice;
+    private String pb_video;
     private String pb_topic;
     private String pb_location;
     private int pb_thumb_num;
     private int pb_comment_num;
+
+    private Bitmap videoBitmap;
 
     public String getUser_name() {
         return user_name;
@@ -102,5 +107,21 @@ public class Bar implements Serializable {
 
     public void setPb_comment_num(int pb_comment_num) {
         this.pb_comment_num = pb_comment_num;
+    }
+
+    public String getPb_video() {
+        return pb_video;
+    }
+
+    public void setPb_video(String pb_video) {
+        this.pb_video = pb_video;
+    }
+
+    public Bitmap getVideoBitmap() {
+        return videoBitmap;
+    }
+
+    public void setVideoBitmap(Bitmap videoBitmap) {
+        this.videoBitmap = videoBitmap;
     }
 }

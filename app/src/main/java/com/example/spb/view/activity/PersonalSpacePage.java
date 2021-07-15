@@ -49,6 +49,8 @@ import com.luck.picture.lib.listener.OnResultCallbackListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
@@ -210,7 +212,6 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mExcessR.setVisibility(View.GONE);
                         finishRRefresh(0);
                     }
                 });
@@ -273,6 +274,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
     }
 
     private void initUserDate() {
+        mExcessR.setVisibility(View.GONE);
         mPersonalspaceUsername.setText(toUser.getUser_name());
         mPersonalspaceUsersign.setText(toUser.getUser_profile());
         USERNAME = mPersonalspaceUsername.getText().toString();
@@ -452,6 +454,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                                     .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                                     .centerCrop()
                                     .into(mPersonalspaceUserHeadimg);
+                            mPresenter.updateRong(getDataUserMsgPresenter().getUser_account(),getDataUserMsgPresenter().getUser_name());
                         } else {
                             MyToastClass.ShowToast(MyApplication.getContext(), "背景更换成功");
                             Glide.with(MyApplication.getContext())
@@ -708,7 +711,10 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                 }
                 break;
             case R.id.personalspace_message_btn:
-
+                Conversation.ConversationType conversationType  = Conversation.ConversationType.PRIVATE;
+                String targetId = toUser.getUser_account();
+                String title = toUser.getUser_name();
+                RongIM.getInstance().startConversation(this , conversationType, targetId, title);
                 break;
         }
     }

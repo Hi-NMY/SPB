@@ -180,7 +180,7 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
 
                 badgePagerTitleView.setInnerPagerTitleView(simplePagerTitleView);
 
-                if (index == 1) {
+                if (index == 0) {
                     ImageView badgeImageView = (ImageView) LayoutInflater.from(context).inflate(R.layout.other_simple_red_dot, null);
                     badgePagerTitleView.setBadgeView(badgeImageView);
                     badgePagerTitleView.setXBadgeRule(new BadgeRule(BadgeAnchor.CONTENT_RIGHT, -UIUtil.dip2px(context, 6)));
@@ -209,22 +209,22 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
         mPostbarPageIdt.setNavigator(commonNavigator);
         ViewPagerHelper.bind(mPostbarPageIdt, mPostbarPageViewpager);
         mPostbarPageViewpager.setCurrentItem(1);
-        mPostbarPageViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_stop_voice),0,null);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+//        mPostbarPageViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_stop_voice),0,null);
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
     }
 
     @Override

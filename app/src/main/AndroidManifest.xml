@@ -32,6 +32,24 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
+        <activity android:name=".view.activity.SendNewVideo"
+                  android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+                  android:windowSoftInputMode="adjustResize">
+        </activity>
+        <activity
+                android:name=".view.activity.UserPrivateChatPage"
+                android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data
+                        android:host="com.example.spb"
+                        android:pathPrefix="/conversation/"
+                        android:scheme="rong"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".view.activity.SearchUserPage">
         </activity>
 
@@ -82,6 +100,7 @@
         </activity>
         <activity
                 android:name=".view.activity.HomePage"
+                android:theme="@style/NoBackgroundTheme"
                 android:label="@string/title_activity_user_home_page">
         </activity>
         <activity android:name=".view.activity.UserForgotpasswordPage">
@@ -92,7 +111,8 @@
         </activity>
         <activity android:name=".view.activity.FirstPage">
         </activity>
-        <activity android:name=".view.activity.EnterPage">
+        <activity android:name=".view.activity.EnterPage"
+                android:theme="@style/EnterPageBg">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

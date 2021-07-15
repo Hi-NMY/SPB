@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Handler;
+import android.util.Log;
 import com.example.spb.R;
 import com.example.spb.base.BasePresenter;
 import com.example.spb.entity.RongUser;
@@ -157,7 +158,7 @@ public class FirstPageAPresenterImpl extends BasePresenter<IFirstPageAView> impl
                 UserInfo userInfo = new UserInfo(uAccount,uName, Uri.parse(InValues
                         .send(R.string.httpHeader) +"/UserImageServer/"+uAccount+"/HeadImage/myHeadImage.png"));
                 RongIM.getInstance().setCurrentUserInfo(userInfo);
-                getView().goIntent();
+                Log.d("rongLink","true");
             }
 
             @Override
@@ -167,7 +168,7 @@ public class FirstPageAPresenterImpl extends BasePresenter<IFirstPageAView> impl
 
             @Override
             public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus databaseOpenStatus) {
-
+                getView().goIntent();
             }
         });
     }

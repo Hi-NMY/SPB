@@ -92,7 +92,6 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageF
         mNewpostpageRecyclerview = MyListAnimation.setListAnimation(homePage,mNewpostpageRecyclerview);
         mySmartRefresh = new MySmartRefresh(mNewpostpageRefresh, mNewpostpageRefreshTgif, mNewpostpageRefreshBgif);
         createRefresh();
-        initData();
     }
 
     @Override

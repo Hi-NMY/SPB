@@ -94,5 +94,5 @@ dependencies {
     implementation 'com.github.Hitomis.transferee:Transferee:1.6.1'
     implementation 'com.github.Hitomis.transferee:GlideImageLoader:1.6.1'//图片加载
 
-    //implementation 'com.shuyu:GSYVideoPlayer:8.1.0'   //视频播放器
+    implementation 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer:v8.1.5-jitpack'  //视频播放器
 }

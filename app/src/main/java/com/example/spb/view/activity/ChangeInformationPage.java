@@ -153,6 +153,7 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
                         closeDialog(LOADINGDIALOG);
                         finish();
                         MyToastClass.ShowToast(MyApplication.getContext(),"修改成功");
+                        mPresenter.updateRong(getDataUserMsgPresenter().getUser_account(),getDataUserMsgPresenter().getUser_name());
                         break;
                     default:
                         closeDialog(LOADINGDIALOG);

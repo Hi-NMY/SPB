@@ -71,8 +71,8 @@ public class NewTopicBarFPresenterImpl extends BasePresenter<INewTopicBarFView> 
 
     public void obtainNewTopicBar(){
         Bar cacheBar = new Bar();
-        cacheBar.setPb_topic(tName);
-        cacheBar.setPb_date(cacheDate);
+        cacheBar.setPb_topic(gettName());
+        cacheBar.setPb_date(getCacheDate());
         barModel.selectData(barModel.DATABAR_SELECT_THREE, cacheBar, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {

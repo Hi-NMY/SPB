@@ -88,7 +88,6 @@ public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresen
         setMyListener();
         createDialog();
         createRefresh();
-        initData();
     }
 
     @Override

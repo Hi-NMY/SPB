@@ -9,6 +9,7 @@
         android:fitsSystemWindows="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
+        android:background="@color/beijing"
         tools:context=".view.activity.SendNewBarPage">
 
     <fragment

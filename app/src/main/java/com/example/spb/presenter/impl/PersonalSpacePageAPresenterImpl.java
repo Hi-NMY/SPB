@@ -1,5 +1,6 @@
 package com.example.spb.presenter.impl;
 
+import android.net.Uri;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BasePresenter;
@@ -8,19 +9,17 @@ import com.example.spb.entity.Follow;
 import com.example.spb.entity.Followed;
 import com.example.spb.entity.User;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
-import com.example.spb.model.impl.BarModelImpl;
-import com.example.spb.model.impl.FollowModelImpl;
-import com.example.spb.model.impl.FollowedModelImpl;
-import com.example.spb.model.impl.UserModelImpl;
+import com.example.spb.model.impl.*;
 import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.inter.IPersonalSpacePageAPresenter;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.view.inter.IPersonalSpacePageAView;
-import com.example.spb.view.inter.IUserRegisteredPageAView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.luck.picture.lib.entity.LocalMedia;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,6 +35,7 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
     private SpbModelBasicInter followedModel;
     private SpbModelBasicInter followModel;
     private SpbModelBasicInter barModel;
+    private SpbModelBasicInter videoModel;
     private User user;
     private boolean userFollowKey = false;
 
@@ -44,6 +44,7 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
         userModel = new UserModelImpl();
         followedModel = new FollowedModelImpl();
         followModel = new FollowModelImpl();
+        videoModel = new VideoModelImpl();
     }
 
     public boolean isUserFollowKey() {
@@ -220,6 +221,33 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
 
             }
         });
+
+        videoModel.selectData(videoModel.DATAVIDEO_SELECT_FOUR, bar, new MyCallBack() {
+            @Override
+            public void onSuccess(@NotNull Response response) {
+                try {
+                    String a = response.body().string();
+                    if (Integer.valueOf(a.substring(0,3)) == 200){
+                        List<Bar> bars = new Gson().fromJson(a.substring(3),new TypeToken<List<Bar>>(){}.getType());
+                        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_personal_videobar)
+                                ,0,account,(Serializable)bars);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(int t) {
+
+            }
+        });
+    }
+
+    public void updateRong(String account,String name){
+        UserInfo userInfo = new UserInfo(account, name,
+                Uri.parse(InValues.send(R.string.httpHeader) + "/UserImageServer/" + account + "/HeadImage/myHeadImage.png"));
+        RongIM.getInstance().refreshUserInfoCache(userInfo);
     }
 
     public interface OnReturn{

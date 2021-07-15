@@ -1,6 +1,8 @@
 package com.example.spb.presenter.impl;
 
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.util.Log;
 import com.example.spb.R;
 import com.example.spb.base.BasePresenter;
 import com.example.spb.presenter.inter.IEnterPageAPresenter;
@@ -8,6 +10,9 @@ import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MySharedPreferences;
 import com.example.spb.view.activity.EnterPage;
 import com.example.spb.view.inter.IEnterPageAView;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -24,22 +29,11 @@ public class EnterPageAPresenterImpl extends BasePresenter<IEnterPageAView> impl
     }
 
     public void initDate(EnterPage enterPage,Jump jump){
-//        ExecutorService executorService = Executors.newFixedThreadPool(10);
-//        executorService.execute(new Runnable() {
-//            @Override
-//            public void run() {
-                SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_User));
-                enterPage.initUserData(sharedPreferences.getString(InValues.send(R.string.user_account),""));
-//            }
-//        });
-//        executorService.shutdown();
-//        while (true){
-//            if (executorService.isTerminated()){
-//                ;
-//            }
-//        }
+        SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_User));
+        enterPage.initUserData(sharedPreferences.getString(InValues.send(R.string.user_account),""));
         jump.toJump();
     }
+
     public interface Jump{
         void toJump();
     }

@@ -74,6 +74,13 @@ public interface SpbModelBasicInter<T> {
     public static int DATACOMMENT_UPDATE_ONE = 930;
     public static int DATACOMMENT_DELETE_ONE = 940;
 
+    public static int DATAVIDEO_ADD_ONE = 1010;
+    public static int DATAVIDEO_SELECT_ONE = 1020;
+    public static int DATAVIDEO_SELECT_THREE = 1022;
+    public static int DATAVIDEO_SELECT_FOUR = 1023;
+    public static int DATAVIDEO_UPDATE_ONE = 1030;
+    public static int DATAVIDEO_DELETE_ONE = 1040;
+
     public void addData(int fun,T data, MyCallBack callBack);
 
     public void selectData(int fun,T data,MyCallBack callBack);

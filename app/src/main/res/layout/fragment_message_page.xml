@@ -9,6 +9,7 @@
         tools:context=".view.fragment.homepage.messagepage.MessagePage">
 
     <LinearLayout
+            android:id="@+id/llll"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="120dp">
@@ -68,5 +69,11 @@
         </RelativeLayout>
     </LinearLayout>
 
+    <FrameLayout
+            android:id="@+id/container"
+            android:background="@color/beijing"
+            android:layout_below="@+id/llll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
 </RelativeLayout>

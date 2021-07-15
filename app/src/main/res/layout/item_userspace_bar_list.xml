@@ -58,6 +58,26 @@
                 android:layout_height="wrap_content"
                 />
 
+        <androidx.cardview.widget.CardView
+                android:id="@+id/video_card"
+                android:visibility="gone"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="@dimen/corner_8"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_below="@+id/item_userspace_bar_txt"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+                <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
+                        android:id="@+id/detail_player"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+        </androidx.cardview.widget.CardView>
+
+
         <RelativeLayout
                 android:id="@+id/item_userspace_bar_voice"
                 android:visibility="gone"
@@ -65,7 +85,7 @@
                 android:layout_marginRight="@dimen/margin_64"
                 android:layout_marginTop="@dimen/margin_8"
                 android:layout_toLeftOf="@id/item_userspace_bar_more"
-                android:layout_below="@id/item_userspace_bar_txt"
+                android:layout_below="@id/video_card"
                 android:background="@drawable/bar_music_bg"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/icon_image_40">
