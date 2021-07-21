@@ -5,6 +5,10 @@ import android.net.Uri;
 import android.util.Log;
 import com.example.spb.R;
 import com.example.spb.base.BasePresenter;
+import com.example.spb.entity.User;
+import com.example.spb.model.InterTotal.SpbModelBasicInter;
+import com.example.spb.model.impl.UserModelImpl;
+import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.inter.IEnterPageAPresenter;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MySharedPreferences;
@@ -13,13 +17,39 @@ import com.example.spb.view.inter.IEnterPageAView;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
+import okhttp3.Response;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class EnterPageAPresenterImpl extends BasePresenter<IEnterPageAView> implements IEnterPageAPresenter {
 
+    private SpbModelBasicInter userModel;
+
     public EnterPageAPresenterImpl() {
+        userModel = new UserModelImpl();
+    }
+
+    public void setUserIp(){
+        SharedPreferences sharedPreferences1 = MySharedPreferences.getShared(InValues.send(R.string.Shared_User));
+        String account = sharedPreferences1.getString(InValues.send(R.string.user_account),"");
+        SharedPreferences sharedPreferences2 = MySharedPreferences.getShared(InValues.send(R.string.Shared_Push));
+        String ip = sharedPreferences2.getString(InValues.send(R.string.push_id),"");
+        User user = new User();
+        user.setUser_account(account);
+        user.setUser_ip(ip);
+        userModel.updateData(userModel.DATAUSER_UPDATE_FOUR,user, new MyCallBack() {
+            @Override
+            public void onSuccess(@NotNull Response response) {
+
+            }
+
+            @Override
+            public void onError(int t) {
+
+            }
+        });
     }
 
     @Override

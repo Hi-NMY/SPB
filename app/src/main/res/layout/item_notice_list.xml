@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/item_notice_list_R"
+                android:background="@color/beijing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/item_notice_list_headimg"
+            android:layout_marginLeft="@dimen/margin_12"
+            android:layout_marginRight="@dimen/margin_8"
+            android:layout_marginVertical="@dimen/margin_16"
+            android:scaleType="centerCrop"
+            android:src="@drawable/enterbg"
+            android:layout_width="@dimen/icon_image_44"
+            android:layout_height="@dimen/icon_image_44"
+            app:riv_oval="true"/>
+
+    <TextView
+            android:id="@+id/item_notice_list_title_name"
+            android:layout_marginTop="@dimen/margin_2"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_alignTop="@id/item_notice_list_headimg"
+            android:layout_toRightOf="@id/item_notice_list_headimg"
+            android:text=""
+            android:textSize="@dimen/font_14"
+            android:textColor="@color/qihei"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <ImageView
+            android:id="@+id/item_notice_list_title_img"
+            android:visibility="gone"
+            android:layout_alignBottom="@id/item_notice_list_title_name"
+            android:layout_toRightOf="@id/item_notice_list_title_name"
+            android:translationY="@dimen/margin_4"
+            android:background="@drawable/icon_likeal"
+            android:layout_width="@dimen/icon_image_32"
+            android:layout_height="@dimen/icon_image_32"/>
+
+    <TextView
+            android:id="@+id/item_notice_list_title_block"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textStyle="bold"
+            android:layout_alignTop="@id/item_notice_list_title_name"
+            android:layout_toRightOf="@id/item_notice_list_title_img"
+            android:text=""
+            android:textSize="@dimen/font_14"
+            android:textColor="@color/qihei"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:id="@+id/item_notice_list_title"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_alignTop="@id/item_notice_list_title_name"
+            android:layout_toRightOf="@id/item_notice_list_title_block"
+            android:text=""
+            android:textSize="@dimen/font_14"
+            android:textColor="@color/qihei"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:id="@+id/item_notice_list_date"
+            android:layout_below="@id/item_notice_list_title_name"
+            android:layout_marginTop="@dimen/margin_4"
+            android:layout_toRightOf="@id/item_notice_list_headimg"
+            android:text=""
+            android:textSize="@dimen/font_12"
+            android:textColor="@color/qihei"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+</RelativeLayout>

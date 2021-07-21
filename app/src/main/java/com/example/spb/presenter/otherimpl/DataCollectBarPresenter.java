@@ -9,6 +9,8 @@ import com.example.spb.model.impl.CollectBarModelImpl;
 import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
+import com.example.spb.xserver.AndroidNotification;
+import com.example.spb.xserver.AndroidUnicast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import okhttp3.Response;
@@ -88,9 +90,9 @@ public class DataCollectBarPresenter {
         });
     }
 
-    public void addCollectBar(String account,String pbid){
+    public void addCollectBar(String acc,String pbid){
         CollectBar collectBar = new CollectBar();
-        collectBar.setCache_account(account);
+        collectBar.setCache_account(acc);
         collectBar.setUser_account(this.account);
         collectBar.setPb_one_id(pbid);
         collectBarModel.addData(collectBarModel.DATACOLLECTBAR_ADD_ONE, collectBar, new MyCallBack() {
@@ -98,8 +100,24 @@ public class DataCollectBarPresenter {
             public void onSuccess(@NotNull Response response) {
                 try {
                     a = response.body().string();
-                    if (Integer.valueOf(a) == SUCCESS){
+                    if (Integer.valueOf(a.substring(0,3)) == SUCCESS){
                         collectList.add(0,collectBar);
+                        String user_ip = a.substring(3);
+                        if (!account.equals(acc)){
+                            AndroidUnicast unicast = null;
+                            try {
+                                unicast = new AndroidUnicast();
+                                unicast.setDeviceToken(user_ip);
+                                unicast.setTicker( "Android unicast ticker");
+                                unicast.setTitle(InValues.send(R.string.Push_Title));
+                                unicast.setText(InValues.send(R.string.Push_Collect_txt));
+                                unicast.setExtraField(InValues.send(R.string.Push_fun),String.valueOf(unicast.PUSHCOLLECTKEY));
+                                unicast.setExtraField(InValues.send(R.string.Push_pbid_key),pbid);
+                                unicast.clientSend(unicast);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
                 } catch (Exception e) {
 

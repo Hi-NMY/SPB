@@ -118,6 +118,9 @@ public class FirstPageAPresenterImpl extends BasePresenter<IFirstPageAView> impl
     }
 
     public void verifyPassword(User user, Handler verifyAccountHanlder) {
+        SharedPreferences sharedPreferences2 = MySharedPreferences.getShared(InValues.send(R.string.Shared_Push));
+        String ip = sharedPreferences2.getString(InValues.send(R.string.push_id),"");
+        user.setUser_ip(ip);
         userModel.selectData(userModel.FIRSTPAGE_TWO, user, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {

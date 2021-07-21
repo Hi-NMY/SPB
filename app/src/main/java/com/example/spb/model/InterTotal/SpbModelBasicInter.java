@@ -8,9 +8,11 @@ public interface SpbModelBasicInter<T> {
     public static int FIRSTPAGE_ONE = 920;
     public static int FIRSTPAGE_TWO = 930;
     public static int FIRSTPAGE_THREE = 931;
+    public static int FIRSTPAGE_FOUR = 932;
     public static int DATAUSER_UPDATE_ONE = 940;
     public static int DATAUSER_UPDATE_TWO = 941;
     public static int DATAUSER_UPDATE_THREE = 942;
+    public static int DATAUSER_UPDATE_FOUR = 943;
 
 
     public static int DATAATTENTIONTOPIC_ADD_ONE = 110;
@@ -63,6 +65,7 @@ public interface SpbModelBasicInter<T> {
     public static int DATABAR_SELECT_FOUR = 823;
     public static int DATABAR_SELECT_FIVE = 824;
     public static int DATABAR_SELECT_SIX = 825;
+    public static int DATABAR_SELECT_SEVEN = 826;
     public static int DATABAR_UPDATE_ONE = 830;
     public static int DATABAR_UPDATE_TWO = 831;
     public static int DATABAR_UPDATE_THREE = 832;
@@ -71,6 +74,7 @@ public interface SpbModelBasicInter<T> {
 
     public static int DATACOMMENT_ADD_ONE = 910;
     public static int DATACOMMENT_SELECT_ONE = 920;
+    public static int DATACOMMENT_SELECT_TWO = 921;
     public static int DATACOMMENT_UPDATE_ONE = 930;
     public static int DATACOMMENT_DELETE_ONE = 940;
 

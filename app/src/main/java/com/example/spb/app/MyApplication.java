@@ -6,6 +6,7 @@ import com.example.spb.R;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.view.InterTotal.SpbInterOne;
+import com.example.spb.xserver.PushHelper;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Message;
@@ -18,6 +19,17 @@ public class MyApplication extends Application implements RongIMClient.Connectio
     @Override
     public void onCreate() {
         super.onCreate();
+
+        //预初始化
+        PushHelper.preInit(this);
+        //push初始化
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                PushHelper.init(getApplicationContext());
+            }
+        }).start();
+
         String appKey = "x18ywvqfx4z8c";
         LitePal.initialize(this);
         context = getApplicationContext();

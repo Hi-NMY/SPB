@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:background="@drawable/dialog_bottom_bg"
+                android:focusableInTouchMode="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <View
+                android:layout_marginTop="@dimen/margin_12"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/enter_next_login_false"
+                android:layout_width="@dimen/margin_40"
+                android:layout_height="@dimen/margin_8"/>
+
+        <RelativeLayout
+                android:id="@+id/r"
+                android:layout_marginHorizontal="@dimen/margin_20"
+                android:layout_marginTop="@dimen/margin_40"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:id="@+id/notice_close"
+                    android:text="关闭"
+                    android:textSize="@dimen/font_16"
+                    android:textColor="@color/qihei"
+                    android:layout_alignParentLeft="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:text="官方通知"
+                    android:textSize="@dimen/font_16"
+                    android:textColor="@color/qihei"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/notice_recycler"
+                android:layout_marginTop="@dimen/margin_12"
+                android:layout_below="@+id/r"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+</RelativeLayout>

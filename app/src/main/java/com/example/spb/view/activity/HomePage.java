@@ -8,7 +8,6 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -129,7 +128,6 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
                 PAGENUMBER = 2;
                 break;
             case 3:
-                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_new_messasge),1,null);
                 fragmentTransaction.show(messagePage);
                 PAGENUMBER = 3;
                 break;
@@ -236,7 +234,7 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
                 mVideoRlt.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        JumpIntent.startMyIntent(SendNewVideo.class);
+                        JumpIntent.startMyIntent(SendNewVideoPage.class);
                         closeDialog(0);
                     }
                 });
@@ -400,9 +398,16 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
         SpbBroadcast.sendReceiver(this, InValues.send(R.string.Bcr_stop_voice), 0, null);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setDataNoticePresenter();
+    }
+
     class NewMessage extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+            getDataNoticePresenter().obtainNotice(false);
             int key = intent.getIntExtra("key_one",0);
             if (key == 0){
                 mViewNewMessage.setVisibility(View.VISIBLE);

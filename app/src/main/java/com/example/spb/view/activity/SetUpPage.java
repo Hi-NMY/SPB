@@ -41,6 +41,7 @@ public class SetUpPage extends BaseMVPActivity<ISetUpPageAView, SetUpPageAPresen
                 editor.putBoolean(InValues.send(R.string.FirstLogIn_login),true);
                 editor.commit();
                 RongIM.getInstance().logout();
+                //退出登录时加入逻辑：删除user_ip。使用户无法收到其他用户推送的消息
             }
         });
         setActivityBar();

@@ -263,7 +263,6 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
                     ENTER_CHECK = true;
                     showDialogS(DIALOGUSERNOTICE);
                 } else {
-                    JumpIntent.startMyIntent(HomePage.class);
                     mEnterCheck.setBackground(getDrawable(R.drawable.enter_nocheck));
                     ENTER_CHECK = false;
                 }

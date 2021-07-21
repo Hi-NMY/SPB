@@ -39,6 +39,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
+            <View
+                    android:id="@+id/view_newMessage"
+                    android:visibility="invisible"
+                    android:layout_toRightOf="@id/messagepage_notice"
+                    android:layout_alignTop="@id/messagepage_notice"
+                    android:translationX="@dimen/margin_8"
+                    android:background="@drawable/simple_red"
+                    android:layout_width="@dimen/margin_12"
+                    android:layout_height="@dimen/margin_12"/>
+
         </RelativeLayout>
 
         <RelativeLayout

@@ -77,6 +77,8 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
     private DialogInter easyDialog;
     private StandardGSYVideoPlayer mDetailPlayer;
     private CardView mVideoCard;
+    private String intentPbidKey = null;
+    private int intentCommentIdKey = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,9 +89,27 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment), barComment);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_re_Follow), refreshFollow);
         layoutInflater = this.getLayoutInflater();
-        barData = (Bar) getIntent().getSerializableExtra(InValues.send(R.string.intent_Bar));
-        keyboardStartKey = getIntent().getBooleanExtra("intent_keyboard_start", false);
-        initActView();
+        intentPbidKey = getIntent().getStringExtra(InValues.send(R.string.intent_pbid_start));
+        if (intentPbidKey == null || intentPbidKey.equals("")){
+            barData = (Bar) getIntent().getSerializableExtra(InValues.send(R.string.intent_Bar));
+            keyboardStartKey = getIntent().getBooleanExtra(InValues.send(R.string.intent_keyboard_start), false);
+            initActView();
+        }else {
+            intentCommentIdKey = getIntent().getIntExtra(InValues.send(R.string.intent_commentid_start),-1);
+            mPresenter.obtainBar("", intentPbidKey, new PostBarDetailPageAPresenterImpl.OnReturn() {
+                @Override
+                public void onReturn(Bar bar) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            barData = bar;
+                            keyboardStartKey = false;
+                            initActView();
+                        }
+                    });
+                }
+            });
+        }
     }
 
     @Override
@@ -143,7 +163,11 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
     @Override
     protected void initData() {
         mPresenter.setCommentpbid(barData.getPb_one_id());
-        mPresenter.obtainComment();
+        if (intentCommentIdKey == -1){
+            mPresenter.obtainComment();
+        }else {
+            mPresenter.obtainCommentOne(intentCommentIdKey,intentPbidKey);
+        }
         Glide.with(this)
                 .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + barData.getUser_account() + "/HeadImage/myHeadImage.png")
                 .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
@@ -225,8 +249,6 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
                                 videoTool.creatVideo(InValues.send(R.string.httpHeadert) + barData.getPb_video(),bitmap);
                             }
                         });
-
-
         }
     }
 

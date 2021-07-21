@@ -20,6 +20,7 @@ public class CommentModellmpl extends SpbModelAbstrate implements SpbModelBasicI
                             .add("comment_art",String.valueOf(data.getComment_art()))
                             .add("comment_user",String.valueOf(data.getComment_user()))
                             .add("comment_touser",String.valueOf(data.getComment_touser()))
+                            .add("cache_account",String.valueOf(data.getCache_account()))
                             .build();
                 }else {
                     requestBody = new FormBody.Builder()
@@ -27,6 +28,7 @@ public class CommentModellmpl extends SpbModelAbstrate implements SpbModelBasicI
                             .add("pb_one_id",String.valueOf(data.getPb_one_id()))
                             .add("comment_art",String.valueOf(data.getComment_art()))
                             .add("comment_user",String.valueOf(data.getComment_user()))
+                            .add("cache_account",String.valueOf(data.getCache_account()))
                             .build();
                 }
                 sendHttp(InValues.send(R.string.Comment),requestBody,callBack);
@@ -41,6 +43,14 @@ public class CommentModellmpl extends SpbModelAbstrate implements SpbModelBasicI
                 requestBody = new FormBody.Builder()
                         .add("fun", String.valueOf(fun))
                         .add("pb_one_id",String.valueOf(data.getPb_one_id()))
+                        .build();
+                sendHttp(InValues.send(R.string.Comment),requestBody,callBack);
+                break;
+            case DATACOMMENT_SELECT_TWO:
+                requestBody = new FormBody.Builder()
+                        .add("fun", String.valueOf(fun))
+                        .add("pb_one_id",String.valueOf(data.getPb_one_id()))
+                        .add("comment_id",String.valueOf(data.getComment_id()))
                         .build();
                 sendHttp(InValues.send(R.string.Comment),requestBody,callBack);
                 break;

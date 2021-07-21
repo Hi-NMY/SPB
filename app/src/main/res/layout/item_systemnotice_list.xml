@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/item_notice_list_R"
+                android:clipChildren="false"
+                android:background="@color/beijing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+    <TextView
+            android:id="@+id/official_time"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/lightgray"
+            android:gravity="center"
+            android:text=""
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_below="@id/official_time"
+            android:clipChildren="false"
+            android:layout_marginHorizontal="@dimen/margin_24"
+            android:background="@drawable/systemnotice_gb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/item_notice_list_headimg"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_launcher"
+                android:translationX="@dimen/margin__12"
+                android:layout_centerVertical="true"
+                android:layout_width="@dimen/icon_image_24"
+                android:layout_height="@dimen/icon_image_24"
+                app:riv_border_color="@color/theme_color"
+                app:riv_border_width="@dimen/margin_2"
+                app:riv_oval="true"/>
+
+        <TextView
+                android:id="@+id/official_notice"
+                android:layout_margin="@dimen/margin_16"
+                android:layout_marginLeft="@dimen/margin_20"
+                android:textSize="@dimen/font_14"
+                android:textColor="@color/qihei"
+                android:lineSpacingMultiplier="1.3"
+                android:text=""
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

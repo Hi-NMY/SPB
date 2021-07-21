@@ -11,6 +11,8 @@ import com.example.spb.model.impl.FollowedModelImpl;
 import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
+import com.example.spb.xserver.AndroidNotification;
+import com.example.spb.xserver.AndroidUnicast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import okhttp3.Response;
@@ -74,9 +76,22 @@ public class DataFollowPresenter {
             public void onSuccess(@NotNull Response response) {
                 try {
                     String a = response.body().string();
-                    if (Integer.valueOf(a) == SUCCESS) {
+                    if (Integer.valueOf(a.substring(0,3)) == SUCCESS) {
                         followList.add(0,follow);
                         SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_re_Follow),0,(Serializable)follow);
+                        String user_ip = a.substring(3);
+                        AndroidUnicast unicast = null;
+                        try {
+                            unicast = new AndroidUnicast();
+                            unicast.setDeviceToken(user_ip);
+                            unicast.setTicker( "Android unicast ticker");
+                            unicast.setTitle(InValues.send(R.string.Push_Title));
+                            unicast.setText(InValues.send(R.string.Push_Follow_txt));
+                            unicast.setExtraField(InValues.send(R.string.Push_fun),String.valueOf(unicast.PUSHFOLLOWKEY));
+                            unicast.clientSend(unicast);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

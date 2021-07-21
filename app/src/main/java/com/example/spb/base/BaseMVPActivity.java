@@ -24,6 +24,7 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
     public static DataLikePresenter dataLikePresenter;
     public static DataPostBarPresenter dataPostBarPresenter;
     public static DataUserMsgPresenter dataUserMsgPresenter;
+    public static DataNoticePresenter dataNoticePresenter;
 
     public static String deletePbId = "";
 
@@ -180,6 +181,20 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
         this.dataUserMsgPresenter = new DataUserMsgPresenter(user_account);
     }
 
+    public DataNoticePresenter getDataNoticePresenter() {
+        if (dataNoticePresenter == null){
+            setDataNoticePresenter();
+            return dataNoticePresenter;
+        }else {
+            return dataNoticePresenter;
+        }
+    }
+
+    public void setDataNoticePresenter() {
+        if (dataNoticePresenter == null){
+            this.dataNoticePresenter = new DataNoticePresenter();
+        }
+    }
 
     public EasyVoice toVoice(String url, TextView textView, GIFShow gif){
         EasyVoice easyVoice = new EasyVoice(InValues.send(R.string.httpHeadert) + url, new EasyVoice.OnVoice() {

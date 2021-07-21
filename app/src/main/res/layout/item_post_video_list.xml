@@ -105,7 +105,7 @@
                 android:id="@+id/item_postvideo_topic"
                 android:visibility="gone"
                 android:layout_below="@id/item_postvideo_txt"
-                android:layout_marginHorizontal="@dimen/margin_12"
+                android:layout_marginHorizontal="@dimen/margin_8"
                 android:layout_marginTop="@dimen/margin_8"
                 app:max_select="0"
                 android:layout_width="match_parent"

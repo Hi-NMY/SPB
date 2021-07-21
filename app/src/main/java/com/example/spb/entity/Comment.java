@@ -12,6 +12,7 @@ public class Comment implements Serializable {
     public String comment_touser;
     public String user_toname;
     public int comment_id;
+    public String cache_account;
 
     public String getPb_one_id() {
         return pb_one_id;
@@ -75,5 +76,13 @@ public class Comment implements Serializable {
 
     public void setComment_id(int comment_id) {
         this.comment_id = comment_id;
+    }
+
+    public String getCache_account() {
+        return cache_account;
+    }
+
+    public void setCache_account(String cache_account) {
+        this.cache_account = cache_account;
     }
 }

@@ -47,6 +47,7 @@ public class UserModelImpl extends SpbModelAbstrate implements SpbModelBasicInte
                 requestBody = new FormBody.Builder()
                         .add("user_account", data.getUser_account())
                         .add("user_password", data.getUser_password())
+                        .add("user_ip", data.getUser_ip())
                         .build();
                 sendHttp(InValues.send(R.string.VerifyPassword),requestBody,callBack);
                 break;
@@ -54,6 +55,12 @@ public class UserModelImpl extends SpbModelAbstrate implements SpbModelBasicInte
                 requestBody = new FormBody.Builder()
                         .add("fun",String.valueOf(fun))
                         .add("search_key", data.getUser_name())
+                        .build();
+                sendHttp(InValues.send(R.string.User),requestBody,callBack);
+                break;
+            case FIRSTPAGE_FOUR:
+                requestBody = new FormBody.Builder()
+                        .add("user_account", data.getUser_account())
                         .build();
                 sendHttp(InValues.send(R.string.User),requestBody,callBack);
                 break;
@@ -95,6 +102,14 @@ public class UserModelImpl extends SpbModelAbstrate implements SpbModelBasicInte
                         .addFormDataPart("user_bg_image",file1.getName(),RequestBody.Companion.create(file1
                                 ,MediaType.Companion.parse("image/png")));
                 requestBody = builder.build();
+                sendHttp(InValues.send(R.string.User),requestBody,callBack);
+                break;
+            case DATAUSER_UPDATE_FOUR:
+                requestBody = new FormBody.Builder()
+                        .add("fun",String.valueOf(fun))
+                        .add("user_account", data.getUser_account())
+                        .add("user_ip", data.getUser_ip())
+                        .build();
                 sendHttp(InValues.send(R.string.User),requestBody,callBack);
                 break;
         }

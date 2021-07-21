@@ -64,6 +64,7 @@ public class EnterPage extends BaseMVPActivity<IEnterPageAView, EnterPageAPresen
                         Intent intent = new Intent(MyApplication.getContext(),FirstPage.class);
                         startActivity(intent);
                     }else {
+                        mPresenter.setUserIp();
                         mPresenter.initDate(EnterPage.this, new EnterPageAPresenterImpl.Jump() {
                             @Override
                             public void toJump() {

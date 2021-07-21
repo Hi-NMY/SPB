@@ -15,12 +15,19 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!-- share缓存数据名及value-->
     <string name="Shared_FirstLogIn">firstLogIn</string>
     <string name="FirstLogIn_login">login</string>
 
     <string name="Shared_RongUser">RongUser</string>
     <string name="RongUser_userId">userId</string>
     <string name="RongUser_token">token</string>
+
+    <string name="Shared_Push">MyPush</string>
+    <string name="push_id">push_id</string>
+
+    <string name="Shared_Pushseenum">PushSeeNum</string>
+    <string name="num">num</string>
 
     <string name="Shared_User">User</string>
     <string name="user_account">user_account</string>
@@ -39,7 +46,7 @@
     <string name="Shared_userBar_Num">Shared_userBar_Num</string>
     <string name="userBar_num">userBar_num</string>
 
-
+    <!-- 网络请求-->
     <string name="httpHeader">http://nmy1206.natapp1.cc</string>
     <string name="httpHeadert">http://nmy1206.natapp1.cc/</string>
     <string name="ServerDate">http://nmy1206.natapp1.cc/ServerDate.php</string>
@@ -48,7 +55,6 @@
     <string name="getuiServer">http://nmy1206.natapp1.cc/getuiServer.php</string>
     <string name="MyAppVersion">http://nmy1206.natapp1.cc/MyAppVersion.php</string>
     <string name="SPBAPK">http://nmy1206.natapp1.cc/appDownLoad/SPB.apk</string>
-
     <string name="VerifyMessage">http://nmy1206.natapp1.cc/VerifyMessage.php</string>
     <string name="VerifyAccount">http://nmy1206.natapp1.cc/VerifyAccount.php</string>
     <string name="VerifyPassword">http://nmy1206.natapp1.cc/VerifyPassword.php</string>
@@ -66,6 +72,7 @@
     <string name="SendNewVideo">http://nmy1206.natapp1.cc/SendNewVideo.php</string>
     <string name="Video">http://nmy1206.natapp1.cc/Video.php</string>
 
+    <!-- 内部广播 -->
     <string name="Bcr_refresh_userMsg">Bcr_refresh_userMsg</string>
     <string name="Bcr_transfer_loc">Bcr_transfer_loc</string>
     <string name="Bcr_refresh_topic">Bcr_refresh_topic</string>
@@ -91,9 +98,26 @@
     <string name="Bcr_new_messasge">Bcr_new_messasge</string>
     <string name="Bcr_add_new_video">Bcr_add_new_video</string>
 
-
+    <!--intent搭载信息-->
     <string name="intent_Topic">intent_Topic</string>
     <string name="intent_Bar">intent_Bar</string>
     <string name="intent_User_account">intent_User_account</string>
     <string name="intent_keyboard_start">intent_keyboard_start</string>
+    <string name="intent_pbid_start">intent_pbid_start</string>
+    <string name="intent_commentid_start">intent_commentid_start</string>
+
+    <!--Push推送-->
+    <string name="Push_fun">push_fun</string>
+    <string name="Push_Title">新消息</string>
+    <string name="Push_Like_txt">有人点赞了你的帖子</string>
+    <string name="Push_Collect_txt">有人收藏了你的帖子</string>
+    <string name="Push_Follow_txt">有人关注了你</string>
+    <string name="Push_Comment_txt">有人评论了你的帖子</string>
+    <string name="Push_CommentToUser_txt">有人回复了你的评论</string>
+    <string name="Push_username_key">user_name</string>
+    <string name="Push_useraccount_key">user_account</string>
+    <string name="Push_pbid_key">pb_id</string>
+    <string name="Push_commentid_key">comment_id</string>
+    <string name="Push_system_key">Push_system_key</string>
+
 </resources>
