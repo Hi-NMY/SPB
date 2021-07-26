@@ -14,6 +14,7 @@ import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.entity.Topic;
 import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.littlefun.Task;
 import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.activity.TopicBarPage;
 import com.example.spb.view.littlefun.JumpIntent;
@@ -83,6 +84,7 @@ public class RandomTopicAdapter extends RecyclerView.Adapter<RandomTopicAdapter.
                         @Override
                         public void setMessage(Intent intent) {
                             intent.putExtra(InValues.send(R.string.intent_Topic),topics.get(position));
+                            Task.setNewTopicData(topics.get(position).getTopic_name());
                         }
                     });
                 }catch (Exception e){

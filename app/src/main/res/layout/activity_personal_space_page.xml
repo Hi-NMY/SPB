@@ -122,6 +122,17 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"/>
 
+                            <TextView
+                                    android:id="@+id/personalspace_userbadgeAll"
+                                    android:layout_below="@+id/personalspace_usersign"
+                                    android:layout_toRightOf="@id/personalspace_user_headimg"
+                                    android:layout_marginTop="@dimen/margin_8"
+                                    android:textSize="@dimen/font_14"
+                                    android:textColor="@color/theme_color6"
+                                    android:text="查看全部徽章>"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+
                             <LinearLayout
                                     android:id="@+id/l"
                                     android:layout_centerHorizontal="true"
@@ -262,7 +273,8 @@
                             android:id="@+id/personalspace_viewpager"
                             android:layout_below="@id/r"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="2dp"/>
                 </RelativeLayout>
             </androidx.core.widget.NestedScrollView>
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
@@ -299,7 +311,7 @@
             android:layout_height="69dp">
         <fragment
                 android:id="@+id/personalspace_bar"
-                android:name="com.example.spb.view.Component.FragmentSpbAvtivityBar"
+                android:name="com.example.spb.view.fragment.FragmentSpbAvtivityBar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/spb_activity_bar_44"/>
 

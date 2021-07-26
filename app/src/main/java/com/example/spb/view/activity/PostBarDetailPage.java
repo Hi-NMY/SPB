@@ -25,9 +25,13 @@ import com.example.spb.entity.Topic;
 import com.example.spb.presenter.impl.PostBarDetailPageAPresenterImpl;
 import com.example.spb.presenter.littlefun.*;
 import com.example.spb.presenter.otherimpl.DataLikePresenter;
-import com.example.spb.view.Component.*;
+import com.example.spb.view.Component.BarMoreOperateDialog;
+import com.example.spb.view.Component.EasyDialog;
+import com.example.spb.view.Component.MyToastClass;
+import com.example.spb.view.Component.ThumbAnima;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.inter.IPostBarDetailPageAView;
 import com.example.spb.view.littlefun.*;
 import com.gyf.immersionbar.ImmersionBar;
@@ -79,6 +83,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
     private CardView mVideoCard;
     private String intentPbidKey = null;
     private int intentCommentIdKey = -1;
+    private ImageView mPostbarDetailUserbadge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,12 +95,12 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_re_Follow), refreshFollow);
         layoutInflater = this.getLayoutInflater();
         intentPbidKey = getIntent().getStringExtra(InValues.send(R.string.intent_pbid_start));
-        if (intentPbidKey == null || intentPbidKey.equals("")){
+        if (intentPbidKey == null || intentPbidKey.equals("")) {
             barData = (Bar) getIntent().getSerializableExtra(InValues.send(R.string.intent_Bar));
             keyboardStartKey = getIntent().getBooleanExtra(InValues.send(R.string.intent_keyboard_start), false);
             initActView();
-        }else {
-            intentCommentIdKey = getIntent().getIntExtra(InValues.send(R.string.intent_commentid_start),-1);
+        } else {
+            intentCommentIdKey = getIntent().getIntExtra(InValues.send(R.string.intent_commentid_start), -1);
             mPresenter.obtainBar("", intentPbidKey, new PostBarDetailPageAPresenterImpl.OnReturn() {
                 @Override
                 public void onReturn(Bar bar) {
@@ -121,6 +126,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
     protected void initActView() {
         mPresenter.setBarUser(barData.getUser_account());
         mPresenter.setUserFollowKey(getDataFollowPresenter().determineFollow(barData.getUser_account()));
+        mPostbarDetailUserbadge = (ImageView) findViewById(R.id.postbar_detail_userbadge);
         mDetailPlayer = (StandardGSYVideoPlayer) findViewById(R.id.detail_player);
         mVideoCard = (CardView) findViewById(R.id.video_card);
         mPostbarDetailUserHeadimg = (RoundedImageView) findViewById(R.id.postbar_detail_user_headimg);
@@ -163,15 +169,26 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
     @Override
     protected void initData() {
         mPresenter.setCommentpbid(barData.getPb_one_id());
-        if (intentCommentIdKey == -1){
+        if (intentCommentIdKey == -1) {
             mPresenter.obtainComment();
-        }else {
-            mPresenter.obtainCommentOne(intentCommentIdKey,intentPbidKey);
+        } else {
+            mPresenter.obtainCommentOne(intentCommentIdKey, intentPbidKey);
         }
         Glide.with(this)
                 .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + barData.getUser_account() + "/HeadImage/myHeadImage.png")
                 .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                 .into(mPostbarDetailUserHeadimg);
+        if (barData.getUser_badge() == null || barData.getUser_badge().equals("")){
+            mPostbarDetailUserbadge.setVisibility(View.INVISIBLE);
+        }else {
+            mPostbarDetailUserbadge.setVisibility(View.VISIBLE);
+            //显示徽章！！！
+            Glide.with(this)
+                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + barData.getUser_badge())
+                    .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
+                    .centerCrop()
+                    .into(mPostbarDetailUserbadge);
+        }
         if (barData.getUser_account().equals(getDataUserMsgPresenter().getUser_account())) {
             mPostbarDetailAttentionbtn.setVisibility(View.INVISIBLE);
         } else {
@@ -216,6 +233,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
                                 @Override
                                 public void setMessage(Intent intent) {
                                     intent.putExtra(InValues.send(R.string.intent_Topic), o);
+                                    Task.setNewTopicData(o.getTopic_name());
                                 }
                             });
                         }
@@ -239,16 +257,16 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
             mPostbarDetailLikeImg.setBackground(MyApplication.getContext().getDrawable(R.drawable.icon_likeal));
         }
 
-        if (barData.getPb_video() != null){
+        if (barData.getPb_video() != null) {
             mVideoCard.setVisibility(View.VISIBLE);
-                VideoTool.gethttpBitmap(MyApplication.getContext(), 0
-                        , InValues.send(R.string.httpHeadert) + barData.getPb_video(), new VideoTool.OnReturnBitmap() {
-                            @Override
-                            public void onReturn(Bitmap bitmap, int position) {
-                                VideoTool videoTool = new VideoTool(PostBarDetailPage.this,MyApplication.getContext(),mDetailPlayer);
-                                videoTool.creatVideo(InValues.send(R.string.httpHeadert) + barData.getPb_video(),bitmap);
-                            }
-                        });
+            VideoTool.gethttpBitmap(MyApplication.getContext(), 0
+                    , InValues.send(R.string.httpHeadert) + barData.getPb_video(), new VideoTool.OnReturnBitmap() {
+                        @Override
+                        public void onReturn(Bitmap bitmap, int position) {
+                            VideoTool videoTool = new VideoTool(PostBarDetailPage.this, MyApplication.getContext(), mDetailPlayer);
+                            videoTool.creatVideo(InValues.send(R.string.httpHeadert) + barData.getPb_video(), bitmap);
+                        }
+                    });
         }
     }
 
@@ -433,6 +451,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
                                 mPostbarDetailLikeNum.setVisibility(View.VISIBLE);
                                 mPostbarDetailLikeNum.setText(MyDateClass.sendMath(barData.getPb_thumb_num()));
                                 SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_thumb), +1, barData.getPb_one_id());
+                                Task.setNewLikeData(barData.getPb_one_id());
                             }
                         });
                 break;

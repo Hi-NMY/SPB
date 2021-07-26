@@ -18,7 +18,6 @@ import com.bigkoo.pickerview.view.TimePickerView;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
-import com.example.spb.entity.Topic;
 import com.example.spb.entity.User;
 import com.example.spb.presenter.impl.ChangeInformationPageAPresenterImpl;
 import com.example.spb.presenter.littlefun.InValues;
@@ -27,7 +26,7 @@ import com.example.spb.presenter.littlefun.RemoveNullCharacter;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.Component.EasyDialog;
-import com.example.spb.view.Component.FragmentSpbAvtivityBar;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.inter.IChangeInformationPageAView;
@@ -39,7 +38,6 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Set;
 
 public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPageAView, ChangeInformationPageAPresenterImpl>
         implements IChangeInformationPageAView, View.OnClickListener {
@@ -148,7 +146,7 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
             public void run() {
                 switch (responseFlag){
                     case 200:
-                        getDataUserMsgPresenter().setUserMsg((User) response);
+                        getDataUserMsgPresenter().setUpdateUserMsg((User) response);
                         SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_userMsg),0,null);
                         closeDialog(LOADINGDIALOG);
                         finish();

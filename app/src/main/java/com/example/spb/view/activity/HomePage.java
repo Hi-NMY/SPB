@@ -19,7 +19,7 @@ import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.RequestForAccess;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.view.Component.ComponentDialog;
-import com.example.spb.view.Component.FragmentSpbAvtivityBar;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;

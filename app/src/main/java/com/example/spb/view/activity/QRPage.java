@@ -13,7 +13,7 @@ import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.presenter.littlefun.DataEncryption;
 import com.example.spb.presenter.littlefun.InValues;
-import com.example.spb.view.Component.FragmentSpbAvtivityBar;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.Component.SelectImage;
 import com.example.spb.view.InterTotal.SpbInterOne;
 import com.example.spb.view.littlefun.JumpIntent;

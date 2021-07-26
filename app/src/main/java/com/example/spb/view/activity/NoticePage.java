@@ -13,7 +13,7 @@ import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.NoticePageAPresenterImpl;
 import com.example.spb.presenter.otherimpl.DataNoticePresenter;
 import com.example.spb.view.Component.ComponentDialog;
-import com.example.spb.view.Component.FragmentSpbAvtivityBar;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.Component.MySmartRefresh;
 import com.example.spb.view.inter.INoticePageAView;
 import com.example.spb.view.littlefun.MyListAnimation;

@@ -12,7 +12,7 @@
     <fragment
             android:id="@+id/first_actbar"
             android:layout_width="match_parent"
-            android:name="com.example.spb.view.Component.FragmentSpbAvtivityBar"
+            android:name="com.example.spb.view.fragment.FragmentSpbAvtivityBar"
             android:layout_height="@dimen/spb_activity_bar_44"/>
 
     <ImageView

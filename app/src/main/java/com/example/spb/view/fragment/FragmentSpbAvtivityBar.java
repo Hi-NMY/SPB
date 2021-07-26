@@ -1,4 +1,4 @@
-package com.example.spb.view.Component;
+package com.example.spb.view.fragment;
 
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;

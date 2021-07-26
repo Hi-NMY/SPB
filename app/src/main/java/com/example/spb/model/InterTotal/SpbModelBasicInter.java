@@ -13,6 +13,7 @@ public interface SpbModelBasicInter<T> {
     public static int DATAUSER_UPDATE_TWO = 941;
     public static int DATAUSER_UPDATE_THREE = 942;
     public static int DATAUSER_UPDATE_FOUR = 943;
+    public static int DATAUSER_UPDATE_FIVE = 944;
 
 
     public static int DATAATTENTIONTOPIC_ADD_ONE = 110;
@@ -66,6 +67,7 @@ public interface SpbModelBasicInter<T> {
     public static int DATABAR_SELECT_FIVE = 824;
     public static int DATABAR_SELECT_SIX = 825;
     public static int DATABAR_SELECT_SEVEN = 826;
+    public static int DATABAR_SELECT_EIGHT = 827;
     public static int DATABAR_UPDATE_ONE = 830;
     public static int DATABAR_UPDATE_TWO = 831;
     public static int DATABAR_UPDATE_THREE = 832;
@@ -84,6 +86,19 @@ public interface SpbModelBasicInter<T> {
     public static int DATAVIDEO_SELECT_FOUR = 1023;
     public static int DATAVIDEO_UPDATE_ONE = 1030;
     public static int DATAVIDEO_DELETE_ONE = 1040;
+
+    public static int DATASIGN_ADD_ONE = 1110;
+    public static int DATASIGN_SELECT_ONE = 1120;
+    public static int DATASIGN_SELECT_TWO = 1121;
+    public static int DATASIGN_UPDATE_ONE = 1130;
+    public static int DATASIGN_UPDATE_TWO = 1131;
+    public static int DATASIGN_UPDATE_THREE = 1132;
+    public static int DATASIGN_UPDATE_FOUR = 1133;
+    public static int DATASIGN_UPDATE_FIVE = 1134;
+    public static int DATASIGN_UPDATE_SIX = 1135;
+    public static int DATASIGN_UPDATE_SEVEN = 1136;
+    public static int DATASIGN_UPDATE_EIGHT = 1137;
+    public static int DATASIGN_DELETE_ONE = 1140;
 
     public void addData(int fun,T data, MyCallBack callBack);
 

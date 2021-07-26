@@ -37,6 +37,8 @@
     <string name="user_home">user_home</string>
     <string name="user_favorite">user_favorite</string>
     <string name="user_profile">user_profile</string>
+    <string name="user_badge">user_badge</string>
+    <string name="user_longday">user_longday</string>
     <string name="user_privacy">user_privacy</string>
     <string name="user_ip">user_ip</string>
     <string name="user_token">user_token</string>
@@ -45,6 +47,22 @@
 
     <string name="Shared_userBar_Num">Shared_userBar_Num</string>
     <string name="userBar_num">userBar_num</string>
+
+    <string name="Shared_server_date">Shared_server_date</string>
+    <string name="server_date">server_date</string>
+
+    <string name="Shared_sign_task">Shared_sign_task</string>
+    <string name="sign_task_daysign">sign_task_daysign</string>
+    <string name="sign_task_bar">sign_task_bar</string>
+    <string name="sign_task_like">sign_task_like</string>
+    <string name="sign_task_tolike">sign_task_tolike</string>
+    <string name="sign_task_video">sign_task_video</string>
+
+    <string name="Shared_task_like">Shared_task_like</string>
+    <string name="task_pbid">task_pbid</string>
+
+    <string name="Shared_task_Topic">Shared_task_Topic</string>
+    <string name="task_topic">task_topic</string>
 
     <!-- 网络请求-->
     <string name="httpHeader">http://nmy1206.natapp1.cc</string>
@@ -71,6 +89,7 @@
     <string name="Comment">http://nmy1206.natapp1.cc/Comment.php</string>
     <string name="SendNewVideo">http://nmy1206.natapp1.cc/SendNewVideo.php</string>
     <string name="Video">http://nmy1206.natapp1.cc/Video.php</string>
+    <string name="Sign">http://nmy1206.natapp1.cc/Sign.php</string>
 
     <!-- 内部广播 -->
     <string name="Bcr_refresh_userMsg">Bcr_refresh_userMsg</string>
@@ -97,6 +116,8 @@
     <string name="Bcr_add_comment">Bcr_comment</string>
     <string name="Bcr_new_messasge">Bcr_new_messasge</string>
     <string name="Bcr_add_new_video">Bcr_add_new_video</string>
+    <string name="Bcr_sign_data">Bcr_sign_data</string>
+    <string name="Bcr_add_sign">Bcr_add_sign</string>
 
     <!--intent搭载信息-->
     <string name="intent_Topic">intent_Topic</string>

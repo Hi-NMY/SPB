@@ -13,7 +13,7 @@ import com.example.spb.entity.Bar;
 import com.example.spb.presenter.impl.UserCollectPageAPresenterImpl;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
-import com.example.spb.view.Component.FragmentSpbAvtivityBar;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.Component.MySmartRefresh;
 import com.example.spb.view.inter.IUserCollectPageAView;
 import com.example.spb.view.littlefun.MyListAnimation;

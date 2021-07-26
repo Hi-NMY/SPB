@@ -3,7 +3,7 @@ package com.example.spb.view.InterComponent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.example.spb.view.Component.FragmentSpbAvtivityBar;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 
 public interface ISpbAvtivityBarFView {
     //请求标记

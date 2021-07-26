@@ -14,7 +14,7 @@ import com.example.spb.R;
 import com.example.spb.adapter.FragmentViewPageAdapter;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.AttentionUserPageAPresenterImpl;
-import com.example.spb.view.Component.FragmentSpbAvtivityBar;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.fragment.attentionuser.Follow;
 import com.example.spb.view.fragment.attentionuser.Followed;
 import com.example.spb.view.inter.IAttentionUserPageAView;

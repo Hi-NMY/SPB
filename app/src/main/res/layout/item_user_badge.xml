@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:paddingHorizontal="@dimen/margin_8"
+            android:layout_width="88dp"
+            android:layout_height="106dp">
+
+        <ImageView
+                android:id="@+id/item_badge_img"
+                android:layout_width="@dimen/icon_image_72"
+                android:layout_height="@dimen/icon_image_72"/>
+
+        <Button
+                android:id="@+id/item_badge_btn"
+                android:textSize="@dimen/font_12"
+                android:text="设置"
+                android:textColor="@color/beijing"
+                android:layout_marginHorizontal="@dimen/margin_12"
+                android:layout_toLeftOf="@id/item_badge_img"
+                android:layout_alignRight="@id/item_badge_img"
+                android:layout_below="@id/item_badge_img"
+                android:stateListAnimator="@null"
+                android:background="@drawable/no_sign_bg"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_20"/>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -88,6 +88,19 @@ public class UserFollowAdapter extends RecyclerView.Adapter<UserFollowAdapter.Vi
                     .into(holder.mItemUserFollowHeadimg);
             holder.mItemUserFollowHeadimg.setTag(cacheKey);
         }
+
+        if (user.getUser_badge().equals("") || user.getUser_badge() == null){
+            holder.mItemUserFollowUserbadge.setVisibility(View.INVISIBLE);
+        }else {
+            holder.mItemUserFollowUserbadge.setVisibility(View.VISIBLE);
+            //写入徽章
+            Glide.with(activity)
+                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + user.getUser_badge())
+                    .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
+                    .centerCrop()
+                    .into(holder.mItemUserFollowUserbadge);
+        }
+
         if (user.getStu_sex() != null && user.getStu_sex().equals("男")) {
             holder.mItemUserFollowUsersex.setImageResource(R.drawable.icon_boy);
         } else {

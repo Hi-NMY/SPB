@@ -11,7 +11,7 @@
 
     <fragment
             android:id="@+id/private_message_bar"
-            android:name="com.example.spb.view.Component.FragmentSpbAvtivityBar"
+            android:name="com.example.spb.view.fragment.FragmentSpbAvtivityBar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/spb_activity_bar_44"/>
 

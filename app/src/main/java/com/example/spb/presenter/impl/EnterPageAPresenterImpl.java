@@ -1,8 +1,6 @@
 package com.example.spb.presenter.impl;
 
 import android.content.SharedPreferences;
-import android.net.Uri;
-import android.util.Log;
 import com.example.spb.R;
 import com.example.spb.base.BasePresenter;
 import com.example.spb.entity.User;
@@ -14,14 +12,9 @@ import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MySharedPreferences;
 import com.example.spb.view.activity.EnterPage;
 import com.example.spb.view.inter.IEnterPageAView;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.UserInfo;
+import com.example.spb.xserver.ObtainServerDate;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class EnterPageAPresenterImpl extends BasePresenter<IEnterPageAView> implements IEnterPageAPresenter {
 
@@ -55,6 +48,7 @@ public class EnterPageAPresenterImpl extends BasePresenter<IEnterPageAView> impl
     @Override
     public boolean getFirstLogIn() {
         SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_FirstLogIn));
+      //  setInitialize();
         return sharedPreferences.getBoolean(InValues.send(R.string.FirstLogIn_login),true);
     }
 
@@ -68,7 +62,16 @@ public class EnterPageAPresenterImpl extends BasePresenter<IEnterPageAView> impl
         void toJump();
     }
 
- //   public void setInitialize(){
+    public void setInitialize(){
+        ObtainServerDate.obtainDate(new ObtainServerDate.OnReturn() {
+            @Override
+            public void onReturn(String date) {
+                SharedPreferences.Editor e = MySharedPreferences.saveShared(InValues.send(R.string.Shared_server_date));
+                e.putString(InValues.send(R.string.server_date),"2021-07-23 12:23:22");
+                e.commit();
+            }
+        });
+
 //        SharedPreferences.Editor editor = MySharedPreferences.saveShared("settingMessage");
 //        editor.putBoolean("thumb",true);
 //        editor.putBoolean("comment",true);
@@ -97,5 +100,5 @@ public class EnterPageAPresenterImpl extends BasePresenter<IEnterPageAView> impl
 //        editor3.putInt("goodVoice",0);
 //        editor3.putInt("goToSpace",0);
 //        editor3.commit();
- //   }
+    }
 }

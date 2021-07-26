@@ -111,6 +111,11 @@ public class ComponentDialog implements DialogInter {
     }
 
     @Override
+    public void setNoBg() {
+        window.setDimAmount(0f);
+    }
+
+    @Override
     public void setCenterGravity() {
         window.setGravity(Gravity.CENTER);
     }

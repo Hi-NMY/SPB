@@ -87,6 +87,11 @@ public class EasyDialog implements DialogInter {
     }
 
     @Override
+    public void setNoBg() {
+
+    }
+
+    @Override
     public void setCenterGravity() {
         window.setGravity(Gravity.CENTER);
     }

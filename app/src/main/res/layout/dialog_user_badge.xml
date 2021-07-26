@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ScrollView
+            android:background="@color/beijing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <RelativeLayout
+                android:layout_marginHorizontal="@dimen/margin_12"
+                android:layout_width="match_parent"
+                android:layout_height="280dp">
+            <RelativeLayout
+                    android:id="@+id/r"
+                    android:layout_marginTop="@dimen/margin_12"
+                    android:layout_marginHorizontal="@dimen/margin_12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:id="@+id/favorite_close"
+                        android:text="关闭"
+                        android:textSize="@dimen/font_16"
+                        android:textColor="@color/gray"
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:text="全部徽章"
+                        android:textSize="@dimen/font_16"
+                        android:textColor="@color/gray"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/user_badge_rcl"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/margin_12"
+                    android:layout_below="@+id/r"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/gif"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/loading"
+                    android:layout_width="@dimen/icon_image_56"
+                    android:layout_height="@dimen/icon_image_56"
+                    />
+
+        </RelativeLayout>
+    </ScrollView>
+</LinearLayout>

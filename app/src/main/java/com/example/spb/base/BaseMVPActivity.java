@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.spb.R;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.otherimpl.*;
-import com.example.spb.view.Component.FragmentSpbAvtivityBar;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.littlefun.EasyVoice;
 import com.example.spb.view.littlefun.GIFShow;
 

@@ -25,6 +25,7 @@ import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.view.Component.*;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.InterComponent.SpbSelectImage;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.inter.IUserDiaryPageAView;
 import com.example.spb.view.littlefun.MyListAnimation;
 import com.gyf.immersionbar.ImmersionBar;

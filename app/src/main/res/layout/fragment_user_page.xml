@@ -59,12 +59,11 @@
 
                 <ImageView
                         android:id="@+id/user_page_userbadge"
-                        android:src="@drawable/star_sagittarius"
                         android:scaleType="fitCenter"
-                        android:layout_alignBottom="@id/user_page_usersex"
-                        android:layout_alignTop="@id/user_page_usersex"
+                        android:layout_marginTop="@dimen/margin_4"
+                        android:layout_alignTop="@id/user_page_user_headimg"
                         android:layout_toRightOf="@id/user_page_usersex"
-                        android:layout_width="@dimen/icon_image_24"
+                        android:layout_width="@dimen/icon_image_32"
                         android:layout_height="@dimen/icon_image_32"/>
 
                 <TextView
@@ -98,7 +97,9 @@
                         android:textSize="@dimen/font_18"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        android:text="9999天"
+                        android:gravity="center"
+                        android:text=""
+                        android:minWidth="@dimen/icon_image_56"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 

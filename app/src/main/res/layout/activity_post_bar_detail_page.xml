@@ -53,13 +53,12 @@
                 <ImageView
                         android:id="@+id/postbar_detail_userbadge"
                         android:layout_marginLeft="@dimen/margin_4"
-                        android:background="@drawable/enterbg"
-                        android:scaleType="centerCrop"
-                        android:layout_alignBottom="@id/postbar_detail_username"
+                        android:translationY="@dimen/margin__8"
                         android:layout_alignTop="@id/postbar_detail_username"
+                        android:scaleType="centerCrop"
                         android:layout_toRightOf="@id/postbar_detail_username"
-                        android:layout_width="@dimen/icon_image_16"
-                        android:layout_height="@dimen/icon_image_16"/>
+                        android:layout_width="@dimen/icon_image_32"
+                        android:layout_height="@dimen/icon_image_32"/>
 
                 <TextView
                         android:id="@+id/postbar_detail_postdate"
@@ -397,7 +396,7 @@
 
     <fragment
             android:id="@+id/postbar_detail_bar"
-            android:name="com.example.spb.view.Component.FragmentSpbAvtivityBar"
+            android:name="com.example.spb.view.fragment.FragmentSpbAvtivityBar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/spb_activity_bar_44"/>
 </RelativeLayout>

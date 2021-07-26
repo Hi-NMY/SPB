@@ -26,6 +26,8 @@ public class DataUserMsgPresenter {
     public String user_home;
     public String user_favorite;
     public String user_profile;
+    public String user_badge;
+    public int user_longDay;
     public String user_privacy;
     public String user_token;
     public String user_ip;
@@ -48,6 +50,8 @@ public class DataUserMsgPresenter {
                             user.setUser_home(user1.getUser_home());
                             user.setUser_favorite(user1.getUser_favorite());
                             user.setUser_profile(user1.getUser_profile());
+                            user.setUser_badge(user1.getUser_badge());
+                            user.setUser_longday(user1.getUser_longday());
                             user.setUser_privacy(user1.getUser_privacy());
                             user.setUser_ip(user1.getUser_ip());
                             user.setUser_name(user1.getUser_name());
@@ -80,6 +84,8 @@ public class DataUserMsgPresenter {
         user_home = user.getUser_home();
         user_favorite = user.getUser_favorite();
         user_profile = user.getUser_profile();
+        user_badge = user.getUser_badge();
+        user_longDay = user.getUser_longday();
         user_privacy = user.getUser_privacy();
         user_token = user.getUser_token();
         user_ip = user.getUser_ip();
@@ -91,11 +97,27 @@ public class DataUserMsgPresenter {
         editor.putString(InValues.send(R.string.user_ip),user.getUser_ip());
         editor.putString(InValues.send(R.string.user_name),user.getUser_name());
         editor.putString(InValues.send(R.string.user_privacy),user.getUser_privacy());
+        editor.putString(InValues.send(R.string.user_badge),user.getUser_badge());
+        editor.putInt(InValues.send(R.string.user_longday),user.getUser_longday());
         editor.putString(InValues.send(R.string.user_profile),user.getUser_profile());
         editor.putString(InValues.send(R.string.user_token),user.getUser_token());
         editor.putString(InValues.send(R.string.stu_sex),user.getStu_sex());
         editor.putString(InValues.send(R.string.stu_name),user.getStu_name());
         editor.apply();
+    }
+
+    public void setUpdateUserMsg(User updateUserMsg){
+        editor = MySharedPreferences.saveShared(InValues.send(R.string.Shared_User));
+        user_name = updateUserMsg.getUser_name();
+        user_birth = updateUserMsg.getUser_birth();
+        user_home = updateUserMsg.getUser_home();
+        user_favorite = updateUserMsg.getUser_favorite();
+        user_profile = updateUserMsg.getUser_profile();
+        editor.putString(InValues.send(R.string.user_birth),updateUserMsg.getUser_birth());
+        editor.putString(InValues.send(R.string.user_favorite),updateUserMsg.getUser_favorite());
+        editor.putString(InValues.send(R.string.user_home),updateUserMsg.getUser_home());
+        editor.putString(InValues.send(R.string.user_name),updateUserMsg.getUser_name());
+        editor.putString(InValues.send(R.string.user_profile),updateUserMsg.getUser_profile());
     }
 
     public String getUser_account() {
@@ -173,6 +195,28 @@ public class DataUserMsgPresenter {
         editor.putString(InValues.send(R.string.user_profile),user_profile);
         editor.apply();
         this.user_profile = user_profile;
+    }
+
+    public String getUser_badge() {
+        user_badge = sharedPreferences.getString(InValues.send(R.string.user_badge),"");
+        return user_badge;
+    }
+
+    public void setUser_badge(String user_badge) {
+        editor.putString(InValues.send(R.string.user_badge),user_badge);
+        editor.apply();
+        this.user_badge = user_badge;
+    }
+
+    public int getUser_longDay() {
+        user_longDay = sharedPreferences.getInt(InValues.send(R.string.user_longday),0);
+        return user_longDay;
+    }
+
+    public void setUser_longDay(int user_longDay) {
+        editor.putInt(InValues.send(R.string.user_longday),user_longDay);
+        editor.apply();
+        this.user_longDay = user_longDay;
     }
 
     public String getUser_privacy() {

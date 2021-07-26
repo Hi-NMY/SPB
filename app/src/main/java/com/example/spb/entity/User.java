@@ -14,6 +14,8 @@ public class User implements Serializable {
     private String user_profile;
     private String user_head_image;
     private String user_bg_image;
+    private String user_badge;
+    private int user_longday;
     private String user_privacy;
     private String stu_sex;
     private String stu_name;
@@ -98,6 +100,22 @@ public class User implements Serializable {
 
     public void setUser_bg_image(String user_bg_image) {
         this.user_bg_image = user_bg_image;
+    }
+
+    public String getUser_badge() {
+        return user_badge;
+    }
+
+    public void setUser_badge(String user_badge) {
+        this.user_badge = user_badge;
+    }
+
+    public int getUser_longday() {
+        return user_longday;
+    }
+
+    public void setUser_longday(int user_longday) {
+        this.user_longday = user_longday;
     }
 
     public String getUser_privacy() {

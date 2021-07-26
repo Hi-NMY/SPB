@@ -12,7 +12,7 @@ import com.example.spb.presenter.impl.UserQrPageAPresenterImpl;
 import com.example.spb.presenter.littlefun.DataEncryption;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MyDateClass;
-import com.example.spb.view.Component.FragmentSpbAvtivityBar;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.inter.IUserQrPageAView;
 import com.gyf.immersionbar.ImmersionBar;
 import com.king.zxing.util.CodeUtils;

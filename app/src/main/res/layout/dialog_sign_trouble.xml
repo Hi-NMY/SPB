@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:id="@+id/r"
+            android:paddingHorizontal="@dimen/margin_12"
+            android:layout_centerInParent="true"
+            android:layout_marginHorizontal="@dimen/margin_64"
+            android:background="@drawable/act_user_notice_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/t1"
+                android:layout_marginTop="@dimen/margin_24"
+                android:textSize="@dimen/font_16"
+                android:textStyle="bold"
+                android:textColor="@color/ziti"
+                android:text="签到："
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <ImageView
+                android:id="@+id/i1"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_below="@id/t1"
+                android:background="@drawable/num_one"
+                android:layout_width="@dimen/icon_image_24"
+                android:layout_height="@dimen/icon_image_24"/>
+
+        <TextView
+                android:id="@+id/v1"
+                android:textColor="@color/theme_color"
+                android:textSize="@dimen/font_14"
+                android:layout_marginLeft="@dimen/margin_8"
+                android:gravity="center"
+                android:layout_alignBottom="@id/i1"
+                android:text="断签 "
+                android:layout_alignTop="@id/i1"
+                android:layout_toRightOf="@id/i1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/v11"
+                android:textColor="@color/darkgrey"
+                android:textSize="@dimen/font_14"
+                android:gravity="center"
+                android:layout_alignBottom="@id/i1"
+                android:text="后，将会重置签到"
+                android:layout_alignTop="@id/i1"
+                android:layout_toRightOf="@id/v1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <ImageView
+                android:id="@+id/i2"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_below="@id/v1"
+                android:background="@drawable/num_two"
+                android:layout_width="@dimen/icon_image_24"
+                android:layout_height="@dimen/icon_image_24"/>
+
+        <TextView
+                android:id="@+id/v2"
+                android:textColor="@color/darkgray"
+                android:textSize="@dimen/font_14"
+                android:layout_marginLeft="@dimen/margin_8"
+                android:gravity="center|left"
+                android:text="只有签到，才会"
+                android:layout_alignTop="@id/i2"
+                android:layout_toRightOf="@id/i2"
+                android:layout_alignBottom="@id/i2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/v22"
+                android:textColor="@color/theme_color"
+                android:lineSpacingMultiplier="1.3"
+                android:textSize="@dimen/font_14"
+                android:gravity="center|left"
+                android:text="增长在线天数"
+                android:layout_alignTop="@id/i2"
+                android:layout_toRightOf="@id/v2"
+                android:layout_alignBottom="@id/i2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <ImageView
+                android:id="@+id/i3"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_below="@id/i2"
+                android:background="@drawable/num_three"
+                android:layout_width="@dimen/icon_image_24"
+                android:layout_height="@dimen/icon_image_24"/>
+
+        <TextView
+                android:id="@+id/v3"
+                android:textColor="@color/darkgray"
+                android:textSize="@dimen/font_14"
+                android:layout_marginLeft="@dimen/margin_8"
+                android:gravity="center|left"
+                android:layout_alignBottom="@id/i3"
+                android:text="签到更新时间 : "
+                android:layout_alignTop="@id/i3"
+                android:layout_toRightOf="@id/i3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/v33"
+                android:textColor="@color/theme_color"
+                android:textSize="@dimen/font_14"
+                android:gravity="center|left"
+                android:layout_alignBottom="@id/i3"
+                android:text="每天零点"
+                android:layout_alignTop="@id/i3"
+                android:layout_toRightOf="@id/v3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/t2"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_below="@+id/v3"
+                android:textSize="@dimen/font_16"
+                android:textStyle="bold"
+                android:textColor="@color/ziti"
+                android:text="任务："
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <ImageView
+                android:id="@+id/i4"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_below="@id/t2"
+                android:background="@drawable/num_one"
+                android:layout_width="@dimen/icon_image_24"
+                android:layout_height="@dimen/icon_image_24"/>
+
+        <TextView
+                android:id="@+id/v4"
+                android:textColor="@color/darkgray"
+                android:textSize="@dimen/font_14"
+                android:layout_marginLeft="@dimen/margin_8"
+                android:gravity="center|left"
+                android:text="任务更新时间 : "
+                android:layout_alignTop="@id/i4"
+                android:layout_toRightOf="@id/i4"
+                android:layout_alignBottom="@id/i4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/v44"
+                android:textColor="@color/theme_color"
+                android:textSize="@dimen/font_14"
+                android:gravity="center|left"
+                android:text="每天零点"
+                android:layout_alignTop="@id/i4"
+                android:layout_toRightOf="@id/v4"
+                android:layout_alignBottom="@id/i4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <ImageView
+                android:id="@+id/i5"
+                android:layout_marginBottom="@dimen/margin_20"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_below="@id/v4"
+                android:background="@drawable/num_two"
+                android:layout_width="@dimen/icon_image_24"
+                android:layout_height="@dimen/icon_image_24"/>
+
+        <TextView
+                android:id="@+id/v5"
+                android:layout_marginTop="@dimen/margin_2"
+                android:lineSpacingMultiplier="1.2"
+                android:textColor="@color/darkgray"
+                android:textSize="@dimen/font_14"
+                android:layout_marginLeft="@dimen/margin_8"
+                android:gravity="center|left"
+                android:text="请务必在零点后进入此页面更新任务,否则做任务无效哦"
+                android:layout_alignTop="@id/i5"
+                android:layout_toRightOf="@id/i5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/t6"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_below="@+id/v5"
+                android:textSize="@dimen/font_16"
+                android:textStyle="bold"
+                android:textColor="@color/ziti"
+                android:text="徽章："
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <ImageView
+                android:id="@+id/i6"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_below="@id/t6"
+                android:background="@drawable/num_one"
+                android:layout_width="@dimen/icon_image_24"
+                android:layout_height="@dimen/icon_image_24"/>
+
+        <TextView
+                android:id="@+id/v6"
+                android:lineSpacingMultiplier="1.2"
+                android:textColor="@color/darkgray"
+                android:textSize="@dimen/font_14"
+                android:layout_marginLeft="@dimen/margin_8"
+                android:gravity="center|left"
+                android:text="领取高等级徽章后，低等级徽章将会自动领取"
+                android:layout_marginTop="@dimen/margin_2"
+                android:layout_alignTop="@id/i6"
+                android:layout_toRightOf="@id/i6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <ImageView
+                android:id="@+id/close_tips"
+                android:layout_marginTop="@dimen/margin_20"
+                android:layout_marginBottom="@dimen/margin_20"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/v6"
+                android:background="@drawable/closecircle"
+                android:layout_width="@dimen/icon_image_32"
+                android:layout_height="@dimen/icon_image_32"/>
+    </RelativeLayout>
+
+</RelativeLayout>

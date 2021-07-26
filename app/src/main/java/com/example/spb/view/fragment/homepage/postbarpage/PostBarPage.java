@@ -20,6 +20,7 @@ import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.presenter.impl.PostBarPageFPresenterImpl;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
+import com.example.spb.view.activity.SignInPage;
 import com.example.spb.view.activity.TopicBarPage;
 import com.example.spb.view.inter.IPostBarPageFView;
 import com.example.spb.view.littlefun.JumpIntent;
@@ -244,7 +245,7 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
                 mPostbarAppbarlayout.setExpanded(true);
                 break;
             case R.id.sign_rlt:
-
+                JumpIntent.startMyIntent(SignInPage.class);
                 break;
         }
     }

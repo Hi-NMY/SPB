@@ -18,6 +18,8 @@ import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomViewTarget;
@@ -32,14 +34,19 @@ import com.example.spb.presenter.impl.PersonalSpacePageAPresenterImpl;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MyDateClass;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
-import com.example.spb.view.Component.*;
+import com.example.spb.view.Component.ComponentDialog;
+import com.example.spb.view.Component.MySmartRefresh;
+import com.example.spb.view.Component.MyToastClass;
+import com.example.spb.view.Component.SelectImage;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.InterComponent.SpbSelectImage;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.fragment.personalspace.BasicInformation;
 import com.example.spb.view.fragment.personalspace.PersonalPostBar;
 import com.example.spb.view.fragment.personalspace.PersonalVideo;
 import com.example.spb.view.inter.IPersonalSpacePageAView;
 import com.example.spb.view.littlefun.JumpIntent;
+import com.example.spb.view.littlefun.MyListAnimation;
 import com.example.spb.view.littlefun.ScaleTransitionPagerTitleView;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -110,6 +117,13 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
     private boolean imageKey = false;
     private RelativeLayout mPersonalspaceRBg;
     private CollapsingToolbarLayout mPersonalspaceCollapsinglayout;
+    private ImageView mPersonalspaceUserbadge;
+    private TextView mPersonalspaceUserbadgeAll;
+    private DialogInter badgeDialog;
+    private TextView mFavoriteClose;
+    private RecyclerView mUserBadgeRcl;
+    private GifImageView mGif;
+    private RefreshBadgeImg refreshBadgeImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +133,8 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         userAccount = getIntent().getStringExtra(InValues.send(R.string.intent_User_account));
         refreshMsg = new RefreshMsg();
         refreshFollow = new RefreshFollow();
+        refreshBadgeImg = new RefreshBadgeImg();
+        SpbBroadcast.obtainRecriver(this, InValues.send(R.string.Bcr_refresh_headimg), refreshBadgeImg);
         SpbBroadcast.obtainRecriver(this, InValues.send(R.string.Bcr_re_Follow), refreshFollow);
         SpbBroadcast.obtainRecriver(this, InValues.send(R.string.Bcr_refresh_userMsg), refreshMsg);
         initActView();
@@ -134,6 +150,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         setBar();
         mPresenter.setUserFollowKey(getDataFollowPresenter().determineFollow(userAccount));
         spbSelectImage = new SelectImage(this);
+        mPersonalspaceUserbadge = (ImageView) findViewById(R.id.personalspace_userbadge);
         mExcessR = (RelativeLayout) findViewById(R.id.excess_r);
         mPersonalspaceRBg = (RelativeLayout) findViewById(R.id.personalspace_R_bg);
         mPersonalspaceCollapsinglayout = (CollapsingToolbarLayout) findViewById(R.id.personalspace_collapsinglayout);
@@ -153,6 +170,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         mPersonalspaceUserattentionNum = (TextView) findViewById(R.id.personalspace_userattention_num);
         mPersonalspaceUserfansNum = (TextView) findViewById(R.id.personalspace_userfans_num);
         mPersonalspaceMessageBtn = (ImageView) findViewById(R.id.personalspace_message_btn);
+        mPersonalspaceUserbadgeAll = (TextView) findViewById(R.id.personalspace_userbadgeAll);
         mR1 = (RelativeLayout) findViewById(R.id.r1);
         mR2 = (RelativeLayout) findViewById(R.id.r2);
         mR3 = (RelativeLayout) findViewById(R.id.r3);
@@ -221,6 +239,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
 
     @Override
     protected void initData() {
+        mPresenter.setNowBadge(getDataUserMsgPresenter().getUser_badge());
         mPersonalspaceUsername.setText(getDataUserMsgPresenter().getUser_name());
         USERNAME = mPersonalspaceUsername.getText().toString();
         mPersonalspaceUsersign.setText(getDataUserMsgPresenter().getUser_profile());
@@ -231,6 +250,16 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
             mPersonalspaceUsersex.setImageResource(R.drawable.icon_boy);
         } else {
             mPersonalspaceUsersex.setImageResource(R.drawable.icon_girl);
+        }
+        if (getDataUserMsgPresenter().getUser_badge() == null || getDataUserMsgPresenter().getUser_badge().equals("")) {
+            mPersonalspaceUserbadge.setVisibility(View.INVISIBLE);
+        } else {
+            mPersonalspaceUserbadge.setVisibility(View.VISIBLE);
+            //显示徽章
+            Glide.with(PersonalSpacePage.this)
+                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + getDataUserMsgPresenter().getUser_badge())
+                    .centerCrop()
+                    .into(mPersonalspaceUserbadge);
         }
         if (mPersonalspaceUserHeadimg.getTag() == null || !mPersonalspaceUserHeadimg.getTag().equals(cacheDate)) {
             Glide.with(MyApplication.getContext())
@@ -288,6 +317,16 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
             mPersonalspaceUsersex.setImageResource(R.drawable.icon_boy);
         } else {
             mPersonalspaceUsersex.setImageResource(R.drawable.icon_girl);
+        }
+        if (toUser.getUser_badge() == null || toUser.getUser_badge().equals("")) {
+            mPersonalspaceUserbadge.setVisibility(View.INVISIBLE);
+        } else {
+            mPersonalspaceUserbadge.setVisibility(View.VISIBLE);
+            //显示徽章
+            Glide.with(PersonalSpacePage.this)
+                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + toUser.getUser_badge())
+                    .centerCrop()
+                    .into(mPersonalspaceUserbadge);
         }
         if (mPersonalspaceUserHeadimg.getTag() == null || !mPersonalspaceUserHeadimg.getTag().equals(cacheDate)) {
             Glide.with(this)
@@ -454,7 +493,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                                     .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                                     .centerCrop()
                                     .into(mPersonalspaceUserHeadimg);
-                            mPresenter.updateRong(getDataUserMsgPresenter().getUser_account(),getDataUserMsgPresenter().getUser_name());
+                            mPresenter.updateRong(getDataUserMsgPresenter().getUser_account(), getDataUserMsgPresenter().getUser_name());
                         } else {
                             MyToastClass.ShowToast(MyApplication.getContext(), "背景更换成功");
                             Glide.with(MyApplication.getContext())
@@ -493,6 +532,45 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
 
     @Override
     public void createDialog() {
+        badgeDialog = new ComponentDialog(this, R.layout.dialog_user_badge, R.style.bottomdialog, new ComponentDialog.InitDialog() {
+            @Override
+            public void initView(View view) {
+                mFavoriteClose = (TextView) view.findViewById(R.id.favorite_close);
+                mUserBadgeRcl = (RecyclerView) view.findViewById(R.id.user_badge_rcl);
+                mGif = (GifImageView) view.findViewById(R.id.gif);
+                mUserBadgeRcl = MyListAnimation.setListAnimation(PersonalSpacePage.this,mUserBadgeRcl);
+            }
+
+            @Override
+            public void initData() {
+                mPresenter.obtainUserBadge(userAccount, new PersonalSpacePageAPresenterImpl.OnReturnBar() {
+                    @Override
+                    public void onReturn() {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mGif.setVisibility(View.GONE);
+                                mUserBadgeRcl.setVisibility(View.VISIBLE);
+                                mPresenter.setBadgeAdapter(PersonalSpacePage.this,getDataUserMsgPresenter().getUser_account().equals(userAccount) ? true:false,mUserBadgeRcl,
+                                        new GridLayoutManager(MyApplication.getContext(), 4));
+                            }
+                        });
+                    }
+                });
+            }
+
+            @Override
+            public void initListener() {
+                mFavoriteClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        closeDialog(BADGEDIALOG);
+                    }
+                });
+            }
+        });
+        badgeDialog.setBottomStyle();
+        badgeDialog.setAnimation(R.style.bottomdialog_animStyle);
         bottomDialog = new ComponentDialog(this, R.layout.dialog_selectpicture, R.style.bottomdialog, new ComponentDialog.InitDialog() {
             @Override
             public void initView(View view) {
@@ -516,13 +594,13 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                 mDialogClose.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        closeDialog(0);
+                        closeDialog(IMAGEDIALOG);
                     }
                 });
                 mDialogPhotoalbum.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        closeDialog(0);
+                        closeDialog(IMAGEDIALOG);
                         if (imageKey) {
                             spbSelectImage.selectOneImg(IMAGENAME, new OnResultCallbackListener<LocalMedia>() {
                                 @Override
@@ -553,7 +631,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                 mDialogCamera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        closeDialog(0);
+                        closeDialog(IMAGEDIALOG);
                         if (imageKey) {
                             spbSelectImage.selectCameraImg(IMAGENAME, new OnResultCallbackListener() {
                                 @Override
@@ -566,7 +644,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
 
                                 }
                             });
-                        }else {
+                        } else {
                             spbSelectImage.selectCameraImg2(IMAGENAME2, new OnResultCallbackListener() {
                                 @Override
                                 public void onResult(List result) {
@@ -589,12 +667,26 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
 
     @Override
     public void showDialogS(int i) {
-        bottomDialog.showMyDialog();
+        switch (i){
+            case IMAGEDIALOG:
+                bottomDialog.showMyDialog();
+                break;
+            case BADGEDIALOG:
+                badgeDialog.showMyDialog();
+                break;
+        }
     }
 
     @Override
     public void closeDialog(int i) {
-        bottomDialog.closeMyDialog();
+        switch (i){
+            case IMAGEDIALOG:
+                bottomDialog.closeMyDialog();
+                break;
+            case BADGEDIALOG:
+                badgeDialog.closeMyDialog();
+                break;
+        }
     }
 
     @Override
@@ -605,6 +697,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         mPersonalspaceMessageBtn.setOnClickListener(this);
         mPersonalspaceRBg.setOnClickListener(this);
         mPersonalspaceCollapsinglayout.setOnClickListener(this);
+        mPersonalspaceUserbadgeAll.setOnClickListener(this);
         mR1.setOnClickListener(this);
         mR2.setOnClickListener(this);
         mR3.setOnClickListener(this);
@@ -670,7 +763,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                 } else {
                     imageKey = true;
                     createDialog();
-                    showDialogS(0);
+                    showDialogS(IMAGEDIALOG);
                 }
                 break;
             case R.id.personalspace_collapsinglayout:
@@ -679,7 +772,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                 } else {
                     imageKey = false;
                     createDialog();
-                    showDialogS(0);
+                    showDialogS(IMAGEDIALOG);
                 }
                 break;
             case R.id.r1:
@@ -711,10 +804,13 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                 }
                 break;
             case R.id.personalspace_message_btn:
-                Conversation.ConversationType conversationType  = Conversation.ConversationType.PRIVATE;
+                Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
                 String targetId = toUser.getUser_account();
                 String title = toUser.getUser_name();
-                RongIM.getInstance().startConversation(this , conversationType, targetId, title);
+                RongIM.getInstance().startConversation(this, conversationType, targetId, title);
+                break;
+            case R.id.personalspace_userbadgeAll:
+                showDialogS(BADGEDIALOG);
                 break;
         }
     }
@@ -724,6 +820,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         super.onDestroy();
         SpbBroadcast.destroyBrc(refreshFollow);
         SpbBroadcast.destroyBrc(refreshMsg);
+        SpbBroadcast.destroyBrc(refreshBadgeImg);
         SpbBroadcast.sendReceiver(this, InValues.send(R.string.Bcr_stop_voice), 0, null);
     }
 
@@ -753,6 +850,23 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
             } else {
                 mPresenter.setUserFollowKey(false);
                 MyToastClass.ShowToast(MyApplication.getContext(), "取消关注");
+            }
+        }
+    }
+
+    class RefreshBadgeImg extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int a = intent.getIntExtra("key_one",0);
+            if (a == 1){
+                String badge = intent.getStringExtra("key_two");
+                mPresenter.updateUserBadge(getDataUserMsgPresenter().getUser_account(),badge);
+                mPersonalspaceUserbadge.setVisibility(View.VISIBLE);
+                Glide.with(PersonalSpacePage.this)
+                        .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + badge)
+                        .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
+                        .centerCrop()
+                        .into(mPersonalspaceUserbadge);
             }
         }
     }

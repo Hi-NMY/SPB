@@ -16,6 +16,7 @@ public class Bar implements Serializable {
     private String pb_video;
     private String pb_topic;
     private String pb_location;
+    private String user_badge;
     private int pb_thumb_num;
     private int pb_comment_num;
 
@@ -123,5 +124,13 @@ public class Bar implements Serializable {
 
     public void setVideoBitmap(Bitmap videoBitmap) {
         this.videoBitmap = videoBitmap;
+    }
+
+    public String getUser_badge() {
+        return user_badge;
+    }
+
+    public void setUser_badge(String user_badge) {
+        this.user_badge = user_badge;
     }
 }

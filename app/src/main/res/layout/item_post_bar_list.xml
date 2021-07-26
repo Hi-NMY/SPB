@@ -38,13 +38,12 @@
         <ImageView
                 android:id="@+id/item_postbar_userbadge"
                 android:layout_marginLeft="@dimen/margin_4"
-                android:background="@drawable/enterbg"
+                android:translationY="@dimen/margin__2"
                 android:scaleType="centerCrop"
-                android:layout_alignBottom="@id/item_postbar_username"
                 android:layout_alignTop="@id/item_postbar_username"
                 android:layout_toRightOf="@id/item_postbar_username"
-                android:layout_width="@dimen/icon_image_16"
-                android:layout_height="@dimen/icon_image_16"/>
+                android:layout_width="@dimen/icon_image_24"
+                android:layout_height="@dimen/icon_image_24"/>
 
         <TextView
                 android:id="@+id/item_postbar_postdate"

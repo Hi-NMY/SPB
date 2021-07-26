@@ -184,6 +184,18 @@ public class PostVideoAdapter extends RecyclerView.Adapter<PostVideoAdapter.View
             holder.mItemPostvideoUserHeadimg.setTag(cacheKey);
         }
 
+        if (videoBar.getUser_badge() == null || videoBar.getUser_badge().equals("")){
+            holder.mItemPostvideoUserbadge.setVisibility(View.INVISIBLE);
+        }else {
+            holder.mItemPostvideoUserbadge.setVisibility(View.VISIBLE);
+            //显示徽章！！
+            Glide.with(activity)
+                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + videoBar.getUser_badge())
+                    .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
+                    .centerCrop()
+                    .into(holder.mItemPostvideoUserbadge);
+        }
+
         if (videoBar.getPb_article() != null && !videoBar.getPb_article().equals("")){
             holder.mItemPostvideoTxt.setVisibility(View.VISIBLE);
             holder.mItemPostvideoTxt.setText(videoBar.getPb_article());
@@ -297,6 +309,7 @@ public class PostVideoAdapter extends RecyclerView.Adapter<PostVideoAdapter.View
                             public void addLike() {
                                 ThumbAnima.thumbAnimation(holder.mItemPostvideoLikeImg);
                                 SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_refresh_thumb),+1,videoList.get(position).getPb_one_id());
+                                Task.setNewLikeData(videoList.get(position).getPb_one_id());
                             }
                         });
             }
@@ -323,6 +336,7 @@ public class PostVideoAdapter extends RecyclerView.Adapter<PostVideoAdapter.View
                                     @Override
                                     public void setMessage(Intent intent) {
                                         intent.putExtra(InValues.send(R.string.intent_Topic),o);
+                                        Task.setNewTopicData(o.getTopic_name());
                                     }
                                 });
                             }

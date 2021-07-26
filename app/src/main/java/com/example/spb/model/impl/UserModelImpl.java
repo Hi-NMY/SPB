@@ -112,6 +112,14 @@ public class UserModelImpl extends SpbModelAbstrate implements SpbModelBasicInte
                         .build();
                 sendHttp(InValues.send(R.string.User),requestBody,callBack);
                 break;
+            case DATAUSER_UPDATE_FIVE:
+                requestBody = new FormBody.Builder()
+                        .add("fun",String.valueOf(fun))
+                        .add("user_account", data.getUser_account())
+                        .add("user_badge", data.getUser_badge())
+                        .build();
+                sendHttp(InValues.send(R.string.User),requestBody,callBack);
+                break;
         }
     }
 

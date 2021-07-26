@@ -46,7 +46,7 @@
     <fragment
             android:id="@+id/qrpage_bar"
             android:layout_marginTop="@dimen/StatusBar_height"
-            android:name="com.example.spb.view.Component.FragmentSpbAvtivityBar"
+            android:name="com.example.spb.view.fragment.FragmentSpbAvtivityBar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/spb_activity_bar_44">
     </fragment>

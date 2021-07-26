@@ -9,7 +9,7 @@ import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.SetUpPageAPresenterImpl;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MySharedPreferences;
-import com.example.spb.view.Component.FragmentSpbAvtivityBar;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.inter.ISetUpPageAView;
 import com.gyf.immersionbar.ImmersionBar;
 import io.rong.imkit.RongIM;

@@ -25,7 +25,7 @@ import com.example.spb.presenter.impl.FirstPageAPresenterImpl;
 import com.example.spb.presenter.littlefun.RemoveNullCharacter;
 import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.Component.EasyDialog;
-import com.example.spb.view.Component.FragmentSpbAvtivityBar;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;
 import com.example.spb.view.inter.IFirstPageAView;

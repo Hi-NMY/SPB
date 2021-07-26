@@ -27,6 +27,8 @@ public interface DialogInter {
 
     public void setBottomStyle();
 
+    public void setNoBg();
+
     public void setCenterGravity();
 
     public void setBottomGravity();

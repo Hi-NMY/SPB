@@ -1,12 +1,10 @@
 package com.example.spb.view.activity;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.SecondHandStorePageAPresenterImpl;
-import com.example.spb.presenter.inter.ISecondHandStorePageAPresenter;
-import com.example.spb.view.Component.FragmentSpbAvtivityBar;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.inter.ISecondHandStorePageAView;
 import com.gyf.immersionbar.ImmersionBar;
 

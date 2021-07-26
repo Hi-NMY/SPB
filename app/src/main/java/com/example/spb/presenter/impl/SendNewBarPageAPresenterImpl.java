@@ -106,6 +106,9 @@ public class SendNewBarPageAPresenterImpl extends BasePresenter<ISendNewBarPageA
                             SharedPreferences.Editor editor = MySharedPreferences.saveShared(InValues.send(R.string.Shared_userBar_Num));
                             editor.putInt(InValues.send(R.string.userBar_num),sharedPreferences.getInt(InValues.send(R.string.userBar_num),0) + 1);
                             editor.apply();
+                            SharedPreferences.Editor e = MySharedPreferences.saveShared(InValues.send(R.string.Shared_sign_task));
+                            e.putInt(InValues.send(R.string.sign_task_bar),1);
+                            e.apply();
                             break;
                         default:
                             getView().response(null,getView().ERROR_BAR);

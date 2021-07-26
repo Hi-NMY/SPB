@@ -26,6 +26,7 @@ import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.view.Component.*;
 import com.example.spb.view.InterComponent.DialogInter;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.inter.ISendNewBarPageAView;
 import com.example.spb.view.littlefun.GIFShow;
 import com.example.spb.view.littlefun.HideKeyboard;

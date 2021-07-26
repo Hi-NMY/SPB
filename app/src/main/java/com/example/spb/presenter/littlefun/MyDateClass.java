@@ -292,6 +292,41 @@ public class MyDateClass {
         return "";
     }
 
+    public static String getConstellationEImg(String date){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd");
+        try {
+            Date birthdate = simpleDateFormat.parse(date);
+            if (birthdate.getTime() >= Aries_start.getTime() && birthdate.getTime() <= Aries_end.getTime()){
+                return "star_aries.png";
+            }else if (birthdate.getTime() >= Taurus_start.getTime() && birthdate.getTime() <= Taurus_end.getTime()){
+                return "star_taurus.png";
+            }else if (birthdate.getTime() >= Gemini_start.getTime() && birthdate.getTime() <= Gemini_end.getTime()){
+                return "star_gemini.png";
+            }else if (birthdate.getTime() >= Cancer_start.getTime() && birthdate.getTime() <= Cancer_end.getTime()){
+                return "star_cancer.png";
+            }else if (birthdate.getTime() >= Leo_start.getTime() && birthdate.getTime() <= Leo_end.getTime()){
+                return "star_leo.png";
+            }else if (birthdate.getTime() >= Virgo_start.getTime() && birthdate.getTime() <= Virgo_end.getTime()){
+                return "star_virgo.png";
+            }else if (birthdate.getTime() >= Libra_start.getTime() && birthdate.getTime() <= Libra_end.getTime()){
+                return "star_libra.png";
+            }else if (birthdate.getTime() >= Scorpio_start.getTime() && birthdate.getTime() <= Scorpio_end.getTime()){
+                return "star_scorpio.png";
+            }else if (birthdate.getTime() >= Sagittarius_start.getTime() && birthdate.getTime() <= Sagittarius_end.getTime()){
+                return "star_sagittarius.png";
+            }else if (birthdate.getTime() >= Capricorn_start.getTime() || birthdate.getTime() <= Capricorn_end.getTime()){
+                return "star_capricorn.png";
+            }else if (birthdate.getTime() >= Aquarius_start.getTime() && birthdate.getTime() <= Aquarius_end.getTime()){
+                return "star_aquarius.png";
+            }else if (birthdate.getTime() >= Pisces_start.getTime() && birthdate.getTime() <= Pisces_end.getTime()){
+                return "star_pisces.png";
+            }
+        } catch (ParseException e) {
+            return "";
+        }
+        return "";
+    }
+
     public static String obtainPeriod(String date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
         try {

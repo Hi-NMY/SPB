@@ -92,6 +92,8 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
             mBasicinformationConstellation.setText(MyDateClass.getConstellation(personalSpacePage.getDataUserMsgPresenter().user_birth.substring(5)));
         }
 
+        mBasicinformationOnline.setText(personalSpacePage.getDataUserMsgPresenter().getUser_longDay() + "天");
+
         mBasicinformationFavorite.setAdapter(new TagAdapter<String>(mPresenter.setFavorite(personalSpacePage.getDataUserMsgPresenter().getUser_favorite())) {
             @Override
             public View getView(FlowLayout parent, int position, String o) {
@@ -114,10 +116,12 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
         mBasicinformationFavorite.postInvalidate();
         mBasicinformationConstellation.postInvalidate();
         mBasicinformationBirth.postInvalidate();
+        mBasicinformationOnline.postInvalidate();
     }
 
     private void initUserData(){
         mBasicinformationChange.setVisibility(View.GONE);
+        mBasicinformationOnline.setText(toUser.getUser_longday() + "天");
         if (toUser.getUser_home() != null && !toUser.getUser_home().equals("")){
             mBasicinformationHome.setText(toUser.getUser_home());
         }else {
@@ -150,6 +154,7 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
             }
         });
 
+        mBasicinformationOnline.postInvalidate();
         mBasicinformationHome.postInvalidate();
         mBasicinformationFavorite.postInvalidate();
         mBasicinformationConstellation.postInvalidate();

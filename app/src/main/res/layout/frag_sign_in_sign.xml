@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+            app:cardElevation="0dp"
+            app:cardCornerRadius="@dimen/corner_8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TextView
+                    android:id="@+id/long_sign_day"
+                    android:textSize="@dimen/font_14"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:textColor="@color/gray"
+                    android:layout_marginLeft="@dimen/margin_12"
+                    android:text=""
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                    android:paddingLeft="@dimen/margin_12"
+                    android:paddingRight="@dimen/margin_12"
+                    android:layout_marginBottom="@dimen/margin_20"
+                    android:layout_marginRight="@dimen/margin_12"
+                    android:layout_marginLeft="@dimen/margin_12"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:layout_below="@+id/long_sign_day"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <LinearLayout
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                            android:id="@+id/r"
+                            android:layout_gravity="center"
+                            android:background="@drawable/sign_bg"
+                            android:minWidth="@dimen/icon_image_32"
+                            android:minHeight="@dimen/icon_image_44"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                        <View
+                                android:id="@+id/no_sign_bg"
+                                android:visibility="invisible"
+                                android:background="@drawable/no_sign_bg"
+                                android:layout_width="@dimen/icon_image_32"
+                                android:layout_height="@dimen/icon_image_44"/>
+
+                        <ImageView
+                                android:id="@+id/img"
+                                android:visibility="invisible"
+                                android:background="@drawable/icon_coin"
+                                android:layout_centerInParent="true"
+                                android:layout_width="@dimen/margin_20"
+                                android:layout_height="@dimen/margin_20"/>
+
+                        <TextView
+                                android:id="@+id/sign_text"
+                                android:visibility="invisible"
+                                android:layout_centerInParent="true"
+                                android:textSize="@dimen/font_12"
+                                android:text="打卡"
+                                android:textStyle="bold"
+                                android:textColor="@color/beijing"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                    </RelativeLayout>
+
+                    <TextView
+                            android:id="@+id/txt_tip"
+                            android:layout_marginTop="@dimen/margin_4"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/font_10"
+                            android:textStyle="bold"
+                            android:textColor="@color/gray"
+                            android:gravity="center"
+                            android:text="第1天"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                            android:id="@+id/r1"
+                            android:layout_gravity="center"
+                            android:background="@drawable/sign_bg"
+                            android:minWidth="@dimen/icon_image_32"
+                            android:minHeight="@dimen/icon_image_44"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                        <View
+                                android:id="@+id/no_sign_bg1"
+                                android:visibility="invisible"
+                                android:background="@drawable/no_sign_bg"
+                                android:layout_width="@dimen/icon_image_32"
+                                android:layout_height="@dimen/icon_image_44"/>
+
+                        <ImageView
+                                android:id="@+id/img1"
+                                android:visibility="invisible"
+                                android:background="@drawable/icon_coin"
+                                android:layout_centerInParent="true"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"/>
+
+                        <TextView
+                                android:id="@+id/sign_text1"
+                                android:visibility="invisible"
+                                android:layout_centerInParent="true"
+                                android:textSize="@dimen/font_12"
+                                android:text="打卡"
+                                android:textStyle="bold"
+                                android:textColor="@color/beijing"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                    </RelativeLayout>
+
+                    <TextView
+                            android:id="@+id/txt_tip1"
+                            android:layout_marginTop="@dimen/margin_4"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/font_10"
+                            android:textStyle="bold"
+                            android:textColor="@color/gray"
+                            android:gravity="center"
+                            android:text="第2天"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                            android:id="@+id/r2"
+                            android:layout_gravity="center"
+                            android:background="@drawable/sign_bg"
+                            android:minWidth="@dimen/icon_image_32"
+                            android:minHeight="@dimen/icon_image_44"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                        <View
+                                android:id="@+id/no_sign_bg2"
+                                android:visibility="invisible"
+                                android:background="@drawable/no_sign_bg"
+                                android:layout_width="@dimen/icon_image_32"
+                                android:layout_height="@dimen/icon_image_44"/>
+
+                        <ImageView
+                                android:id="@+id/img2"
+                                android:visibility="invisible"
+                                android:background="@drawable/icon_coin"
+                                android:layout_centerInParent="true"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"/>
+
+                        <TextView
+                                android:id="@+id/sign_text2"
+                                android:visibility="invisible"
+                                android:layout_centerInParent="true"
+                                android:textSize="@dimen/font_12"
+                                android:text="打卡"
+                                android:textStyle="bold"
+                                android:textColor="@color/beijing"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                    </RelativeLayout>
+
+                    <TextView
+                            android:id="@+id/txt_tip2"
+                            android:layout_marginTop="@dimen/margin_4"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/font_10"
+                            android:textStyle="bold"
+                            android:textColor="@color/gray"
+                            android:gravity="center"
+                            android:text="第3天"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                            android:id="@+id/r3"
+                            android:layout_gravity="center"
+                            android:background="@drawable/sign_bg"
+                            android:minWidth="@dimen/icon_image_32"
+                            android:minHeight="@dimen/icon_image_44"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                        <View
+                                android:id="@+id/no_sign_bg3"
+                                android:visibility="invisible"
+                                android:background="@drawable/no_sign_bg"
+                                android:layout_width="@dimen/icon_image_32"
+                                android:layout_height="@dimen/icon_image_44"/>
+
+                        <ImageView
+                                android:id="@+id/img3"
+                                android:visibility="invisible"
+                                android:background="@drawable/icon_coin"
+                                android:layout_centerInParent="true"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"/>
+
+                        <TextView
+                                android:id="@+id/sign_text3"
+                                android:visibility="invisible"
+                                android:layout_centerInParent="true"
+                                android:textSize="@dimen/font_12"
+                                android:text="打卡"
+                                android:textStyle="bold"
+                                android:textColor="@color/beijing"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                    </RelativeLayout>
+
+                    <TextView
+                            android:id="@+id/txt_tip3"
+                            android:layout_marginTop="@dimen/margin_4"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/font_10"
+                            android:textStyle="bold"
+                            android:textColor="@color/gray"
+                            android:gravity="center"
+                            android:text="第4天"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                            android:id="@+id/r4"
+                            android:layout_gravity="center"
+                            android:background="@drawable/sign_bg"
+                            android:minWidth="@dimen/icon_image_32"
+                            android:minHeight="@dimen/icon_image_44"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                        <View
+                                android:id="@+id/no_sign_bg4"
+                                android:visibility="invisible"
+                                android:background="@drawable/no_sign_bg"
+                                android:layout_width="@dimen/icon_image_32"
+                                android:layout_height="@dimen/icon_image_44"/>
+
+                        <ImageView
+                                android:id="@+id/img4"
+                                android:visibility="invisible"
+                                android:background="@drawable/icon_coin"
+                                android:layout_centerInParent="true"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"/>
+
+                        <TextView
+                                android:id="@+id/sign_text4"
+                                android:visibility="invisible"
+                                android:layout_centerInParent="true"
+                                android:textSize="@dimen/font_12"
+                                android:text="打卡"
+                                android:textStyle="bold"
+                                android:textColor="@color/beijing"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                    </RelativeLayout>
+
+                    <TextView
+                            android:id="@+id/txt_tip4"
+                            android:layout_marginTop="@dimen/margin_4"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/font_10"
+                            android:textStyle="bold"
+                            android:textColor="@color/gray"
+                            android:gravity="center"
+                            android:text="第5天"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                            android:id="@+id/r5"
+                            android:layout_gravity="center"
+                            android:background="@drawable/sign_bg"
+                            android:minWidth="@dimen/icon_image_32"
+                            android:minHeight="@dimen/icon_image_44"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                        <View
+                                android:id="@+id/no_sign_bg5"
+                                android:visibility="invisible"
+                                android:background="@drawable/no_sign_bg"
+                                android:layout_width="@dimen/icon_image_32"
+                                android:layout_height="@dimen/icon_image_44"/>
+
+                        <ImageView
+                                android:id="@+id/img5"
+                                android:visibility="invisible"
+                                android:background="@drawable/icon_coin"
+                                android:layout_centerInParent="true"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"/>
+
+                        <TextView
+                                android:id="@+id/sign_text5"
+                                android:visibility="invisible"
+                                android:layout_centerInParent="true"
+                                android:textSize="@dimen/font_12"
+                                android:text="打卡"
+                                android:textStyle="bold"
+                                android:textColor="@color/beijing"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                    </RelativeLayout>
+
+                    <TextView
+                            android:id="@+id/txt_tip5"
+                            android:layout_marginTop="@dimen/margin_4"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/font_10"
+                            android:textStyle="bold"
+                            android:textColor="@color/gray"
+                            android:gravity="center"
+                            android:text="第6天"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                            android:id="@+id/r6"
+                            android:layout_gravity="center"
+                            android:background="@drawable/sign_bg"
+                            android:minWidth="@dimen/icon_image_32"
+                            android:minHeight="@dimen/icon_image_44"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                        <View
+                                android:id="@+id/no_sign_bg6"
+                                android:visibility="invisible"
+                                android:background="@drawable/no_sign_bg"
+                                android:layout_width="@dimen/icon_image_32"
+                                android:layout_height="@dimen/icon_image_44"/>
+
+                        <ImageView
+                                android:id="@+id/img6"
+                                android:visibility="invisible"
+                                android:background="@drawable/icon_coin"
+                                android:layout_centerInParent="true"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"/>
+
+                        <TextView
+                                android:id="@+id/sign_text6"
+                                android:visibility="invisible"
+                                android:layout_centerInParent="true"
+                                android:textSize="@dimen/font_12"
+                                android:text="打卡"
+                                android:textStyle="bold"
+                                android:textColor="@color/beijing"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                    </RelativeLayout>
+
+                    <TextView
+                            android:id="@+id/txt_tip6"
+                            android:layout_marginTop="@dimen/margin_4"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/font_10"
+                            android:textStyle="bold"
+                            android:textColor="@color/gray"
+                            android:gravity="center"
+                            android:text="第7天"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
