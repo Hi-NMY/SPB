@@ -58,9 +58,10 @@ public class UserModelImpl extends SpbModelAbstrate implements SpbModelBasicInte
                         .build();
                 sendHttp(InValues.send(R.string.User),requestBody,callBack);
                 break;
-            case FIRSTPAGE_FOUR:
+            case DATAUSER_SELECT_FOUR:
                 requestBody = new FormBody.Builder()
-                        .add("user_account", data.getUser_account())
+                        .add("fun",String.valueOf(fun))
+                        .add("user_name", data.getUser_name())
                         .build();
                 sendHttp(InValues.send(R.string.User),requestBody,callBack);
                 break;
@@ -120,11 +121,27 @@ public class UserModelImpl extends SpbModelAbstrate implements SpbModelBasicInte
                         .build();
                 sendHttp(InValues.send(R.string.User),requestBody,callBack);
                 break;
+            case DATAUSER_UPDATE_SIX:
+                requestBody = new FormBody.Builder()
+                        .add("fun",String.valueOf(fun))
+                        .add("user_account", data.getUser_account())
+                        .add("user_privacy", data.getUser_privacy())
+                        .build();
+                sendHttp(InValues.send(R.string.User),requestBody,callBack);
+                break;
         }
     }
 
     @Override
     public void deleteData(int fun, User data, MyCallBack callBack) {
-
+        switch (fun){
+            case DATAUSER_DELETE_ONE:
+                requestBody = new FormBody.Builder()
+                        .add("fun",String.valueOf(fun))
+                        .add("user_account", data.getUser_account())
+                        .build();
+                sendHttp(InValues.send(R.string.User),requestBody,callBack);
+                break;
+        }
     }
 }

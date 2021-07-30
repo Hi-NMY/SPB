@@ -154,6 +154,36 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
             }
         });
 
+        for (int i = 0 ; i < mPresenter.getKeys().size() ; i++){
+            switch (i){
+                case 0:
+                    if (mPresenter.getKeys().get(0) != 1){
+                        mBasicinformationOnline.setText("秘密");
+                    }
+                    break;
+                case 1:
+                    if (mPresenter.getKeys().get(1) != 1){
+                        mBasicinformationBirth.setText("秘密");
+                    }
+                    break;
+                case 2:
+                    if (mPresenter.getKeys().get(2) != 1){
+                        mBasicinformationConstellation.setText("秘密");
+                    }
+                    break;
+                case 3:
+                    if (mPresenter.getKeys().get(3) != 1){
+                        mBasicinformationHome.setText("秘密");
+                    }
+                    break;
+                case 4:
+                    if (mPresenter.getKeys().get(4) != 1){
+                        mBasicinformationFavorite.setVisibility(View.INVISIBLE);
+                    }
+                    break;
+            }
+        }
+
         mBasicinformationOnline.postInvalidate();
         mBasicinformationHome.postInvalidate();
         mBasicinformationFavorite.postInvalidate();
@@ -212,6 +242,7 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
         public void onReceive(Context context, Intent intent) {
             toUser = (User) intent.getSerializableExtra("key_two");
             if (toUser.getUser_account().equals(personalSpacePage.userAccount)){
+                mPresenter.setMyPrivacy(toUser.getUser_privacy());
                 initUserData();
             }
         }

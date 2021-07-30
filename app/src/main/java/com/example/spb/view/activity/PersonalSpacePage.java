@@ -307,6 +307,39 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         mPersonalspaceUsername.setText(toUser.getUser_name());
         mPersonalspaceUsersign.setText(toUser.getUser_profile());
         USERNAME = mPersonalspaceUsername.getText().toString();
+
+        for (int i = 5 ; i < mPresenter.getKeys().size() ; i++){
+            switch (i){
+                case 5:
+                    if (mPresenter.getKeys().get(5) == 1){
+                        mR1.setVisibility(View.VISIBLE);
+                        mR2.setVisibility(View.VISIBLE);
+                    }else {
+                        mR1.setVisibility(View.INVISIBLE);
+                        mR2.setVisibility(View.INVISIBLE);
+                    }
+                    break;
+                case 6:
+                    if (mPresenter.getKeys().get(6) == 1){
+                        mPersonalspaceUserbadgeAll.setVisibility(View.VISIBLE);
+                    }else {
+                        mPersonalspaceUserbadgeAll.setVisibility(View.INVISIBLE);
+                    }
+                    break;
+                case 7:
+                    if (mPresenter.getKeys().get(7) == 2){
+                        mPersonalspaceViewpager.setVisibility(View.VISIBLE);
+                    }else {
+                        if (getDataFollowPresenter().determineFollow(toUser.getUser_account()) && getDataFollowedPresenter().determineFollowed(toUser.getUser_account())){
+                            mPersonalspaceViewpager.setVisibility(View.VISIBLE);
+                        }else {
+                            mPersonalspaceViewpager.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                    break;
+            }
+        }
+
         //获取用户关注和粉丝
         if (mPresenter.isUserFollowKey()) {
             yesAtt();

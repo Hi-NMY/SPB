@@ -64,6 +64,18 @@
     <string name="Shared_task_Topic">Shared_task_Topic</string>
     <string name="task_topic">task_topic</string>
 
+    <string name="Shared_notify_setup">Shared_notify_setup</string>
+    <string name="notify_all">notify_all</string>
+    <string name="notify_like">notify_like</string>
+    <string name="notify_collect">notify_collect</string>
+    <string name="notify_comment">notify_comment</string>
+    <string name="notify_follow">notify_follow</string>
+    <string name="notify_system">notify_system</string>
+
+    <string name="Shared_assist_setup">Shared_assist_setup</string>
+    <string name="assist_class">assist_class</string>
+    <string name="assist_active">assist_active</string>
+
     <!-- 网络请求-->
     <string name="httpHeader">http://nmy1206.natapp1.cc</string>
     <string name="httpHeadert">http://nmy1206.natapp1.cc/</string>
@@ -71,8 +83,8 @@
     <string name="RongCloudUser">http://nmy1206.natapp1.cc/RongCloudServer/RongCloud/SPBServer/User.php</string>
     <string name="SendToken">http://nmy1206.natapp1.cc/SendToken.php</string>
     <string name="getuiServer">http://nmy1206.natapp1.cc/getuiServer.php</string>
-    <string name="MyAppVersion">http://nmy1206.natapp1.cc/MyAppVersion.php</string>
-    <string name="SPBAPK">http://nmy1206.natapp1.cc/appDownLoad/SPB.apk</string>
+    <string name="AppVersion">http://nmy1206.natapp1.cc/AppVersion.php</string>
+    <string name="SPBAPK">http://nmy1206.natapp1.cc/Data/SPB.apk</string>
     <string name="VerifyMessage">http://nmy1206.natapp1.cc/VerifyMessage.php</string>
     <string name="VerifyAccount">http://nmy1206.natapp1.cc/VerifyAccount.php</string>
     <string name="VerifyPassword">http://nmy1206.natapp1.cc/VerifyPassword.php</string>
@@ -118,6 +130,7 @@
     <string name="Bcr_add_new_video">Bcr_add_new_video</string>
     <string name="Bcr_sign_data">Bcr_sign_data</string>
     <string name="Bcr_add_sign">Bcr_add_sign</string>
+    <string name="Bcr_assist_card">Bcr_assist_card</string>
 
     <!--intent搭载信息-->
     <string name="intent_Topic">intent_Topic</string>

@@ -104,7 +104,7 @@ public class SignInPageAPresenterImpl extends BasePresenter<ISignInPageAView> im
     }
 
     public void noDay(OnReturn onReturn){
-        if (s.getSign_right() == 1){
+        if (s.getSign_right() == 1 || now - old > 1){
             //修改数据库删除signday
             Sign sign = new Sign();
             sign.setUser_account(account);

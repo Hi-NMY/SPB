@@ -24,7 +24,18 @@ public class UserPageFPresenterImpl extends BasePresenter<IUserPageFView> implem
         onReturn.onReturn(a);
     }
 
+    public void obtainMyCard(OnCardReturn onCardReturn){
+        SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_assist_setup));
+        boolean activeKey = sharedPreferences.getBoolean(InValues.send(R.string.assist_active),true);
+        boolean classKey = sharedPreferences.getBoolean(InValues.send(R.string.assist_class),true);
+        onCardReturn.onReturn(classKey,activeKey);
+    }
+
     public interface OnReturn{
         void onReturn(int num);
+    }
+
+    public interface OnCardReturn{
+        void onReturn(boolean classKey,boolean activeKey);
     }
 }

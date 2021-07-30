@@ -45,6 +45,17 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
     private boolean userFollowKey = false;
     private String nowBadge;
     private List<String> badgelist;
+    private List<Integer> keys;
+
+    public List<Integer> getKeys() {
+        return keys;
+    }
+
+    public void setMyPrivacy(String s){
+        for (int i = 0 ; i < s.length() ; i++){
+            keys.add(Integer.valueOf(s.substring(i,i + 1)));
+        }
+    }
 
     public PersonalSpacePageAPresenterImpl() {
         barModel = new BarModelImpl();
@@ -53,6 +64,7 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
         followModel = new FollowModelImpl();
         videoModel = new VideoModelImpl();
         signModel = new SignInModelImpl();
+        keys = new ArrayList<>();
     }
 
     public String getNowBadge() {
@@ -143,6 +155,7 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
                     String a = response.body().string();
                     if (Integer.valueOf(a.substring(0,3)) == 200){
                         user = new Gson().fromJson(a.substring(3),User.class);
+                        setMyPrivacy(user.getUser_privacy());
                         onReturn.onReturn(user);
                     }
                 } catch (IOException e) {

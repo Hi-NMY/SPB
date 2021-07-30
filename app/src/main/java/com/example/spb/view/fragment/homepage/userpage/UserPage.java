@@ -53,6 +53,9 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
     private TextView mUserPageUseronlineday;
     private ImageView mUserPageUserbadge;
     private RefreshLongDay refreshLongDay;
+    private AssistCard assistCard;
+    private RelativeLayout mUserPageSubject;
+    private RelativeLayout mUserPageDayactive;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +65,8 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
         refreshHeadImg = new RefreshHeadImg();
         refreshFollowNum = new RefreshFollowNum();
         refreshLongDay = new RefreshLongDay();
+        assistCard = new AssistCard();
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_assist_card), assistCard);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_re_Follow), refreshFollowNum);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_userMsg), refreshMsg);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_reUserPage_Datanum), refreshDataNum);
@@ -100,6 +105,8 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
         mR2 = (RelativeLayout) view.findViewById(R.id.r2);
         mR3 = (RelativeLayout) view.findViewById(R.id.r3);
         mR4 = (RelativeLayout) view.findViewById(R.id.r4);
+        mUserPageSubject = (RelativeLayout) view.findViewById(R.id.user_page_subject);
+        mUserPageDayactive = (RelativeLayout) view.findViewById(R.id.user_page_dayactive);
         createDialog();
         setMyListener();
     }
@@ -111,6 +118,7 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
         mUserPageFollow.setText("关注 " + MyDateClass.sendMath(homePage.getDataFollowPresenter().obtainFollowNum()));
         mUserPageFollowed.setText("被关注 " + MyDateClass.sendMath(homePage.getDataFollowedPresenter().obtainFollowedNum()));
         mUserPageUseronlineday.setText(homePage.getDataUserMsgPresenter().getUser_longDay() + "天");
+        viewMyCard();
         if (homePage.getDataUserMsgPresenter().getStu_sex().equals("男")) {
             mUserPageUsersex.setImageResource(R.drawable.icon_boy);
         } else {
@@ -135,6 +143,24 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
         mUserPageUsername.postInvalidate();
         mUserPageAttentionnum.postInvalidate();
         mUserPageUseronlineday.postInvalidate();
+    }
+
+    private void viewMyCard(){
+        mPresenter.obtainMyCard(new UserPageFPresenterImpl.OnCardReturn() {
+            @Override
+            public void onReturn(boolean classKey, boolean activeKey) {
+                if (!classKey){
+                    mUserPageSubject.setVisibility(View.GONE);
+                }else {
+                    mUserPageSubject.setVisibility(View.VISIBLE);
+                }
+                if (!activeKey){
+                    mUserPageDayactive.setVisibility(View.GONE);
+                }else {
+                    mUserPageDayactive.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     @Override
@@ -256,6 +282,7 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
         SpbBroadcast.destroyBrc(refreshDataNum);
         SpbBroadcast.destroyBrc(refreshHeadImg);
         SpbBroadcast.destroyBrc(refreshLongDay);
+        SpbBroadcast.destroyBrc(assistCard);
     }
 
     class RefreshMsg extends BroadcastReceiver {
@@ -290,8 +317,8 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
     class RefreshHeadImg extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int a = intent.getIntExtra("key_one",0);
-            if (a == 1){
+            int a = intent.getIntExtra("key_one", 0);
+            if (a == 1) {
                 String badge = intent.getStringExtra("key_two");
                 mUserPageUserbadge.setVisibility(View.VISIBLE);
                 Glide.with(homePage)
@@ -299,7 +326,7 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
                         .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                         .centerCrop()
                         .into(mUserPageUserbadge);
-            }else {
+            } else {
                 Glide.with(MyApplication.getContext())
                         .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + homePage.getDataUserMsgPresenter().getUser_account() + "/HeadImage/myHeadImage.png")
                         .centerCrop()
@@ -324,6 +351,13 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
         public void onReceive(Context context, Intent intent) {
             mUserPageUseronlineday.setText(homePage.getDataUserMsgPresenter().getUser_longDay() + "天");
             mUserPageUseronlineday.postInvalidate();
+        }
+    }
+
+    class AssistCard extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            viewMyCard();
         }
     }
 }

@@ -161,6 +161,18 @@ public class FirstPageAPresenterImpl extends BasePresenter<IFirstPageAView> impl
                 UserInfo userInfo = new UserInfo(uAccount,uName, Uri.parse(InValues
                         .send(R.string.httpHeader) +"/UserImageServer/"+uAccount+"/HeadImage/myHeadImage.png"));
                 RongIM.getInstance().setCurrentUserInfo(userInfo);
+                SharedPreferences.Editor editor = MySharedPreferences.saveShared(InValues.send(R.string.Shared_RongUser));
+                editor.putString(InValues.send(R.string.RongUser_userId),uAccount);
+                editor.putString(InValues.send(R.string.RongUser_token),token);
+                editor.apply();
+                SharedPreferences.Editor editor1 = MySharedPreferences.saveShared(InValues.send(R.string.Shared_notify_setup));
+                editor1.putBoolean(InValues.send(R.string.notify_collect),true);
+                editor1.putBoolean(InValues.send(R.string.notify_comment),true);
+                editor1.putBoolean(InValues.send(R.string.notify_follow),true);
+                editor1.putBoolean(InValues.send(R.string.notify_like),true);
+                editor1.putBoolean(InValues.send(R.string.notify_system),true);
+                editor1.putBoolean(InValues.send(R.string.notify_all),true);
+                editor.apply();
                 Log.d("rongLink","true");
             }
 

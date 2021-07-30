@@ -18,6 +18,7 @@ import com.example.spb.presenter.impl.UserHomePageAPresenterImpl;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.RequestForAccess;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
+import com.example.spb.view.Component.AppVersion;
 import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.Component.MyToastClass;
@@ -29,6 +30,7 @@ import com.example.spb.view.fragment.homepage.userpage.UserPage;
 import com.example.spb.view.fragment.homepage.videopage.VideoPage;
 import com.example.spb.view.inter.IUserHomePageAView;
 import com.example.spb.view.littlefun.JumpIntent;
+import com.example.spb.xserver.ObtainVersion;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gyf.immersionbar.ImmersionBar;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
@@ -287,7 +289,7 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
                 bar.barSearchView(new FragmentSpbAvtivityBar.OnMyClick() {
                     @Override
                     public void onClick() {
-
+                        JumpIntent.startMyIntent(AllSearchPage.class);
                     }
                 });
                 break;
@@ -402,6 +404,8 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
     protected void onResume() {
         super.onResume();
         setDataNoticePresenter();
+        AppVersion appVersion = new AppVersion(MyApplication.getContext(),this);
+        appVersion.startVersion(String.valueOf(ObtainVersion.versionCode(this)),false);
     }
 
     class NewMessage extends BroadcastReceiver {

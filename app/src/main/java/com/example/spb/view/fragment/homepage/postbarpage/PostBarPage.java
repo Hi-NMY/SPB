@@ -18,10 +18,8 @@ import com.example.spb.adapter.FragmentViewPageAdapter;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.presenter.impl.PostBarPageFPresenterImpl;
-import com.example.spb.presenter.littlefun.InValues;
-import com.example.spb.presenter.littlefun.SpbBroadcast;
+import com.example.spb.view.activity.AllSearchPage;
 import com.example.spb.view.activity.SignInPage;
-import com.example.spb.view.activity.TopicBarPage;
 import com.example.spb.view.inter.IPostBarPageFView;
 import com.example.spb.view.littlefun.JumpIntent;
 import com.example.spb.view.littlefun.ScaleTransitionPagerTitleView;
@@ -62,6 +60,7 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
     private CollapsingToolbarLayout mPostbarCollapsinglayout;
     private RelativeLayout mPostbarR;
     private RelativeLayout mSignRlt;
+    private RelativeLayout mSearchRlt;
 
 
     @Override
@@ -87,7 +86,8 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
         mPostbarSearchIcon = (ImageView) view.findViewById(R.id.postbar_search_icon);
         mPostbarCollapsinglayout = (CollapsingToolbarLayout) view.findViewById(R.id.postbar_collapsinglayout);
         mPostbarR = (RelativeLayout) view.findViewById(R.id.postbar_R);
-        mSignRlt = (RelativeLayout)view.findViewById(R.id.sign_rlt);
+        mSignRlt = (RelativeLayout) view.findViewById(R.id.sign_rlt);
+        mSearchRlt = (RelativeLayout) view.findViewById(R.id.search_rlt);
         mPostbarSearchIcon.bringToFront();
         intFollowViewPager();
         listenViewMove();
@@ -269,6 +269,12 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
     public void setMyListener() {
         mPostbarSearchIcon.setOnClickListener(this);
         mSignRlt.setOnClickListener(this);
+        mSearchRlt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JumpIntent.startMyIntent(AllSearchPage.class);
+            }
+        });
     }
 
     @Override

@@ -89,7 +89,7 @@ public class UserFollowAdapter extends RecyclerView.Adapter<UserFollowAdapter.Vi
             holder.mItemUserFollowHeadimg.setTag(cacheKey);
         }
 
-        if (user.getUser_badge().equals("") || user.getUser_badge() == null){
+        if (user.getUser_badge() == null || user.getUser_badge().equals("")){
             holder.mItemUserFollowUserbadge.setVisibility(View.INVISIBLE);
         }else {
             holder.mItemUserFollowUserbadge.setVisibility(View.VISIBLE);

@@ -105,6 +105,9 @@ public class PushHelper {
         UmengMessageHandler msgHandler = new UmengMessageHandler() {
             @Override
             public Notification getNotification(Context context, UMessage uMessage) {
+                SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_notify_setup));
+                boolean notifyAll = sharedPreferences.getBoolean(InValues.send(R.string.notify_all),true);
+
                 String nowDate = MyDateClass.showNowDate();
                 Map<String,String> mapData = new HashMap<>();
                 for (Map.Entry entry : uMessage.extra.entrySet()) {

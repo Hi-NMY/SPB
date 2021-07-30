@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.MediaStoreSignature;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
+import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.entity.Bar;
 import com.example.spb.entity.Topic;
 import com.example.spb.presenter.littlefun.*;
@@ -40,7 +41,7 @@ import java.util.List;
 public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHolder> {
 
     private Activity activity;
-    private HomePage homePage;
+    private BaseMVPActivity baseMVPActivity;
     private List<Bar> bars;
     private Bar bar;
     private LayoutInflater layoutInflater;
@@ -99,7 +100,7 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
         this.activity = activity;
         this.bars = bars;
         cacheKey = MyDateClass.showNowDate();
-        homePage = (HomePage) activity;
+        baseMVPActivity = (BaseMVPActivity) activity;
         layoutInflater = activity.getLayoutInflater();
     }
 
@@ -233,7 +234,7 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
             holder.mItemPostbarLikeNum.setVisibility(View.INVISIBLE);
         }
 
-        if (homePage.getDataLikePresenter().determineLike(bar.getPb_one_id())) {
+        if (baseMVPActivity.getDataLikePresenter().determineLike(bar.getPb_one_id())) {
             holder.mItemPostbarLikeImg.setBackground(MyApplication.getContext().getDrawable(R.drawable.icon_likeal));
         }
 
@@ -269,10 +270,10 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
             public void onClick(View v) {
                 //显示dialog更多功能
                 barMoreOperateDialog = new BarMoreOperateDialog(activity);
-                barMoreOperateDialog.setData(homePage.getDataFollowPresenter().determineFollow(bars.get(position).getUser_account()),
-                        homePage.getDataCollectBarPresenter().determineCollect(bars.get(position).getPb_one_id()),
+                barMoreOperateDialog.setData(baseMVPActivity.getDataFollowPresenter().determineFollow(bars.get(position).getUser_account()),
+                        baseMVPActivity.getDataCollectBarPresenter().determineCollect(bars.get(position).getPb_one_id()),
                         bars.get(position).getPb_one_id(), bars.get(position).getUser_account(), bars.get(position).getUser_name());
-                if (!bars.get(position).getUser_account().equals(homePage.getDataUserMsgPresenter().getUser_account())) {
+                if (!bars.get(position).getUser_account().equals(baseMVPActivity.getDataUserMsgPresenter().getUser_account())) {
                     barMoreOperateDialog.funChat();
                     barMoreOperateDialog.funCollect();
                     barMoreOperateDialog.funFOllow();
@@ -303,8 +304,8 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 //执行点赞动画。更改数据
-                homePage.getDataLikePresenter().updateLikeData(bars.get(position).getPb_one_id()
-                        , homePage.getDataUserMsgPresenter().getUser_account(), bars.get(position).getUser_account(), new DataLikePresenter.OnReturn() {
+                baseMVPActivity.getDataLikePresenter().updateLikeData(bars.get(position).getPb_one_id()
+                        , baseMVPActivity.getDataUserMsgPresenter().getUser_account(), bars.get(position).getUser_account(), new DataLikePresenter.OnReturn() {
                             @Override
                             public void removeLike() {
                                 holder.mItemPostbarLikeImg.setBackground(MyApplication.getContext().getDrawable(R.drawable.icon_like));
@@ -373,8 +374,8 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
                         if (e != null) {
                             e.stopPlayer();
                         }
-                        e = homePage.toVoice(bars.get(position).getPb_voice(), holder.mVoiceTime, gifShow);
-                        cachePosition = position;
+//                        e = homePage.toVoice(bars.get(position).getPb_voice(), holder.mVoiceTime, gifShow);
+//                        cachePosition = position;
                     }
                     if (e.isVoicePlayerKey()) {
                         e.startPlayer();

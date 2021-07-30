@@ -57,6 +57,14 @@ public class DataFollowedPresenter {
         });
     }
 
+    public boolean determineFollowed(String account){
+        if (followedList != null && followedList.stream().anyMatch(followedList -> followedList.getUser_account().equals(account))){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
     public int obtainFollowedNum(){
         if (followedList != null){
             return followedList.size();

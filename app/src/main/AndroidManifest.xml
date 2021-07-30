@@ -37,6 +37,14 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
+        <activity android:name=".view.activity.AllSearchPage">
+        </activity>
+        <activity android:name=".view.activity.SetUpAssistPage">
+        </activity>
+        <activity android:name=".view.activity.SetUpMessagePage">
+        </activity>
+        <activity android:name=".view.activity.SetUpPrivacyPage">
+        </activity>
         <activity android:name=".view.activity.SignInPage">
         </activity>
         <activity

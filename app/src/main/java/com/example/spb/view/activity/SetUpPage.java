@@ -1,23 +1,30 @@
 package com.example.spb.view.activity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.example.spb.R;
+import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.SetUpPageAPresenterImpl;
-import com.example.spb.presenter.littlefun.InValues;
-import com.example.spb.presenter.littlefun.MySharedPreferences;
+import com.example.spb.view.Component.AppVersion;
 import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.inter.ISetUpPageAView;
+import com.example.spb.view.littlefun.JumpIntent;
+import com.example.spb.xserver.ObtainVersion;
 import com.gyf.immersionbar.ImmersionBar;
-import io.rong.imkit.RongIM;
 
-public class SetUpPage extends BaseMVPActivity<ISetUpPageAView, SetUpPageAPresenterImpl> implements ISetUpPageAView {
+public class SetUpPage extends BaseMVPActivity<ISetUpPageAView, SetUpPageAPresenterImpl> implements ISetUpPageAView, View.OnClickListener {
 
     private FragmentSpbAvtivityBar bar;
-    private TextView mTuichu;
+    private RelativeLayout mR1;
+    private RelativeLayout mR2;
+    private RelativeLayout mR3;
+    private RelativeLayout mR4;
+    private RelativeLayout mR5;
+    private RelativeLayout mQuitLogin;
+    private TextView mVersionText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,17 +40,14 @@ public class SetUpPage extends BaseMVPActivity<ISetUpPageAView, SetUpPageAPresen
 
     @Override
     protected void initActView() {
-        mTuichu = (TextView) findViewById(R.id.tuichu);
-        mTuichu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = MySharedPreferences.saveShared(InValues.send(R.string.Shared_FirstLogIn));
-                editor.putBoolean(InValues.send(R.string.FirstLogIn_login),true);
-                editor.commit();
-                RongIM.getInstance().logout();
-                //退出登录时加入逻辑：删除user_ip。使用户无法收到其他用户推送的消息
-            }
-        });
+        mR1 = (RelativeLayout) findViewById(R.id.r1);
+        mR2 = (RelativeLayout) findViewById(R.id.r2);
+        mR3 = (RelativeLayout) findViewById(R.id.r3);
+        mR4 = (RelativeLayout) findViewById(R.id.r4);
+        mR5 = (RelativeLayout) findViewById(R.id.r5);
+        mQuitLogin = (RelativeLayout) findViewById(R.id.quit_login);
+        mVersionText = (TextView) findViewById(R.id.version_text);
+        initData();
         setActivityBar();
         setBar();
         setMyListener();
@@ -52,7 +56,8 @@ public class SetUpPage extends BaseMVPActivity<ISetUpPageAView, SetUpPageAPresen
 
     @Override
     protected void initData() {
-
+        mVersionText.setText(ObtainVersion.versionName(this));
+        mVersionText.postInvalidate();
     }
 
     @Override
@@ -82,7 +87,11 @@ public class SetUpPage extends BaseMVPActivity<ISetUpPageAView, SetUpPageAPresen
 
     @Override
     public void setMyListener() {
-
+        mR1.setOnClickListener(this);
+        mR2.setOnClickListener(this);
+        mR3.setOnClickListener(this);
+        mR4.setOnClickListener(this);
+        mR5.setOnClickListener(this);
     }
 
     @Override
@@ -104,5 +113,35 @@ public class SetUpPage extends BaseMVPActivity<ISetUpPageAView, SetUpPageAPresen
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.r1:
+
+                break;
+            case R.id.r2:
+                JumpIntent.startMyIntent(SetUpMessagePage.class);
+                break;
+            case R.id.r3:
+                JumpIntent.startMyIntent(SetUpPrivacyPage.class);
+                break;
+            case R.id.r4:
+                JumpIntent.startMyIntent(SetUpAssistPage.class);
+                break;
+            case R.id.r5:
+                AppVersion appVersion = new AppVersion(MyApplication.getContext(),this);
+                appVersion.startVersion(String.valueOf(ObtainVersion.versionCode(this)),true);
+                break;
+            case R.id.quit_login:
+                mPresenter.loginOut(getDataUserMsgPresenter().getUser_account(), new SetUpPageAPresenterImpl.OnReturn() {
+                    @Override
+                    public void onReturn() {
+                        JumpIntent.startNewIntent(EnterPage.class);
+                    }
+                });
+                break;
+        }
     }
 }

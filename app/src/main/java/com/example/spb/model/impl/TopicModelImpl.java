@@ -40,8 +40,15 @@ public class TopicModelImpl extends SpbModelAbstrate implements SpbModelBasicInt
                 break;
             case DATATOPIC_SELECT_FOUR:
                 requestBody = new FormBody.Builder()
-                        .add("fun",String.valueOf(fun))
                         .add("topic_name",String.valueOf(data.getTopic_name()))
+                        .add("fun",String.valueOf(fun))
+                        .build();
+                sendHttp(InValues.send(R.string.Topic),requestBody,callBack);
+                break;
+            case DATATOPIC_SELECT_FIVE:
+                requestBody = new FormBody.Builder()
+                        .add("fun",String.valueOf(fun))
+                        .add("topic_name",data.getTopic_name())
                         .build();
                 sendHttp(InValues.send(R.string.Topic),requestBody,callBack);
                 break;
