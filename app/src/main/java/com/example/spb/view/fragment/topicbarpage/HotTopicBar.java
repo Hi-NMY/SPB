@@ -35,7 +35,6 @@ public class HotTopicBar extends BaseMVPFragment<IHotTopicBarFView, HotTopicBarF
     private MySmartRefresh mySmartRefresh;
     private TopicBarPage topicBarPage;
     private RefreshThumb refreshThumb;
-    private RemoveVoice removeVoice;
     private RefreshComment refreshComment;
 
     @Override
@@ -44,10 +43,8 @@ public class HotTopicBar extends BaseMVPFragment<IHotTopicBarFView, HotTopicBarF
         topicBarPage = (TopicBarPage) getActivity();
         addHotTopicBar = new AddHotTopicBar();
         refreshThumb = new RefreshThumb();
-        removeVoice = new RemoveVoice();
         refreshComment = new RefreshComment();
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment),refreshComment);
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_stop_voice),removeVoice);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_thumb), refreshThumb);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_hottopicbar), addHotTopicBar);
     }
@@ -118,6 +115,16 @@ public class HotTopicBar extends BaseMVPFragment<IHotTopicBarFView, HotTopicBarF
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (topicBarPage.getEasyVoice() != null){
+            topicBarPage.getEasyVoice().stopPlayer();
+            topicBarPage.setEasyVoice(null);
+            mPresenter.stopVoice();
+        }
+    }
+
+    @Override
     public void createRefresh() {
         mySmartRefresh.setMyRefreshListener(new MySmartRefresh.MyRefreshListener() {
             @Override
@@ -127,6 +134,10 @@ public class HotTopicBar extends BaseMVPFragment<IHotTopicBarFView, HotTopicBarF
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                if (topicBarPage.getEasyVoice() != null){
+                    topicBarPage.getEasyVoice().stopPlayer();
+                    mPresenter.stopVoice();
+                }
                 mPresenter.obtainMoreHotTopicBar();
             }
         });
@@ -143,7 +154,6 @@ public class HotTopicBar extends BaseMVPFragment<IHotTopicBarFView, HotTopicBarF
         super.onDestroy();
         SpbBroadcast.destroyBrc(addHotTopicBar);
         SpbBroadcast.destroyBrc(refreshThumb);
-        SpbBroadcast.destroyBrc(removeVoice);
         SpbBroadcast.destroyBrc(refreshComment);
     }
 
@@ -178,13 +188,6 @@ public class HotTopicBar extends BaseMVPFragment<IHotTopicBarFView, HotTopicBarF
             int a = intent.getIntExtra("key_one",0);
             String pbId = intent.getStringExtra("key_two");
             mPresenter.refreshThumb(a,pbId);
-        }
-    }
-
-    class RemoveVoice extends BroadcastReceiver{
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            mPresenter.stopVoice();
         }
     }
 

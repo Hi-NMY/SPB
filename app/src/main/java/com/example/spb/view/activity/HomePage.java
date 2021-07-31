@@ -408,6 +408,15 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
         appVersion.startVersion(String.valueOf(ObtainVersion.versionCode(this)),false);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (getEasyVoice() != null){
+            getEasyVoice().stopPlayer();
+            setEasyVoice(null);
+        }
+    }
+
     class NewMessage extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {

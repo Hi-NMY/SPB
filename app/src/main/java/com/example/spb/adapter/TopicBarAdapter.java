@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.MediaStoreSignature;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
+import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.entity.Bar;
 import com.example.spb.entity.Topic;
 import com.example.spb.presenter.littlefun.*;
@@ -36,12 +37,14 @@ import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 import pl.droidsonroids.gif.GifImageView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHolder> {
 
     private Activity activity;
-    private TopicBarPage topicBarPage;
+    private BaseMVPActivity baseMVPActivity;
     private List<Bar> bars;
     private Bar bar;
     private LayoutInflater layoutInflater;
@@ -53,6 +56,7 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
     private int cachePosition = -1;
     private EasyVoice e;
     private String commentIDKey = "";
+    private Map<Integer,String> timeMap;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView mItemPostbarUserHeadimg;
@@ -100,8 +104,9 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
     public TopicBarAdapter(Activity activity, List<Bar> bars) {
         this.activity = activity;
         this.bars = bars;
+        timeMap = new HashMap<>();
         cacheKey = MyDateClass.showNowDate();
-        topicBarPage = (TopicBarPage) activity;
+        baseMVPActivity = (BaseMVPActivity) activity;
         layoutInflater = activity.getLayoutInflater();
         notifyDataSetChanged();
     }
@@ -160,23 +165,19 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
         }
     }
 
-    public void refreshVoiceView(int position) {
-        if (position != 0) {
-            notifyItemChanged(0, position - 1);
-        }
-        notifyItemChanged(position + 1, bars.size() - 1);
+    public void refreshVoiceTime(int position,String time){
+        timeMap.put(position,time);
+        notifyItemChanged(position);
     }
 
     public void refreshNoewVoice(int position) {
-        if (cachePosition != -1) {
-            if (e != null) {
-                e.stopPlayer();
-            }
-            if (position == -1) {
-                notifyItemChanged(cachePosition);
-            } else {
-                notifyItemChanged(position);
-            }
+        if (position == -1) {
+            notifyItemChanged(cachePosition);
+        }else if (cachePosition == position){
+            notifyItemChanged(position);
+        }else {
+            notifyItemChanged(cachePosition);
+            notifyItemChanged(position);
         }
     }
 
@@ -204,12 +205,15 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
             holder.mItemPostbarUserbadge.setVisibility(View.INVISIBLE);
         }else {
             holder.mItemPostbarUserbadge.setVisibility(View.VISIBLE);
-            //显示徽章！！！
-            Glide.with(activity)
-                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + bar.getUser_badge())
-                    .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
-                    .centerCrop()
-                    .into(holder.mItemPostbarUserbadge);
+            if (holder.mItemPostbarUserbadge.getTag() == null || !holder.mItemPostbarUserbadge.getTag().equals(cacheKey)){
+                //显示徽章！
+                Glide.with(activity)
+                        .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + bar.getUser_badge())
+                        .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
+                        .centerCrop()
+                        .into(holder.mItemPostbarUserbadge);
+                holder.mItemPostbarUserbadge.setTag(cacheKey);
+            }
         }
 
         if (bar.getPb_article() != null && !bar.getPb_article().equals("")) {
@@ -237,7 +241,7 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
             holder.mItemPostbarLikeNum.setVisibility(View.INVISIBLE);
         }
 
-        if (topicBarPage.getDataLikePresenter().determineLike(bar.getPb_one_id())) {
+        if (baseMVPActivity.getDataLikePresenter().determineLike(bar.getPb_one_id())) {
             holder.mItemPostbarLikeImg.setBackground(MyApplication.getContext().getDrawable(R.drawable.icon_likeal));
         }
 
@@ -273,10 +277,10 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
             public void onClick(View v) {
                 //显示dialog更多功能
                 barMoreOperateDialog = new BarMoreOperateDialog(activity);
-                barMoreOperateDialog.setData(topicBarPage.getDataFollowPresenter().determineFollow(bars.get(position).getUser_account()),
-                        topicBarPage.getDataCollectBarPresenter().determineCollect(bars.get(position).getPb_one_id()),
+                barMoreOperateDialog.setData(baseMVPActivity.getDataFollowPresenter().determineFollow(bars.get(position).getUser_account()),
+                        baseMVPActivity.getDataCollectBarPresenter().determineCollect(bars.get(position).getPb_one_id()),
                         bars.get(position).getPb_one_id(), bars.get(position).getUser_account(), bars.get(position).getUser_name());
-                if (!bars.get(position).getUser_account().equals(topicBarPage.getDataUserMsgPresenter().getUser_account())) {
+                if (!bars.get(position).getUser_account().equals(baseMVPActivity.getDataUserMsgPresenter().getUser_account())) {
                     barMoreOperateDialog.funChat();
                     barMoreOperateDialog.funCollect();
                     barMoreOperateDialog.funFOllow();
@@ -307,8 +311,8 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 //执行点赞动画。更改数据
-                topicBarPage.getDataLikePresenter().updateLikeData(bars.get(position).getPb_one_id()
-                        , topicBarPage.getDataUserMsgPresenter().getUser_account(), bars.get(position).getUser_account(), new DataLikePresenter.OnReturn() {
+                baseMVPActivity.getDataLikePresenter().updateLikeData(bars.get(position).getPb_one_id()
+                        , baseMVPActivity.getDataUserMsgPresenter().getUser_account(), bars.get(position).getUser_account(), new DataLikePresenter.OnReturn() {
                             @Override
                             public void removeLike() {
                                 holder.mItemPostbarLikeImg.setBackground(MyApplication.getContext().getDrawable(R.drawable.icon_like));
@@ -366,24 +370,40 @@ public class TopicBarAdapter extends RecyclerView.Adapter<TopicBarAdapter.ViewHo
 
         if (bar.getPb_voice() != null && !bar.getPb_voice().equals("")) {
             holder.mItemPostbarVoice.setVisibility(View.VISIBLE);
-            holder.mVoiceTime.setText(String.valueOf(EasyVoice.getVoiceTime(InValues.send(R.string.httpHeadert) + bar.getPb_voice())));
             GIFShow gifShow = new GIFShow(holder.mVoiceGif);
+            if (timeMap.containsKey(position)){
+                holder.mVoiceTime.setText(timeMap.get(position));
+            }else {
+                EasyVoice.getVoiceTime(InValues.send(R.string.httpHeadert) + bar.getPb_voice(), position, new EasyVoice.TimeReturn() {
+                    @Override
+                    public void onReturn(int time, int position) {
+                        baseMVPActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                refreshVoiceTime(position,String.valueOf(time));
+                            }
+                        });
+                    }
+                });
+            }
             holder.mItemPostbarVoice.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    refreshVoiceView(position);
-                    if (e == null || position != cachePosition) {
-                        if (e != null) {
-                            e.stopPlayer();
+                    if (baseMVPActivity.getEasyVoice() == null || position != cachePosition) {
+                        if (baseMVPActivity.getEasyVoice() != null) {
+                            baseMVPActivity.getEasyVoice().stopPlayer();
                         }
-                        e = topicBarPage.toVoice(bars.get(position).getPb_voice(), holder.mVoiceTime, gifShow);
+                        baseMVPActivity.toVoice(bars.get(position).getPb_voice(), holder.mVoiceTime, gifShow);
                         cachePosition = position;
+                        baseMVPActivity.getEasyVoice().startPlayer();
+                    }else {
+                        if (baseMVPActivity.getEasyVoice().isVoicePlayerKey()){
+                            baseMVPActivity.getEasyVoice().startPlayer();
+                        }else {
+                            baseMVPActivity.getEasyVoice().stopPlayer();
+                        }
                     }
-                    if (e.isVoicePlayerKey()) {
-                        e.startPlayer();
-                    } else {
-                        refreshNoewVoice(position);
-                    }
+                    refreshNoewVoice(position);
                 }
             });
         } else {

@@ -339,6 +339,9 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
                         finishRRefresh(0);
                     }
                 });
+                if (getEasyVoice() != null){
+                    getEasyVoice().stopPlayer();
+                }
             }
 
             @Override
@@ -404,6 +407,19 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
     protected void onDestroy() {
         super.onDestroy();
         SpbBroadcast.sendReceiver(this,InValues.send(R.string.Bcr_stop_voice),0,null);
+        if (getEasyVoice() != null){
+            getEasyVoice().stopPlayer();
+            setEasyVoice(null);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (getEasyVoice() != null){
+            getEasyVoice().stopPlayer();
+            setEasyVoice(null);
+        }
     }
 
     @Override

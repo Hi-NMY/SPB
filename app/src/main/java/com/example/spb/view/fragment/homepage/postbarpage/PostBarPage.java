@@ -3,6 +3,7 @@ package com.example.spb.view.fragment.homepage.postbarpage;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -12,6 +13,8 @@ import android.widget.RelativeLayout;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Lifecycle;
 import androidx.viewpager.widget.ViewPager;
 import com.example.spb.R;
 import com.example.spb.adapter.FragmentViewPageAdapter;
@@ -62,6 +65,8 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
     private RelativeLayout mSignRlt;
     private RelativeLayout mSearchRlt;
 
+    private AttentionPage attentionPage;
+    private NewPostPage newPostPage;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -142,8 +147,10 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
 
     private void intFollowViewPager() {
         fragments = new ArrayList<>();
-        fragments.add(new AttentionPage());
-        fragments.add(new NewPostPage());
+        attentionPage = new AttentionPage();
+        newPostPage = new NewPostPage();
+        fragments.add(attentionPage);
+        fragments.add(newPostPage);
         fragments.add(new TopicPage());
 
         fragmentManager = getChildFragmentManager();
@@ -210,22 +217,22 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
         mPostbarPageIdt.setNavigator(commonNavigator);
         ViewPagerHelper.bind(mPostbarPageIdt, mPostbarPageViewpager);
         mPostbarPageViewpager.setCurrentItem(1);
-//        mPostbarPageViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_stop_voice),0,null);
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
+        mPostbarPageViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override

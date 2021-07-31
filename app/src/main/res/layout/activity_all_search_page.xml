@@ -17,7 +17,6 @@
     <RelativeLayout
             android:id="@+id/search_R"
             android:background="@color/beijing"
-            android:layout_marginTop="@dimen/margin_2"
             android:layout_below="@id/allsearch_actbar"
             android:focusable="true"
             android:focusableInTouchMode="true"
@@ -60,7 +59,7 @@
             <RelativeLayout
                     android:id="@+id/r1"
                     android:visibility="gone"
-                    android:layout_marginTop="@dimen/margin_16"
+                    android:layout_marginTop="@dimen/margin_8"
                     android:layout_marginHorizontal="@dimen/margin_8"
                     android:minHeight="80dp"
                     android:background="@drawable/cardview_gb"
@@ -103,7 +102,7 @@
                     android:id="@+id/r2"
                     android:visibility="gone"
                     android:layout_below="@id/r1"
-                    android:layout_marginTop="@dimen/margin_16"
+                    android:layout_marginTop="@dimen/margin_8"
                     android:layout_marginHorizontal="@dimen/margin_8"
                     android:minHeight="80dp"
                     android:background="@drawable/cardview_gb"
@@ -152,7 +151,7 @@
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/bar_search_recyclerview"
                     android:visibility="gone"
-                    android:layout_marginTop="@dimen/margin_16"
+                    android:layout_marginTop="@dimen/margin_8"
                     android:layout_below="@id/r2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>

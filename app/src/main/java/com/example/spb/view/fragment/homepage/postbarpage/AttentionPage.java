@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -42,7 +43,6 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
     private RefreshThumb refreshThumb;
     private DataRefresh dataRefresh;
     private PostBarAdapter postBarAdapter;
-    private RemoveVoice removeVoice;
     private RefreshComment refreshComment;
 
     @Override
@@ -52,10 +52,8 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
         refreshFollowUserBar = new RefreshFollowUserBar();
         refreshThumb = new RefreshThumb();
         dataRefresh = new DataRefresh();
-        removeVoice = new RemoveVoice();
         refreshComment = new RefreshComment();
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment),refreshComment);
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_stop_voice),removeVoice);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_re_Follow),dataRefresh);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_thumb),refreshThumb);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_FollowUserBar),refreshFollowUserBar);
@@ -69,6 +67,16 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
     @Override
     public <T> void response(T response, int responseFlag) {
 
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (homePage.getEasyVoice() != null){
+            homePage.getEasyVoice().stopPlayer();
+            homePage.setEasyVoice(null);
+            postBarAdapter.refreshNoewVoice(-1);
+        }
     }
 
     @Override
@@ -136,11 +144,19 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
         mySmartRefresh.setMyRefreshListener(new MySmartRefresh.MyRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                if (homePage.getEasyVoice() != null){
+                    homePage.getEasyVoice().stopPlayer();
+                    postBarAdapter.refreshNoewVoice(-1);
+                }
                 homePage.getDataPostBarPresenter().obtainFollowUserBar(true);
             }
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                if (homePage.getEasyVoice() != null){
+                    homePage.getEasyVoice().stopPlayer();
+                    postBarAdapter.refreshNoewVoice(-1);
+                }
                 homePage.getDataPostBarPresenter().obtainFollowUserBar(false);
             }
         });
@@ -165,7 +181,6 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
         SpbBroadcast.destroyBrc(refreshFollowUserBar);
         SpbBroadcast.destroyBrc(refreshThumb);
         SpbBroadcast.destroyBrc(dataRefresh);
-        SpbBroadcast.destroyBrc(removeVoice);
         SpbBroadcast.destroyBrc(refreshComment);
     }
 
@@ -219,13 +234,6 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
         @Override
         public void onReceive(Context context, Intent intent) {
             homePage.getDataPostBarPresenter().obtainFollowUserBar(true);
-        }
-    }
-
-    class RemoveVoice extends BroadcastReceiver{
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            postBarAdapter.refreshNoewVoice(-1);
         }
     }
 }

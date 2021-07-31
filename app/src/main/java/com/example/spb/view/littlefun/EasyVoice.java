@@ -43,18 +43,24 @@ public class EasyVoice {
         return voiceTime;
     }
 
-    public static int getVoiceTime(String url) {
-        int Time = 0;
-        try {
-            MediaPlayer mediaPlayer = new MediaPlayer();
-            mediaPlayer.setDataSource(url);
-            mediaPlayer.prepare();
-            Time = mediaPlayer.getDuration()/1000;
-            mediaPlayer.release();
-            return Time;
-        } catch (IOException e) {
-            return 0;
-        }
+    public static void getVoiceTime(String url,int position,TimeReturn timeReturn) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int Time = 0;
+                String finalUrl = url;
+                int finalPosition = position;
+                try {
+                    MediaPlayer mediaPlayer = new MediaPlayer();
+                    mediaPlayer.setDataSource(finalUrl);
+                    mediaPlayer.prepare();
+                    Time = mediaPlayer.getDuration()/1000;
+                    mediaPlayer.release();
+                    timeReturn.onReturn(Time,finalPosition);
+                } catch (IOException e) {
+                }
+            }
+        }).start();
     }
 
     public boolean isVoicePlayerKey() {
@@ -106,5 +112,9 @@ public class EasyVoice {
         void onStart(int time);
         void onStop(int cacheTime);
         void onDestroy();
+    }
+
+    public interface TimeReturn{
+        void onReturn(int time,int position);
     }
 }

@@ -74,7 +74,6 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
     private boolean keyboardStartKey = false;
     private ImageView mPostbarDetailCommentImg;
     private BarMoreOperateDialog barMoreOperateDialog;
-    private EasyVoice e;
     private GIFShow gifShow;
     private RelativeLayout mExcessR;
     private BarComment barComment;
@@ -213,7 +212,18 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
             mPostbarDetailImagelist.setAdapter(postBarImgAdapter);
         }
         if (barData.getPb_voice() != null && !barData.getPb_voice().equals("")) {
-            mVoiceTime.setText(String.valueOf(EasyVoice.getVoiceTime(InValues.send(R.string.httpHeadert) + barData.getPb_voice())));
+            EasyVoice.getVoiceTime(InValues.send(R.string.httpHeadert) + barData.getPb_voice(), 0, new EasyVoice.TimeReturn() {
+                @Override
+                public void onReturn(int time, int position) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mVoiceTime.setText(time + "");
+                            mVoiceTime.postInvalidate();
+                        }
+                    });
+                }
+            });
             mPostbarDetailVoice.setVisibility(View.VISIBLE);
         }
         if (barData.getPb_topic() != null && !barData.getPb_topic().equals("") && !barData.getPb_topic().equals("null")) {
@@ -474,13 +484,15 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
                 });
                 break;
             case R.id.postbar_detail_voice:
-                if (e == null) {
-                    e = toVoice(barData.getPb_voice(), mVoiceTime, gifShow);
-                }
-                if (e.isVoicePlayerKey()) {
-                    e.startPlayer();
-                } else {
-                    e.stopPlayer();
+                if (getEasyVoice() == null) {
+                    toVoice(barData.getPb_voice(), mVoiceTime, gifShow);
+                    getEasyVoice().startPlayer();
+                }else {
+                    if (getEasyVoice().isVoicePlayerKey()){
+                        getEasyVoice().startPlayer();
+                    }else {
+                        getEasyVoice().stopPlayer();
+                    }
                 }
                 break;
             case R.id.comment_send:
@@ -495,16 +507,18 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
         super.onDestroy();
         SpbBroadcast.destroyBrc(refreshFollow);
         SpbBroadcast.destroyBrc(barComment);
-        if (e != null) {
-            e.stopPlayer();
+        if (getEasyVoice() != null){
+            getEasyVoice().stopPlayer();
+            setEasyVoice(null);
         }
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        if (e != null) {
-            e.stopPlayer();
+    protected void onPause() {
+        super.onPause();
+        if (getEasyVoice() != null){
+            getEasyVoice().stopPlayer();
+            setEasyVoice(null);
         }
     }
 

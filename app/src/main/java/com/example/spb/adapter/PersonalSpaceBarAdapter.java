@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
+import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.entity.Bar;
 import com.example.spb.entity.Topic;
 import com.example.spb.presenter.littlefun.*;
@@ -35,7 +36,9 @@ import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 import pl.droidsonroids.gif.GifImageView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceBarAdapter.ViewHolder> {
 
@@ -46,11 +49,12 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
     private LayoutInflater layoutInflater;
     private GridLayoutManager gridLayoutManager;
     private PostBarImgAdapter postBarImgAdapter;
-    private PersonalSpacePage personalSpacePage;
+    private BaseMVPActivity baseMVPActivity;
     private BarMoreOperateDialog barMoreOperateDialog;
     private int cachePosition = -1;
     private EasyVoice e;
     private String commentIDKey = "";
+    private Map<Integer,String> timeMap;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView mItemUserspaceBarPostdate;
@@ -98,7 +102,8 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
     public PersonalSpaceBarAdapter(Activity activity, List<Bar> bars) {
         this.activity = activity;
         this.bars = bars;
-        personalSpacePage = (PersonalSpacePage) activity;
+        timeMap = new HashMap<>();
+        baseMVPActivity = (BaseMVPActivity) activity;
         layoutInflater = activity.getLayoutInflater();
         notifyDataSetChanged();
     }
@@ -163,31 +168,19 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
         });
     }
 
-    public void refreshVoiceView(int position) {
-        if (position != 0) {
-            notifyItemChanged(0, position - 1);
-        }
-        notifyItemChanged(position + 1, bars.size() - 1);
+    public void refreshVoiceTime(int position,String time){
+        timeMap.put(position,time);
+        notifyItemChanged(position);
     }
 
     public void refreshNoewVoice(int position) {
-        if (cachePosition != -1) {
-            if (e != null) {
-                e.stopPlayer();
-            }
-            if (position == -1) {
-                /**
-                 *暂时解决卡顿问题。必现一次卡顿。待解决！
-                 * @Auther nmynmy
-                 * @Date 2021-07-05  21:41
-                 */
-                if (e != null) {
-                    notifyItemChanged(cachePosition, 0);
-                    e = null;
-                }
-            } else {
-                notifyItemChanged(position, 0);
-            }
+        if (position == -1) {
+            notifyItemChanged(cachePosition);
+        }else if (cachePosition == position){
+            notifyItemChanged(position);
+        }else {
+            notifyItemChanged(cachePosition);
+            notifyItemChanged(position);
         }
     }
 
@@ -234,7 +227,7 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
             holder.mItemPostbarLikeNum.setVisibility(View.INVISIBLE);
         }
 
-        if (personalSpacePage.getDataLikePresenter().determineLike(bar.getPb_one_id())) {
+        if (baseMVPActivity.getDataLikePresenter().determineLike(bar.getPb_one_id())) {
             holder.mItemPostbarLikeImg.setBackground(MyApplication.getContext().getDrawable(R.drawable.icon_likeal));
         } else {
             holder.mItemPostbarLikeImg.setBackground(MyApplication.getContext().getDrawable(R.drawable.icon_like));
@@ -259,10 +252,10 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
             public void onClick(View v) {
                 //显示dialog更多功能
                 barMoreOperateDialog = new BarMoreOperateDialog(activity);
-                barMoreOperateDialog.setData(personalSpacePage.getDataFollowPresenter().determineFollow(bars.get(position).getUser_account()),
-                        personalSpacePage.getDataCollectBarPresenter().determineCollect(bars.get(position).getPb_one_id()),
+                barMoreOperateDialog.setData(baseMVPActivity.getDataFollowPresenter().determineFollow(bars.get(position).getUser_account()),
+                        baseMVPActivity.getDataCollectBarPresenter().determineCollect(bars.get(position).getPb_one_id()),
                         bars.get(position).getPb_one_id(), bars.get(position).getUser_account(), bars.get(position).getUser_name());
-                if (!bars.get(position).getUser_account().equals(personalSpacePage.getDataUserMsgPresenter().getUser_account())) {
+                if (!bars.get(position).getUser_account().equals(baseMVPActivity.getDataUserMsgPresenter().getUser_account())) {
                     barMoreOperateDialog.funChat();
                     barMoreOperateDialog.funCollect();
                     barMoreOperateDialog.funFOllow();
@@ -295,8 +288,8 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
             @Override
             public void onClick(View v) {
                 //执行点赞动画。更改数据
-                personalSpacePage.getDataLikePresenter().updateLikeData(bars.get(position).getPb_one_id()
-                        , personalSpacePage.getDataUserMsgPresenter().getUser_account(), bars.get(position).getUser_account(), new DataLikePresenter.OnReturn() {
+                baseMVPActivity.getDataLikePresenter().updateLikeData(bars.get(position).getPb_one_id()
+                        , baseMVPActivity.getDataUserMsgPresenter().getUser_account(), bars.get(position).getUser_account(), new DataLikePresenter.OnReturn() {
                             @Override
                             public void removeLike() {
                                 holder.mItemPostbarLikeImg.setBackground(MyApplication.getContext().getDrawable(R.drawable.icon_like));
@@ -358,30 +351,46 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
                         }
                     });
         }else {
-            VideoTool videoTool = new VideoTool(personalSpacePage,MyApplication.getContext(),holder.mDetailPlayer);
+            VideoTool videoTool = new VideoTool(baseMVPActivity,MyApplication.getContext(),holder.mDetailPlayer);
             videoTool.creatVideo(InValues.send(R.string.httpHeadert) + bar.getPb_video(),bar.getVideoBitmap());
         }
 
         if (bar.getPb_voice() != null && !bar.getPb_voice().equals("")) {
             holder.mItemUserspaceBarVoice.setVisibility(View.VISIBLE);
-          //  holder.mVoiceTime.setText(String.valueOf(EasyVoice.getVoiceTime(InValues.send(R.string.httpHeadert) + bar.getPb_voice())));
             GIFShow gifShow = new GIFShow(holder.mVoiceGif);
+            if (timeMap.containsKey(position)){
+                holder.mVoiceTime.setText(timeMap.get(position));
+            }else {
+                EasyVoice.getVoiceTime(InValues.send(R.string.httpHeadert) + bar.getPb_voice(), position, new EasyVoice.TimeReturn() {
+                    @Override
+                    public void onReturn(int time, int position) {
+                        baseMVPActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                refreshVoiceTime(position,String.valueOf(time));
+                            }
+                        });
+                    }
+                });
+            }
             holder.mItemUserspaceBarVoice.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    refreshVoiceView(position);
-                    if (e == null || position != cachePosition) {
-                        if (e != null) {
-                            e.stopPlayer();
+                    if (baseMVPActivity.getEasyVoice() == null || position != cachePosition) {
+                        if (baseMVPActivity.getEasyVoice() != null) {
+                            baseMVPActivity.getEasyVoice().stopPlayer();
                         }
-                        e = personalSpacePage.toVoice(bars.get(position).getPb_voice(), holder.mVoiceTime, gifShow);
+                        baseMVPActivity.toVoice(bars.get(position).getPb_voice(), holder.mVoiceTime, gifShow);
                         cachePosition = position;
+                        baseMVPActivity.getEasyVoice().startPlayer();
+                    }else {
+                        if (baseMVPActivity.getEasyVoice().isVoicePlayerKey()){
+                            baseMVPActivity.getEasyVoice().startPlayer();
+                        }else {
+                            baseMVPActivity.getEasyVoice().stopPlayer();
+                        }
                     }
-                    if (e.isVoicePlayerKey()) {
-                        e.startPlayer();
-                    } else {
-                        refreshNoewVoice(position);
-                    }
+                    refreshNoewVoice(position);
                 }
             });
         } else {

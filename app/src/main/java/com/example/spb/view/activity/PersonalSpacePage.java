@@ -855,7 +855,21 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         SpbBroadcast.destroyBrc(refreshMsg);
         SpbBroadcast.destroyBrc(refreshBadgeImg);
         SpbBroadcast.sendReceiver(this, InValues.send(R.string.Bcr_stop_voice), 0, null);
+        if (getEasyVoice() != null){
+            getEasyVoice().stopPlayer();
+            setEasyVoice(null);
+        }
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (getEasyVoice() != null){
+            getEasyVoice().stopPlayer();
+            setEasyVoice(null);
+        }
+    }
+
 
     @Override
     protected void onStop() {

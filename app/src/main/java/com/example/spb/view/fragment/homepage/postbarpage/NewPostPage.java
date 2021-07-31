@@ -4,11 +4,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +24,7 @@ import com.example.spb.presenter.impl.NewPostPageFPresenterImpl;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.view.Component.MySmartRefresh;
+import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.Component.RefreshTipAnima;
 import com.example.spb.view.activity.HomePage;
 import com.example.spb.view.fragment.topicbarpage.HotTopicBar;
@@ -45,7 +48,6 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageF
     private TextView mNewpostpageRefreshTip;
     private RefreshThumb refreshThumb;
     private AddNewPostBar addNewPostBar;
-    private RemoveVoice removeVoice;
     private RefreshComment refreshComment;
 
     @Override
@@ -54,12 +56,16 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageF
         homePage = (HomePage) getActivity();
         refreshThumb = new RefreshThumb();
         addNewPostBar = new AddNewPostBar();
-        removeVoice = new RemoveVoice();
         refreshComment = new RefreshComment();
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment),refreshComment);
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_stop_voice),removeVoice);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_new_bar),addNewPostBar);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_thumb),refreshThumb);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        Log.d("aaaaaaaaaaaaaaaaaaaa","2" + hidden);
     }
 
     @Override
@@ -70,6 +76,16 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageF
     @Override
     public <T> void response(T response, int responseFlag) {
 
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (homePage.getEasyVoice() != null){
+            homePage.getEasyVoice().stopPlayer();
+            homePage.setEasyVoice(null);
+            postBarAdapter.refreshNoewVoice(-1);
+        }
     }
 
     @Override
@@ -137,11 +153,19 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageF
         mySmartRefresh.setMyRefreshListener(new MySmartRefresh.MyRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                if (homePage.getEasyVoice() != null){
+                    homePage.getEasyVoice().stopPlayer();
+                    postBarAdapter.refreshNoewVoice(-1);
+                }
                 mPresenter.obtainNewBar(true);
             }
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                if (homePage.getEasyVoice() != null){
+                    homePage.getEasyVoice().stopPlayer();
+                    postBarAdapter.refreshNoewVoice(-1);
+                }
                 mPresenter.obtainNewBar(false);
             }
         });
@@ -165,7 +189,6 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageF
         super.onDestroy();
         SpbBroadcast.destroyBrc(refreshThumb);
         SpbBroadcast.destroyBrc(addNewPostBar);
-        SpbBroadcast.destroyBrc(removeVoice);
         SpbBroadcast.destroyBrc(refreshComment);
     }
 
@@ -202,26 +225,19 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageF
             List<Bar> moreBars = (List<Bar>) intent.getSerializableExtra("key_two");
             switch (a){
                 case 1:
+                    finishRRefresh(FINISH_MORE);
                     if (postBarAdapter != null){
                         postBarAdapter.addMorePostBar(moreBars);
                     }
-                    finishRRefresh(FINISH_MORE);
                     break;
                 case 0:
-                    initData();
                     finishRRefresh(FINISH_REFRESH);
+                    initData();
                     break;
                 case 3:
                     postBarAdapter.deleteBar(homePage.getDeletePbId());
                     break;
             }
-        }
-    }
-
-    class RemoveVoice extends BroadcastReceiver{
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            postBarAdapter.refreshNoewVoice(-1);
         }
     }
 }

@@ -28,6 +28,8 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
 
     public static String deletePbId = "";
 
+    public static EasyVoice easyVoice;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -196,14 +198,24 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
         }
     }
 
+    public static EasyVoice getEasyVoice() {
+        return easyVoice;
+    }
+
+    public static void setEasyVoice(EasyVoice easyVoice) {
+        BaseMVPActivity.easyVoice = easyVoice;
+    }
+
     public EasyVoice toVoice(String url, TextView textView, GIFShow gif){
-        EasyVoice easyVoice = new EasyVoice(InValues.send(R.string.httpHeadert) + url, new EasyVoice.OnVoice() {
+        easyVoice = new EasyVoice(InValues.send(R.string.httpHeadert) + url, new EasyVoice.OnVoice() {
             @Override
             public void onStart(int time) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        gif.startGif();
+                        if (gif != null){
+                            gif.startGif();
+                        }
                         textView.setText(String.valueOf(time));
                         textView.postInvalidate();
                     }
@@ -215,7 +227,9 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        gif.stopGif();
+                        if (gif != null){
+                            gif.stopGif();
+                        }
                         textView.setText(String.valueOf(cacheTime));
                     }
                 });
@@ -234,6 +248,9 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
         super.onDestroy();
         if (mPresenter != null){
             mPresenter.deleteView();
+        }
+        if (easyVoice != null){
+            easyVoice.stopPlayer();
         }
     }
 }

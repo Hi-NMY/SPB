@@ -1,6 +1,7 @@
 package com.example.spb.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import com.bumptech.glide.signature.MediaStoreSignature;
 import com.example.spb.R;
 import com.example.spb.entity.User;
 import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.view.activity.PersonalSpacePage;
+import com.example.spb.view.littlefun.JumpIntent;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
@@ -79,6 +82,19 @@ public class AllSearchUserAdapter extends RecyclerView.Adapter<AllSearchUserAdap
                     .centerCrop()
                     .into(holder.mItemUserFollowUserbadge);
         }
+
+        holder.mItemAllsearchUserHeadimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转用户主页
+                JumpIntent.startMsgIntent(PersonalSpacePage.class, new JumpIntent.SetMsg() {
+                    @Override
+                    public void setMessage(Intent intent) {
+                        intent.putExtra(InValues.send(R.string.intent_User_account), users.get(position).getUser_account());
+                    }
+                });
+            }
+        });
     }
 
     @Override

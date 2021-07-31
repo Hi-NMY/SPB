@@ -35,7 +35,6 @@ public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView, Pers
     private SmartRefreshLayout mPersonalBarRefresh;
     private MySmartRefresh mySmartRefresh;
     private PersonalSpacePage personalSpacePage;
-    private RemoveVoice removeVoice;
     private RefreshComment refreshComment;
 
     @Override
@@ -44,10 +43,8 @@ public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView, Pers
         personalSpacePage = (PersonalSpacePage)getActivity();
         refreshThumb = new RefreshThumb();
         addPersonalBar = new AddPersonalBar();
-        removeVoice = new RemoveVoice();
         refreshComment = new RefreshComment();
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment),refreshComment);
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_stop_voice), removeVoice);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_personal_bar), addPersonalBar);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_thumb), refreshThumb);
     }
@@ -79,6 +76,16 @@ public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView, Pers
         mPersonalBarRefresh = (SmartRefreshLayout)view.findViewById(R.id.personal_bar_refresh);
         mPersonalBarRecyclerview = MyListAnimation.setListAnimation(personalSpacePage,mPersonalBarRecyclerview);
         createRefresh();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (personalSpacePage.getEasyVoice() != null){
+            personalSpacePage.getEasyVoice().stopPlayer();
+            personalSpacePage.setEasyVoice(null);
+            mPresenter.stopvoice();
+        }
     }
 
     @Override
@@ -128,6 +135,10 @@ public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView, Pers
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                if (personalSpacePage.getEasyVoice() != null){
+                    personalSpacePage.getEasyVoice().stopPlayer();
+                    mPresenter.stopvoice();
+                }
                 mPresenter.obtainMorePersonalBar(personalSpacePage.getDataUserMsgPresenter().getUser_account());
             }
         });
@@ -144,7 +155,6 @@ public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView, Pers
         super.onDestroy();
         SpbBroadcast.destroyBrc(refreshThumb);
         SpbBroadcast.destroyBrc(addPersonalBar);
-        SpbBroadcast.destroyBrc(removeVoice);
         SpbBroadcast.destroyBrc(refreshComment);
     }
 
@@ -160,8 +170,8 @@ public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView, Pers
                 }
                 switch (a){
                     case 1:
-                        mPresenter.addPersonalBarList(bars,mPersonalBarRecyclerview,false);
                         finishRRefresh(0);
+                        mPresenter.addPersonalBarList(bars,mPersonalBarRecyclerview,false);
                         break;
                     case 0:
                         mPresenter.addPersonalBarList(bars,mPersonalBarRecyclerview,true);
@@ -197,13 +207,6 @@ public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView, Pers
                     mPresenter.refreshComment(Integer.valueOf(num));
                     break;
             }
-        }
-    }
-
-    class RemoveVoice extends BroadcastReceiver{
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            mPresenter.stopvoice();
         }
     }
 }

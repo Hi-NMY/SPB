@@ -131,7 +131,7 @@ public class AllSearchPageAPresenterImpl extends BasePresenter<IAllSearchPageAVi
     public void setTopicAdapter(List<Topic> topics, GridLayoutManager gridLayoutManager, RecyclerView recyclerView){
         randomTopicAdapter = new RandomTopicAdapter(activity,topics);
         recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setAdapter(postBarAdapter);
+        recyclerView.setAdapter(randomTopicAdapter);
         ((DefaultItemAnimator)recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         recyclerView.startLayoutAnimation();
     }

@@ -36,7 +36,9 @@ import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 import pl.droidsonroids.gif.GifImageView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHolder> {
 
@@ -50,8 +52,8 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
     private String cacheKey = "";
     private BarMoreOperateDialog barMoreOperateDialog;
     private int cachePosition = -1;
-    private EasyVoice e;
     private String commentIDKey = "";
+    private Map<Integer,String> timeMap;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView mItemPostbarUserHeadimg;
@@ -99,6 +101,7 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
     public PostBarAdapter(Activity activity, List<Bar> bars) {
         this.activity = activity;
         this.bars = bars;
+        timeMap = new HashMap<>();
         cacheKey = MyDateClass.showNowDate();
         baseMVPActivity = (BaseMVPActivity) activity;
         layoutInflater = activity.getLayoutInflater();
@@ -156,23 +159,19 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
         }
     }
 
-    public void refreshVoiceView(int position) {
-        if (position != 0) {
-            notifyItemChanged(0, position - 1);
-        }
-        notifyItemChanged(position + 1, bars.size() - 1);
+    public void refreshVoiceTime(int position,String time){
+        timeMap.put(position,time);
+        notifyItemChanged(position);
     }
 
     public void refreshNoewVoice(int position) {
-        if (cachePosition != -1) {
-            if (e != null) {
-                e.stopPlayer();
-            }
-            if (position == -1) {
-                notifyItemChanged(cachePosition);
-            } else {
-                notifyItemChanged(position);
-            }
+        if (position == -1) {
+            notifyItemChanged(cachePosition);
+        }else if (cachePosition == position){
+            notifyItemChanged(position);
+        }else {
+            notifyItemChanged(cachePosition);
+            notifyItemChanged(position);
         }
     }
 
@@ -201,12 +200,15 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
             holder.mItemPostbarUserbadge.setVisibility(View.INVISIBLE);
         }else {
             holder.mItemPostbarUserbadge.setVisibility(View.VISIBLE);
-            //显示徽章！
-            Glide.with(activity)
-                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + bar.getUser_badge())
-                    .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
-                    .centerCrop()
-                    .into(holder.mItemPostbarUserbadge);
+            if (holder.mItemPostbarUserbadge.getTag() == null || !holder.mItemPostbarUserbadge.getTag().equals(cacheKey)){
+                //显示徽章！
+                Glide.with(activity)
+                        .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + bar.getUser_badge())
+                        .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
+                        .centerCrop()
+                        .into(holder.mItemPostbarUserbadge);
+                holder.mItemPostbarUserbadge.setTag(cacheKey);
+            }
         }
 
         if (bar.getPb_article() != null && !bar.getPb_article().equals("")) {
@@ -359,29 +361,40 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
 
         if (bar.getPb_voice() != null && !bar.getPb_voice().equals("")) {
             holder.mItemPostbarVoice.setVisibility(View.VISIBLE);
-            /**
-             *   数字加载！耗时操作！造成数据呈现卡顿！
-             * @Auther nmynmy
-             * @Date 2021-07-06  21:26
-             */
-            // holder.mVoiceTime.setText(String.valueOf(EasyVoice.getVoiceTime(InValues.send(R.string.httpHeadert) + bar.getPb_voice())));
             GIFShow gifShow = new GIFShow(holder.mVoiceGif);
+            if (timeMap.containsKey(position)){
+                holder.mVoiceTime.setText(timeMap.get(position));
+            }else {
+                EasyVoice.getVoiceTime(InValues.send(R.string.httpHeadert) + bar.getPb_voice(), position, new EasyVoice.TimeReturn() {
+                    @Override
+                    public void onReturn(int time, int position) {
+                        baseMVPActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                refreshVoiceTime(position,String.valueOf(time));
+                            }
+                        });
+                    }
+                });
+            }
             holder.mItemPostbarVoice.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    refreshVoiceView(position);
-                    if (e == null || position != cachePosition) {
-                        if (e != null) {
-                            e.stopPlayer();
+                    if (baseMVPActivity.getEasyVoice() == null || position != cachePosition) {
+                        if (baseMVPActivity.getEasyVoice() != null) {
+                            baseMVPActivity.getEasyVoice().stopPlayer();
                         }
-//                        e = homePage.toVoice(bars.get(position).getPb_voice(), holder.mVoiceTime, gifShow);
-//                        cachePosition = position;
+                        baseMVPActivity.toVoice(bars.get(position).getPb_voice(), holder.mVoiceTime, gifShow);
+                        cachePosition = position;
+                        baseMVPActivity.getEasyVoice().startPlayer();
+                    }else {
+                        if (baseMVPActivity.getEasyVoice().isVoicePlayerKey()){
+                            baseMVPActivity.getEasyVoice().startPlayer();
+                        }else {
+                            baseMVPActivity.getEasyVoice().stopPlayer();
+                        }
                     }
-                    if (e.isVoicePlayerKey()) {
-                        e.startPlayer();
-                    } else {
-                        refreshNoewVoice(position);
-                    }
+                    refreshNoewVoice(position);
                 }
             });
         } else {
