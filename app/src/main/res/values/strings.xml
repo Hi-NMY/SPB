@@ -102,7 +102,7 @@
     <string name="SendNewVideo">http://nmy1206.natapp1.cc/SendNewVideo.php</string>
     <string name="Video">http://nmy1206.natapp1.cc/Video.php</string>
     <string name="Sign">http://nmy1206.natapp1.cc/Sign.php</string>
-
+    <string name="UpdatePassword">http://nmy1206.natapp1.cc/UpdatePassword.php</string>
     <!-- 内部广播 -->
     <string name="Bcr_refresh_userMsg">Bcr_refresh_userMsg</string>
     <string name="Bcr_transfer_loc">Bcr_transfer_loc</string>

@@ -8,6 +8,7 @@ import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.SetUpMessagePageAPresenterImpl;
 import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.inter.ISetUpMessagePageAView;
+import com.example.spb.xserver.PushHelper;
 import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.ArrayList;
@@ -84,6 +85,12 @@ public class SetUpMessagePage extends BaseMVPActivity<ISetUpMessagePageAView, Se
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     mPresenter.setNotifyAll(isChecked);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            PushHelper.init(getApplicationContext());
+                        }
+                    }).start();
                 }
             });
         }

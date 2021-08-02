@@ -3,19 +3,31 @@ package com.example.spb.view.Component;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Looper;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.littlefun.MyResolve;
+import com.example.spb.view.InterComponent.DialogInter;
+import com.example.spb.xserver.APPDownload;
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class AppVersion {
 
     private Context context;
     private Activity activity;
+    private DialogInter versionDialog;
+    private Button mButtonRight;
+    private Button mButtonClose;
+    private TextView mAppDetailed;
+    private TextView mCodeNum;
 
     public AppVersion(Context context, Activity activity) {
         this.context = context;
@@ -32,12 +44,56 @@ public class AppVersion {
                         MyToastClass.ShowToast(MyApplication.getContext(),"已是最新版本");
                     }
                 }else if (code == 200){
-                    activity.runOnUiThread(new Runnable() {
+                    List<String> strings = MyResolve.InBadge(app_detailed);
+                    versionDialog = new ComponentDialog(activity, R.layout.dialog_downloadapp_view, new ComponentDialog.InitDialog() {
                         @Override
-                        public void run() {
-                            //创建dialog进行更新
+                        public void initView(View view) {
+                            mButtonRight = (Button) view.findViewById(R.id.button_right);
+                            mButtonClose = (Button) view.findViewById(R.id.button_close);
+                            mAppDetailed = (TextView) view.findViewById(R.id.app_detailed);
+                            mCodeNum = (TextView) view.findViewById(R.id.code_num);
+                        }
+
+                        @Override
+                        public void initData() {
+                            StringBuffer stringBuffer = new StringBuffer();
+                            if (strings != null || strings.size() != 0){
+                                for (int i = 0 ; i < strings.size() ;i++){
+                                    if (i == 0){
+                                        mCodeNum.setText(strings.get(0));
+                                    }else {
+                                        stringBuffer.append(strings.get(i) + "\n");
+                                    }
+                                }
+                                mAppDetailed.setText(stringBuffer.toString());
+                            }
+                        }
+
+                        @Override
+                        public void initListener() {
+                            mButtonClose.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    versionDialog.closeMyDialog();
+                                }
+                            });
+                            mButtonRight.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    versionDialog.closeMyDialog();
+                                    MyToastClass.ShowToast(context,"请在通知栏查看更新进度");
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            APPDownload appDownload = new APPDownload(context,activity);
+                                            appDownload.startDownload();
+                                        }
+                                    }).start();
+                                }
+                            });
                         }
                     });
+                    versionDialog.showMyDialog();
                 }
                 Looper.loop();
             }

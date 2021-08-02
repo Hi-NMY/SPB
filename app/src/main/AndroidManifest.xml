@@ -37,6 +37,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
+        <activity android:name=".view.activity.SetUpUpdatePasswordPage">
+        </activity>
         <activity android:name=".view.activity.AllSearchPage">
         </activity>
         <activity android:name=".view.activity.SetUpAssistPage">
@@ -135,7 +137,19 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity> <!-- 适配华为（huawei）刘海屏 -->
+        </activity>
+
+        <provider
+                android:name="androidx.core.content.FileProvider"
+                android:authorities="com.example.spb.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/filepaths"
+                    tools:replace="android:resource"/>
+        </provider>
+        <!-- 适配华为（huawei）刘海屏 -->
         <meta-data
                 android:name="android.notch_support"
                 android:value="true"/> <!-- 适配小米（xiaomi）刘海屏 -->

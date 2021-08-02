@@ -71,6 +71,8 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_new_messasge), newMessage);
         initActView();
         selectionFragment(1);
+        AppVersion appVersion = new AppVersion(MyApplication.getContext(),this);
+        appVersion.startVersion(String.valueOf(ObtainVersion.versionCode(this)),false);
     }
 
     @Override
@@ -404,8 +406,6 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
     protected void onResume() {
         super.onResume();
         setDataNoticePresenter();
-        AppVersion appVersion = new AppVersion(MyApplication.getContext(),this);
-        appVersion.startVersion(String.valueOf(ObtainVersion.versionCode(this)),false);
     }
 
     @Override

@@ -145,5 +145,4 @@ public class MyResolve {
         }
         return badges;
     }
-
 }

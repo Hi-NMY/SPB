@@ -119,7 +119,7 @@ public class SetUpPage extends BaseMVPActivity<ISetUpPageAView, SetUpPageAPresen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.r1:
-
+                JumpIntent.startMyIntent(SetUpUpdatePasswordPage.class);
                 break;
             case R.id.r2:
                 JumpIntent.startMyIntent(SetUpMessagePage.class);

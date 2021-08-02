@@ -1,11 +1,11 @@
 package com.example.spb.xserver;
 
-import android.app.Application;
 import android.app.Notification;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 import com.example.spb.R;
+import com.example.spb.app.MyApplication;
 import com.example.spb.entity.Notice;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MyDateClass;
@@ -100,14 +100,22 @@ public class PushHelper {
 
         //设置通知栏显示通知的最大个数（0～10），0：不限制个数
         pushAgent.setDisplayNotificationNumber(0);
-
+        pushAgent.setMuteDurationSeconds(0);
+        try {
+            SharedPreferences sharedPreferences = context.getSharedPreferences(InValues.send(R.string.Shared_notify_setup),Context.MODE_PRIVATE);
+            boolean notifyAll = sharedPreferences.getBoolean(InValues.send(R.string.notify_all),true);
+            if(notifyAll){
+                pushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATION_PLAY_SDK_ENABLE);
+            }else {
+                pushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATION_PLAY_SDK_DISABLE);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         //推送消息处理
         UmengMessageHandler msgHandler = new UmengMessageHandler() {
             @Override
             public Notification getNotification(Context context, UMessage uMessage) {
-                SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_notify_setup));
-                boolean notifyAll = sharedPreferences.getBoolean(InValues.send(R.string.notify_all),true);
-
                 String nowDate = MyDateClass.showNowDate();
                 Map<String,String> mapData = new HashMap<>();
                 for (Map.Entry entry : uMessage.extra.entrySet()) {

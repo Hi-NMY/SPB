@@ -16,6 +16,7 @@ public interface SpbModelBasicInter<T> {
     public static int DATAUSER_UPDATE_FOUR = 943;
     public static int DATAUSER_UPDATE_FIVE = 944;
     public static int DATAUSER_UPDATE_SIX = 945;
+    public static int DATAUSER_UPDATE_SEVEN = 946;
     public static int DATAUSER_DELETE_ONE = 950;
 
 
