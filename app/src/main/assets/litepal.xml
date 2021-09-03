@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <litepal>
     <dbname value="SPB"></dbname>
-    <version value="3"></version>
+    <version value="4"></version>
 
     <list>
         <mapping class="com.example.spb.entity.Notice"></mapping>
+        <mapping class="com.example.spb.entity.SchoolTable"></mapping>
     </list>
 </litepal>

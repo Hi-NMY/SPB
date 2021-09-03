@@ -18,14 +18,6 @@ import java.util.List;
 public class SetUpPrivacyPage extends BaseMVPActivity<ISetUpPrivacyPageAView, SetUpPrivacyPageAPresenterImpl> implements ISetUpPrivacyPageAView {
 
     private FragmentSpbAvtivityBar bar;
-    private Switch mSwitch1;
-    private Switch mSwitch2;
-    private Switch mSwitch3;
-    private Switch mSwitch4;
-    private Switch mSwitch5;
-    private Switch mSwitch6;
-    private Switch mSwitch7;
-    private Switch mSwitch8;
     private List<Switch> switches;
 
     @Override
@@ -44,14 +36,14 @@ public class SetUpPrivacyPage extends BaseMVPActivity<ISetUpPrivacyPageAView, Se
     @Override
     protected void initActView() {
         switches = new ArrayList<>();
-        mSwitch1 = (Switch) findViewById(R.id.switch1);
-        mSwitch2 = (Switch) findViewById(R.id.switch2);
-        mSwitch3 = (Switch) findViewById(R.id.switch3);
-        mSwitch4 = (Switch) findViewById(R.id.switch4);
-        mSwitch5 = (Switch) findViewById(R.id.switch5);
-        mSwitch6 = (Switch) findViewById(R.id.switch6);
-        mSwitch7 = (Switch) findViewById(R.id.switch7);
-        mSwitch8 = (Switch) findViewById(R.id.switch8);
+        Switch mSwitch1 = (Switch) findViewById(R.id.switch1);
+        Switch mSwitch2 = (Switch) findViewById(R.id.switch2);
+        Switch mSwitch3 = (Switch) findViewById(R.id.switch3);
+        Switch mSwitch4 = (Switch) findViewById(R.id.switch4);
+        Switch mSwitch5 = (Switch) findViewById(R.id.switch5);
+        Switch mSwitch6 = (Switch) findViewById(R.id.switch6);
+        Switch mSwitch7 = (Switch) findViewById(R.id.switch7);
+        Switch mSwitch8 = (Switch) findViewById(R.id.switch8);
         switches.add(mSwitch1);
         switches.add(mSwitch2);
         switches.add(mSwitch3);
@@ -92,10 +84,10 @@ public class SetUpPrivacyPage extends BaseMVPActivity<ISetUpPrivacyPageAView, Se
                         getDataUserMsgPresenter().setUser_privacy(mPresenter.getStringPrivacy());
                         break;
                     case ON_ERROR:
-                        if (switches.get((int)response).isChecked()){
-                            switches.get((int)response).setChecked(false);
+                        if (switches.get((Integer) response).isChecked()){
+                            switches.get((Integer)response).setChecked(false);
                         }else {
-                            switches.get((int)response).setChecked(true);
+                            switches.get((Integer)response).setChecked(true);
                         }
                         MyToastClass.ShowToast(MyApplication.getContext(),"错误，请重试");
                         break;

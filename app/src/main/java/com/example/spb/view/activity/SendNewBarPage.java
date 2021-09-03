@@ -277,7 +277,7 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
                         setSearchTopic();
                         break;
                     case RESPONSE_THREE:
-                        mCircleProgressbar.setProgress((float) response);
+                        mCircleProgressbar.setProgress((Float) response);
                         mVoiceTimeMath.setText(String.valueOf(Integer.valueOf(mVoiceTimeMath.getText().toString()) + 1));
                         mVoiceTimeMath.postInvalidate();
                         break;

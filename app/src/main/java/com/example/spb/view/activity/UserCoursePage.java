@@ -1,6 +1,7 @@
 package com.example.spb.view.activity;
 
 import android.os.Bundle;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.UserCoursePageAPresenterImpl;
@@ -8,10 +9,11 @@ import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.inter.IUserCoursePageAView;
 import com.gyf.immersionbar.ImmersionBar;
 
-public class UserCoursePage extends BaseMVPActivity<IUserCoursePageAView,UserCoursePageAPresenterImpl>
+public class UserCoursePage extends BaseMVPActivity<IUserCoursePageAView, UserCoursePageAPresenterImpl>
         implements IUserCoursePageAView {
 
     private FragmentSpbAvtivityBar bar;
+    private RecyclerView mSubjectList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +24,13 @@ public class UserCoursePage extends BaseMVPActivity<IUserCoursePageAView,UserCou
 
     @Override
     protected UserCoursePageAPresenterImpl createPresenter() {
-        return new UserCoursePageAPresenterImpl();
+        return new UserCoursePageAPresenterImpl(this);
     }
 
     @Override
     protected void initActView() {
+        mSubjectList = (RecyclerView) findViewById(R.id.subject_list);
+        initData();
         setActivityBar();
         setBar();
         setMyListener();
@@ -35,7 +39,7 @@ public class UserCoursePage extends BaseMVPActivity<IUserCoursePageAView,UserCou
 
     @Override
     protected void initData() {
-
+        mPresenter.obtainSubjectClass(mSubjectList);
     }
 
     @Override
@@ -86,7 +90,7 @@ public class UserCoursePage extends BaseMVPActivity<IUserCoursePageAView,UserCou
                 finish();
             }
         });
-        bar.barCentralTxt(TITLE,null);
+        bar.barCentralTxt(TITLE, null);
     }
 
     @Override

@@ -138,6 +138,7 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
             case 4:
                 fragmentTransaction.show(userPage);
                 PAGENUMBER = 4;
+                userPage.setAdapter();
                 SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_reUserPage_Datanum), 0, null);
                 break;
         }

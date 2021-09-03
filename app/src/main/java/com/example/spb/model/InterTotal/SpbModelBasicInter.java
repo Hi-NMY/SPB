@@ -10,6 +10,7 @@ public interface SpbModelBasicInter<T> {
     public static int FIRSTPAGE_THREE = 931;
     public static int FIRSTPAGE_FOUR = 932;
     public static int DATAUSER_SELECT_FOUR = 933;
+    public static int DATAUSER_SELECT_FIVE = 934;
     public static int DATAUSER_UPDATE_ONE = 940;
     public static int DATAUSER_UPDATE_TWO = 941;
     public static int DATAUSER_UPDATE_THREE = 942;

@@ -13,4 +13,13 @@
             android:name="com.example.spb.view.fragment.FragmentSpbAvtivityBar"
             android:layout_height="@dimen/spb_activity_bar_44"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/subject_list"
+            android:layout_marginTop="@dimen/margin_12"
+            android:layout_below="@id/usercourse_actbar"
+            android:layout_marginBottom="@dimen/margin_12"
+            android:layout_marginHorizontal="@dimen/margin_20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
 </RelativeLayout>

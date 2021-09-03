@@ -63,7 +63,6 @@ public class FollowFPresenterImpl extends BasePresenter<IFollowFView> implements
 
             @Override
             public void onError(int t) {
-
             }
         });
     }

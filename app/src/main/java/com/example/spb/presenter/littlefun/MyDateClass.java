@@ -145,6 +145,12 @@ public class MyDateClass {
         return nowTime;
     }
 
+    public static String showNowTime2(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+        String nowTime = simpleDateFormat.format(System.currentTimeMillis());
+        return nowTime;
+    }
+
     public static String showYearMonthDayAddOneDay(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
@@ -232,6 +238,28 @@ public class MyDateClass {
 
     public static Date stringToDate(String time){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = null;
+        try {
+            date = simpleDateFormat.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
+    public static Date stringToDate2(String time){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = simpleDateFormat.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
+    public static Date stringToTime(String time){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
         Date date = null;
         try {
             date = simpleDateFormat.parse(time);

@@ -28,6 +28,7 @@ import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MyDateClass;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.presenter.otherimpl.DataAttentionTopicPresenter;
+import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.Component.MySmartRefresh;
 import com.example.spb.view.fragment.topicbarpage.HotTopicBar;
@@ -285,7 +286,12 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
 
     @Override
     public <T> void response(T response, int responseFlag) {
-
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToastClass.ShowToast(MyApplication.getContext(),"huidiao");
+            }
+        });
     }
 
     @Override

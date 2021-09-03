@@ -115,8 +115,6 @@ public class TopicBarPageAPresenterImpl extends BasePresenter<ITopicBarPageAView
                         if (stopRefresh != null){
                             stopRefresh.stop();
                         }
-                    }else {
-
                     }
                 } catch (Exception e) {
 
@@ -125,7 +123,7 @@ public class TopicBarPageAPresenterImpl extends BasePresenter<ITopicBarPageAView
 
             @Override
             public void onError(int t) {
-
+                getView().response(null,0);
             }
         });
         barModel.selectData(barModel.DATABAR_SELECT_THREE, cacheBar, new MyCallBack() {

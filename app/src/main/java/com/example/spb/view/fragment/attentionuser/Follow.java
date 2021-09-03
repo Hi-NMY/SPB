@@ -15,6 +15,7 @@ import com.example.spb.presenter.impl.FollowFPresenterImpl;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.SpbBroadcast;
 import com.example.spb.view.Component.MySmartRefresh;
+import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.activity.AttentionUserPage;
 import com.example.spb.view.inter.IFollowFView;
 import com.example.spb.view.littlefun.MyListAnimation;

@@ -32,6 +32,7 @@ import java.util.List;
 
 public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, AttentionPageFPresenterImpl> implements IAttentionPageFView {
 
+
     private GifImageView mAttentionpageRefreshTgif;
     private RecyclerView mAttentionpageRecyclerview;
     private TextView mAttentionpageRefreshTip;
@@ -48,15 +49,15 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        homePage = (HomePage)getActivity();
+        homePage = (HomePage) getActivity();
         refreshFollowUserBar = new RefreshFollowUserBar();
         refreshThumb = new RefreshThumb();
         dataRefresh = new DataRefresh();
         refreshComment = new RefreshComment();
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment),refreshComment);
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_re_Follow),dataRefresh);
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_thumb),refreshThumb);
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_FollowUserBar),refreshFollowUserBar);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment), refreshComment);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_re_Follow), dataRefresh);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_thumb), refreshThumb);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_FollowUserBar), refreshFollowUserBar);
     }
 
     @Override
@@ -72,7 +73,7 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (homePage.getEasyVoice() != null){
+        if (homePage.getEasyVoice() != null) {
             homePage.getEasyVoice().stopPlayer();
             homePage.setEasyVoice(null);
             postBarAdapter.refreshNoewVoice(-1);
@@ -91,12 +92,12 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
 
     @Override
     protected void initFragView(View view) {
-        mAttentionpageRefreshTgif = (GifImageView)view.findViewById(R.id.attentionpage_refresh_tgif);
+        mAttentionpageRefreshTgif = (GifImageView) view.findViewById(R.id.attentionpage_refresh_tgif);
         mAttentionpageRecyclerview = (RecyclerView) view.findViewById(R.id.attentionpage_recyclerview);
-        mAttentionpageRefreshTip  = (TextView) view.findViewById(R.id.attentionpage_refresh_tip);
-        mAttentionpageRefreshBgif = (GifImageView)view.findViewById(R.id.attentionpage_refresh_bgif);
+        mAttentionpageRefreshTip = (TextView) view.findViewById(R.id.attentionpage_refresh_tip);
+        mAttentionpageRefreshBgif = (GifImageView) view.findViewById(R.id.attentionpage_refresh_bgif);
         mAttentionpageRefresh = (SmartRefreshLayout) view.findViewById(R.id.attentionpage_refresh);
-        mAttentionpageRecyclerview = MyListAnimation.setListAnimation(homePage,mAttentionpageRecyclerview);
+        mAttentionpageRecyclerview = MyListAnimation.setListAnimation(homePage, mAttentionpageRecyclerview);
         createRefresh();
     }
 
@@ -104,7 +105,7 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
     protected void initData() {
         postBarAdapter = new PostBarAdapter(homePage, homePage.getDataPostBarPresenter().followbars);
         mAttentionpageRecyclerview.setAdapter(postBarAdapter);
-        ((DefaultItemAnimator)mAttentionpageRecyclerview.getItemAnimator()).setSupportsChangeAnimations(false);
+        ((DefaultItemAnimator) mAttentionpageRecyclerview.getItemAnimator()).setSupportsChangeAnimations(false);
         mAttentionpageRecyclerview.startLayoutAnimation();
     }
 
@@ -140,11 +141,11 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
 
     @Override
     public void createRefresh() {
-        mySmartRefresh = new MySmartRefresh(mAttentionpageRefresh,mAttentionpageRefreshTgif,mAttentionpageRefreshBgif);
+        mySmartRefresh = new MySmartRefresh(mAttentionpageRefresh, mAttentionpageRefreshTgif, mAttentionpageRefreshBgif);
         mySmartRefresh.setMyRefreshListener(new MySmartRefresh.MyRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                if (homePage.getEasyVoice() != null){
+                if (homePage.getEasyVoice() != null) {
                     homePage.getEasyVoice().stopPlayer();
                     postBarAdapter.refreshNoewVoice(-1);
                 }
@@ -153,7 +154,7 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if (homePage.getEasyVoice() != null){
+                if (homePage.getEasyVoice() != null) {
                     homePage.getEasyVoice().stopPlayer();
                     postBarAdapter.refreshNoewVoice(-1);
                 }
@@ -164,10 +165,10 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
 
     @Override
     public void finishRRefresh(int num) {
-        switch (num){
+        switch (num) {
             case FINISH_REFRESH:
                 mySmartRefresh.finishMyRefresh();
-                RefreshTipAnima.tipAnimation(mAttentionpageRefreshTip,0);
+                RefreshTipAnima.tipAnimation(mAttentionpageRefreshTip, 0);
                 break;
             case FINISH_MORE:
                 mySmartRefresh.finishMyLoadMore();
@@ -184,23 +185,23 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
         SpbBroadcast.destroyBrc(refreshComment);
     }
 
-    class RefreshThumb extends BroadcastReceiver{
+    class RefreshThumb extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int a = intent.getIntExtra("key_one",0);
+            int a = intent.getIntExtra("key_one", 0);
             String pbId = intent.getStringExtra("key_two");
-            postBarAdapter.refreshLikeItem(a,pbId);
+            postBarAdapter.refreshLikeItem(a, pbId);
         }
     }
 
-    class RefreshComment extends BroadcastReceiver{
+    class RefreshComment extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int a = intent.getIntExtra("key_one",-1);
+            int a = intent.getIntExtra("key_one", -1);
             String num = intent.getStringExtra("key_two");
-            switch (a){
+            switch (a) {
                 case 0:
-                    List<Comment> comments = (List<Comment>)intent.getSerializableExtra("key_three");
+                    List<Comment> comments = (List<Comment>) intent.getSerializableExtra("key_three");
                     postBarAdapter.refreshNowCommentItem(comments.size());
                     break;
                 case 1:
@@ -210,14 +211,14 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
         }
     }
 
-    class RefreshFollowUserBar extends BroadcastReceiver{
+    class RefreshFollowUserBar extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int a = intent.getIntExtra("key_one",0);
+            int a = intent.getIntExtra("key_one", 0);
             List<Bar> moreBars = (List<Bar>) intent.getSerializableExtra("key_two");
-            switch (a){
+            switch (a) {
                 case 1:
-                    if (postBarAdapter != null){
+                    if (postBarAdapter != null) {
                         postBarAdapter.addMorePostBar(moreBars);
                     }
                     finishRRefresh(FINISH_MORE);
@@ -230,7 +231,7 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
         }
     }
 
-    class DataRefresh extends BroadcastReceiver{
+    class DataRefresh extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             homePage.getDataPostBarPresenter().obtainFollowUserBar(true);

@@ -31,6 +31,8 @@ public abstract class SpbModelAbstrate {
                 }
                 if (e instanceof ConnectException) {
                     callBack.onError(MyCallBack.ERROR_CONNECTION);
+                }else {
+                    callBack.onError(-1);
                 }
                 clearBody();
             }

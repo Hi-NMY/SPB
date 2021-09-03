@@ -2,6 +2,7 @@ package com.example.spb.presenter.otherimpl;
 
 import android.content.SharedPreferences;
 import com.example.spb.R;
+import com.example.spb.entity.SchoolTable;
 import com.example.spb.entity.User;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
 import com.example.spb.model.impl.UserModelImpl;
@@ -9,10 +10,13 @@ import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.littlefun.InValues;
 import com.example.spb.presenter.littlefun.MySharedPreferences;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
+import org.litepal.LitePal;
 
 import java.io.IOException;
+import java.util.List;
 
 public class DataUserMsgPresenter {
 
@@ -59,6 +63,7 @@ public class DataUserMsgPresenter {
                             user.setStu_sex(user1.getStu_sex());
                             user.setStu_name(user1.getStu_name());
                             setUserMsg(user);
+                            obtainUserSubject();
                             break;
                         default:
                             break;
@@ -118,6 +123,7 @@ public class DataUserMsgPresenter {
         editor.putString(InValues.send(R.string.user_home),updateUserMsg.getUser_home());
         editor.putString(InValues.send(R.string.user_name),updateUserMsg.getUser_name());
         editor.putString(InValues.send(R.string.user_profile),updateUserMsg.getUser_profile());
+        editor.apply();
     }
 
     public String getUser_account() {
@@ -261,6 +267,27 @@ public class DataUserMsgPresenter {
         editor.putString(InValues.send(R.string.stu_sex),stu_sex);
         editor.apply();
         this.stu_sex = stu_sex;
+    }
+
+    public void obtainUserSubject(){
+        userModel.selectData(userModel.DATAUSER_SELECT_FIVE, null, new MyCallBack() {
+            @Override
+            public void onSuccess(@NotNull Response response) throws IOException {
+                String a = response.body().string();
+                if (Integer.valueOf(a.substring(0,3)) == 200){
+                    List<SchoolTable> schoolTables = new Gson().fromJson(a.substring(3),new TypeToken<List<SchoolTable>>(){}.getType());
+                    LitePal.deleteAll(SchoolTable.class);
+                    for (SchoolTable s : schoolTables){
+                        s.save();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(int t) {
+
+            }
+        });
     }
 
     interface OnReturn{

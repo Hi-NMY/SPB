@@ -19,7 +19,7 @@ public abstract class BaseMVPFragment<V,T extends BasePresenter<V>> extends Frag
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        myView = View.inflate(getActivity(),getLayoutViewId(),null);
+        myView = inflater.inflate(getLayoutViewId(),container,false);
 
         mPresenter = createPresenter();
 

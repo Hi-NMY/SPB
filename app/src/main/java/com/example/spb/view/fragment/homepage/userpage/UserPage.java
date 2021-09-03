@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.MediaStoreSignature;
 import com.example.spb.R;
@@ -56,6 +57,8 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
     private AssistCard assistCard;
     private RelativeLayout mUserPageSubject;
     private RelativeLayout mUserPageDayactive;
+    private TextView mSubjectTip;
+    private RecyclerView mSubjectList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,7 +79,7 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
 
     @Override
     protected UserPageFPresenterImpl createPresenter() {
-        return new UserPageFPresenterImpl();
+        return new UserPageFPresenterImpl(getActivity());
     }
 
     @Override
@@ -107,6 +110,8 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
         mR4 = (RelativeLayout) view.findViewById(R.id.r4);
         mUserPageSubject = (RelativeLayout) view.findViewById(R.id.user_page_subject);
         mUserPageDayactive = (RelativeLayout) view.findViewById(R.id.user_page_dayactive);
+        mSubjectTip = (TextView) view.findViewById(R.id.subject_tip);
+        mSubjectList = (RecyclerView) view.findViewById(R.id.subject_list);
         createDialog();
         setMyListener();
     }
@@ -145,22 +150,38 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
         mUserPageUseronlineday.postInvalidate();
     }
 
-    private void viewMyCard(){
+    private void viewMyCard() {
         mPresenter.obtainMyCard(new UserPageFPresenterImpl.OnCardReturn() {
             @Override
             public void onReturn(boolean classKey, boolean activeKey) {
-                if (!classKey){
+                if (!classKey) {
                     mUserPageSubject.setVisibility(View.GONE);
-                }else {
+                } else {
                     mUserPageSubject.setVisibility(View.VISIBLE);
+                    mPresenter.obtainSubjectClass(new UserPageFPresenterImpl.OnClassReturn() {
+                        @Override
+                        public void onReturn(boolean key) {
+                            if (key){
+                                mSubjectTip.setVisibility(View.GONE);
+                                mSubjectList.setVisibility(View.VISIBLE);
+                            }else {
+                                mSubjectTip.setVisibility(View.VISIBLE);
+                                mSubjectList.setVisibility(View.GONE);
+                            }
+                        }
+                    },mSubjectList);
                 }
-                if (!activeKey){
+                if (!activeKey) {
                     mUserPageDayactive.setVisibility(View.GONE);
-                }else {
+                } else {
                     mUserPageDayactive.setVisibility(View.VISIBLE);
                 }
             }
         });
+    }
+
+    public void setAdapter(){
+        mPresenter.setClassAdapter(mSubjectList);
     }
 
     @Override
@@ -311,6 +332,7 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
                 }
             });
             //获取收藏数量
+
         }
     }
 
