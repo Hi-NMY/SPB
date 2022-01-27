@@ -30,6 +30,7 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
 
     public static EasyVoice easyVoice;
 
+    @SuppressWarnings("all")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
