@@ -20,13 +20,13 @@ import com.example.spb.entity.Bar;
 import com.example.spb.entity.Topic;
 import com.example.spb.entity.User;
 import com.example.spb.presenter.impl.AllSearchPageAPresenterImpl;
-import com.example.spb.presenter.littlefun.RemoveNullCharacter;
+import com.example.spb.presenter.utils.RemoveNullCharacter;
 import com.example.spb.view.Component.EasyDialog;
 import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.inter.IAllSearchPageAView;
-import com.example.spb.view.littlefun.HideKeyboard;
+import com.example.spb.view.utils.HideKeyboard;
 import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.List;

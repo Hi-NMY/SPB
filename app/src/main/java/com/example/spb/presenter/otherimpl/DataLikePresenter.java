@@ -1,18 +1,12 @@
 package com.example.spb.presenter.otherimpl;
 
-import android.util.Log;
 import com.example.spb.R;
-import com.example.spb.app.MyApplication;
 import com.example.spb.entity.*;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
 import com.example.spb.model.impl.BarModelImpl;
-import com.example.spb.model.impl.FollowModelImpl;
 import com.example.spb.model.impl.LikeModelImpl;
-import com.example.spb.model.impl.UserModelImpl;
 import com.example.spb.presenter.callback.MyCallBack;
-import com.example.spb.presenter.littlefun.InValues;
-import com.example.spb.view.Component.MyToastClass;
-import com.example.spb.xserver.AndroidNotification;
+import com.example.spb.presenter.utils.InValues;
 import com.example.spb.xserver.AndroidUnicast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

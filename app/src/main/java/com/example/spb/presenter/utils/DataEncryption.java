@@ -1,4 +1,4 @@
-package com.example.spb.presenter.littlefun;
+package com.example.spb.presenter.utils;
 
 import com.example.spb.misc.BASE64Decoder;
 import com.example.spb.misc.BASE64Encoder;

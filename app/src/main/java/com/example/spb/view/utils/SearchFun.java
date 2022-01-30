@@ -1,9 +1,9 @@
-package com.example.spb.view.littlefun;
+package com.example.spb.view.utils;
 
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
-import com.example.spb.presenter.littlefun.RemoveNullCharacter;
+import com.example.spb.presenter.utils.RemoveNullCharacter;
 
 public class SearchFun {
 

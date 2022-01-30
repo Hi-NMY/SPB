@@ -8,14 +8,13 @@ import com.example.spb.R;
 import com.example.spb.adapter.SubjectClassAdapter;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BasePresenter;
-import com.example.spb.entity.Notice;
 import com.example.spb.entity.SchoolTable;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
 import com.example.spb.model.impl.BarModelImpl;
 import com.example.spb.presenter.inter.IUserPageFPresenter;
-import com.example.spb.presenter.littlefun.InValues;
-import com.example.spb.presenter.littlefun.MyDateClass;
-import com.example.spb.presenter.littlefun.MySharedPreferences;
+import com.example.spb.presenter.utils.InValues;
+import com.example.spb.presenter.utils.MyDateClass;
+import com.example.spb.presenter.utils.MySharedPreferences;
 import com.example.spb.view.inter.IUserPageFView;
 import org.litepal.LitePal;
 

@@ -7,9 +7,9 @@ import com.example.spb.entity.User;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
 import com.example.spb.model.impl.UserModelImpl;
 import com.example.spb.presenter.inter.ISetUpPageAPresenter;
-import com.example.spb.presenter.littlefun.InValues;
-import com.example.spb.presenter.littlefun.MySharedPreferences;
-import com.example.spb.presenter.littlefun.Task;
+import com.example.spb.presenter.utils.InValues;
+import com.example.spb.presenter.utils.MySharedPreferences;
+import com.example.spb.presenter.utils.Task;
 import com.example.spb.view.inter.ISetUpPageAView;
 import io.rong.imkit.RongIM;
 

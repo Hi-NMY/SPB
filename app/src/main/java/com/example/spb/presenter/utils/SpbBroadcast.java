@@ -1,4 +1,4 @@
-package com.example.spb.presenter.littlefun;
+package com.example.spb.presenter.utils;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class SpbBroadcast {
 

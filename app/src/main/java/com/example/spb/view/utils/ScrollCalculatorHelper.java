@@ -1,4 +1,4 @@
-package com.example.spb.view.littlefun;
+package com.example.spb.view.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 import com.shuyu.gsyvideoplayer.utils.NetworkUtils;
-import com.shuyu.gsyvideoplayer.video.GSYSampleADVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
 

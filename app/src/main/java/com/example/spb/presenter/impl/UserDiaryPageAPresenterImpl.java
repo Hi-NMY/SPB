@@ -7,8 +7,7 @@ import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.base.BasePresenter;
 import com.example.spb.entity.Diary;
 import com.example.spb.presenter.inter.IUserDiaryPageAPresenter;
-import com.example.spb.presenter.littlefun.MyDateClass;
-import com.example.spb.view.activity.UserDiaryPage;
+import com.example.spb.presenter.utils.MyDateClass;
 import com.example.spb.view.inter.IUserDiaryPageAView;
 import com.luck.picture.lib.entity.LocalMedia;
 

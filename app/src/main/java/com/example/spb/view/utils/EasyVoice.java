@@ -1,7 +1,6 @@
-package com.example.spb.view.littlefun;
+package com.example.spb.view.utils;
 
 import android.media.MediaPlayer;
-import com.example.spb.presenter.impl.SendNewBarPageAPresenterImpl;
 
 import java.io.IOException;
 

@@ -3,8 +3,8 @@ package com.example.spb.xserver;
 
 import android.content.SharedPreferences;
 import com.example.spb.R;
-import com.example.spb.presenter.littlefun.InValues;
-import com.example.spb.presenter.littlefun.MySharedPreferences;
+import com.example.spb.presenter.utils.InValues;
+import com.example.spb.presenter.utils.MySharedPreferences;
 
 public class AndroidUnicast extends AndroidNotification {
 

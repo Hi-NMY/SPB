@@ -1,15 +1,13 @@
 package com.example.spb.presenter.otherimpl;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
 import com.example.spb.R;
-import com.example.spb.adapter.NoticeAdapter;
 import com.example.spb.app.MyApplication;
 import com.example.spb.entity.Notice;
-import com.example.spb.presenter.littlefun.InValues;
-import com.example.spb.presenter.littlefun.MySharedPreferences;
-import com.example.spb.presenter.littlefun.SpbBroadcast;
+import com.example.spb.presenter.utils.InValues;
+import com.example.spb.presenter.utils.MySharedPreferences;
+import com.example.spb.presenter.utils.SpbBroadcast;
 import org.litepal.LitePal;
 
 import java.util.List;

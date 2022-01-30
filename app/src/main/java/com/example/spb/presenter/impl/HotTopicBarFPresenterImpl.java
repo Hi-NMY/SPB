@@ -1,6 +1,5 @@
 package com.example.spb.presenter.impl;
 
-import android.app.Activity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.R;
@@ -12,8 +11,8 @@ import com.example.spb.model.InterTotal.SpbModelBasicInter;
 import com.example.spb.model.impl.BarModelImpl;
 import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.inter.IHotTopicBarFPresenter;
-import com.example.spb.presenter.littlefun.InValues;
-import com.example.spb.presenter.littlefun.SpbBroadcast;
+import com.example.spb.presenter.utils.InValues;
+import com.example.spb.presenter.utils.SpbBroadcast;
 import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.activity.TopicBarPage;
 import com.example.spb.view.inter.IHotTopicBarFView;

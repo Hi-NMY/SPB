@@ -96,7 +96,7 @@ public interface SpbModelBasicInter<T> {
 
     public static int DATASIGN_ADD_ONE = 1110;
     public static int DATASIGN_SELECT_ONE = 1120;
-    public static int DATASIGN_SELECT_TWO = 1121;
+    public static int  DATASIGN_SELECT_TWO = 1121;
     public static int DATASIGN_UPDATE_ONE = 1130;
     public static int DATASIGN_UPDATE_TWO = 1131;
     public static int DATASIGN_UPDATE_THREE = 1132;

@@ -1,4 +1,4 @@
-package com.example.spb.view.littlefun;
+package com.example.spb.view.utils;
 
 import pl.droidsonroids.gif.*;
 

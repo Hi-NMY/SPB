@@ -5,11 +5,11 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.spb.R;
-import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.utils.InValues;
 import com.example.spb.presenter.otherimpl.*;
 import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
-import com.example.spb.view.littlefun.EasyVoice;
-import com.example.spb.view.littlefun.GIFShow;
+import com.example.spb.view.utils.EasyVoice;
+import com.example.spb.view.utils.GIFShow;
 
 public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppCompatActivity {
 

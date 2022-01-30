@@ -1,13 +1,9 @@
-package com.example.spb.view.littlefun;
+package com.example.spb.view.utils;
 
 import android.app.Activity;
-import android.graphics.Rect;
-import android.view.View;
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.entity.ImageDouble;
-import com.example.spb.presenter.littlefun.MyResolve;
+import com.example.spb.presenter.utils.MyResolve;
 
 import java.util.List;
 

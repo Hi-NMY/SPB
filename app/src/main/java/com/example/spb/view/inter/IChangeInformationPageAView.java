@@ -1,10 +1,8 @@
 package com.example.spb.view.inter;
 
-import com.example.spb.presenter.littlefun.MyDateClass;
 import com.example.spb.view.InterTotal.SpbInterOne;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 public interface IChangeInformationPageAView extends SpbInterOne {

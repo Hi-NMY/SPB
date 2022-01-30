@@ -2,7 +2,6 @@ package com.example.spb.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +13,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.MediaStoreSignature;
 import com.example.spb.R;
 import com.example.spb.entity.User;
-import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.utils.InValues;
 import com.example.spb.view.activity.PersonalSpacePage;
-import com.example.spb.view.littlefun.JumpIntent;
+import com.example.spb.view.utils.JumpIntent;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;

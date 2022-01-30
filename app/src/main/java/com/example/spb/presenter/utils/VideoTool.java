@@ -1,11 +1,10 @@
-package com.example.spb.presenter.littlefun;
+package com.example.spb.presenter.utils;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.view.View;

@@ -1,12 +1,9 @@
 package com.example.spb.presenter.otherimpl;
 
-import com.example.spb.entity.Diary;
 import com.example.spb.entity.Followed;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
-import com.example.spb.model.impl.DiaryModelImpl;
 import com.example.spb.model.impl.FollowedModelImpl;
 import com.example.spb.presenter.callback.MyCallBack;
-import com.example.spb.presenter.littlefun.MyDateClass;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import okhttp3.Response;

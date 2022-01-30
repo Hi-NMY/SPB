@@ -11,9 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.entity.LocationGps;
-import com.example.spb.presenter.littlefun.InValues;
-import com.example.spb.presenter.littlefun.SpbBroadcast;
-import com.example.spb.view.Component.MyToastClass;
+import com.example.spb.presenter.utils.InValues;
+import com.example.spb.presenter.utils.SpbBroadcast;
 
 import java.util.List;
 

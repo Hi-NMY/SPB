@@ -17,17 +17,15 @@ import com.example.spb.model.InterTotal.SpbModelBasicInter;
 import com.example.spb.model.impl.BarModelImpl;
 import com.example.spb.model.impl.CollectBarModelImpl;
 import com.example.spb.presenter.callback.MyCallBack;
-import com.example.spb.presenter.littlefun.InValues;
-import com.example.spb.presenter.littlefun.MySharedPreferences;
-import com.example.spb.presenter.littlefun.SpbBroadcast;
-import com.example.spb.view.activity.HomePage;
+import com.example.spb.presenter.utils.InValues;
+import com.example.spb.presenter.utils.MySharedPreferences;
+import com.example.spb.presenter.utils.SpbBroadcast;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.io.Serializable;
 
 public class BarMoreOperateDialog extends ComponentDialog {
 

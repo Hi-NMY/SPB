@@ -13,11 +13,11 @@ import com.bumptech.glide.Glide;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.entity.Topic;
-import com.example.spb.presenter.littlefun.InValues;
-import com.example.spb.presenter.littlefun.Task;
+import com.example.spb.presenter.utils.InValues;
+import com.example.spb.presenter.utils.Task;
 import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.activity.TopicBarPage;
-import com.example.spb.view.littlefun.JumpIntent;
+import com.example.spb.view.utils.JumpIntent;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;

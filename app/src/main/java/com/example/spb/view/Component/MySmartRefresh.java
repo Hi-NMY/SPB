@@ -1,7 +1,7 @@
 package com.example.spb.view.Component;
 
 import androidx.annotation.NonNull;
-import com.example.spb.view.littlefun.GIFShow;
+import com.example.spb.view.utils.GIFShow;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;

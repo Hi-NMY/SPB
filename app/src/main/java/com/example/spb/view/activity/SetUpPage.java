@@ -11,7 +11,7 @@ import com.example.spb.presenter.impl.SetUpPageAPresenterImpl;
 import com.example.spb.view.Component.AppVersion;
 import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.inter.ISetUpPageAView;
-import com.example.spb.view.littlefun.JumpIntent;
+import com.example.spb.view.utils.JumpIntent;
 import com.example.spb.xserver.ObtainVersion;
 import com.gyf.immersionbar.ImmersionBar;
 

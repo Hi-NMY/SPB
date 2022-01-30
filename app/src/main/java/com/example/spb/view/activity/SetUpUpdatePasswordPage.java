@@ -14,7 +14,7 @@ import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.SetUpUpdatePasswordPageAPresenterImpl;
-import com.example.spb.presenter.littlefun.RemoveNullCharacter;
+import com.example.spb.presenter.utils.RemoveNullCharacter;
 import com.example.spb.view.Component.EasyDialog;
 import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.InterComponent.DialogInter;

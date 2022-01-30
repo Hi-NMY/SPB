@@ -1,4 +1,4 @@
-package com.example.spb.view.littlefun;
+package com.example.spb.view.utils;
 
 import android.content.Context;
 import android.graphics.Typeface;

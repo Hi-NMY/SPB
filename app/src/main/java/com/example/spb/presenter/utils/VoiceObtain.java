@@ -1,4 +1,4 @@
-package com.example.spb.presenter.littlefun;
+package com.example.spb.presenter.utils;
 
 import android.media.MediaRecorder;
 import android.net.Uri;

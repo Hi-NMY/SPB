@@ -1,7 +1,6 @@
-package com.example.spb.view.littlefun;
+package com.example.spb.view.utils;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import com.example.spb.app.MyApplication;
 

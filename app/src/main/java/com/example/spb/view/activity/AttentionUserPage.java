@@ -18,7 +18,7 @@ import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.fragment.attentionuser.Follow;
 import com.example.spb.view.fragment.attentionuser.Followed;
 import com.example.spb.view.inter.IAttentionUserPageAView;
-import com.example.spb.view.littlefun.ScaleTransitionPagerTitleView;
+import com.example.spb.view.utils.ScaleTransitionPagerTitleView;
 import com.gyf.immersionbar.ImmersionBar;
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;

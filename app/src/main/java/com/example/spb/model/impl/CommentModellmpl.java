@@ -5,7 +5,7 @@ import com.example.spb.entity.Comment;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
 import com.example.spb.model.SpbAbstract.SpbModelAbstrate;
 import com.example.spb.presenter.callback.MyCallBack;
-import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.utils.InValues;
 import okhttp3.FormBody;
 
 public class CommentModellmpl extends SpbModelAbstrate implements SpbModelBasicInter<Comment> {

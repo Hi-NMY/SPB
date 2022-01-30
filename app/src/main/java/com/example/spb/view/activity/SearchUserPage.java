@@ -11,13 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.SearchUserPageAPresenterImpl;
-import com.example.spb.presenter.littlefun.RemoveNullCharacter;
+import com.example.spb.presenter.utils.RemoveNullCharacter;
 import com.example.spb.view.Component.EasyDialog;
 import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.inter.ISearchUserPageAView;
-import com.example.spb.view.littlefun.HideKeyboard;
-import com.example.spb.view.littlefun.MyListAnimation;
+import com.example.spb.view.utils.HideKeyboard;
+import com.example.spb.view.utils.MyListAnimation;
 import com.gyf.immersionbar.ImmersionBar;
 
 public class SearchUserPage extends BaseMVPActivity<ISearchUserPageAView, SearchUserPageAPresenterImpl> implements ISearchUserPageAView {

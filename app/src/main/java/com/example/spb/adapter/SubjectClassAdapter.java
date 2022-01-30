@@ -1,7 +1,6 @@
 package com.example.spb.adapter;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.entity.SchoolTable;
-import com.example.spb.presenter.littlefun.MyDateClass;
+import com.example.spb.presenter.utils.MyDateClass;
 
 import java.util.Date;
 import java.util.List;

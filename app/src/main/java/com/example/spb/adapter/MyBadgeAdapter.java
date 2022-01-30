@@ -10,12 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.MediaStoreSignature;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
-import com.example.spb.presenter.littlefun.InValues;
-import com.example.spb.presenter.littlefun.SpbBroadcast;
+import com.example.spb.presenter.utils.InValues;
+import com.example.spb.presenter.utils.SpbBroadcast;
 
 import java.util.List;
 

@@ -1,10 +1,6 @@
 package com.example.spb.xserver;
 
-import android.content.SharedPreferences;
 import android.util.Log;
-import com.example.spb.R;
-import com.example.spb.presenter.littlefun.InValues;
-import com.example.spb.presenter.littlefun.MySharedPreferences;
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
 import java.io.IOException;

@@ -22,17 +22,17 @@ import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.entity.User;
 import com.example.spb.presenter.impl.FirstPageAPresenterImpl;
-import com.example.spb.presenter.littlefun.RemoveNullCharacter;
+import com.example.spb.presenter.utils.RemoveNullCharacter;
 import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.Component.EasyDialog;
 import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;
 import com.example.spb.view.inter.IFirstPageAView;
-import com.example.spb.view.littlefun.HideKeyboard;
-import com.example.spb.view.littlefun.JumpIntent;
+import com.example.spb.view.utils.HideKeyboard;
+import com.example.spb.view.utils.JumpIntent;
 import com.example.spb.view.Component.MyToastClass;
-import com.example.spb.presenter.littlefun.RequestForAccess;
+import com.example.spb.presenter.utils.RequestForAccess;
 import com.gyf.immersionbar.ImmersionBar;
 
 public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresenterImpl> implements IFirstPageAView, View.OnClickListener {

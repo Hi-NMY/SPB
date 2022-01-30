@@ -5,7 +5,6 @@ import com.example.spb.model.InterTotal.SpbModelBasicInter;
 import com.example.spb.model.impl.AttentionTopicModelImpl;
 import com.example.spb.model.impl.TopicModelImpl;
 import com.example.spb.presenter.callback.MyCallBack;
-import com.example.spb.presenter.littlefun.MyDateClass;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import okhttp3.Response;
@@ -13,26 +12,24 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class DataAttentionTopicPresenter {
 
-    private static int SUCCESS = 200;
+    private static final int SUCCESS = 200;
 
-    private SpbModelBasicInter attentionTopicModel;
-    private SpbModelBasicInter topicModel;
+    private final SpbModelBasicInter<Topic> attentionTopicModel;
+    private final SpbModelBasicInter<Topic> topicModel;
     public static List<Topic> attentionTopicList;
     public static List<Topic> topics;
     public static List<Integer> attentionNum;
     private int topicId = 0;
     private static String account;
     private String a;
-    private Gson gson;
+    private final Gson gson;
 
-    public DataAttentionTopicPresenter(String user_account) {
-        account = user_account;
+    public DataAttentionTopicPresenter(String userAccount) {
+        account = userAccount;
         attentionNum = new ArrayList<>();
         attentionTopicModel = new AttentionTopicModelImpl();
         topicModel = new TopicModelImpl();
@@ -49,7 +46,7 @@ public class DataAttentionTopicPresenter {
             public void onSuccess(@NotNull Response response) {
                 try {
                     a = response.body().string();
-                    if (Integer.valueOf(a.substring(0,3)) == SUCCESS){
+                    if (Integer.parseInt(a.substring(0,3)) == SUCCESS){
                         attentionTopicList = gson.fromJson(a.substring(3),new TypeToken<List<Topic>>()
                         {}.getType());
                         if (attentionTopicList != null && attentionTopicList.size() != 0){
@@ -61,10 +58,8 @@ public class DataAttentionTopicPresenter {
                         if (returnTopic != null){
                             returnTopic.onReturn();
                         }
-                    }else {
-
                     }
-                } catch (Exception e) {
+                } catch (Exception ignored) {
 
                 }
             }
@@ -82,16 +77,14 @@ public class DataAttentionTopicPresenter {
             public void onSuccess(@NotNull Response response) {
                 try {
                     a = response.body().string();
-                    if (Integer.valueOf(a.substring(0,3)) == SUCCESS){
+                    if (Integer.parseInt(a.substring(0,3)) == SUCCESS){
                         topics = gson.fromJson(a.substring(3),new TypeToken<List<Topic>>()
                         {}.getType());
                         if (hotTopic != null){
                             hotTopic.onReturn();
                         }
-                    }else {
-
                     }
-                } catch (Exception e) {
+                } catch (Exception ignored) {
 
                 }
             }
@@ -104,12 +97,12 @@ public class DataAttentionTopicPresenter {
 
     public void addAttentionTopic(Topic topic,Topic t,ReturnTopic returnTopic){
         topicId = t.getId();
-        attentionTopicModel.addData(attentionTopicModel.DATAATTENTIONTOPIC_ADD_ONE, t, new MyCallBack() {
+        attentionTopicModel.addData(SpbModelBasicInter.DATAATTENTIONTOPIC_ADD_ONE, t, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
                 try {
                     String a = response.body().string();
-                    if (a.equals("200")) {
+                    if ("200".equals(a)) {
                         if (topicId != 0){
                             attentionNum.add(topicId);
                             attentionTopicList.add(0,topic);
@@ -128,17 +121,17 @@ public class DataAttentionTopicPresenter {
         });
         Topic c = t;
         c.setTopic_slogan("true");
-        topicModel.updateData(topicModel.DATATOPIC_UPDATE_ONE, c,null);
+        topicModel.updateData(SpbModelBasicInter.DATATOPIC_UPDATE_ONE, c,null);
     }
 
     public void removeAttentionTopic(Topic topic,ReturnTopic returnTopic){
         topicId = topic.getId();
-        attentionTopicModel.deleteData(attentionTopicModel.DATAATTENTIONTOPIC_DELETE_ONE, topic, new MyCallBack() {
+        attentionTopicModel.deleteData(SpbModelBasicInter.DATAATTENTIONTOPIC_DELETE_ONE, topic, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
                 try {
                     String a = response.body().string();
-                    if (a.equals("200")){
+                    if ("200".equals(a)){
                         attentionNum.removeIf(attentionNum -> attentionNum == topicId);
                         attentionTopicList.removeIf(attentionTopicList -> attentionTopicList.getId() == topicId);
                         returnTopic.onReturn();
@@ -155,15 +148,11 @@ public class DataAttentionTopicPresenter {
         });
         Topic c = topic;
         c.setTopic_slogan("false");
-        topicModel.updateData(topicModel.DATATOPIC_UPDATE_ONE, c,null);
+        topicModel.updateData(SpbModelBasicInter.DATATOPIC_UPDATE_ONE, c,null);
     }
 
     public boolean determineAttention(int id){
-        if (attentionNum != null && attentionNum.stream().anyMatch(attentionNum -> attentionNum.equals(id))){
-            return true;
-        }else {
-            return false;
-        }
+        return attentionNum != null && attentionNum.stream().anyMatch(attentionNum -> attentionNum.equals(id));
     }
 
     public Topic determineTopic(Topic t){

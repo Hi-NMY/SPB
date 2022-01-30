@@ -16,7 +16,7 @@ import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.Component.MySmartRefresh;
 import com.example.spb.view.inter.INoticePageAView;
-import com.example.spb.view.littlefun.MyListAnimation;
+import com.example.spb.view.utils.MyListAnimation;
 import com.gyf.immersionbar.ImmersionBar;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;

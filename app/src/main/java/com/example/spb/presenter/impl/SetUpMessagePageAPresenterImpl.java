@@ -4,8 +4,8 @@ import android.content.SharedPreferences;
 import com.example.spb.R;
 import com.example.spb.base.BasePresenter;
 import com.example.spb.presenter.inter.ISetUpMessagePageAPresenter;
-import com.example.spb.presenter.littlefun.InValues;
-import com.example.spb.presenter.littlefun.MySharedPreferences;
+import com.example.spb.presenter.utils.InValues;
+import com.example.spb.presenter.utils.MySharedPreferences;
 import com.example.spb.view.inter.ISetUpMessagePageAView;
 
 public class SetUpMessagePageAPresenterImpl extends BasePresenter<ISetUpMessagePageAView> implements ISetUpMessagePageAPresenter {

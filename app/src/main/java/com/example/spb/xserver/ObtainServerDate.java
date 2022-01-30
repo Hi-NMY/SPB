@@ -1,7 +1,7 @@
 package com.example.spb.xserver;
 
 import com.example.spb.R;
-import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.utils.InValues;
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
 

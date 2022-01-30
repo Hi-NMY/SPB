@@ -1,12 +1,11 @@
 package com.example.spb.model.impl;
 
 import com.example.spb.R;
-import com.example.spb.app.MyApplication;
 import com.example.spb.entity.User;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
 import com.example.spb.model.SpbAbstract.SpbModelAbstrate;
 import com.example.spb.presenter.callback.MyCallBack;
-import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.utils.InValues;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;

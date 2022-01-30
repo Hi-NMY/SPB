@@ -10,18 +10,15 @@ import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.EnterPageAPresenterImpl;
-import com.example.spb.presenter.littlefun.InValues;
+import com.example.spb.presenter.utils.InValues;
 import com.example.spb.view.inter.IEnterPageAView;
-import com.example.spb.view.littlefun.GlideRoundTransform;
-import com.example.spb.view.littlefun.JumpIntent;
+import com.example.spb.view.utils.GlideRoundTransform;
+import com.example.spb.view.utils.JumpIntent;
 import com.gyf.immersionbar.ImmersionBar;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
 import org.litepal.LitePal;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class EnterPage extends BaseMVPActivity<IEnterPageAView, EnterPageAPresenterImpl> implements IEnterPageAView {
 

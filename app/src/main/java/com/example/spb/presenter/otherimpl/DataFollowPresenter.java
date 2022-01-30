@@ -2,16 +2,12 @@ package com.example.spb.presenter.otherimpl;
 
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
-import com.example.spb.entity.Diary;
 import com.example.spb.entity.Follow;
-import com.example.spb.entity.Followed;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
 import com.example.spb.model.impl.FollowModelImpl;
-import com.example.spb.model.impl.FollowedModelImpl;
 import com.example.spb.presenter.callback.MyCallBack;
-import com.example.spb.presenter.littlefun.InValues;
-import com.example.spb.presenter.littlefun.SpbBroadcast;
-import com.example.spb.xserver.AndroidNotification;
+import com.example.spb.presenter.utils.InValues;
+import com.example.spb.presenter.utils.SpbBroadcast;
 import com.example.spb.xserver.AndroidUnicast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -25,13 +21,13 @@ import java.util.List;
 
 public class DataFollowPresenter {
 
-    private static int SUCCESS = 200;
+    private static final int SUCCESS = 200;
 
-    private SpbModelBasicInter followModel;
+    private final SpbModelBasicInter followModel;
     public List<Follow> followList;
-    private String user_account;
+    private final String user_account;
     private String a;
-    private Gson gson;
+    private final Gson gson;
 
     public DataFollowPresenter(String user_account) {
         this.user_account = user_account;
@@ -76,7 +72,7 @@ public class DataFollowPresenter {
             public void onSuccess(@NotNull Response response) {
                 try {
                     String a = response.body().string();
-                    if (Integer.valueOf(a.substring(0,3)) == SUCCESS) {
+                    if (Integer.parseInt(a.substring(0,3)) == SUCCESS) {
                         followList.add(0,follow);
                         SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_re_Follow),0,(Serializable)follow);
                         String user_ip = a.substring(3);

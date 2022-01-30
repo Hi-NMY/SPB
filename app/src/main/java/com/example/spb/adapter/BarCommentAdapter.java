@@ -20,12 +20,12 @@ import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.entity.Comment;
-import com.example.spb.presenter.littlefun.InValues;
-import com.example.spb.presenter.littlefun.MyDateClass;
-import com.example.spb.presenter.littlefun.SpbBroadcast;
+import com.example.spb.presenter.utils.InValues;
+import com.example.spb.presenter.utils.MyDateClass;
+import com.example.spb.presenter.utils.SpbBroadcast;
 import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.activity.PersonalSpacePage;
-import com.example.spb.view.littlefun.JumpIntent;
+import com.example.spb.view.utils.JumpIntent;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.Serializable;

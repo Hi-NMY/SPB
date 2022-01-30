@@ -8,11 +8,10 @@ import com.example.spb.model.InterTotal.SpbModelBasicInter;
 import com.example.spb.model.impl.SignInModelImpl;
 import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.inter.ISignInSignFPresenter;
-import com.example.spb.presenter.littlefun.InValues;
-import com.example.spb.presenter.littlefun.MyResolve;
-import com.example.spb.presenter.littlefun.SpbBroadcast;
+import com.example.spb.presenter.utils.InValues;
+import com.example.spb.presenter.utils.MyResolve;
+import com.example.spb.presenter.utils.SpbBroadcast;
 import com.example.spb.view.inter.ISignInSignFView;
-import com.google.gson.Gson;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 

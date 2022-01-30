@@ -1,10 +1,8 @@
-package com.example.spb.presenter.littlefun;
+package com.example.spb.presenter.utils;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Build;
 import com.hjq.permissions.OnPermissionCallback;
-import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
 
 import java.util.List;

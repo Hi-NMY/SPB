@@ -1,7 +1,5 @@
 package com.example.spb.presenter.impl;
 
-import android.app.Activity;
-import android.os.Looper;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.R;
@@ -13,9 +11,8 @@ import com.example.spb.model.InterTotal.SpbModelBasicInter;
 import com.example.spb.model.impl.BarModelImpl;
 import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.inter.IPersonalPostBarFPresenter;
-import com.example.spb.presenter.littlefun.InValues;
-import com.example.spb.presenter.littlefun.SpbBroadcast;
-import com.example.spb.view.Component.MyToastClass;
+import com.example.spb.presenter.utils.InValues;
+import com.example.spb.presenter.utils.SpbBroadcast;
 import com.example.spb.view.activity.PersonalSpacePage;
 import com.example.spb.view.inter.IPersonalPostBarFView;
 import com.google.gson.Gson;
@@ -23,7 +20,6 @@ import com.google.gson.reflect.TypeToken;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 

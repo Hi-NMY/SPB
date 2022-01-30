@@ -1,6 +1,5 @@
 package com.example.spb.presenter.impl;
 
-import android.widget.Toast;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BasePresenter;
@@ -12,9 +11,8 @@ import com.example.spb.model.impl.TopicModelImpl;
 import com.example.spb.model.impl.VideoModelImpl;
 import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.inter.ITopicBarPageAPresenter;
-import com.example.spb.presenter.littlefun.InValues;
-import com.example.spb.presenter.littlefun.SpbBroadcast;
-import com.example.spb.view.Component.MyToastClass;
+import com.example.spb.presenter.utils.InValues;
+import com.example.spb.presenter.utils.SpbBroadcast;
 import com.example.spb.view.inter.ITopicBarPageAView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

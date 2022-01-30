@@ -8,7 +8,6 @@ import com.example.spb.app.MyApplication;
 import com.example.spb.base.BasePresenter;
 import com.example.spb.entity.SchoolTable;
 import com.example.spb.presenter.inter.IUserCoursePageAPresenter;
-import com.example.spb.presenter.littlefun.MyDateClass;
 import com.example.spb.view.inter.IUserCoursePageAView;
 import org.litepal.LitePal;
 

@@ -103,6 +103,88 @@
     <string name="Video">http://nmy1206.natapp1.cc/Video.php</string>
     <string name="Sign">http://nmy1206.natapp1.cc/Sign.php</string>
     <string name="UpdatePassword">http://nmy1206.natapp1.cc/UpdatePassword.php</string>
+
+    <string name="updateUserPassword">http://nmy1206.natapp1.cc/accountSecurity/updateUserPassword</string>
+    <string name="queryVerifyAndUserFull">http://nmy1206.natapp1.cc/accountSecurity/queryVerifyAndUserFull</string>
+    <string name="queryVerifyUserPassword">http://nmy1206.natapp1.cc/accountSecurity/queryVerifyUserPassword</string>
+
+    <string name="addAttentionTopic">http://nmy1206.natapp1.cc/attention/addAttentionTopic</string>
+    <string name="queryAttentionTopic">http://nmy1206.natapp1.cc/attention/queryAttentionTopic</string>
+    <string name="deleteAttentionTopicById">http://nmy1206.natapp1.cc/attention/deleteAttentionTopicById</string>
+
+    <string name="queryCollectBarList">http://nmy1206.natapp1.cc/collectbar/queryCollectBarList</string>
+    <string name="queryCollectBarFullList">http://nmy1206.natapp1.cc/collectbar/queryCollectBarFullList</string>
+    <string name="addCollectBar">http://nmy1206.natapp1.cc/collectbar/addCollectBar</string>
+    <string name="deleteCollectBar">http://nmy1206.natapp1.cc/collectbar/deleteCollectBar</string>
+
+    <string name="addComment">http://nmy1206.natapp1.cc/comment/addComment</string>
+    <string name="queryCommentList">http://nmy1206.natapp1.cc/comment/queryCommentList</string>
+    <string name="queryCommentOne">http://nmy1206.natapp1.cc/comment/queryCommentOne</string>
+    <string name="deleteComment">http://nmy1206.natapp1.cc/comment/deleteComment</string>
+
+    <string name="dateTime">http://nmy1206.natapp1.cc/date/dateTime</string>
+
+    <string name="queryDiary">http://nmy1206.natapp1.cc/diary/queryDiary</string>
+    <string name="addDiary">http://nmy1206.natapp1.cc/diary/addDiary</string>
+    <string name="deleteDiary">http://nmy1206.natapp1.cc/diary/deleteDiary</string>
+
+    <string name="queryFollowList">http://nmy1206.natapp1.cc/follow/queryFollowList</string>
+    <string name="queryFollowUserList">http://nmy1206.natapp1.cc/follow/queryFollowUserList</string>
+    <string name="addFollow">http://nmy1206.natapp1.cc/follow/addFollow</string>
+    <string name="deleteFollow">http://nmy1206.natapp1.cc/follow/deleteFollow</string>
+
+    <string name="queryFollowedList">http://nmy1206.natapp1.cc/followed/queryFollowedList</string>
+    <string name="queryFollowedUserList">http://nmy1206.natapp1.cc/followed/queryFollowedUserList</string>
+
+    <string name="queryLike">http://nmy1206.natapp1.cc/like/queryLike</string>
+    <string name="addLike">http://nmy1206.natapp1.cc/like/addLike</string>
+    <string name="deleteLike">http://nmy1206.natapp1.cc/like/deleteLike</string>
+
+    <string name="queryNoVideoBarListForDate">http://nmy1206.natapp1.cc/postbar/queryNoVideoBarListForDate</string>
+    <string name="queryNoVideoTopicBarListForThumbNum">http://nmy1206.natapp1.cc/postbar/queryNoVideoTopicBarListForThumbNum</string>
+    <string name="queryNoVideoTopicBarListForDate">http://nmy1206.natapp1.cc/postbar/queryNoVideoTopicBarListForDate</string>
+    <string name="queryNoVideoUserBarListForDate">http://nmy1206.natapp1.cc/postbar/queryNoVideoUserBarListForDate</string>
+    <string name="queryUserBarCount">http://nmy1206.natapp1.cc/postbar/queryUserBarCount</string>
+    <string name="queryNoVideoFollowBarListForDate">http://nmy1206.natapp1.cc/postbar/queryNoVideoFollowBarListForDate</string>
+    <string name="queryBarDetatilForPbid">http://nmy1206.natapp1.cc/postbar/queryBarDetatilForPbid</string>
+    <string name="queryUserBarLikeCount">http://nmy1206.natapp1.cc/postbar/queryUserBarLikeCount</string>
+    <string name="queryNoVideoSearchBarListForDate">http://nmy1206.natapp1.cc/postbar/queryNoVideoSearchBarListForDate</string>
+    <string name="queryVideoBarListForDate">http://nmy1206.natapp1.cc/postbar/queryVideoBarListForDate</string>
+    <string name="queryVideoTopicBarListForDate">http://nmy1206.natapp1.cc/postbar/queryVideoTopicBarListForDate</string>
+    <string name="queryVideoUserBarListForDate">http://nmy1206.natapp1.cc/postbar/queryVideoUserBarListForDate</string>
+    <string name="deleteBar">http://nmy1206.natapp1.cc/postbar/deleteBar</string>
+    <string name="addBar">http://nmy1206.natapp1.cc/postbar/addBar</string>
+
+    <string name="queryUserSign">http://nmy1206.natapp1.cc/sign/queryUserSign</string>
+    <string name="updateSignDay">http://nmy1206.natapp1.cc/sign/updateSignDay</string>
+    <string name="updateSignRight">http://nmy1206.natapp1.cc/sign/updateSignRight</string>
+    <string name="updateSignDayAndRight">http://nmy1206.natapp1.cc/sign/updateSignDayAndRight</string>
+    <string name="updateSignDayAndRightAndCoin">http://nmy1206.natapp1.cc/sign/updateSignDayAndRightAndCoin</string>
+    <string name="updateSignCoin">http://nmy1206.natapp1.cc/sign/updateSignCoin</string>
+    <string name="updateSignStarBadge">http://nmy1206.natapp1.cc/sign/updateSignStarBadge</string>
+    <string name="updateSignLikeBadge">http://nmy1206.natapp1.cc/sign/updateSignLikeBadge</string>
+    <string name="updateSignTaskBadge">http://nmy1206.natapp1.cc/sign/updateSignTaskBadge</string>
+
+    <string name="queryTopicNameList">http://nmy1206.natapp1.cc/topic/queryTopicNameList</string>
+    <string name="querySearchTopicNameList">http://nmy1206.natapp1.cc/topic/querySearchTopicNameList</string>
+    <string name="queryRundomTopicFullList">http://nmy1206.natapp1.cc/topic/queryRundomTopicFullList</string>
+    <string name="queryTopicFull">http://nmy1206.natapp1.cc/topic/queryTopicFull</string>
+    <string name="querySearchTopicFullList">http://nmy1206.natapp1.cc/topic/querySearchTopicFullList</string>
+
+    <string name="querySchoolTable">http://nmy1206.natapp1.cc/user/querySchoolTable</string>
+    <string name="querySearchUser">http://nmy1206.natapp1.cc/user/querySearchUser</string>
+    <string name="updateUserPersonalInformation">http://nmy1206.natapp1.cc/user/updateUserPersonalInformation</string>
+    <string name="updateUserHeadImage">http://nmy1206.natapp1.cc/user/updateUserHeadImage</string>
+    <string name="updateUserBgImage">http://nmy1206.natapp1.cc/user/updateUserBgImage</string>
+    <string name="updateUserBadgeImage">http://nmy1206.natapp1.cc/user/updateUserBadgeImage</string>
+    <string name="updateUserPrivacy">http://nmy1206.natapp1.cc/user/updateUserPrivacy</string>
+    <string name="deleteUserIp">http://nmy1206.natapp1.cc/user/deleteUserIp</string>
+
+    <string name="userRegistered">http://nmy1206.natapp1.cc/registered/userRegistered</string>
+
+
+
+
     <!-- 内部广播 -->
     <string name="Bcr_refresh_userMsg">Bcr_refresh_userMsg</string>
     <string name="Bcr_transfer_loc">Bcr_transfer_loc</string>
