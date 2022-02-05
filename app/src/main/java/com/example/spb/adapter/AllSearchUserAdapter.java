@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.MediaStoreSignature;
 import com.example.spb.R;
-import com.example.spb.entity.User;
+import com.example.spb.entity.Dto.UserDto;
 import com.example.spb.presenter.utils.InValues;
 import com.example.spb.view.activity.PersonalSpacePage;
 import com.example.spb.view.utils.JumpIntent;
@@ -22,9 +22,9 @@ import java.util.List;
 
 public class AllSearchUserAdapter extends RecyclerView.Adapter<AllSearchUserAdapter.ViewHolder> {
 
-    private List<User> users;
+    private List<UserDto> userDtos;
     private Activity activity;
-    private User user;
+    private UserDto userDto;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView mItemAllsearchUserHeadimg;
@@ -40,8 +40,8 @@ public class AllSearchUserAdapter extends RecyclerView.Adapter<AllSearchUserAdap
         }
     }
 
-    public AllSearchUserAdapter(List<User> users, Activity activity) {
-        this.users = users;
+    public AllSearchUserAdapter(List<UserDto> userDtos, Activity activity) {
+        this.userDtos = userDtos;
         this.activity = activity;
     }
 
@@ -55,28 +55,28 @@ public class AllSearchUserAdapter extends RecyclerView.Adapter<AllSearchUserAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        user = users.get(position);
+        userDto = userDtos.get(position);
 
-        holder.mItemAllsearchUserName.setText(user.getUser_name());
+        holder.mItemAllsearchUserName.setText(userDto.getUser_name());
 
         Glide.with(activity)
-                .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + user.getUser_account() + "/HeadImage/myHeadImage.png")
+                .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + userDto.getUser_account() + "/HeadImage/myHeadImage.png")
                 .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()),1,1))
                 .into(holder.mItemAllsearchUserHeadimg);
 
-        if (user.getStu_sex() != null && user.getStu_sex().equals("男")) {
+        if (userDto.getStu_sex() != null && userDto.getStu_sex().equals("男")) {
             holder.mItemUserFollowUsersex.setImageResource(R.drawable.icon_boy);
         } else {
             holder.mItemUserFollowUsersex.setImageResource(R.drawable.icon_girl);
         }
 
-        if (user.getUser_badge() == null || user.getUser_badge().equals("")){
+        if (userDto.getUser_badge() == null || userDto.getUser_badge().equals("")){
             holder.mItemUserFollowUserbadge.setVisibility(View.GONE);
         }else {
             holder.mItemUserFollowUserbadge.setVisibility(View.VISIBLE);
             //写入徽章
             Glide.with(activity)
-                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + user.getUser_badge())
+                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + userDto.getUser_badge())
                     .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                     .centerCrop()
                     .into(holder.mItemUserFollowUserbadge);
@@ -89,7 +89,7 @@ public class AllSearchUserAdapter extends RecyclerView.Adapter<AllSearchUserAdap
                 JumpIntent.startMsgIntent(PersonalSpacePage.class, new JumpIntent.SetMsg() {
                     @Override
                     public void setMessage(Intent intent) {
-                        intent.putExtra(InValues.send(R.string.intent_User_account), users.get(position).getUser_account());
+                        intent.putExtra(InValues.send(R.string.intent_User_account), userDtos.get(position).getUser_account());
                     }
                 });
             }
@@ -98,6 +98,6 @@ public class AllSearchUserAdapter extends RecyclerView.Adapter<AllSearchUserAdap
 
     @Override
     public int getItemCount() {
-        return users == null ? 0 : users.size();
+        return userDtos == null ? 0 : userDtos.size();
     }
 }

@@ -18,7 +18,7 @@ import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.entity.Bar;
 import com.example.spb.entity.Topic;
-import com.example.spb.entity.User;
+import com.example.spb.entity.Dto.UserDto;
 import com.example.spb.presenter.impl.AllSearchPageAPresenterImpl;
 import com.example.spb.presenter.utils.RemoveNullCharacter;
 import com.example.spb.view.Component.EasyDialog;
@@ -112,12 +112,12 @@ public class AllSearchPage extends BaseMVPActivity<IAllSearchPageAView, AllSearc
                         }
                         break;
                     case USER_SUCCESS:
-                        List<User> users = (List<User>) response;
+                        List<UserDto> userDtos = (List<UserDto>) response;
                         mR2.setVisibility(View.VISIBLE);
-                        if (users != null){
+                        if (userDtos != null){
                             mUserTipOne.setVisibility(View.INVISIBLE);
                             mUserSearchList.setVisibility(View.VISIBLE);
-                            mPresenter.setUserAdapter(users, new LinearLayoutManager(MyApplication.getContext()), mUserSearchList);
+                            mPresenter.setUserAdapter(userDtos, new LinearLayoutManager(MyApplication.getContext()), mUserSearchList);
                         }else {
                             mUserTipOne.setVisibility(View.VISIBLE);
                             mUserSearchList.setVisibility(View.GONE);

@@ -1,11 +1,9 @@
 package com.example.spb.presenter.impl;
 
 import com.example.spb.base.BasePresenter;
-import com.example.spb.entity.User;
+import com.example.spb.entity.Dto.UserDto;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
-import com.example.spb.model.impl.SetUpUpdatePasswordPageAModelImpl;
 import com.example.spb.model.impl.UserModelImpl;
-import com.example.spb.model.inter.ISetUpUpdatePasswordPageAModel;
 import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.inter.ISetUpUpdatePasswordPageAPresenter;
 import com.example.spb.view.inter.ISetUpUpdatePasswordPageAView;
@@ -23,11 +21,11 @@ public class SetUpUpdatePasswordPageAPresenterImpl extends BasePresenter<ISetUpU
     }
 
     public void updatePassword(String account,String password,String passwordOld,OnReturn onReturn){
-        User user = new User();
-        user.setUser_account(account);
-        user.setUser_password(password);
-        user.setUser_token(passwordOld);
-        userModel.updateData(userModel.DATAUSER_UPDATE_SEVEN, user, new MyCallBack() {
+        UserDto userDto = new UserDto();
+        userDto.setUser_account(account);
+        userDto.setUser_password(password);
+        userDto.setUser_token(passwordOld);
+        userModel.updateData(userModel.DATAUSER_UPDATE_SEVEN, userDto, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) throws IOException {
                 String a = response.body().string();

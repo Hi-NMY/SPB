@@ -133,7 +133,7 @@ public class CollectBarAdapter extends RecyclerView.Adapter<CollectBarAdapter.Vi
                         mButtonRight.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                baseMVPActivity.getDataCollectBarPresenter().removeCollectBar(collectBars.get(position).getUser_account(),collectBars.get(position).getPb_one_id());
+                                baseMVPActivity.getDataCollectBarPresenter().removeCollectBar(collectBars.get(position).getPb_one_id());
                                 componentDialog.closeMyDialog();
                             }
                         });

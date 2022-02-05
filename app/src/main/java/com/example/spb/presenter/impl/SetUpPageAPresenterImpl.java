@@ -3,7 +3,7 @@ package com.example.spb.presenter.impl;
 import android.content.SharedPreferences;
 import com.example.spb.R;
 import com.example.spb.base.BasePresenter;
-import com.example.spb.entity.User;
+import com.example.spb.entity.Dto.UserDto;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
 import com.example.spb.model.impl.UserModelImpl;
 import com.example.spb.presenter.inter.ISetUpPageAPresenter;
@@ -39,9 +39,9 @@ public class SetUpPageAPresenterImpl extends BasePresenter<ISetUpPageAView> impl
 
     private void deleteIp(String account){
         //退出登录时加入逻辑：删除user_ip。使用户无法收到其他用户推送的消息
-        User user = new User();
-        user.setUser_account(account);
-        userModel.deleteData(userModel.DATAUSER_DELETE_ONE,user,null);
+        UserDto userDto = new UserDto();
+        userDto.setUser_account(account);
+        userModel.deleteData(userModel.DATAUSER_DELETE_ONE, userDto,null);
     }
 
     private void initShareLogIn(){

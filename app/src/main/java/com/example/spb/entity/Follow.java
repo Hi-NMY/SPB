@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class Follow implements Serializable {
 
     public int id;
-    public String user_account;
-    public String cache_account;
+    public String follow_account;
+    public String followed_account;
 
     public int getId() {
         return id;
@@ -16,19 +16,19 @@ public class Follow implements Serializable {
         this.id = id;
     }
 
-    public String getUser_account() {
-        return user_account;
+    public String getFollow_account() {
+        return follow_account;
     }
 
-    public void setUser_account(String user_accountl) {
-        this.user_account = user_accountl;
+    public void setFollow_account(String follow_account) {
+        this.follow_account = follow_account;
     }
 
-    public String getCache_account() {
-        return cache_account;
+    public String getFollowed_account() {
+        return followed_account;
     }
 
-    public void setCache_account(String cache_account) {
-        this.cache_account = cache_account;
+    public void setFollowed_account(String followed_account) {
+        this.followed_account = followed_account;
     }
 }

@@ -3,9 +3,8 @@ package com.example.spb.presenter.impl;
 import android.content.SharedPreferences;
 import com.example.spb.R;
 import com.example.spb.base.BasePresenter;
-import com.example.spb.entity.User;
-import com.example.spb.model.InterTotal.SpbModelBasicInter;
-import com.example.spb.model.impl.UserModelImpl;
+import com.example.spb.model.implA.UserModelImpl;
+import com.example.spb.model.inter.UserModel;
 import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.inter.IEnterPageAPresenter;
 import com.example.spb.presenter.utils.InValues;
@@ -18,21 +17,18 @@ import org.jetbrains.annotations.NotNull;
 
 public class EnterPageAPresenterImpl extends BasePresenter<IEnterPageAView> implements IEnterPageAPresenter {
 
-    private SpbModelBasicInter userModel;
+    private final UserModel userModel;
 
     public EnterPageAPresenterImpl() {
         userModel = new UserModelImpl();
     }
 
-    public void setUserIp(){
+    public void setUserIp() {
         SharedPreferences sharedPreferences1 = MySharedPreferences.getShared(InValues.send(R.string.Shared_User));
-        String account = sharedPreferences1.getString(InValues.send(R.string.user_account),"");
+        String account = sharedPreferences1.getString(InValues.send(R.string.user_account), "");
         SharedPreferences sharedPreferences2 = MySharedPreferences.getShared(InValues.send(R.string.Shared_Push));
-        String ip = sharedPreferences2.getString(InValues.send(R.string.push_id),"");
-        User user = new User();
-        user.setUser_account(account);
-        user.setUser_ip(ip);
-        userModel.updateData(userModel.DATAUSER_UPDATE_FOUR,user, new MyCallBack() {
+        String ip = sharedPreferences2.getString(InValues.send(R.string.push_id), "");
+        userModel.updateUserIp(account, ip, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
 
@@ -48,26 +44,26 @@ public class EnterPageAPresenterImpl extends BasePresenter<IEnterPageAView> impl
     @Override
     public boolean getFirstLogIn() {
         SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_FirstLogIn));
-      //  setInitialize();
-        return sharedPreferences.getBoolean(InValues.send(R.string.FirstLogIn_login),true);
+        //  setInitialize();
+        return sharedPreferences.getBoolean(InValues.send(R.string.FirstLogIn_login), true);
     }
 
-    public void initDate(EnterPage enterPage,Jump jump){
+    public void initDate(EnterPage enterPage, Jump jump) {
         SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_User));
-        enterPage.initUserData(sharedPreferences.getString(InValues.send(R.string.user_account),""));
+        enterPage.initUserData(sharedPreferences.getString(InValues.send(R.string.user_account), ""));
         jump.toJump();
     }
 
-    public interface Jump{
+    public interface Jump {
         void toJump();
     }
 
-    public void setInitialize(){
+    public void setInitialize() {
         ObtainServerDate.obtainDate(new ObtainServerDate.OnReturn() {
             @Override
             public void onReturn(String date) {
                 SharedPreferences.Editor e = MySharedPreferences.saveShared(InValues.send(R.string.Shared_server_date));
-                e.putString(InValues.send(R.string.server_date),"2021-07-23 12:23:22");
+                e.putString(InValues.send(R.string.server_date), "2021-07-23 12:23:22");
                 e.commit();
             }
         });

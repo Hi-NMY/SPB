@@ -2,30 +2,32 @@ package com.example.spb.presenter.otherimpl;
 
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
+import com.example.spb.common.RequestCode;
+import com.example.spb.common.RequestListJson;
 import com.example.spb.entity.Diary;
-import com.example.spb.model.InterTotal.SpbModelBasicInter;
-import com.example.spb.model.impl.DiaryModelImpl;
+import com.example.spb.model.implA.DiaryModelImpl;
+import com.example.spb.model.inter.DiaryModel;
 import com.example.spb.presenter.callback.MyCallBack;
+import com.example.spb.presenter.utils.DataVerificationTool;
 import com.example.spb.presenter.utils.InValues;
 import com.example.spb.presenter.utils.SpbBroadcast;
+import com.example.spb.view.Component.ResponseToast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
+import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
 public class DataDiaryPresenter {
 
-    private static int SUCCESS = 200;
+    private final DiaryModel diaryModel;
+    private final String account;
+    private final Gson gson;
 
-    private SpbModelBasicInter diaryModel;
     public List<Diary> diaryList;
-    private String account;
-    private String a;
-    private Gson gson;
 
     public DataDiaryPresenter(String user_account) {
         account = user_account;
@@ -35,22 +37,17 @@ public class DataDiaryPresenter {
     }
 
     public void initDate() {
-        Diary diary = new Diary();
-        diary.setCacheAccount(account);
-        diaryModel.selectData(SpbModelBasicInter.DATADIARY_SELECT_ONE, diary, new MyCallBack() {
+        diaryModel.queryDiary(account, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    a = response.body().string();
-                    if (Integer.valueOf(a.substring(0,3)) == SUCCESS){
-                        diaryList = gson.fromJson(a.substring(3),new TypeToken<List<Diary>>()
-                        {}.getType());
-                        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_Diary),0,(Serializable) diaryList);
-                    }else {
-
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestListJson<Diary> requestList = gson.fromJson(value, new TypeToken<RequestListJson<Diary>>() {
+                    }.getType());
+                    if (ResponseToast.toToast(requestList.getResultCode())) {
+                        diaryList = requestList.getDataList();
+                        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_Diary), 0, (Serializable) diaryList);
                     }
-                } catch (Exception e) {
-
                 }
             }
 
@@ -61,18 +58,18 @@ public class DataDiaryPresenter {
         });
     }
 
-    public void addNewDiary(Diary diary){
-        diaryModel.addData(diaryModel.DATADIARY_ADD_ONE, diary, new MyCallBack() {
+    public void addNewDiary(Diary diary, File file) {
+        diary.setUser_account(account);
+        diaryModel.addDiary(diary, file, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    String a = response.body().string();
-                    if (Integer.valueOf(a) == 200){
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestCode requestCode = gson.fromJson(value, RequestCode.class);
+                    if (ResponseToast.toToast(requestCode)) {
                         initDate();
-                        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_Diary),2,null);
+                        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_Diary), 2, null);
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
 
@@ -83,19 +80,16 @@ public class DataDiaryPresenter {
         });
     }
 
-    public void removeDiary(Diary diary){
-        diary.setCacheAccount(account);
-        diaryModel.deleteData(diaryModel.DATADIARY_DELETE_ONE, diary, new MyCallBack() {
+    public void removeDiary(int diaryId) {
+        diaryModel.deleteDiary(account, String.valueOf(diaryId), new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    String a = response.body().string();
-                    if (Integer.valueOf(a) == 200){
-                        diaryList.removeIf(diaryList -> diaryList.getId() == diary.getId());
-                      // SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_Diary),1,null);
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestCode requestCode = gson.fromJson(value, RequestCode.class);
+                    if (ResponseToast.toToast(requestCode)) {
+                        diaryList.removeIf(diaryList -> diaryList.getId() == diaryId);
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
 

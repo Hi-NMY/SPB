@@ -16,18 +16,15 @@ public class DataNoticePresenter {
 
     public List<Notice> notices;
     public List<Notice> systemNotices;
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
-    private int num = 0;
 
     public DataNoticePresenter() {
         obtainNotice(true);
     }
 
     public List<Notice> obtainNotice(boolean key){
-        sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_Pushseenum));
-        editor = MySharedPreferences.saveShared(InValues.send(R.string.Shared_Pushseenum));
-        num = sharedPreferences.getInt(InValues.send(R.string.num),0);
+        SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_Pushseenum));
+        SharedPreferences.Editor editor = MySharedPreferences.saveShared(InValues.send(R.string.Shared_Pushseenum));
+        int num = sharedPreferences.getInt(InValues.send(R.string.num), 0);
         notices = LitePal.where("push_fun != ?","5").order("notice_date desc").find(Notice.class);
         if (key){
             if (num != notices.size()){

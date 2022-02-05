@@ -31,18 +31,17 @@ import java.util.List;
 
 public class UserDiaryAdapter extends RecyclerView.Adapter<UserDiaryAdapter.ViewHolder> {
 
-    private List<Diary> diaryList;
-    private BaseMVPActivity baseMVPActivity;
+    private final List<Diary> diaryList;
+    private final BaseMVPActivity baseMVPActivity;
+    private final TransferConfig config;
+    private final List<String> stringspath;
     private Diary diary;
-    private TransferConfig config;
-    private List<String> stringspath;
     private Transferee transferee;
     private ComponentDialog componentDialog;
     private Button mButtonRight;
     private Button mButtonClose;
     private TextView mtxt;
     private TextView mtitle;
-    private String cacheKey;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView mDiaryDateYear;
@@ -53,6 +52,7 @@ public class UserDiaryAdapter extends RecyclerView.Adapter<UserDiaryAdapter.View
         TextView mDiaryMessage;
         RoundedImageView mDiaryImg;
         RelativeLayout mDiaryItemR;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mDiaryDateYear = (TextView) itemView.findViewById(R.id.diary_date_year);
@@ -62,7 +62,7 @@ public class UserDiaryAdapter extends RecyclerView.Adapter<UserDiaryAdapter.View
             mDiaryWeather = (ImageView) itemView.findViewById(R.id.diary_weather);
             mDiaryMessage = (TextView) itemView.findViewById(R.id.diary_message);
             mDiaryImg = (RoundedImageView) itemView.findViewById(R.id.diary_img);
-            mDiaryItemR = (RelativeLayout)itemView.findViewById(R.id.diary_item_r);
+            mDiaryItemR = (RelativeLayout) itemView.findViewById(R.id.diary_item_r);
         }
     }
 
@@ -70,8 +70,8 @@ public class UserDiaryAdapter extends RecyclerView.Adapter<UserDiaryAdapter.View
         this.diaryList = diaryList;
         this.baseMVPActivity = (BaseMVPActivity) activity;
         stringspath = new ArrayList<>();
-        for (Diary d:diaryList){
-            if (d.getDia_image() != null && !d.getDia_image().equals("")){
+        for (Diary d : diaryList) {
+            if (d.getDia_image() != null && !d.getDia_image().equals("")) {
                 stringspath.add(InValues.send(R.string.httpHeadert) + d.getDia_image());
             }
         }
@@ -83,7 +83,7 @@ public class UserDiaryAdapter extends RecyclerView.Adapter<UserDiaryAdapter.View
                 .create();
     }
 
-    public void removeData(int p){
+    public void removeData(int p) {
         diaryList.remove(p);
         notifyItemRemoved(p);
         notifyItemRangeChanged(p, diaryList.size() + 1);
@@ -93,36 +93,36 @@ public class UserDiaryAdapter extends RecyclerView.Adapter<UserDiaryAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_diary_list, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         diary = diaryList.get(position);
-        if (transferee == null){
+        if (transferee == null) {
             transferee = Transferee.getDefault(baseMVPActivity);
         }
         Calendar calendar = new GregorianCalendar();
         String month = "";
         String monthday = "";
         String dateTime = diary.getDia_date().substring(11);
-        String dateWeek = MyDateClass.showWeekTable(diary.getDia_date(),0);
+        String dateWeek = MyDateClass.showWeekTable(diary.getDia_date(), 0);
         holder.mDiaryDateTime.setText(MyDateClass.obtainPeriod(dateTime));
         holder.mDiaryDateWeek.setText(dateWeek);
         holder.mDiaryMessage.setText(diary.getDia_message());
 
         calendar.setTime(MyDateClass.stringToDate(diary.getDia_date()));
-        holder.mDiaryDateYear.setText(String.valueOf(calendar.get(calendar.YEAR)));
-        if ((calendar.get(calendar.MONTH) + 1) < 10){
-            month = "0" + (calendar.get(calendar.MONTH) + 1);
+
+        holder.mDiaryDateYear.setText(String.valueOf(calendar.get(Calendar.YEAR)));
+        if ((calendar.get(Calendar.MONTH) + 1) < 10) {
+            month = "0" + (calendar.get(Calendar.MONTH) + 1);
         }
-        if (calendar.get(calendar.DAY_OF_MONTH) < 10){
-            monthday = "0" + calendar.get(calendar.DAY_OF_MONTH);
+        if (calendar.get(Calendar.DAY_OF_MONTH) < 10) {
+            monthday = "0" + calendar.get(Calendar.DAY_OF_MONTH);
         }
         holder.mDiaryDateMonth.setText(month + monthday);
 
-        switch (diary.getDia_weather()){
+        switch (diary.getDia_weather()) {
             case 1:
                 holder.mDiaryWeather.setBackground(baseMVPActivity.getDrawable(R.drawable.icon_weather_sun));
                 break;
@@ -152,12 +152,12 @@ public class UserDiaryAdapter extends RecyclerView.Adapter<UserDiaryAdapter.View
                 break;
         }
 
-        if (diary.getDia_image() != null && !diary.getDia_image().equals("")){
+        if (diary.getDia_image() != null && !diary.getDia_image().equals("")) {
             holder.mDiaryImg.setVisibility(View.VISIBLE);
             Glide.with(baseMVPActivity)
                     .load(InValues.send(R.string.httpHeadert) + diary.getDia_image())
                     .into(holder.mDiaryImg);
-        }else {
+        } else {
             holder.mDiaryImg.setVisibility(View.GONE);
         }
 
@@ -175,10 +175,10 @@ public class UserDiaryAdapter extends RecyclerView.Adapter<UserDiaryAdapter.View
                 componentDialog = new ComponentDialog(baseMVPActivity, R.layout.dialog_longclick_view, new ComponentDialog.InitDialog() {
                     @Override
                     public void initView(View view) {
-                        mButtonClose = (Button)view.findViewById(R.id.button_close);
-                        mButtonRight = (Button)view.findViewById(R.id.button_right);
-                        mtitle = (TextView)view.findViewById(R.id.topic_name);
-                        mtxt = (TextView)view.findViewById(R.id.txt);
+                        mButtonClose = (Button) view.findViewById(R.id.button_close);
+                        mButtonRight = (Button) view.findViewById(R.id.button_right);
+                        mtitle = (TextView) view.findViewById(R.id.topic_name);
+                        mtxt = (TextView) view.findViewById(R.id.txt);
                     }
 
                     @Override
@@ -198,9 +198,7 @@ public class UserDiaryAdapter extends RecyclerView.Adapter<UserDiaryAdapter.View
                         mButtonRight.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Diary diary = new Diary();
-                                diary.setId(diaryList.get(position).getId());
-                                baseMVPActivity.getDataDiaryPresenter().removeDiary(diary);
+                                baseMVPActivity.getDataDiaryPresenter().removeDiary(diaryList.get(position).getId());
                                 componentDialog.closeMyDialog();
                                 removeData(position);
                             }

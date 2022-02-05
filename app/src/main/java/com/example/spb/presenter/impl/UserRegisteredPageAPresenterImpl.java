@@ -5,7 +5,7 @@ import android.os.Handler;
 import com.example.spb.R;
 import com.example.spb.base.BasePresenter;
 import com.example.spb.entity.RongUser;
-import com.example.spb.entity.User;
+import com.example.spb.entity.Dto.UserDto;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
 import com.example.spb.model.impl.UserModelImpl;
 import com.example.spb.presenter.callback.MyCallBack;
@@ -45,8 +45,8 @@ public class UserRegisteredPageAPresenterImpl extends BasePresenter<IUserRegiste
         }
     }
 
-    public void registerUser(User user, Handler handler){
-        userModel.addData(UserModelImpl.REGISTEREDPAGE, user, new MyCallBack() {
+    public void registerUser(UserDto userDto, Handler handler){
+        userModel.addData(UserModelImpl.REGISTEREDPAGE, userDto, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
                 if (isAttachView()){

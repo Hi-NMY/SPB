@@ -13,21 +13,21 @@ import java.util.List;
 public class AttentionTopicPageAPresenterImpl extends BasePresenter<IAttentionTopicPageAView> implements IAttentionTopicPageAPresenter {
 
     private AttentionTopicAdapter attentionTopicAdapter;
-    private Activity activity;
+    private final Activity activity;
 
     public AttentionTopicPageAPresenterImpl(Activity a) {
         this.activity = a;
     }
 
-    public void addAttentionTopic(List<Topic> t, RecyclerView recyclerView){
-        if (attentionTopicAdapter == null){
-            attentionTopicAdapter = new AttentionTopicAdapter(activity,t);
+    public void addAttentionTopic(List<Topic> t, RecyclerView recyclerView) {
+        if (attentionTopicAdapter == null) {
+            attentionTopicAdapter = new AttentionTopicAdapter(activity, t);
             recyclerView.setAdapter(attentionTopicAdapter);
         }
     }
 
-    public void refreshAdapter(){
-        if (attentionTopicAdapter != null){
+    public void refreshAdapter() {
+        if (attentionTopicAdapter != null) {
             attentionTopicAdapter.refreshA();
         }
     }

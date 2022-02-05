@@ -18,7 +18,7 @@ import androidx.annotation.NonNull;
 import com.bumptech.glide.Glide;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPActivity;
-import com.example.spb.entity.User;
+import com.example.spb.entity.Dto.UserDto;
 import com.example.spb.presenter.impl.UserRegisteredPageAPresenterImpl;
 import com.example.spb.presenter.utils.RemoveNullCharacter;
 import com.example.spb.view.Component.ComponentDialog;
@@ -58,7 +58,7 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
 
     private boolean SEE = false;
 
-    private User user = null;
+    private UserDto userDto = null;
 
     private Handler userHanlder = new Handler(){
         @Override
@@ -329,13 +329,13 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
         });
     }
 
-    private User setUser(){
-        user = new User();
-        user.setUser_head_image(imagePath);
-        user.setUser_account(account);
-        user.setUser_name(name);
-        user.setUser_password(password);
-        return user;
+    private UserDto setUser(){
+        userDto = new UserDto();
+        userDto.setUser_head_image(imagePath);
+        userDto.setUser_account(account);
+        userDto.setUser_name(name);
+        userDto.setUser_password(password);
+        return userDto;
     }
 
     @Override

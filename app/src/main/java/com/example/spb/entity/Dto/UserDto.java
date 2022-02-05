@@ -1,8 +1,8 @@
-package com.example.spb.entity;
+package com.example.spb.entity.Dto;
 
 import java.io.Serializable;
 
-public class User implements Serializable {
+public class UserDto implements Serializable {
 
     private int id;
     private String user_account;

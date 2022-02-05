@@ -1,6 +1,6 @@
 package com.example.spb.entity;
 
-public class    Followed {
+public class Followed {
 
     public int id;
     public String user_account;

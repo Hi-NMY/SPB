@@ -3,11 +3,11 @@ package com.example.spb.entity;
 public class Diary {
 
     public int id;
+    public String user_account;
     public String dia_date;
     public int dia_weather;
     public String dia_message;
     public String dia_image;
-    public String cacheAccount;
 
     public int getId() {
         return id;
@@ -15,6 +15,14 @@ public class Diary {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getUser_account() {
+        return user_account;
+    }
+
+    public void setUser_account(String user_account) {
+        this.user_account = user_account;
     }
 
     public String getDia_date() {
@@ -47,13 +55,5 @@ public class Diary {
 
     public void setDia_image(String dia_image) {
         this.dia_image = dia_image;
-    }
-
-    public String getCacheAccount() {
-        return cacheAccount;
-    }
-
-    public void setCacheAccount(String cacheAccount) {
-        this.cacheAccount = cacheAccount;
     }
 }

@@ -4,7 +4,7 @@ import android.app.Activity;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.adapter.SearchUserAdapter;
 import com.example.spb.base.BasePresenter;
-import com.example.spb.entity.User;
+import com.example.spb.entity.Dto.UserDto;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
 import com.example.spb.model.impl.UserModelImpl;
 import com.example.spb.presenter.callback.MyCallBack;
@@ -20,7 +20,7 @@ import java.util.List;
 
 public class SearchUserPageAPresenterImpl extends BasePresenter<ISearchUserPageAView> implements ISearchUserPageAPresenter {
 
-    private User user;
+    private UserDto userDto;
     private SpbModelBasicInter userModel;
     private RecyclerView recyclerView;
     private Activity activity;
@@ -32,20 +32,20 @@ public class SearchUserPageAPresenterImpl extends BasePresenter<ISearchUserPageA
 
     public void searUser(String key ,RecyclerView r){
         this.recyclerView = r;
-        user = new User();
-        user.setUser_name(key);
-        userModel.selectData(userModel.FIRSTPAGE_THREE, user, new MyCallBack() {
+        userDto = new UserDto();
+        userDto.setUser_name(key);
+        userModel.selectData(userModel.FIRSTPAGE_THREE, userDto, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
                 try {
                     String a = response.body().string();
                     if (Integer.valueOf(a.substring(0,3)) == 200){
-                        List<User> users = new Gson().fromJson(a.substring(3),new TypeToken<List<User>>(){}.getType());
+                        List<UserDto> userDtos = new Gson().fromJson(a.substring(3),new TypeToken<List<UserDto>>(){}.getType());
                         activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 getView().response(null,0);
-                                setData(users);
+                                setData(userDtos);
                             }
                         });
                     }
@@ -61,8 +61,8 @@ public class SearchUserPageAPresenterImpl extends BasePresenter<ISearchUserPageA
         });
     }
 
-    public void setData(List<User> users){
-        SearchUserAdapter searchUserAdapter = new SearchUserAdapter(users,activity);
+    public void setData(List<UserDto> userDtos){
+        SearchUserAdapter searchUserAdapter = new SearchUserAdapter(userDtos,activity);
         recyclerView.setAdapter(searchUserAdapter);
     }
 }

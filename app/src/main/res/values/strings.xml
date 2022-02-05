@@ -79,6 +79,13 @@
     <!-- 网络请求-->
     <string name="httpHeader">http://nmy1206.natapp1.cc</string>
     <string name="httpHeadert">http://nmy1206.natapp1.cc/</string>
+    <string name="prefix_img">http://nmy1206.natapp1.cc/upload/spb/UserImageServer/</string>
+    <string name="suffix_head_img">/HeadImage/myHeadImage.png</string>
+    <string name="suffix_bg_img">/HeadImage/myBackgroundImage.png</string>
+
+
+
+
     <string name="ServerDate">http://nmy1206.natapp1.cc/ServerDate.php</string>
     <string name="RongCloudUser">http://nmy1206.natapp1.cc/RongCloudServer/RongCloud/SPBServer/User.php</string>
     <string name="SendToken">http://nmy1206.natapp1.cc/SendToken.php</string>
@@ -103,6 +110,12 @@
     <string name="Video">http://nmy1206.natapp1.cc/Video.php</string>
     <string name="Sign">http://nmy1206.natapp1.cc/Sign.php</string>
     <string name="UpdatePassword">http://nmy1206.natapp1.cc/UpdatePassword.php</string>
+
+
+
+
+
+
 
     <string name="updateUserPassword">http://nmy1206.natapp1.cc/accountSecurity/updateUserPassword</string>
     <string name="queryVerifyAndUserFull">http://nmy1206.natapp1.cc/accountSecurity/queryVerifyAndUserFull</string>
@@ -156,6 +169,7 @@
     <string name="addBar">http://nmy1206.natapp1.cc/postbar/addBar</string>
 
     <string name="queryUserSign">http://nmy1206.natapp1.cc/sign/queryUserSign</string>
+    <string name="queryUserBadge">http://nmy1206.natapp1.cc/sign/queryUserBadge</string>
     <string name="updateSignDay">http://nmy1206.natapp1.cc/sign/updateSignDay</string>
     <string name="updateSignRight">http://nmy1206.natapp1.cc/sign/updateSignRight</string>
     <string name="updateSignDayAndRight">http://nmy1206.natapp1.cc/sign/updateSignDayAndRight</string>
@@ -179,6 +193,8 @@
     <string name="updateUserBadgeImage">http://nmy1206.natapp1.cc/user/updateUserBadgeImage</string>
     <string name="updateUserPrivacy">http://nmy1206.natapp1.cc/user/updateUserPrivacy</string>
     <string name="deleteUserIp">http://nmy1206.natapp1.cc/user/deleteUserIp</string>
+    <string name="updateUserIp">http://nmy1206.natapp1.cc/user/updateUserIp</string>
+    <string name="updateUserToken">http://nmy1206.natapp1.cc/user/updateUserToken</string>
 
     <string name="userRegistered">http://nmy1206.natapp1.cc/registered/userRegistered</string>
 

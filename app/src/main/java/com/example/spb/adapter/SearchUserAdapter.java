@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.MediaStoreSignature;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPActivity;
-import com.example.spb.entity.User;
+import com.example.spb.entity.Dto.UserDto;
 import com.example.spb.presenter.utils.InValues;
 import com.example.spb.presenter.utils.MyDateClass;
 import com.example.spb.view.activity.PersonalSpacePage;
@@ -25,8 +25,8 @@ import java.util.List;
 
 public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.ViewHolder> {
 
-    private List<User> users;
-    private User user;
+    private List<UserDto> userDtos;
+    private UserDto userDto;
     private BaseMVPActivity activity;
     private String cacheKey;
 
@@ -46,8 +46,8 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
         }
     }
 
-    public SearchUserAdapter(List<User> users, Activity activity) {
-        this.users = users;
+    public SearchUserAdapter(List<UserDto> userDtos, Activity activity) {
+        this.userDtos = userDtos;
         this.activity = (BaseMVPActivity) activity;
         cacheKey = MyDateClass.showNowDate();
     }
@@ -62,16 +62,16 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        user = users.get(position);
-        holder.mItemUserFollowTitle.setText(user.getUser_name());
+        userDto = userDtos.get(position);
+        holder.mItemUserFollowTitle.setText(userDto.getUser_name());
         if(holder.mItemUserFollowHeadimg.getTag() == null || !holder.mItemUserFollowHeadimg.getTag().equals(cacheKey)){
             Glide.with(activity)
-                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + user.getUser_account() + "/HeadImage/myHeadImage.png")
+                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + userDto.getUser_account() + "/HeadImage/myHeadImage.png")
                     .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()),1,1))
                     .into(holder.mItemUserFollowHeadimg);
             holder.mItemUserFollowHeadimg.setTag(cacheKey);
         }
-        if (user.getStu_sex() != null && user.getStu_sex().equals("男")) {
+        if (userDto.getStu_sex() != null && userDto.getStu_sex().equals("男")) {
             holder.mItemUserFollowUsersex.setImageResource(R.drawable.icon_boy);
         } else {
             holder.mItemUserFollowUsersex.setImageResource(R.drawable.icon_girl);
@@ -83,7 +83,7 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
                 JumpIntent.startMsgIntent(PersonalSpacePage.class, new JumpIntent.SetMsg() {
                     @Override
                     public void setMessage(Intent intent) {
-                        intent.putExtra(InValues.send(R.string.intent_User_account),users.get(position).getUser_account());
+                        intent.putExtra(InValues.send(R.string.intent_User_account), userDtos.get(position).getUser_account());
                     }
                 });
             }
@@ -92,6 +92,6 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return users.size();
+        return userDtos.size();
     }
 }

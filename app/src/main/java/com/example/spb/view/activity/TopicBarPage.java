@@ -388,8 +388,7 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
                     });
                 } else {
                     yesAtt();
-                    getDataAttentionTopicPresenter().addAttentionTopic(topic, mPresenter.addAttentionAccount
-                            (getDataUserMsgPresenter().getUser_account(), topic), new DataAttentionTopicPresenter.ReturnTopic() {
+                    getDataAttentionTopicPresenter().addAttentionTopic(topic , new DataAttentionTopicPresenter.ReturnTopic() {
                         @Override
                         public void onReturn() {
                             runOnUiThread(new Runnable() {

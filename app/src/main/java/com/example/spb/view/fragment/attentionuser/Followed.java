@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPFragment;
-import com.example.spb.entity.User;
+import com.example.spb.entity.Dto.UserDto;
 import com.example.spb.presenter.impl.FollowedFPresenterImpl;
 import com.example.spb.presenter.utils.InValues;
 import com.example.spb.presenter.utils.SpbBroadcast;
@@ -135,9 +135,9 @@ public class Followed extends BaseMVPFragment<IFollowedFView, FollowedFPresenter
     class RefreshFollowedList extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            List<User> users = (List<User>) intent.getSerializableExtra("key_two");
-            if (users != null && users.size() != 0){
-                mPresenter.addList(users,mFollowedRecyclerview);
+            List<UserDto> userDtos = (List<UserDto>) intent.getSerializableExtra("key_two");
+            if (userDtos != null && userDtos.size() != 0){
+                mPresenter.addList(userDtos,mFollowedRecyclerview);
             }
             finishRRefresh(0);
         }

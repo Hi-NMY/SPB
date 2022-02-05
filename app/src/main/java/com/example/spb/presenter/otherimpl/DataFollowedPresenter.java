@@ -1,25 +1,26 @@
 package com.example.spb.presenter.otherimpl;
 
+import com.example.spb.common.RequestListJson;
 import com.example.spb.entity.Followed;
-import com.example.spb.model.InterTotal.SpbModelBasicInter;
-import com.example.spb.model.impl.FollowedModelImpl;
+import com.example.spb.model.implA.FollowedModelImpl;
+import com.example.spb.model.inter.FollowedModel;
 import com.example.spb.presenter.callback.MyCallBack;
+import com.example.spb.presenter.utils.DataVerificationTool;
+import com.example.spb.view.Component.ResponseToast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.List;
 
 public class DataFollowedPresenter {
 
-    private static int SUCCESS = 200;
-
-    private SpbModelBasicInter followedModel;
-    public List<Followed> followedList;
-    private String account;
-    private String a;
-    private Gson gson;
+    private final FollowedModel followedModel;
+    public List<String> followedList;
+    private final String account;
+    private final Gson gson;
 
     public DataFollowedPresenter(String user_account) {
         account = user_account;
@@ -31,19 +32,16 @@ public class DataFollowedPresenter {
     public void initDate() {
         Followed followed = new Followed();
         followed.setUser_account(account);
-        followedModel.selectData(SpbModelBasicInter.DATAFOLLOWED_SELECT_ONE, followed, new MyCallBack() {
+        followedModel.queryFollowedList(account, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    a = response.body().string();
-                    if (Integer.valueOf(a.substring(0,3)) == SUCCESS){
-                        followedList = gson.fromJson(a.substring(3),new TypeToken<List<Followed>>()
-                        {}.getType());
-                    }else {
-
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestListJson<String> requestList = gson.fromJson(value, new TypeToken<RequestListJson<String>>() {
+                    }.getType());
+                    if (ResponseToast.toToast(requestList.getResultCode())) {
+                        followedList = requestList.getDataList();
                     }
-                } catch (Exception e) {
-
                 }
             }
 
@@ -54,18 +52,18 @@ public class DataFollowedPresenter {
         });
     }
 
-    public boolean determineFollowed(String account){
-        if (followedList != null && followedList.stream().anyMatch(followedList -> followedList.getUser_account().equals(account))){
+    public boolean determineFollowed(String account) {
+        if (followedList != null && followedList.stream().anyMatch(followedList -> followedList.equals(account))) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
 
-    public int obtainFollowedNum(){
-        if (followedList != null){
+    public int obtainFollowedNum() {
+        if (followedList != null) {
             return followedList.size();
-        }else {
+        } else {
             return 0;
         }
     }

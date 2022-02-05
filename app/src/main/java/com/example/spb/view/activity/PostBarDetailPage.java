@@ -528,10 +528,8 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
             int a = intent.getIntExtra("key_one", 0);
             if (a == 0) {
                 mPresenter.setUserFollowKey(true);
-                MyToastClass.ShowToast(MyApplication.getContext(), "关注成功");
             } else {
                 mPresenter.setUserFollowKey(false);
-                MyToastClass.ShowToast(MyApplication.getContext(), "取消关注");
             }
         }
     }

@@ -1,7 +1,7 @@
 package com.example.spb.model.impl;
 
 import com.example.spb.R;
-import com.example.spb.entity.User;
+import com.example.spb.entity.Dto.UserDto;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
 import com.example.spb.model.SpbAbstract.SpbModelAbstrate;
 import com.example.spb.presenter.callback.MyCallBack;
@@ -13,10 +13,10 @@ import okhttp3.RequestBody;
 
 import java.io.File;
 
-public class UserModelImpl extends SpbModelAbstrate implements SpbModelBasicInter<User> {
+public class UserModelImpl extends SpbModelAbstrate implements SpbModelBasicInter<UserDto> {
 
     @Override
-    public void addData(int fun, User data, MyCallBack callBack) {
+    public void addData(int fun, UserDto data, MyCallBack callBack) {
         switch (fun){
             case REGISTEREDPAGE:
                 File file = new File(data.getUser_head_image());
@@ -34,7 +34,7 @@ public class UserModelImpl extends SpbModelAbstrate implements SpbModelBasicInte
     }
 
     @Override
-    public void selectData(int fun, User data, MyCallBack callBack) {
+    public void selectData(int fun, UserDto data, MyCallBack callBack) {
         switch (fun){
             case FIRSTPAGE_ONE:
                 requestBody = new FormBody.Builder()
@@ -74,7 +74,7 @@ public class UserModelImpl extends SpbModelAbstrate implements SpbModelBasicInte
     }
 
     @Override
-    public void updateData(int fun, User data, MyCallBack callBack) {
+    public void updateData(int fun, UserDto data, MyCallBack callBack) {
         switch (fun){
             case DATAUSER_UPDATE_ONE:
                 requestBody = new FormBody.Builder()
@@ -146,7 +146,7 @@ public class UserModelImpl extends SpbModelAbstrate implements SpbModelBasicInte
     }
 
     @Override
-    public void deleteData(int fun, User data, MyCallBack callBack) {
+    public void deleteData(int fun, UserDto data, MyCallBack callBack) {
         switch (fun){
             case DATAUSER_DELETE_ONE:
                 requestBody = new FormBody.Builder()

@@ -79,7 +79,7 @@ public class Bar implements Serializable {
     }
 
     public String getPb_topic() {
-        return pb_topic;
+        return pb_topic == null ? "" : pb_topic;
     }
 
     public void setPb_topic(String pb_topic) {
@@ -87,7 +87,7 @@ public class Bar implements Serializable {
     }
 
     public String getPb_location() {
-        return pb_location;
+        return pb_location == null ? "" : pb_location;
     }
 
     public void setPb_location(String pb_location) {

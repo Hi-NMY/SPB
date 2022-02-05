@@ -198,7 +198,7 @@ public class BarMoreOperateDialog extends ComponentDialog {
             public void onClick(View v) {
                 if (isCollectKey()){
                     setCollectKey(false);
-                    baseMVPActivity.getDataCollectBarPresenter().removeCollectBar(getUserAccount(),getBarOneId());
+                    baseMVPActivity.getDataCollectBarPresenter().removeCollectBar(getBarOneId());
                 }else {
                     setCollectKey(true);
                     baseMVPActivity.getDataCollectBarPresenter().addCollectBar(getUserAccount(),getBarOneId());

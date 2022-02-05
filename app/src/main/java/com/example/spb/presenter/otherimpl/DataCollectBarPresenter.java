@@ -2,13 +2,18 @@ package com.example.spb.presenter.otherimpl;
 
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
+import com.example.spb.common.RequestCode;
+import com.example.spb.common.RequestEntityJson;
+import com.example.spb.common.RequestListJson;
 import com.example.spb.entity.Bar;
-import com.example.spb.entity.CollectBar;
-import com.example.spb.model.InterTotal.SpbModelBasicInter;
-import com.example.spb.model.impl.CollectBarModelImpl;
+import com.example.spb.entity.Dto.CollectBarDto;
+import com.example.spb.model.implA.CollectBarModelImpl;
+import com.example.spb.model.inter.CollectBarModel;
 import com.example.spb.presenter.callback.MyCallBack;
+import com.example.spb.presenter.utils.DataVerificationTool;
 import com.example.spb.presenter.utils.InValues;
 import com.example.spb.presenter.utils.SpbBroadcast;
+import com.example.spb.view.Component.ResponseToast;
 import com.example.spb.xserver.AndroidUnicast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -21,13 +26,11 @@ import java.util.List;
 
 public class DataCollectBarPresenter {
 
-    private static int SUCCESS = 200;
-
-    private SpbModelBasicInter collectBarModel;
-    public List<CollectBar> collectList;
-    private String account;
-    private String a;
-    private Gson gson;
+    private final CollectBarModel collectBarModel;
+    public List<String> collectList;
+    private final String account;
+    private final Gson gson;
+    private String cacheAccount = "";
 
     public DataCollectBarPresenter(String user_account) {
         account = user_account;
@@ -37,21 +40,16 @@ public class DataCollectBarPresenter {
     }
 
     private void initDate() {
-        CollectBar collectBar = new CollectBar();
-        collectBar.setUser_account(account);
-        collectBarModel.selectData(collectBarModel.DATACOLLECTBAR_SELECT_ONE, collectBar, new MyCallBack() {
+        collectBarModel.queryCollectBarList(account, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    a = response.body().string();
-                    if (Integer.valueOf(a.substring(0,3)) == SUCCESS){
-                        collectList = gson.fromJson(a.substring(3),new TypeToken<List<CollectBar>>()
-                        {}.getType());
-                    }else {
-
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestListJson<String> requestListJson = gson.fromJson(value, new TypeToken<RequestListJson<String>>() {
+                    }.getType());
+                    if (ResponseToast.toToast(requestListJson.getResultCode())) {
+                        collectList = requestListJson.getDataList();
                     }
-                } catch (Exception e) {
-
                 }
             }
 
@@ -62,23 +60,18 @@ public class DataCollectBarPresenter {
         });
     }
 
-    public void obtainCollectBar(String account){
-        CollectBar collectBar = new CollectBar();
-        collectBar.setUser_account(account);
-        collectBarModel.selectData(collectBarModel.DATACOLLECTBAR_SELECT_TWO, collectBar, new MyCallBack() {
+    public void obtainCollectBar(String account) {
+        collectBarModel.queryCollectBarFullList(account, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    a = response.body().string();
-                    if (Integer.valueOf(a.substring(0,3)) == SUCCESS){
-                        List<Bar> collectBars = gson.fromJson(a.substring(3),new TypeToken<List<Bar>>()
-                        {}.getType());
-                        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_CollectBar),0,(Serializable) collectBars);
-                    }else {
-
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestListJson<Bar> requestListJson = gson.fromJson(value, new TypeToken<RequestListJson<Bar>>() {
+                    }.getType());
+                    if (ResponseToast.toToast(requestListJson.getResultCode())) {
+                        SpbBroadcast.sendReceiver(MyApplication.getContext()
+                                , InValues.send(R.string.Bcr_add_CollectBar), 0, (Serializable) requestListJson.getDataList());
                     }
-                } catch (Exception e) {
-
                 }
             }
 
@@ -89,37 +82,24 @@ public class DataCollectBarPresenter {
         });
     }
 
-    public void addCollectBar(String acc,String pbid){
-        CollectBar collectBar = new CollectBar();
-        collectBar.setCache_account(acc);
-        collectBar.setUser_account(this.account);
-        collectBar.setPb_one_id(pbid);
-        collectBarModel.addData(collectBarModel.DATACOLLECTBAR_ADD_ONE, collectBar, new MyCallBack() {
+    public void addCollectBar(String acc, String pbid) {
+        if (!acc.equals(account)) {
+            cacheAccount = acc;
+        }
+        CollectBarDto collectBarDto = new CollectBarDto();
+        collectBarDto.setPb_one_id(pbid);
+        collectBarDto.setUser_account(account);
+        collectBarModel.addCollectBar(collectBarDto, cacheAccount, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    a = response.body().string();
-                    if (Integer.valueOf(a.substring(0,3)) == SUCCESS){
-                        collectList.add(0,collectBar);
-                        String user_ip = a.substring(3);
-                        if (!account.equals(acc)){
-                            AndroidUnicast unicast = null;
-                            try {
-                                unicast = new AndroidUnicast();
-                                unicast.setDeviceToken(user_ip);
-                                unicast.setTicker( "Android unicast ticker");
-                                unicast.setTitle(InValues.send(R.string.Push_Title));
-                                unicast.setText(InValues.send(R.string.Push_Collect_txt));
-                                unicast.setExtraField(InValues.send(R.string.Push_fun),String.valueOf(unicast.PUSHCOLLECTKEY));
-                                unicast.setExtraField(InValues.send(R.string.Push_pbid_key),pbid);
-                                unicast.clientSend(unicast);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestEntityJson<String> requestEntityJson = gson.fromJson(value, new TypeToken<RequestEntityJson<String>>() {
+                    }.getType());
+                    if (ResponseToast.toToast(requestEntityJson.getResultCode())) {
+                        collectList.add(0, pbid);
+                        toMessage(requestEntityJson.getData(), pbid);
                     }
-                } catch (Exception e) {
-
                 }
             }
 
@@ -130,26 +110,40 @@ public class DataCollectBarPresenter {
         });
     }
 
-    public void removeCollectBar(String account,String pbid){
-        CollectBar collectBar = new CollectBar();
-        collectBar.setCache_account(account);
-        collectBar.setUser_account(this.account);
-        collectBar.setPb_one_id(pbid);
-        collectBarModel.deleteData(collectBarModel.DATACOLLECTBAR_DELETE_ONE, collectBar, new MyCallBack() {
+    private void toMessage(String userIp, String pbId) {
+        AndroidUnicast unicast = null;
+        try {
+            unicast = new AndroidUnicast();
+            unicast.setDeviceToken(userIp);
+            unicast.setTicker("Android unicast ticker");
+            unicast.setTitle(InValues.send(R.string.Push_Title));
+            unicast.setText(InValues.send(R.string.Push_Collect_txt));
+            unicast.setExtraField(InValues.send(R.string.Push_fun), String.valueOf(AndroidUnicast.PUSHCOLLECTKEY));
+            unicast.setExtraField(InValues.send(R.string.Push_pbid_key), pbId);
+            unicast.clientSend(unicast);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeCollectBar(String pbid) {
+        CollectBarDto collectBarDto = new CollectBarDto();
+        collectBarDto.setPb_one_id(pbid);
+        collectBarDto.setUser_account(account);
+        collectBarModel.deleteCollectBar(collectBarDto, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    a = response.body().string();
-                    if (Integer.valueOf(a) == SUCCESS){
-                        collectList.removeIf(collectList -> collectList.getPb_one_id().equals(collectBar.getPb_one_id()));
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestCode requestCode = gson.fromJson(value, RequestCode.class);
+                    if (ResponseToast.toToast(requestCode)) {
+                        collectList.removeIf(collectList -> collectList.equals(pbid));
                         List<Bar> cacheBars = new ArrayList<>();
                         Bar bar = new Bar();
                         bar.setPb_one_id(pbid);
                         cacheBars.add(bar);
-                        SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_add_CollectBar),2,(Serializable)cacheBars);
+                        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_CollectBar), 2, (Serializable) cacheBars);
                     }
-                } catch (Exception e) {
-
                 }
             }
 
@@ -160,18 +154,18 @@ public class DataCollectBarPresenter {
         });
     }
 
-    public boolean determineCollect(String pbid){
-        if (collectList != null && collectList.stream().anyMatch(collectList -> collectList.getPb_one_id().equals(pbid))){
+    public boolean determineCollect(String pbid) {
+        if (collectList != null && collectList.stream().anyMatch(collectList -> collectList.equals(pbid))) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
 
-    public int obtainCollectNum(){
-        if (collectList != null){
+    public int obtainCollectNum() {
+        if (collectList != null) {
             return collectList.size();
-        }else {
+        } else {
             return 0;
         }
     }

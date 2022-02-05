@@ -1,7 +1,7 @@
 package com.example.spb.presenter.impl;
 
 import com.example.spb.base.BasePresenter;
-import com.example.spb.entity.User;
+import com.example.spb.entity.Dto.UserDto;
 import com.example.spb.model.InterTotal.SpbModelBasicInter;
 import com.example.spb.model.impl.UserModelImpl;
 import com.example.spb.presenter.callback.MyCallBack;
@@ -53,10 +53,10 @@ public class SetUpPrivacyPageAPresenterImpl extends BasePresenter<ISetUpPrivacyP
     }
 
     public void updateUserPrivacy(String account,int p){
-        User user = new User();
-        user.setUser_account(account);
-        user.setUser_privacy(getStringPrivacy());
-        userModel.updateData(userModel.DATAUSER_UPDATE_SIX,user, new MyCallBack() {
+        UserDto userDto = new UserDto();
+        userDto.setUser_account(account);
+        userDto.setUser_privacy(getStringPrivacy());
+        userModel.updateData(userModel.DATAUSER_UPDATE_SIX, userDto, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
                 try {
