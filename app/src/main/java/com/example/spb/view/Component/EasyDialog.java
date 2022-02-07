@@ -1,7 +1,6 @@
 package com.example.spb.view.Component;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +17,10 @@ public class EasyDialog implements DialogInter {
     private int mloadingId;
     private Window window;
 
-    public EasyDialog(Activity context,int loadingId) {
+    public EasyDialog(Activity context, int loadingId) {
         builder = new AlertDialog.Builder(context);
         mloadingId = loadingId;
-        View view = LayoutInflater.from(context).inflate(R.layout.dialog_loading,null);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_loading, null);
         initView(view);
         alertDialog = builder.create();
         window = alertDialog.getWindow();

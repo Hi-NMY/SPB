@@ -66,7 +66,7 @@ public class GlideEngine implements ImageEngine {
                 .centerCrop()
                 .apply(new RequestOptions().placeholder(R.drawable.picture_image_placeholder))
                 .into(imageView);
-}
+    }
 
     private static GlideEngine instance;
 

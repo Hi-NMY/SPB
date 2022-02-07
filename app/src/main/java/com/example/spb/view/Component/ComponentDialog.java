@@ -25,7 +25,7 @@ public class ComponentDialog implements DialogInter {
     public ComponentDialog(Activity context, int viewId, InitDialog initDialog) {
         activity = context;
         builder = new AlertDialog.Builder(context);
-        view = LayoutInflater.from(context).inflate(viewId,null);
+        view = LayoutInflater.from(context).inflate(viewId, null);
         initView(view);
         this.initDialog = initDialog;
         initDialog.initView(view);
@@ -36,10 +36,10 @@ public class ComponentDialog implements DialogInter {
         setBackgroundTransparent();
     }
 
-    public ComponentDialog(Activity context,int viewId,int styleId,InitDialog initDialog) {
+    public ComponentDialog(Activity context, int viewId, int styleId, InitDialog initDialog) {
         activity = context;
-        builder = new AlertDialog.Builder(context,styleId);
-        view = LayoutInflater.from(context).inflate(viewId,null);
+        builder = new AlertDialog.Builder(context, styleId);
+        view = LayoutInflater.from(context).inflate(viewId, null);
         initView(view);
         this.initDialog = initDialog;
         initDialog.initView(view);
@@ -103,10 +103,10 @@ public class ComponentDialog implements DialogInter {
     @Override
     public void setBottomStyle() {
         window.setGravity(Gravity.BOTTOM);
-        window.getDecorView().setPadding(0,0,0,0);
-        WindowManager.LayoutParams layoutParams=window.getAttributes();
-        layoutParams.width= WindowManager.LayoutParams.MATCH_PARENT;
-        layoutParams.height=WindowManager.LayoutParams.WRAP_CONTENT;
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams layoutParams = window.getAttributes();
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(layoutParams);
     }
 
@@ -125,9 +125,11 @@ public class ComponentDialog implements DialogInter {
         window.setGravity(Gravity.BOTTOM);
     }
 
-    public interface InitDialog{
+    public interface InitDialog {
         void initView(View view);
+
         void initData();
+
         void initListener();
     }
 
@@ -143,12 +145,12 @@ public class ComponentDialog implements DialogInter {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             DisplayCutout displayCutout = activity.getWindow().getDecorView().getRootWindowInsets().getDisplayCutout();
             if (displayCutout != null) {
-                int notificationBar  = Resources.getSystem().getDimensionPixelSize(
+                int notificationBar = Resources.getSystem().getDimensionPixelSize(
                         Resources.getSystem().getIdentifier("status_bar_height", "dimen", "android"));
                 layoutParams.x = 0; //对 dialog 设置 x 轴坐标
-                layoutParams.y = (int) (-(screenHeight / 2) + location[1] - v.getHeight() * 1.1-notificationBar/2); //对dialog设置y轴坐标
+                layoutParams.y = (int) (-(screenHeight / 2) + location[1] - v.getHeight() * 1.1 - notificationBar / 2); //对dialog设置y轴坐标
             }
-        }else {
+        } else {
             layoutParams.y = (int) (-(screenHeight / 2) + location[1] - v.getHeight() * 1.1); //对dialog设置y轴坐标
         }
         window.setAttributes(layoutParams);

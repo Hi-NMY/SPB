@@ -17,8 +17,8 @@ public class MyPopupWindow extends PopupWindow implements MyPopupWindowInter {
         mcontext = context;
     }
 
-    public void init(int viewId,InitWindow initWindow){
-        mview = LayoutInflater.from(mcontext).inflate(viewId,null);
+    public void init(int viewId, InitWindow initWindow) {
+        mview = LayoutInflater.from(mcontext).inflate(viewId, null);
         initWindow.initView(mview);
         initWindow.initData();
         initWindow.initListener();
@@ -26,9 +26,11 @@ public class MyPopupWindow extends PopupWindow implements MyPopupWindowInter {
         this.setBackgroundDrawable(new ColorDrawable(0x00000000));
     }
 
-    public interface InitWindow{
+    public interface InitWindow {
         void initView(View view);
+
         void initData();
+
         void initListener();
     }
 }

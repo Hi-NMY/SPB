@@ -16,31 +16,31 @@ public class GlideRoundTransform extends BitmapTransformation {
 
     }
 
-    public GlideRoundTransform(int dp){
+    public GlideRoundTransform(int dp) {
         super();
         this.radius = Resources.getSystem().getDisplayMetrics().density * dp;
     }
 
     @Override
     protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
-        Bitmap bitmap = TransformationUtils.centerCrop(pool,toTransform,outWidth,outHeight);
+        Bitmap bitmap = TransformationUtils.centerCrop(pool, toTransform, outWidth, outHeight);
         return roundCrop(pool, bitmap);
     }
 
     private Bitmap roundCrop(BitmapPool pool, Bitmap bitmap) {
-        if (bitmap == null){
+        if (bitmap == null) {
             return null;
         }
-        Bitmap resule = pool.get(bitmap.getWidth(),bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-        if (resule == null){
+        Bitmap resule = pool.get(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        if (resule == null) {
             resule = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
         }
         Canvas canvas = new Canvas(resule);
         Paint paint = new Paint();
         paint.setShader(new BitmapShader(bitmap, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
         paint.setAntiAlias(true);
-        RectF rectF = new RectF(0f,0f,bitmap.getWidth(),bitmap.getHeight());
-        canvas.drawRoundRect(rectF,radius,radius,paint);
+        RectF rectF = new RectF(0f, 0f, bitmap.getWidth(), bitmap.getHeight());
+        canvas.drawRoundRect(rectF, radius, radius, paint);
 
         return resule;
     }

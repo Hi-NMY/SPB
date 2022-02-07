@@ -84,12 +84,12 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
     @Override
     protected void initData() {
         if (!personalSpacePage.getDataUserMsgPresenter().getUser_home().equals("")){
-            mBasicinformationHome.setText(personalSpacePage.getDataUserMsgPresenter().user_home);
+            mBasicinformationHome.setText(personalSpacePage.getDataUserMsgPresenter().getUser_home());
         }
 
         if (!personalSpacePage.getDataUserMsgPresenter().getUser_birth().equals("")){
-            mBasicinformationBirth.setText(personalSpacePage.getDataUserMsgPresenter().user_birth);
-            mBasicinformationConstellation.setText(MyDateClass.getConstellation(personalSpacePage.getDataUserMsgPresenter().user_birth.substring(5)));
+            mBasicinformationBirth.setText(personalSpacePage.getDataUserMsgPresenter().getUser_birth());
+            mBasicinformationConstellation.setText(MyDateClass.getConstellation(personalSpacePage.getDataUserMsgPresenter().getUser_birth().substring(5)));
         }
 
         mBasicinformationOnline.setText(personalSpacePage.getDataUserMsgPresenter().getUser_longDay() + "天");

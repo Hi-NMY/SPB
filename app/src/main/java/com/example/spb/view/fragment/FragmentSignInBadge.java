@@ -31,7 +31,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import java.util.Calendar;
 import java.util.Date;
 
-public class FragmentSignInBadge extends BaseMVPFragment<ISignInBadgeFView,SignInBadgeFPresenterImpl> implements ISignInBadgeFView , View.OnClickListener{
+public class FragmentSignInBadge extends BaseMVPFragment<ISignInBadgeFView, SignInBadgeFPresenterImpl> implements ISignInBadgeFView, View.OnClickListener {
 
     private RoundedImageView mBadgeStar;
     private Button mBadgeStarBtn;
@@ -50,7 +50,7 @@ public class FragmentSignInBadge extends BaseMVPFragment<ISignInBadgeFView,SignI
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        signInPage = (SignInPage)getActivity();
+        signInPage = (SignInPage) getActivity();
         obtainSignData = new ObtainSignData();
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_sign_data), obtainSignData);
     }
@@ -74,9 +74,9 @@ public class FragmentSignInBadge extends BaseMVPFragment<ISignInBadgeFView,SignI
         mBadgeLikeTwoBtn = (Button) view.findViewById(R.id.badge_like_two_btn);
         mBadgeLikeOneBtn = (Button) view.findViewById(R.id.badge_like_one_btn);
         mBadgeLikeThreeBtn = (Button) view.findViewById(R.id.badge_like_three_btn);
-        mBadgeTaskTwoBtn = (Button)view.findViewById(R.id.badge_task_two_btn);
-        mBadgeTaskOneBtn = (Button)view.findViewById(R.id.badge_task_one_btn);
-        mBadgeTaskThreeBtn = (Button)view.findViewById(R.id.badge_task_three_btn);
+        mBadgeTaskTwoBtn = (Button) view.findViewById(R.id.badge_task_two_btn);
+        mBadgeTaskOneBtn = (Button) view.findViewById(R.id.badge_task_one_btn);
+        mBadgeTaskThreeBtn = (Button) view.findViewById(R.id.badge_task_three_btn);
         createDialog();
         setMyListener();
     }
@@ -86,45 +86,45 @@ public class FragmentSignInBadge extends BaseMVPFragment<ISignInBadgeFView,SignI
 
     }
 
-    public void initBadgeView(){
+    public void initBadgeView() {
         mPresenter.obtainBarLike(signInPage.getDataUserMsgPresenter().getUser_account(), new SignInBadgeFPresenterImpl.OnReturn() {
             @Override
             public void onReturn(int likeNum) {
                 signInPage.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (mPresenter.getLikeBadgeNum() == 0){
+                        if (mPresenter.getLikeBadgeNum() == 0) {
                             setNullBadge(mBadgeLikeOneBtn);
                             setNullBadge(mBadgeLikeTwoBtn);
                             setNullBadge(mBadgeLikeThreeBtn);
-                            if (likeNum >= 15 && likeNum < 60){
+                            if (likeNum >= 15 && likeNum < 60) {
                                 setReceiveBadge(mBadgeLikeOneBtn);
-                            }else if (likeNum >= 60 && likeNum < 150){
+                            } else if (likeNum >= 60 && likeNum < 150) {
                                 setReceiveBadge(mBadgeLikeOneBtn);
                                 setReceiveBadge(mBadgeLikeTwoBtn);
-                            }else if (likeNum >= 150){
+                            } else if (likeNum >= 150) {
                                 setReceiveBadge(mBadgeLikeOneBtn);
                                 setReceiveBadge(mBadgeLikeTwoBtn);
                                 setReceiveBadge(mBadgeLikeThreeBtn);
                             }
-                        }else if (mPresenter.getLikeBadgeNum() == 1){
+                        } else if (mPresenter.getLikeBadgeNum() == 1) {
                             setAlreadyBadge(mBadgeLikeOneBtn);
                             setNullBadge(mBadgeLikeTwoBtn);
                             setNullBadge(mBadgeLikeThreeBtn);
-                            if (likeNum >= 60 && likeNum < 150){
+                            if (likeNum >= 60 && likeNum < 150) {
                                 setReceiveBadge(mBadgeLikeTwoBtn);
-                            }else if (likeNum >= 150){
+                            } else if (likeNum >= 150) {
                                 setReceiveBadge(mBadgeLikeTwoBtn);
                                 setReceiveBadge(mBadgeLikeThreeBtn);
                             }
-                        }else if (mPresenter.getLikeBadgeNum() == 2){
+                        } else if (mPresenter.getLikeBadgeNum() == 2) {
                             setAlreadyBadge(mBadgeLikeOneBtn);
                             setAlreadyBadge(mBadgeLikeTwoBtn);
                             setNullBadge(mBadgeLikeThreeBtn);
-                            if (likeNum >= 150){
+                            if (likeNum >= 150) {
                                 setReceiveBadge(mBadgeLikeThreeBtn);
                             }
-                        }else if (mPresenter.getLikeBadgeNum() == 3){
+                        } else if (mPresenter.getLikeBadgeNum() == 3) {
                             setAlreadyBadge(mBadgeLikeOneBtn);
                             setAlreadyBadge(mBadgeLikeTwoBtn);
                             setAlreadyBadge(mBadgeLikeThreeBtn);
@@ -135,61 +135,61 @@ public class FragmentSignInBadge extends BaseMVPFragment<ISignInBadgeFView,SignI
         });
 
         int longDay = signInPage.obtainLongDay();
-        if (mPresenter.getSignBadgeNum() == 0){
+        if (mPresenter.getSignBadgeNum() == 0) {
             setNullBadge(mBadgeTaskOneBtn);
             setNullBadge(mBadgeTaskTwoBtn);
             setNullBadge(mBadgeTaskThreeBtn);
-            if (longDay >= 10 && longDay < 50){
+            if (longDay >= 10 && longDay < 50) {
                 setReceiveBadge(mBadgeTaskOneBtn);
-            }else if (longDay >= 50 && longDay < 110){
+            } else if (longDay >= 50 && longDay < 110) {
                 setReceiveBadge(mBadgeTaskOneBtn);
                 setReceiveBadge(mBadgeTaskTwoBtn);
-            }else if (longDay >= 110){
+            } else if (longDay >= 110) {
                 setReceiveBadge(mBadgeTaskOneBtn);
                 setReceiveBadge(mBadgeTaskTwoBtn);
                 setReceiveBadge(mBadgeTaskThreeBtn);
             }
-        }else if (mPresenter.getSignBadgeNum() == 1){
+        } else if (mPresenter.getSignBadgeNum() == 1) {
             setAlreadyBadge(mBadgeTaskOneBtn);
             setNullBadge(mBadgeTaskTwoBtn);
             setNullBadge(mBadgeTaskThreeBtn);
-            if (longDay >= 50 && longDay < 110){
+            if (longDay >= 50 && longDay < 110) {
                 setReceiveBadge(mBadgeTaskTwoBtn);
-            }else if (longDay >= 110){
+            } else if (longDay >= 110) {
                 setReceiveBadge(mBadgeTaskTwoBtn);
                 setReceiveBadge(mBadgeTaskThreeBtn);
             }
-        }else if (mPresenter.getSignBadgeNum() == 2){
+        } else if (mPresenter.getSignBadgeNum() == 2) {
             setAlreadyBadge(mBadgeTaskOneBtn);
             setAlreadyBadge(mBadgeTaskTwoBtn);
             setNullBadge(mBadgeTaskThreeBtn);
-            if (longDay >= 110){
+            if (longDay >= 110) {
                 setReceiveBadge(mBadgeTaskThreeBtn);
             }
-        }else if (mPresenter.getSignBadgeNum() == 3){
+        } else if (mPresenter.getSignBadgeNum() == 3) {
             setAlreadyBadge(mBadgeTaskOneBtn);
             setAlreadyBadge(mBadgeTaskTwoBtn);
             setAlreadyBadge(mBadgeTaskThreeBtn);
         }
 
-        if (mPresenter.getCtSign() == 0){
+        if (mPresenter.getCtSign() == 0) {
             setYesView(mBadgeCertificationBtn);
             //glide展示认证徽章
             mBadgeCertification.setTag(0);
             Glide.with(signInPage)
                     .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/certification_badge.png")
                     .into(mBadgeCertification);
-        }else {
+        } else {
             mBadgeCertification.setTag(1);
         }
-        if (!mPresenter.getStarBadge().equals("")){
+        if (!mPresenter.getStarBadge().equals("")) {
             setYesView(mBadgeStarBtn);
             //glide展示星座徽章
             mBadgeStar.setTag(0);
             Glide.with(signInPage)
                     .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + mPresenter.getStarBadge())
                     .into(mBadgeStar);
-        }else {
+        } else {
             mBadgeStar.setTag(1);
         }
     }
@@ -198,9 +198,9 @@ public class FragmentSignInBadge extends BaseMVPFragment<ISignInBadgeFView,SignI
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.badge_star:
-                if(mBadgeStar.getTag().equals(0)){
-                    MyToastClass.ShowToast(MyApplication.getContext(),"已认证，不可再次认证哦");
-                }else {
+                if (mBadgeStar.getTag().equals(0)) {
+                    MyToastClass.ShowToast(MyApplication.getContext(), "已认证，不可再次认证哦");
+                } else {
                     Calendar startDate = Calendar.getInstance();
                     startDate.set(1985, 0, 1);
                     Calendar endDate = Calendar.getInstance();
@@ -244,46 +244,46 @@ public class FragmentSignInBadge extends BaseMVPFragment<ISignInBadgeFView,SignI
                 }
                 break;
             case R.id.badge_certification:
-                if(mBadgeCertification.getTag().equals(0)){
-                    MyToastClass.ShowToast(MyApplication.getContext(),"已认证，不可再次认证哦");
-                }else {
+                if (mBadgeCertification.getTag().equals(0)) {
+                    MyToastClass.ShowToast(MyApplication.getContext(), "已认证，不可再次认证哦");
+                } else {
 
                 }
                 break;
             case R.id.badge_like_two_btn:
-                if (mBadgeLikeTwoBtn.getTag().equals(1)){
+                if (mBadgeLikeTwoBtn.getTag().equals(1)) {
                     sendObtainLikeNum(2);
                 }
                 break;
             case R.id.badge_like_one_btn:
-                if (mBadgeLikeOneBtn.getTag().equals(1)){
+                if (mBadgeLikeOneBtn.getTag().equals(1)) {
                     sendObtainLikeNum(1);
                 }
                 break;
             case R.id.badge_like_three_btn:
-                if (mBadgeLikeThreeBtn.getTag().equals(1)){
+                if (mBadgeLikeThreeBtn.getTag().equals(1)) {
                     sendObtainLikeNum(3);
                 }
                 break;
             case R.id.badge_task_two_btn:
-                if (mBadgeTaskTwoBtn.getTag().equals(1)){
+                if (mBadgeTaskTwoBtn.getTag().equals(1)) {
                     sendObtainSignNum(2);
                 }
                 break;
             case R.id.badge_task_one_btn:
-                if (mBadgeTaskOneBtn.getTag().equals(1)){
+                if (mBadgeTaskOneBtn.getTag().equals(1)) {
                     sendObtainSignNum(1);
                 }
                 break;
             case R.id.badge_task_three_btn:
-                if (mBadgeTaskThreeBtn.getTag().equals(1)){
+                if (mBadgeTaskThreeBtn.getTag().equals(1)) {
                     sendObtainSignNum(3);
                 }
                 break;
         }
     }
 
-    public void sendObtainLikeNum(int a){
+    public void sendObtainLikeNum(int a) {
         showDialogS(LOADINGDIALOG);
         mPresenter.obtainLikeBadge(signInPage.getDataUserMsgPresenter().getUser_account(), a, new SignInBadgeFPresenterImpl.OnReturn() {
             @Override
@@ -292,12 +292,12 @@ public class FragmentSignInBadge extends BaseMVPFragment<ISignInBadgeFView,SignI
                     @Override
                     public void run() {
                         closeDialog(LOADINGDIALOG);
-                        if (likeNum == 1){
+                        if (likeNum == 1) {
                             setAlreadyBadge(mBadgeLikeOneBtn);
-                        }else if (likeNum == 2){
+                        } else if (likeNum == 2) {
                             setAlreadyBadge(mBadgeLikeOneBtn);
                             setAlreadyBadge(mBadgeLikeTwoBtn);
-                        }else {
+                        } else {
                             setAlreadyBadge(mBadgeLikeOneBtn);
                             setAlreadyBadge(mBadgeLikeTwoBtn);
                             setAlreadyBadge(mBadgeLikeThreeBtn);
@@ -308,7 +308,7 @@ public class FragmentSignInBadge extends BaseMVPFragment<ISignInBadgeFView,SignI
         });
     }
 
-    public void sendObtainSignNum(int a){
+    public void sendObtainSignNum(int a) {
         mPresenter.obtainSignBadge(signInPage.getDataUserMsgPresenter().getUser_account(), a, new SignInBadgeFPresenterImpl.OnReturn() {
             @Override
             public void onReturn(int likeNum) {
@@ -316,12 +316,12 @@ public class FragmentSignInBadge extends BaseMVPFragment<ISignInBadgeFView,SignI
                     @Override
                     public void run() {
                         closeDialog(LOADINGDIALOG);
-                        if (likeNum == 1){
+                        if (likeNum == 1) {
                             setAlreadyBadge(mBadgeTaskOneBtn);
-                        }else if (likeNum == 2){
+                        } else if (likeNum == 2) {
                             setAlreadyBadge(mBadgeTaskOneBtn);
                             setAlreadyBadge(mBadgeTaskTwoBtn);
-                        }else {
+                        } else {
                             setAlreadyBadge(mBadgeTaskOneBtn);
                             setAlreadyBadge(mBadgeTaskTwoBtn);
                             setAlreadyBadge(mBadgeTaskThreeBtn);
@@ -332,26 +332,26 @@ public class FragmentSignInBadge extends BaseMVPFragment<ISignInBadgeFView,SignI
         });
     }
 
-    public void setYesView(Button thisButton){
+    public void setYesView(Button thisButton) {
         thisButton.setText("已认证");
         thisButton.setBackground(signInPage.getDrawable(R.drawable.badge_obtain_bg));
     }
 
-    public void setNullBadge(Button thisButton){
+    public void setNullBadge(Button thisButton) {
         thisButton.setTag(0);
     }
 
-    public void setReceiveBadge(Button thisButton){
+    public void setReceiveBadge(Button thisButton) {
         thisButton.setTag(1);
         thisButton.setText("领取");
-        thisButton.setTextColor(ContextCompat.getColor(MyApplication.getContext(),R.color.beijing));
+        thisButton.setTextColor(ContextCompat.getColor(MyApplication.getContext(), R.color.beijing));
         thisButton.setBackground(signInPage.getDrawable(R.drawable.badge_obtain_bg));
     }
 
-    public void setAlreadyBadge(Button thisButton){
+    public void setAlreadyBadge(Button thisButton) {
         thisButton.setTag(2);
         thisButton.setText("已获得");
-        thisButton.setTextColor(ContextCompat.getColor(MyApplication.getContext(),R.color.qihei));
+        thisButton.setTextColor(ContextCompat.getColor(MyApplication.getContext(), R.color.qihei));
         thisButton.setBackground(signInPage.getDrawable(R.drawable.sign_bg));
     }
 
@@ -368,12 +368,12 @@ public class FragmentSignInBadge extends BaseMVPFragment<ISignInBadgeFView,SignI
 
     @Override
     public void createDialog() {
-        loadingDialog = new EasyDialog(signInPage,R.drawable.loading);
+        loadingDialog = new EasyDialog(signInPage, R.drawable.loading);
     }
 
     @Override
     public void showDialogS(int i) {
-        switch (i){
+        switch (i) {
             case LOADINGDIALOG:
                 loadingDialog.showMyDialog();
                 break;
@@ -385,7 +385,7 @@ public class FragmentSignInBadge extends BaseMVPFragment<ISignInBadgeFView,SignI
 
     @Override
     public void closeDialog(int i) {
-        switch (i){
+        switch (i) {
             case LOADINGDIALOG:
                 loadingDialog.closeMyDialog();
                 break;
@@ -429,14 +429,14 @@ public class FragmentSignInBadge extends BaseMVPFragment<ISignInBadgeFView,SignI
         @Override
         public void onReceive(Context context, Intent intent) {
             Sign sign = (Sign) intent.getSerializableExtra("key_two");
-            if (sign.getSign_like_badge() == null || sign.getSign_like_badge().equals("")){
+            if (sign.getSign_like_badge() == null || sign.getSign_like_badge().equals("")) {
                 mPresenter.setLikeBadgeNum(0);
-            }else {
+            } else {
                 mPresenter.setLikeBadgeNum(MyResolve.InBadge(sign.getSign_like_badge()).size());
             }
-            if (sign.getSign_task_badge() == null || sign.getSign_task_badge().equals("")){
+            if (sign.getSign_task_badge() == null || sign.getSign_task_badge().equals("")) {
                 mPresenter.setSignBadgeNum(0);
-            }else {
+            } else {
                 mPresenter.setSignBadgeNum(MyResolve.InBadge(sign.getSign_task_badge()).size());
             }
             mPresenter.setCtSign(sign.getSign_ct_badge());

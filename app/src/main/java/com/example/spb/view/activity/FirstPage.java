@@ -246,7 +246,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
                 if (ENTER_FUN == 1) {
                     showDialogS(DIALOGLOADING);
                     userDto.setUser_password(mPasswordNumberEdit.getText().toString().trim());
-                    mPresenter.verifyPassword(userDto,verifyAccountHanlder);
+                    mPresenter.verifyPassword(userDto.getUser_password(),verifyAccountHanlder);
                 } else {
                     if (!ENTER_CHECK) {
                         MyToastClass.ShowToast(this, TOASTTXT);

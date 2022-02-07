@@ -80,9 +80,11 @@
     <string name="httpHeader">http://nmy1206.natapp1.cc</string>
     <string name="httpHeadert">http://nmy1206.natapp1.cc/</string>
     <string name="rong_api">https://api-cn.ronghub.com/user/getToken.json</string>
-    <string name="prefix_img">http://nmy1206.natapp1.cc/upload/spb/UserImageServer/</string>
+    <string name="prefix_img">http://nmy1206.natapp1.cc/</string>
     <string name="suffix_head_img">/HeadImage/myHeadImage.png</string>
     <string name="suffix_bg_img">/HeadImage/myBackgroundImage.png</string>
+    <string name="isVerison">http://nmy1206.natapp1.cc/appVersion/isVerison</string>
+    <string name="SPBAPK">http://nmy1206.natapp1.cc/upload/spb/UserImageServer/Data/SPB.apk</string>
 
 
 
@@ -91,8 +93,6 @@
     <string name="RongCloudUser">http://nmy1206.natapp1.cc/RongCloudServer/RongCloud/SPBServer/User.php</string>
     <string name="SendToken">http://nmy1206.natapp1.cc/SendToken.php</string>
     <string name="getuiServer">http://nmy1206.natapp1.cc/getuiServer.php</string>
-    <string name="AppVersion">http://nmy1206.natapp1.cc/AppVersion.php</string>
-    <string name="SPBAPK">http://nmy1206.natapp1.cc/Data/SPB.apk</string>
     <string name="VerifyMessage">http://nmy1206.natapp1.cc/VerifyMessage.php</string>
     <string name="VerifyAccount">http://nmy1206.natapp1.cc/VerifyAccount.php</string>
     <string name="VerifyPassword">http://nmy1206.natapp1.cc/VerifyPassword.php</string>

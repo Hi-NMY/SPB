@@ -9,7 +9,7 @@ import com.example.spb.R;
 
 public class MyListAnimation {
 
-    public static RecyclerView setListAnimation(Activity activity, RecyclerView recyclerView){
+    public static RecyclerView setListAnimation(Activity activity, RecyclerView recyclerView) {
         LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(activity, R.anim.layout_animation);
         controller.setOrder(LayoutAnimationController.ORDER_NORMAL);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(activity, 1);

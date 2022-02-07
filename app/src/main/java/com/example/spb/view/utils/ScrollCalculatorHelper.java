@@ -79,7 +79,7 @@ public class ScrollCalculatorHelper {
         }
 
         if (gsyBaseVideoPlayer != null && needPlay) {
-            if (oneKey){
+            if (oneKey) {
                 runnable = new PlayRunnable(gsyBaseVideoPlayer);
                 oneKey = false;
             }

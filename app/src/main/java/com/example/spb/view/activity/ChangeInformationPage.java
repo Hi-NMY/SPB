@@ -101,7 +101,7 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
     protected void initData() {
         mChangeinformationUsername.setText(getDataUserMsgPresenter().getUser_name());
         if (!getDataUserMsgPresenter().getUser_birth().equals("")) {
-            mChangeinformationBirth.setText(getDataUserMsgPresenter().user_birth + "   " + MyDateClass.getConstellation(getDataUserMsgPresenter().user_birth.substring(5)));
+            mChangeinformationBirth.setText(getDataUserMsgPresenter().getUser_birth() + "   " + MyDateClass.getConstellation(getDataUserMsgPresenter().getUser_birth().substring(5)));
         }
         mChangeinformationFavorite.setText(getDataUserMsgPresenter().getUser_favorite());
         mChangeinformationHome.setText(getDataUserMsgPresenter().getUser_home());
@@ -116,22 +116,22 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
 
     @Override
     public String getUser_birth() {
-        return getDataUserMsgPresenter().user_birth;
+        return getDataUserMsgPresenter().getUser_birth();
     }
 
     @Override
     public String getUser_home() {
-        return getDataUserMsgPresenter().user_home;
+        return getDataUserMsgPresenter().getUser_home();
     }
 
     @Override
     public String getUser_profile() {
-        return getDataUserMsgPresenter().user_profile;
+        return getDataUserMsgPresenter().getUser_profile();
     }
 
     @Override
     public String getUser_name() {
-        return getDataUserMsgPresenter().user_name;
+        return getDataUserMsgPresenter().getUser_name();
     }
 
     @Override

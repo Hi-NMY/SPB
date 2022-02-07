@@ -7,7 +7,7 @@ import com.example.spb.presenter.utils.RemoveNullCharacter;
 
 public class SearchFun {
 
-    public static void search(EditText editText,GoSearch goSearch){
+    public static void search(EditText editText, GoSearch goSearch) {
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -16,7 +16,7 @@ public class SearchFun {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                RemoveNullCharacter.setRemoveNull(editText,s).setSelection(editText.getText().length());
+                RemoveNullCharacter.setRemoveNull(editText, s).setSelection(editText.getText().length());
             }
 
             @Override
@@ -26,8 +26,8 @@ public class SearchFun {
         });
     }
 
-    public interface GoSearch{
-       void afterTextChangedSearch(String text);
+    public interface GoSearch {
+        void afterTextChangedSearch(String text);
     }
 
 }

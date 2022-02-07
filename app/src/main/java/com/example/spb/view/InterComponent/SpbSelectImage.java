@@ -10,7 +10,7 @@ public interface SpbSelectImage {
 
     public void selectOneImg2(String imgName, OnResultCallbackListener onResultCallbackListener);
 
-    public void selectMoreImg(String imgName,int maxPosition, OnResultCallbackListener onResultCallbackListener);
+    public void selectMoreImg(String imgName, int maxPosition, OnResultCallbackListener onResultCallbackListener);
 
     public void selectVideo(String videoName, OnResultCallbackListener onResultCallbackListener);
 

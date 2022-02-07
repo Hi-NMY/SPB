@@ -32,10 +32,10 @@ public class CircleProgressBar extends View {
     }
 
     private void initAttrs(Context context, AttributeSet attrs) {
-        TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.CircleProgressbar,0,0);
-        radius = typedArray.getDimension(R.styleable.CircleProgressbar_radius,80);
-        strokeWidth = typedArray.getDimension(R.styleable.CircleProgressbar_strokeWidth,10);
-        ringcolor = typedArray.getColor(R.styleable.CircleProgressbar_ringColor,0xFF0000);
+        TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.CircleProgressbar, 0, 0);
+        radius = typedArray.getDimension(R.styleable.CircleProgressbar_radius, 80);
+        strokeWidth = typedArray.getDimension(R.styleable.CircleProgressbar_strokeWidth, 10);
+        ringcolor = typedArray.getColor(R.styleable.CircleProgressbar_ringColor, 0xFF0000);
     }
 
 
@@ -52,14 +52,14 @@ public class CircleProgressBar extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (newProgress > 0){
-            RectF rectF = new RectF(getWidth() / 2 - radius,getHeight() / 2 - radius, getWidth() / 2 + radius, getHeight() / 2 + radius);
-            canvas.drawArc(rectF,0,0,false,paint);
-            canvas.drawArc(rectF,-90,((float)newProgress / maxProgress) * 360,false,paint);
+        if (newProgress > 0) {
+            RectF rectF = new RectF(getWidth() / 2 - radius, getHeight() / 2 - radius, getWidth() / 2 + radius, getHeight() / 2 + radius);
+            canvas.drawArc(rectF, 0, 0, false, paint);
+            canvas.drawArc(rectF, -90, ((float) newProgress / maxProgress) * 360, false, paint);
         }
     }
 
-    public void setProgress(float progress){
+    public void setProgress(float progress) {
         this.newProgress = progress;
         postInvalidate();
     }

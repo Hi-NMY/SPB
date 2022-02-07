@@ -21,9 +21,9 @@ public interface ISpbAvtivityBarFView {
 
     public ImageView getmBarLeftImg();
 
-    public TextView getmBarLeftTxt() ;
+    public TextView getmBarLeftTxt();
 
-    public ImageView getmBarRightImg1() ;
+    public ImageView getmBarRightImg1();
 
     public View getmBarNewnoticeView();
 
@@ -59,7 +59,7 @@ public interface ISpbAvtivityBarFView {
 
     public void removeInvisible(View view);
 
-    public void searchShow(View view,int fun);
+    public void searchShow(View view, int fun);
 
     public void setBarBackground(int color);
 

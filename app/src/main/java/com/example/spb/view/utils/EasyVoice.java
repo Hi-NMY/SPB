@@ -14,21 +14,21 @@ public class EasyVoice {
     private OnVoice onVoice;
     private String url;
 
-    public EasyVoice(String url,OnVoice o) {
+    public EasyVoice(String url, OnVoice o) {
         this.onVoice = o;
         this.url = url;
         try {
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setDataSource(url);
             mediaPlayer.prepare();
-            voiceTime = mediaPlayer.getDuration()/1000;
-            cacheTime = mediaPlayer.getDuration()/1000;
+            voiceTime = mediaPlayer.getDuration() / 1000;
+            cacheTime = mediaPlayer.getDuration() / 1000;
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void returnSet(){
+    public void returnSet() {
         try {
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setDataSource(url);
@@ -42,7 +42,7 @@ public class EasyVoice {
         return voiceTime;
     }
 
-    public static void getVoiceTime(String url,int position,TimeReturn timeReturn) {
+    public static void getVoiceTime(String url, int position, TimeReturn timeReturn) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -53,9 +53,9 @@ public class EasyVoice {
                     MediaPlayer mediaPlayer = new MediaPlayer();
                     mediaPlayer.setDataSource(finalUrl);
                     mediaPlayer.prepare();
-                    Time = mediaPlayer.getDuration()/1000;
+                    Time = mediaPlayer.getDuration() / 1000;
                     mediaPlayer.release();
-                    timeReturn.onReturn(Time,finalPosition);
+                    timeReturn.onReturn(Time, finalPosition);
                 } catch (IOException e) {
                 }
             }
@@ -66,7 +66,7 @@ public class EasyVoice {
         return voicePlayerKey;
     }
 
-    public void startPlayer(){
+    public void startPlayer() {
         returnSet();
         mediaPlayer.start();
         voicePlayerKey = false;
@@ -74,8 +74,8 @@ public class EasyVoice {
         downTime.start();
     }
 
-    public void stopPlayer(){
-        if (mediaPlayer != null){
+    public void stopPlayer() {
+        if (mediaPlayer != null) {
             mediaPlayer.release();
             voicePlayerKey = true;
             voiceTime = cacheTime;
@@ -83,7 +83,7 @@ public class EasyVoice {
         }
     }
 
-    public void onDestroyVoice(){
+    public void onDestroyVoice() {
 
     }
 
@@ -107,13 +107,15 @@ public class EasyVoice {
         }
     }
 
-    public interface OnVoice{
+    public interface OnVoice {
         void onStart(int time);
+
         void onStop(int cacheTime);
+
         void onDestroy();
     }
 
-    public interface TimeReturn{
-        void onReturn(int time,int position);
+    public interface TimeReturn {
+        void onReturn(int time, int position);
     }
 }

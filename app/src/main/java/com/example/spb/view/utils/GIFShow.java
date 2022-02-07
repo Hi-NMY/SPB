@@ -1,8 +1,9 @@
 package com.example.spb.view.utils;
 
-import pl.droidsonroids.gif.*;
+import pl.droidsonroids.gif.GifDrawable;
+import pl.droidsonroids.gif.GifImageView;
 
-public class GIFShow{
+public class GIFShow {
 
     private GifDrawable gifDrawable;
 
@@ -11,16 +12,16 @@ public class GIFShow{
         gifDrawable.stop();
     }
 
-    public void startGif(){
+    public void startGif() {
         gifDrawable.setLoopCount(99);
         gifDrawable.reset();
     }
 
-    public void resetGif(){
+    public void resetGif() {
         gifDrawable.setLoopCount(1);
     }
 
-    public void stopGif(){
+    public void stopGif() {
         gifDrawable.stop();
     }
 }

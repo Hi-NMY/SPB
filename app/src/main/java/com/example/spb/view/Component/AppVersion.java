@@ -8,10 +8,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
+import com.example.spb.common.RequestCode;
+import com.example.spb.common.RequestEntityJson;
+import com.example.spb.entity.Dto.AppVersionDto;
+import com.example.spb.presenter.utils.DataVerificationTool;
 import com.example.spb.presenter.utils.InValues;
 import com.example.spb.presenter.utils.MyResolve;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.xserver.APPDownload;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -34,17 +40,17 @@ public class AppVersion {
         this.activity = activity;
     }
 
-    public void startVersion(String version,boolean tipKey){
+    public void startVersion(String version, boolean tipKey) {
         chechingVersion(version, new OnReturn() {
             @Override
-            public void onReturn(int code, String app_detailed) {
+            public void onReturn(RequestEntityJson<AppVersionDto> requestEntityJson) {
                 Looper.prepare();
-                if (code == 201){
-                    if (tipKey){
-                        MyToastClass.ShowToast(MyApplication.getContext(),"已是最新版本");
+                if (requestEntityJson.getResultCode().getCode() == RequestCode.ERROR) {
+                    if (tipKey) {
+                        MyToastClass.ShowToast(MyApplication.getContext(), "已是最新版本");
                     }
-                }else if (code == 200){
-                    List<String> strings = MyResolve.InBadge(app_detailed);
+                } else if (requestEntityJson.getResultCode().getCode() == RequestCode.SUCCESS) {
+                    List<String> strings = MyResolve.InBadge(requestEntityJson.getData().getDetailed());
                     versionDialog = new ComponentDialog(activity, R.layout.dialog_downloadapp_view, new ComponentDialog.InitDialog() {
                         @Override
                         public void initView(View view) {
@@ -57,11 +63,11 @@ public class AppVersion {
                         @Override
                         public void initData() {
                             StringBuffer stringBuffer = new StringBuffer();
-                            if (strings != null || strings.size() != 0){
-                                for (int i = 0 ; i < strings.size() ;i++){
-                                    if (i == 0){
+                            if (strings != null || strings.size() != 0) {
+                                for (int i = 0; i < strings.size(); i++) {
+                                    if (i == 0) {
                                         mCodeNum.setText(strings.get(0));
-                                    }else {
+                                    } else {
                                         stringBuffer.append(strings.get(i) + "\n");
                                     }
                                 }
@@ -81,11 +87,11 @@ public class AppVersion {
                                 @Override
                                 public void onClick(View v) {
                                     versionDialog.closeMyDialog();
-                                    MyToastClass.ShowToast(context,"请在通知栏查看更新进度");
+                                    MyToastClass.ShowToast(context, "请在通知栏查看更新进度");
                                     new Thread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            APPDownload appDownload = new APPDownload(context,activity);
+                                            APPDownload appDownload = new APPDownload(context, activity);
                                             appDownload.startDownload();
                                         }
                                     }).start();
@@ -100,15 +106,15 @@ public class AppVersion {
         });
     }
 
-    private void chechingVersion(String version,OnReturn onReturn){
+    private void chechingVersion(String version, OnReturn onReturn) {
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(20, TimeUnit.SECONDS)
-                .readTimeout(20,TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
                 .build();
         Request request = new Request.Builder()
-                .url(InValues.send(R.string.AppVersion))
+                .url(InValues.send(R.string.isVerison))
                 .post(new FormBody.Builder()
-                        .add("versionCode",version)
+                        .add("versionCode", version)
                         .build())
                 .build();
         client.newCall(request).enqueue(new Callback() {
@@ -118,18 +124,17 @@ public class AppVersion {
             }
 
             @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                String a = response.body().string();
-                if (Integer.valueOf(a.substring(0,3)) == 201){
-                    onReturn.onReturn(201,null);
-                }else if(Integer.valueOf(a.substring(0,3)) == 200){
-                    onReturn.onReturn(200,a.substring(3));
+            public void onResponse(@NotNull Call call, @NotNull Response response) {
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    onReturn.onReturn(new Gson().fromJson(value, new TypeToken<RequestEntityJson<AppVersionDto>>() {
+                    }.getType()));
                 }
             }
         });
     }
 
-    public interface OnReturn{
-        void onReturn(int code,String app_detailed);
+    public interface OnReturn {
+        void onReturn(RequestEntityJson<AppVersionDto> requestEntityJson);
     }
 }
