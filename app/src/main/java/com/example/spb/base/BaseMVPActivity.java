@@ -5,13 +5,13 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.spb.R;
-import com.example.spb.presenter.utils.InValues;
 import com.example.spb.presenter.otherimpl.*;
+import com.example.spb.presenter.utils.InValues;
 import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.utils.EasyVoice;
 import com.example.spb.view.utils.GIFShow;
 
-public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppCompatActivity {
+public abstract class BaseMVPActivity<V, T extends BasePresenter<V>> extends AppCompatActivity {
 
     protected T mPresenter;
 
@@ -30,37 +30,38 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
 
     public static EasyVoice easyVoice;
 
-    @SuppressWarnings("all")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter = createPresenter();
-        if (mPresenter != null){
-            mPresenter.attachView((V)this);
+        if (mPresenter != null) {
+            mPresenter.attachView((V) this);
         }
     }
 
     protected abstract T createPresenter();
 
     /**
-     *初始化view
-     * @Auther  nmynmy
-     * @Date  2021-02-01  19:19
+     * 初始化view
+     *
+     * @Auther nmynmy
+     * @Date 2021-02-01  19:19
      */
     protected abstract void initActView();
 
     /**
-     *初始化数据
-     * @Auther  nmynmy
-     * @Date  2021-02-01  19:20
+     * 初始化数据
+     *
+     * @Auther nmynmy
+     * @Date 2021-02-01  19:20
      */
     protected abstract void initData();
 
-    public FragmentSpbAvtivityBar setMyActivityBar(int barID){
+    public FragmentSpbAvtivityBar setMyActivityBar(int barID) {
         return (FragmentSpbAvtivityBar) getSupportFragmentManager().findFragmentById(barID);
     }
 
-    public void initUserData(String account){
+    public void initUserData(String account) {
         user_account = account;
         setDataAttentionTopicPresenter();
         setDataCollectBarPresenter();
@@ -81,121 +82,121 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
     }
 
     public DataAttentionTopicPresenter getDataAttentionTopicPresenter() {
-        if (dataAttentionTopicPresenter == null){
+        if (dataAttentionTopicPresenter == null) {
             setDataAttentionTopicPresenter();
             return dataAttentionTopicPresenter;
-        }else {
+        } else {
             return dataAttentionTopicPresenter;
         }
     }
 
     public void setDataAttentionTopicPresenter() {
-        this.dataAttentionTopicPresenter = new DataAttentionTopicPresenter(user_account);
+        dataAttentionTopicPresenter = new DataAttentionTopicPresenter(user_account);
     }
 
     public DataCollectBarPresenter getDataCollectBarPresenter() {
-        if (dataCollectBarPresenter == null){
+        if (dataCollectBarPresenter == null) {
             setDataCollectBarPresenter();
             return dataCollectBarPresenter;
-        }else {
+        } else {
             return dataCollectBarPresenter;
         }
     }
 
     public void setDataCollectBarPresenter() {
-        this.dataCollectBarPresenter = new DataCollectBarPresenter(user_account);
+        dataCollectBarPresenter = new DataCollectBarPresenter(user_account);
     }
 
     public DataDiaryPresenter getDataDiaryPresenter() {
-        if (dataDiaryPresenter == null){
+        if (dataDiaryPresenter == null) {
             setDataDiaryPresenter();
             return dataDiaryPresenter;
-        }else {
+        } else {
             return dataDiaryPresenter;
         }
     }
 
     public void setDataDiaryPresenter() {
-        this.dataDiaryPresenter = new DataDiaryPresenter(user_account);
+        dataDiaryPresenter = new DataDiaryPresenter(user_account);
     }
 
     public DataFollowPresenter getDataFollowPresenter() {
-        if (dataFollowPresenter == null){
+        if (dataFollowPresenter == null) {
             setDataFollowPresenter();
             return dataFollowPresenter;
-        }else {
+        } else {
             return dataFollowPresenter;
         }
     }
 
     public void setDataFollowPresenter() {
-        this.dataFollowPresenter = new DataFollowPresenter(user_account);
+        dataFollowPresenter = new DataFollowPresenter(user_account);
     }
 
     public DataFollowedPresenter getDataFollowedPresenter() {
-        if (dataFollowedPresenter == null){
+        if (dataFollowedPresenter == null) {
             setDataFollowedPresenter();
             return dataFollowedPresenter;
-        }else {
+        } else {
             return dataFollowedPresenter;
         }
     }
 
     public void setDataFollowedPresenter() {
-        this.dataFollowedPresenter = new DataFollowedPresenter(user_account);
+        dataFollowedPresenter = new DataFollowedPresenter(user_account);
     }
 
     public DataLikePresenter getDataLikePresenter() {
-        if (dataLikePresenter == null){
+        if (dataLikePresenter == null) {
             setDataLikePresenter();
             return dataLikePresenter;
-        }else {
+        } else {
             return dataLikePresenter;
         }
     }
 
     public void setDataLikePresenter() {
-        this.dataLikePresenter = new DataLikePresenter(user_account);
+        dataLikePresenter = new DataLikePresenter(user_account);
     }
 
     public DataPostBarPresenter getDataPostBarPresenter() {
-        if (dataPostBarPresenter == null){
+        if (dataPostBarPresenter == null) {
             setDataPostBarPresenter();
             return dataPostBarPresenter;
-        }else {
+        } else {
             return dataPostBarPresenter;
         }
     }
 
     public void setDataPostBarPresenter() {
-        this.dataPostBarPresenter = new DataPostBarPresenter(user_account);
+        dataPostBarPresenter = new DataPostBarPresenter(user_account);
     }
 
     public DataUserMsgPresenter getDataUserMsgPresenter() {
-        if (dataUserMsgPresenter == null){
+        if (dataUserMsgPresenter == null) {
             setDataUserMsgPresenter();
             return dataUserMsgPresenter;
-        }else {
+        } else {
             return dataUserMsgPresenter;
         }
     }
 
     public void setDataUserMsgPresenter() {
-        this.dataUserMsgPresenter = new DataUserMsgPresenter(user_account);
+        dataUserMsgPresenter = new DataUserMsgPresenter(user_account);
     }
 
     public DataNoticePresenter getDataNoticePresenter() {
-        if (dataNoticePresenter == null){
+        if (dataNoticePresenter == null) {
             setDataNoticePresenter();
             return dataNoticePresenter;
-        }else {
+        } else {
             return dataNoticePresenter;
         }
     }
 
     public void setDataNoticePresenter() {
-        if (dataNoticePresenter == null){
-            this.dataNoticePresenter = new DataNoticePresenter();
+        if (dataNoticePresenter == null) {
+            dataNoticePresenter = new DataNoticePresenter();
         }
     }
 
@@ -207,14 +208,14 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
         BaseMVPActivity.easyVoice = easyVoice;
     }
 
-    public EasyVoice toVoice(String url, TextView textView, GIFShow gif){
+    public void toVoice(String url, TextView textView, GIFShow gif) {
         easyVoice = new EasyVoice(InValues.send(R.string.httpHeadert) + url, new EasyVoice.OnVoice() {
             @Override
             public void onStart(int time) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (gif != null){
+                        if (gif != null) {
                             gif.startGif();
                         }
                         textView.setText(String.valueOf(time));
@@ -228,7 +229,7 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (gif != null){
+                        if (gif != null) {
                             gif.stopGif();
                         }
                         textView.setText(String.valueOf(cacheTime));
@@ -241,16 +242,15 @@ public abstract class BaseMVPActivity<V,T extends BasePresenter<V>> extends AppC
 
             }
         });
-        return easyVoice;
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null){
+        if (mPresenter != null) {
             mPresenter.deleteView();
         }
-        if (easyVoice != null){
+        if (easyVoice != null) {
             easyVoice.stopPlayer();
         }
     }

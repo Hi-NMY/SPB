@@ -16,7 +16,7 @@ public class SetUpMessagePageAPresenterImpl extends BasePresenter<ISetUpMessageP
     private boolean notifySystem = true;
     private boolean notifyCollect = true;
     private boolean notifyAll = true;
-    private SharedPreferences.Editor editor;
+    private final SharedPreferences.Editor editor;
 
     public boolean isNotifyComment() {
         return notifyComment;
@@ -24,7 +24,7 @@ public class SetUpMessagePageAPresenterImpl extends BasePresenter<ISetUpMessageP
 
     public void setNotifyComment(boolean notifyComment) {
         this.notifyComment = notifyComment;
-        editor.putBoolean(InValues.send(R.string.notify_comment),notifyComment);
+        editor.putBoolean(InValues.send(R.string.notify_comment), notifyComment);
         editor.apply();
     }
 
@@ -34,7 +34,7 @@ public class SetUpMessagePageAPresenterImpl extends BasePresenter<ISetUpMessageP
 
     public void setNotifyFollow(boolean notifyFollow) {
         this.notifyFollow = notifyFollow;
-        editor.putBoolean(InValues.send(R.string.notify_follow),notifyFollow);
+        editor.putBoolean(InValues.send(R.string.notify_follow), notifyFollow);
         editor.apply();
     }
 
@@ -44,7 +44,7 @@ public class SetUpMessagePageAPresenterImpl extends BasePresenter<ISetUpMessageP
 
     public void setNotifyLike(boolean notifyLike) {
         this.notifyLike = notifyLike;
-        editor.putBoolean(InValues.send(R.string.notify_like),notifyLike);
+        editor.putBoolean(InValues.send(R.string.notify_like), notifyLike);
         editor.apply();
     }
 
@@ -54,7 +54,7 @@ public class SetUpMessagePageAPresenterImpl extends BasePresenter<ISetUpMessageP
 
     public void setNotifySystem(boolean notifySystem) {
         this.notifySystem = notifySystem;
-        editor.putBoolean(InValues.send(R.string.notify_system),notifySystem);
+        editor.putBoolean(InValues.send(R.string.notify_system), notifySystem);
         editor.apply();
     }
 
@@ -64,7 +64,7 @@ public class SetUpMessagePageAPresenterImpl extends BasePresenter<ISetUpMessageP
 
     public void setNotifyCollect(boolean notifyCollect) {
         this.notifyCollect = notifyCollect;
-        editor.putBoolean(InValues.send(R.string.notify_collect),notifyCollect);
+        editor.putBoolean(InValues.send(R.string.notify_collect), notifyCollect);
         editor.apply();
     }
 
@@ -74,7 +74,7 @@ public class SetUpMessagePageAPresenterImpl extends BasePresenter<ISetUpMessageP
 
     public void setNotifyAll(boolean notifyAll) {
         this.notifyAll = notifyAll;
-        editor.putBoolean(InValues.send(R.string.notify_all),notifyAll);
+        editor.putBoolean(InValues.send(R.string.notify_all), notifyAll);
         editor.apply();
     }
 
@@ -83,13 +83,13 @@ public class SetUpMessagePageAPresenterImpl extends BasePresenter<ISetUpMessageP
         getMessageNotify();
     }
 
-    public void getMessageNotify(){
+    public void getMessageNotify() {
         SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_notify_setup));
-        notifyCollect = sharedPreferences.getBoolean(InValues.send(R.string.notify_collect),true);
-        notifyComment = sharedPreferences.getBoolean(InValues.send(R.string.notify_comment),true);
-        notifyFollow = sharedPreferences.getBoolean(InValues.send(R.string.notify_follow),true);
-        notifyLike = sharedPreferences.getBoolean(InValues.send(R.string.notify_like),true);
-        notifySystem = sharedPreferences.getBoolean(InValues.send(R.string.notify_system),true);
-        notifyAll = sharedPreferences.getBoolean(InValues.send(R.string.notify_all),true);
+        notifyCollect = sharedPreferences.getBoolean(InValues.send(R.string.notify_collect), true);
+        notifyComment = sharedPreferences.getBoolean(InValues.send(R.string.notify_comment), true);
+        notifyFollow = sharedPreferences.getBoolean(InValues.send(R.string.notify_follow), true);
+        notifyLike = sharedPreferences.getBoolean(InValues.send(R.string.notify_like), true);
+        notifySystem = sharedPreferences.getBoolean(InValues.send(R.string.notify_system), true);
+        notifyAll = sharedPreferences.getBoolean(InValues.send(R.string.notify_all), true);
     }
 }

@@ -584,7 +584,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                             public void run() {
                                 mGif.setVisibility(View.GONE);
                                 mUserBadgeRcl.setVisibility(View.VISIBLE);
-                                mPresenter.setBadgeAdapter(PersonalSpacePage.this,getDataUserMsgPresenter().getUser_account().equals(userAccount) ? true:false,mUserBadgeRcl,
+                                mPresenter.setBadgeAdapter(PersonalSpacePage.this, getDataUserMsgPresenter().getUser_account().equals(userAccount),mUserBadgeRcl,
                                         new GridLayoutManager(MyApplication.getContext(), 4));
                             }
                         });

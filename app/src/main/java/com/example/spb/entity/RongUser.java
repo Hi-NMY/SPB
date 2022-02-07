@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class RongUser {
 
-    @SerializedName("id")
+    @SerializedName("code")
     private int code;
 
-    @SerializedName("user_name")
+    @SerializedName("userId")
     private String userId;
 
-    @SerializedName("user_token")
+    @SerializedName("token")
     private String token;
 
     public int getCode() {

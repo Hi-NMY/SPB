@@ -8,14 +8,22 @@ import com.example.spb.R;
 import com.example.spb.adapter.MyBadgeAdapter;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BasePresenter;
-import com.example.spb.entity.*;
-import com.example.spb.model.InterTotal.SpbModelBasicInter;
-import com.example.spb.model.impl.*;
+import com.example.spb.common.RequestCode;
+import com.example.spb.common.RequestEntityJson;
+import com.example.spb.common.RequestListJson;
+import com.example.spb.entity.Bar;
+import com.example.spb.entity.Dto.UserBadgeDto;
+import com.example.spb.entity.Dto.UserDto;
+import com.example.spb.model.implA.*;
+import com.example.spb.model.inter.*;
 import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.inter.IPersonalSpacePageAPresenter;
+import com.example.spb.presenter.utils.DataVerificationTool;
 import com.example.spb.presenter.utils.InValues;
 import com.example.spb.presenter.utils.MyResolve;
 import com.example.spb.presenter.utils.SpbBroadcast;
+import com.example.spb.view.Component.ResponseToast;
+import com.example.spb.view.activity.PersonalSpacePage;
 import com.example.spb.view.inter.IPersonalSpacePageAView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -25,45 +33,44 @@ import io.rong.imlib.model.UserInfo;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpacePageAView> implements IPersonalSpacePageAPresenter {
 
     private String headImgPath;
     private String bgImgPath;
-    private SpbModelBasicInter userModel;
-    private SpbModelBasicInter followedModel;
-    private SpbModelBasicInter followModel;
-    private SpbModelBasicInter barModel;
-    private SpbModelBasicInter videoModel;
-    private SpbModelBasicInter signModel;
-    private User user;
+    private final UserModel userModel;
+    private final AccountSecurityModel accountSecurityModel;
+    private final FollowedModel followedModel;
+    private final FollowModel followModel;
+    private final PostBarModel barModel;
+    private final SignModel signModel;
     private boolean userFollowKey = false;
     private String nowBadge;
     private List<String> badgelist;
-    private List<Integer> keys;
+    private final List<Integer> keys;
+
 
     public List<Integer> getKeys() {
         return keys;
     }
 
-    public void setMyPrivacy(String s){
-        for (int i = 0 ; i < s.length() ; i++){
-            keys.add(Integer.valueOf(s.substring(i,i + 1)));
+    public void setMyPrivacy(String s) {
+        for (int i = 0; i < s.length(); i++) {
+            keys.add(Integer.valueOf(s.substring(i, i + 1)));
         }
     }
 
     public PersonalSpacePageAPresenterImpl() {
-        barModel = new BarModelImpl();
+        barModel = new PostBarModelImpl();
         userModel = new UserModelImpl();
         followedModel = new FollowedModelImpl();
         followModel = new FollowModelImpl();
-        videoModel = new VideoModelImpl();
-        signModel = new SignInModelImpl();
+        signModel = new SignModelImpl();
+        accountSecurityModel = new AccountSecurityModelImpl();
         keys = new ArrayList<>();
     }
 
@@ -83,27 +90,23 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
         this.userFollowKey = userFollowKey;
     }
 
-    public void getHeadImage(String account,List<LocalMedia> result){
+    public void getHeadImage(String account, List<LocalMedia> result) {
         for (LocalMedia media : result) {
-            if (media.isCompressed()){
+            if (media.isCompressed()) {
                 headImgPath = media.getCompressPath();
-            }else {
+            } else {
                 headImgPath = media.getCutPath();
             }
         }
-        User user = new User();
-        user.setUser_account(account);
-        user.setUser_head_image(headImgPath);
-        userModel.updateData(userModel.DATAUSER_UPDATE_TWO, user, new MyCallBack() {
+        userModel.updateUserHeadImage(new File(headImgPath), account, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    String a = response.body().string();
-                    if (isAttachView() && Integer.valueOf(a) == 200){
-                        getView().response(headImgPath, getView().RESPONSE_SUCCESS);
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestCode requestCode = new Gson().fromJson(value, RequestCode.class);
+                    if (ResponseToast.toToast(requestCode)) {
+                        getView().response(headImgPath, PersonalSpacePage.RESPONSE_SUCCESS);
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
 
@@ -114,27 +117,23 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
         });
     }
 
-    public void getBgImage(String account,List<LocalMedia> result){
+    public void getBgImage(String account, List<LocalMedia> result) {
         for (LocalMedia media : result) {
-            if (media.isCompressed()){
+            if (media.isCompressed()) {
                 bgImgPath = media.getCompressPath();
-            }else {
+            } else {
                 bgImgPath = media.getCutPath();
             }
         }
-        User user = new User();
-        user.setUser_account(account);
-        user.setUser_bg_image(bgImgPath);
-        userModel.updateData(userModel.DATAUSER_UPDATE_THREE, user, new MyCallBack() {
+        userModel.updateUserBgImage(new File(bgImgPath), account, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    String a = response.body().string();
-                    if (isAttachView() && Integer.valueOf(a) == 200){
-                        getView().response(bgImgPath, getView().RESPONSE_SUCCESS);
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestCode requestCode = new Gson().fromJson(value, RequestCode.class);
+                    if (ResponseToast.toToast(requestCode)) {
+                        getView().response(bgImgPath, PersonalSpacePage.RESPONSE_SUCCESS);
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
 
@@ -145,50 +144,18 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
         });
     }
 
-    public void getUser(String account,OnReturn onReturn){
-        user = new User();
-        user.setUser_account(account);
-        userModel.selectData(userModel.FIRSTPAGE_ONE, user, new MyCallBack() {
+    public void getUser(String account, OnReturn onReturn) {
+        accountSecurityModel.queryVerifyAndUserFull(account, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    String a = response.body().string();
-                    if (Integer.valueOf(a.substring(0,3)) == 200){
-                        user = new Gson().fromJson(a.substring(3),User.class);
-                        setMyPrivacy(user.getUser_privacy());
-                        onReturn.onReturn(user);
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestEntityJson<UserDto> requestEntityJson = new Gson().fromJson(value, new TypeToken<RequestEntityJson<UserDto>>() {
+                    }.getType());
+                    if (ResponseToast.toToast(requestEntityJson.getResultCode())) {
+                        setMyPrivacy(requestEntityJson.getData().getUser_privacy());
+                        onReturn.onReturn(requestEntityJson.getData());
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(int t) {
-
-            }
-        });
-
-
-    }
-
-    public void getFollowNum(String account,OnReturnNum onReturn){
-        Follow follow = new Follow();
-        follow.setUser_account(account);
-        followModel.selectData(followModel.DATAFOLLOW_SELECT_ONE, follow, new MyCallBack() {
-            @Override
-            public void onSuccess(@NotNull Response response) {
-                try {
-                    String a = response.body().string();
-                    if (Integer.valueOf(a.substring(0,3)) == 200){
-                        List<Follow> followList = new Gson().fromJson(a.substring(3),new TypeToken<List<Follow>>()
-                        {}.getType());
-                        onReturn.onReturn(followList.size());
-                    }else {
-
-                    }
-                } catch (Exception e) {
-
                 }
             }
 
@@ -199,25 +166,20 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
         });
     }
 
-    public void getFollowedNum(String account,OnReturnNum onReturn){
-        Followed followed = new Followed();
-        followed.setUser_account(account);
-        followedModel.selectData(followedModel.DATAFOLLOWED_SELECT_ONE, followed, new MyCallBack() {
+    public void getFollowNum(String account, OnReturnNum onReturn) {
+        followModel.queryFollowCount(account, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    String a = response.body().string();
-                    if (Integer.valueOf(a.substring(0,3)) == 200){
-                        List<Followed> followedList = new Gson().fromJson(a.substring(3),new TypeToken<List<Followed>>()
-                        {}.getType());
-                        onReturn.onReturn(followedList.size());
-                    }else {
-
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestEntityJson<String> requestEntityJson = new Gson().fromJson(value, new TypeToken<RequestEntityJson<String>>() {
+                    }.getType());
+                    if (ResponseToast.toToast(requestEntityJson.getResultCode())) {
+                        onReturn.onReturn(Integer.parseInt(requestEntityJson.getData()));
                     }
-                } catch (Exception e) {
-
                 }
             }
+
             @Override
             public void onError(int t) {
 
@@ -225,23 +187,40 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
         });
     }
 
-    public void obtainPersonalBar(String account,OnReturnBar onReturnBar){
-        Bar bar = new Bar();
-        bar.setUser_account(account);
-        bar.setPb_date("1");
-        barModel.selectData(barModel.DATABAR_SELECT_FOUR, bar, new MyCallBack() {
+    public void getFollowedNum(String account, OnReturnNum onReturn) {
+        followedModel.queryFollowedCount(account, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    String a = response.body().string();
-                    if (Integer.valueOf(a.substring(0,3)) == 200){
-                        List<Bar> bars = new Gson().fromJson(a.substring(3),new TypeToken<List<Bar>>(){}.getType());
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestEntityJson<String> requestEntityJson = new Gson().fromJson(value, new TypeToken<RequestEntityJson<String>>() {
+                    }.getType());
+                    if (ResponseToast.toToast(requestEntityJson.getResultCode())) {
+                        onReturn.onReturn(Integer.parseInt(requestEntityJson.getData()));
+                    }
+                }
+            }
+
+            @Override
+            public void onError(int t) {
+
+            }
+        });
+    }
+
+    public void obtainPersonalBar(String account, OnReturnBar onReturnBar) {
+        barModel.queryNoVideoUserBarListForDate(account, "", new MyCallBack() {
+            @Override
+            public void onSuccess(@NotNull Response response) {
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestListJson<Bar> requestListJson = new Gson().fromJson(value, new TypeToken<RequestListJson<Bar>>() {
+                    }.getType());
+                    if (ResponseToast.toToast(requestListJson.getResultCode())) {
                         SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_personal_bar)
-                                ,0,account,(Serializable)bars);
+                                , 0, account, (Serializable) requestListJson.getDataList());
                         onReturnBar.onReturn();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
 
@@ -251,18 +230,17 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
             }
         });
 
-        videoModel.selectData(videoModel.DATAVIDEO_SELECT_FOUR, bar, new MyCallBack() {
+        barModel.queryVideoUserBarListForDate(account, "", new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    String a = response.body().string();
-                    if (Integer.valueOf(a.substring(0,3)) == 200){
-                        List<Bar> bars = new Gson().fromJson(a.substring(3),new TypeToken<List<Bar>>(){}.getType());
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestListJson<Bar> requestListJson = new Gson().fromJson(value, new TypeToken<RequestListJson<Bar>>() {
+                    }.getType());
+                    if (ResponseToast.toToast(requestListJson.getResultCode())) {
                         SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_personal_videobar)
-                                ,0,account,(Serializable)bars);
+                                , 0, account, (Serializable) requestListJson.getDataList());
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
 
@@ -273,21 +251,18 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
         });
     }
 
-    public void obtainUserBadge(String account, OnReturnBar onReturnBar){
-        Sign sign = new Sign();
-        sign.setUser_account(account);
-        signModel.selectData(signModel.DATASIGN_SELECT_ONE, sign, new MyCallBack() {
+    public void obtainUserBadge(String account, OnReturnBar onReturnBar) {
+        signModel.queryUserBadge(account, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    String a = response.body().string();
-                    if (Integer.valueOf(a.substring(0,3)) == 200){
-                        Sign s = new Gson().fromJson(a.substring(3),Sign.class);
-                        badgelist = obtainMyBadgeList(s);
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestEntityJson<UserBadgeDto> requestEntityJson = new Gson().fromJson(value, new TypeToken<RequestEntityJson<UserBadgeDto>>() {
+                    }.getType());
+                    if (ResponseToast.toToast(requestEntityJson.getResultCode())) {
+                        badgelist = obtainMyBadgeList(requestEntityJson.getData());
                         onReturnBar.onReturn();
                     }
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
                 }
             }
 
@@ -298,55 +273,48 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
         });
     }
 
-    public void updateUserBadge(String account,String badge){
-        User user = new User();
-        user.setUser_account(account);
-        user.setUser_badge(badge);
-        userModel.updateData(userModel.DATAUSER_UPDATE_FIVE,user,null);
+    public void updateUserBadge(String account, String badge) {
+        userModel.updateUserBadgeImage(badge, account, null);
     }
 
-    public List<String> obtainMyBadgeList(Sign s){
+    public List<String> obtainMyBadgeList(UserBadgeDto s) {
         List<String> badges = new ArrayList<>();
-        if (s.getSign_star_badge() != null && !s.getSign_star_badge().equals("")){
+        if (DataVerificationTool.isEmpty(s.getSign_star_badge())) {
             badges.add(s.getSign_star_badge());
         }
-        if (s.getSign_ct_badge() == 0 ){
-            badges.add("certification_badge.png");
+        if (s.getSign_ct_badge() == 0) {
+            badges.add(InValues.send(R.string.certification_badge));
         }
-        if (s.getSign_like_badge() != null && !s.getSign_like_badge().equals("")){
-            for (Iterator<String> likebadge = MyResolve.InBadge(s.getSign_like_badge()).listIterator();likebadge.hasNext();){
-                badges.add(likebadge.next());
-            }
+        if (DataVerificationTool.isEmpty(s.getSign_like_badge())) {
+            badges.addAll(MyResolve.InBadge(s.getSign_like_badge()));
         }
-        if (s.getSign_task_badge() != null && !s.getSign_task_badge().equals("")){
-            for (Iterator<String> signbadge = MyResolve.InBadge(s.getSign_task_badge()).listIterator();signbadge.hasNext();){
-                badges.add(signbadge.next());
-            }
+        if (DataVerificationTool.isEmpty(s.getSign_task_badge())) {
+            badges.addAll(MyResolve.InBadge(s.getSign_task_badge()));
         }
         return badges;
     }
 
-    public void setBadgeAdapter(Activity activity,boolean account, RecyclerView recyclerView, GridLayoutManager gridLayoutManager){
-        MyBadgeAdapter myBadgeAdapter = new MyBadgeAdapter(badgelist,account,getNowBadge(),activity);
+    public void setBadgeAdapter(Activity activity, boolean account, RecyclerView recyclerView, GridLayoutManager gridLayoutManager) {
+        MyBadgeAdapter myBadgeAdapter = new MyBadgeAdapter(badgelist, account, getNowBadge(), activity);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(myBadgeAdapter);
     }
 
-    public void updateRong(String account,String name){
+    public void updateRong(String account, String name) {
         UserInfo userInfo = new UserInfo(account, name,
-                Uri.parse(InValues.send(R.string.httpHeader) + "/UserImageServer/" + account + "/HeadImage/myHeadImage.png"));
+                Uri.parse(InValues.send(R.string.prefix_img) + account + InValues.send(R.string.suffix_head_img)));
         RongIM.getInstance().refreshUserInfoCache(userInfo);
     }
 
-    public interface OnReturn{
-        void onReturn(User user);
+    public interface OnReturn {
+        void onReturn(UserDto userDto);
     }
 
-    public interface OnReturnNum{
+    public interface OnReturnNum {
         void onReturn(int num);
     }
 
-    public interface OnReturnBar{
+    public interface OnReturnBar {
         void onReturn();
     }
 }

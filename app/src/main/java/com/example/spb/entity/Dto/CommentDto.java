@@ -1,11 +1,13 @@
 package com.example.spb.entity.Dto;
 
+import com.example.spb.entity.Comment;
+
 /**
  * @author nmy
  * @title: CommentDto
  * @date 2022-01-30 14:52
  */
-public class CommentDto {
+public class CommentDto extends Comment {
 
     public String pb_one_id;
     public String comment_art;

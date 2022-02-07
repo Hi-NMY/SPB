@@ -91,7 +91,7 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
     }
 
     public void initTaskData(){
-        switch (mPresenter.getInSign_Key()){
+        switch (mPresenter.getInSignKey()){
             case 1:
                 setReceiveTask(1);
                 break;
@@ -99,7 +99,7 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
                 setAlreadyTask(1);
                 break;
         }
-        switch (mPresenter.getInBar_key()){
+        switch (mPresenter.getInBarKey()){
             case 1:
                 setReceiveTask(2);
                 break;
@@ -107,7 +107,7 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
                 setAlreadyTask(2);
                 break;
         }
-        switch (mPresenter.getInlike_key()){
+        switch (mPresenter.getInlikeKey()){
             case 1:
                 setReceiveTask(3);
                 break;
@@ -115,7 +115,7 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
                 setAlreadyTask(3);
                 break;
         }
-        switch (mPresenter.getIntolike_key()){
+        switch (mPresenter.getIntolikeKey()){
             case 1:
                 setReceiveTask(4);
                 break;
@@ -123,7 +123,7 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
                 setAlreadyTask(4);
                 break;
         }
-        switch (mPresenter.getInvideo_key()){
+        switch (mPresenter.getInvideoKey()){
             case 1:
                 setReceiveTask(5);
                 break;
@@ -237,7 +237,7 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tostart:
-                switch (mPresenter.getInSign_Key()){
+                switch (mPresenter.getInSignKey()){
                     case 0:
 
                         break;
@@ -248,7 +248,7 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
                 }
                 break;
             case R.id.tostart1:
-                switch (mPresenter.getInBar_key()){
+                switch (mPresenter.getInBarKey()){
                     case 0:
                         signInPage.finish();
                         JumpIntent.startMyIntent(SendNewBarPage.class);
@@ -260,7 +260,7 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
                 }
                 break;
             case R.id.tostart2:
-                switch (mPresenter.getInlike_key()){
+                switch (mPresenter.getInlikeKey()){
                     case 0:
                         signInPage.finish();
                         break;
@@ -271,7 +271,7 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
                 }
                 break;
             case R.id.tostart3:
-                switch (mPresenter.getIntolike_key()){
+                switch (mPresenter.getIntolikeKey()){
                     case 0:
                         signInPage.finish();
                         break;
@@ -282,7 +282,7 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
                 }
                 break;
             case R.id.tostart4:
-                switch (mPresenter.getInvideo_key()){
+                switch (mPresenter.getInvideoKey()){
                     case 0:
                         signInPage.finish();
                         JumpIntent.startMyIntent(SendNewVideoPage.class);
@@ -310,31 +310,31 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
                         switch (TASKKEY){
                             case 1:
                                 setAlreadyTask(1);
-                                mPresenter.setInSign_Key(2);
+                                mPresenter.setInSignKey(2);
                                 editor.putInt(InValues.send(R.string.sign_task_daysign),2);
                                 editor.commit();
                                 break;
                             case 2:
                                 setAlreadyTask(2);
-                                mPresenter.setInBar_key(2);
+                                mPresenter.setInBarKey(2);
                                 editor.putInt(InValues.send(R.string.sign_task_bar),2);
                                 editor.commit();
                                 break;
                             case 3:
                                 setAlreadyTask(3);
-                                mPresenter.setInlike_key(2);
+                                mPresenter.setInlikeKey(2);
                                 editor.putInt(InValues.send(R.string.sign_task_like),2);
                                 editor.commit();
                                 break;
                             case 4:
                                 setAlreadyTask(4);
-                                mPresenter.setIntolike_key(2);
+                                mPresenter.setIntolikeKey(2);
                                 editor.putInt(InValues.send(R.string.sign_task_tolike),2);
                                 editor.commit();
                                 break;
                             case 5:
                                 setAlreadyTask(5);
-                                mPresenter.setInvideo_key(2);
+                                mPresenter.setInvideoKey(2);
                                 editor.putInt(InValues.send(R.string.sign_task_video),2);
                                 editor.commit();
                                 break;
@@ -351,16 +351,16 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
             boolean likeKey = Task.getLikeData();
             boolean topicKey = Task.getTopicData();
             SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_sign_task));
-            mPresenter.setInBar_key(sharedPreferences.getInt(InValues.send(R.string.sign_task_bar),0));
-            mPresenter.setInlike_key(sharedPreferences.getInt(InValues.send(R.string.sign_task_like),0));
-            mPresenter.setInSign_Key(sharedPreferences.getInt(InValues.send(R.string.sign_task_daysign),0));
-            mPresenter.setIntolike_key(sharedPreferences.getInt(InValues.send(R.string.sign_task_tolike),0));
-            mPresenter.setInvideo_key(sharedPreferences.getInt(InValues.send(R.string.sign_task_video),0));
-            if (likeKey && mPresenter.getInlike_key() == 0){
-                mPresenter.setInlike_key(1);
+            mPresenter.setInBarKey(sharedPreferences.getInt(InValues.send(R.string.sign_task_bar),0));
+            mPresenter.setInlikeKey(sharedPreferences.getInt(InValues.send(R.string.sign_task_like),0));
+            mPresenter.setInSignKey(sharedPreferences.getInt(InValues.send(R.string.sign_task_daysign),0));
+            mPresenter.setIntolikeKey(sharedPreferences.getInt(InValues.send(R.string.sign_task_tolike),0));
+            mPresenter.setInvideoKey(sharedPreferences.getInt(InValues.send(R.string.sign_task_video),0));
+            if (likeKey && mPresenter.getInlikeKey() == 0){
+                mPresenter.setInlikeKey(1);
             }
-            if (topicKey && mPresenter.getIntolike_key() == 0){
-                mPresenter.setIntolike_key(1);
+            if (topicKey && mPresenter.getIntolikeKey() == 0){
+                mPresenter.setIntolikeKey(1);
             }
             initTaskData();
         }
@@ -373,7 +373,7 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
             int coin = intent.getIntExtra("key_one", 0);
             if (coin != 10){
                 setReceiveTask(1);
-                mPresenter.setInSign_Key(1);
+                mPresenter.setInSignKey(1);
                 SharedPreferences.Editor editor = MySharedPreferences.saveShared(InValues.send(R.string.Shared_sign_task));
                 editor.putInt(InValues.send(R.string.sign_task_daysign),1);
                 editor.commit();

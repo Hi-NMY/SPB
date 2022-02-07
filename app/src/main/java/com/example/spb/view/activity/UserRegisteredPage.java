@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.entity.Dto.UserDto;
+import com.example.spb.entity.Dto.UserRegisteredDto;
 import com.example.spb.presenter.impl.UserRegisteredPageAPresenterImpl;
 import com.example.spb.presenter.utils.RemoveNullCharacter;
 import com.example.spb.view.Component.ComponentDialog;
@@ -58,7 +59,7 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
 
     private boolean SEE = false;
 
-    private UserDto userDto = null;
+    private UserRegisteredDto userRegisteredDto = null;
 
     private Handler userHanlder = new Handler(){
         @Override
@@ -117,31 +118,14 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
                         .into(mRegisteredUserHeadimg);
                 imagePath = (String) response;
                 break;
-            case RESPONSE_ONE:
-                MyToastClass.ShowToast(this,STRINGERRORONE);
-                closeDialog(DIALOGLOADING);
-                break;
-            case RESPONSE_THREE:
-                MyToastClass.ShowToast(this,STRINGERRORTHREE);
-                closeDialog(DIALOGLOADING);
-                break;
-            case RESPONSE_FORE:
-                MyToastClass.ShowToast(this,STRINGERRORFORE);
-                closeDialog(DIALOGLOADING);
-                break;
             case RESPONSE_SUCCESS:
                 closeDialog(DIALOGLOADING);
-                MyToastClass.ShowToast(this,STRINGSUCCESS);
                 JumpIntent.startSetResultIntent(this, 1, new JumpIntent.SetMsg() {
                     @Override
                     public void setMessage(Intent intent) {
                         intent.putExtra(STRINGEXTRA, account);
                     }
                 });
-                break;
-            case RESPONSE_ZERO:
-                closeDialog(DIALOGLOADING);
-                MyToastClass.ShowToast(this,STRINGERRORZERO);
                 break;
         }
     }
@@ -329,13 +313,12 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
         });
     }
 
-    private UserDto setUser(){
-        userDto = new UserDto();
-        userDto.setUser_head_image(imagePath);
-        userDto.setUser_account(account);
-        userDto.setUser_name(name);
-        userDto.setUser_password(password);
-        return userDto;
+    private UserRegisteredDto setUser(){
+        userRegisteredDto = new UserRegisteredDto();
+        userRegisteredDto.setUser_account(account);
+        userRegisteredDto.setUser_name(name);
+        userRegisteredDto.setUser_password(password);
+        return userRegisteredDto;
     }
 
     @Override

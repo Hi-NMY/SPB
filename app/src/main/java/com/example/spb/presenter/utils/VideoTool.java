@@ -40,22 +40,22 @@ public class VideoTool {
     private String videoPath;
     private int videoKey = 0;
 
-    public VideoTool(Activity a,Context c,StandardGSYVideoPlayer player) {
+    public VideoTool(Activity a, Context c, StandardGSYVideoPlayer player) {
         this.activity = a;
         this.context = c;
         this.mDetailPlayer = player;
         imageView = new ImageView(c);
     }
 
-    public void creatVideo(String videoPath){
+    public void creatVideo(String videoPath) {
         this.videoPath = videoPath;
         videoKey = 0;
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setImageBitmap(getBitmap(MyApplication.getContext(),videoPath));
+        imageView.setImageBitmap(getBitmap(MyApplication.getContext(), videoPath));
         setVideo();
     }
 
-    public void creatVideo(String videoPath,Bitmap bitmap){
+    public void creatVideo(String videoPath, Bitmap bitmap) {
         this.videoPath = videoPath;
         videoKey = 1;
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -63,7 +63,7 @@ public class VideoTool {
         setVideo();
     }
 
-    public void setVideo(){
+    public void setVideo() {
         mDetailPlayer.getTitleTextView().setVisibility(View.GONE);
         mDetailPlayer.getBackButton().setVisibility(View.GONE);
 
@@ -89,7 +89,7 @@ public class VideoTool {
                     public void onPrepared(String url, Object... objects) {
                         super.onPrepared(url, objects);
                         //开始播放了才能旋转和全屏
-                        switch (videoKey){
+                        switch (videoKey) {
                             case 0:
                                 orientationUtils.setEnable(mDetailPlayer.isRotateWithSystem());
                                 isPlay = true;
@@ -106,7 +106,7 @@ public class VideoTool {
                     @Override
                     public void onQuitFullscreen(String url, Object... objects) {
                         super.onQuitFullscreen(url, objects);
-                        switch (videoKey){
+                        switch (videoKey) {
                             case 0:
                                 if (orientationUtils != null) {
                                     orientationUtils.backToProtVideo();
@@ -121,7 +121,7 @@ public class VideoTool {
                 }).setLockClickListener(new LockClickListener() {
             @Override
             public void onClick(View view, boolean lock) {
-                if (videoKey == 0){
+                if (videoKey == 0) {
                     if (orientationUtils != null) {
                         //配合下方的onConfigurationChanged
                         orientationUtils.setEnable(!lock);
@@ -133,7 +133,7 @@ public class VideoTool {
         mDetailPlayer.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (videoKey){
+                switch (videoKey) {
                     case 0:
                         //直接横屏
                         orientationUtils.resolveByClick();
@@ -155,38 +155,38 @@ public class VideoTool {
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
         try {
             //（）根据文件路径获取缩略图
-            retriever.setDataSource(context,Uri.fromFile(new File(url)));
+            retriever.setDataSource(context, Uri.fromFile(new File(url)));
             //获得第一帧图片
             bitmap = retriever.getFrameAtTime();
             cacheVideoImage = context.getFilesDir() + "/images/";
             File file = new File(cacheVideoImage);
-            if (!file.exists()){
+            if (!file.exists()) {
                 file.mkdirs();
             }
 
-            file = new File(cacheVideoImage,"cacheVideoImage.png");
+            file = new File(cacheVideoImage, "cacheVideoImage.png");
             FileOutputStream stream = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG,1,stream);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 1, stream);
             stream.flush();
             stream.close();
             cacheVideoImage = cacheVideoImage + "cacheVideoImage.png";
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-        } catch (IOException ioException){
+        } catch (IOException ioException) {
             ioException.printStackTrace();
-        }finally {
+        } finally {
             retriever.release();
         }
         return bitmap;
     }
 
-    public static void gethttpBitmap(Context context,int position, String url,OnReturnBitmap onReturnBitmap) {
+    public static void gethttpBitmap(Context context, int position, String url, OnReturnBitmap onReturnBitmap) {
         bitmap = null;
         Glide.with(context).asBitmap().load(url + ".png").into(new CustomTarget<Bitmap>() {
             @Override
             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                 bitmap = resource;
-                onReturnBitmap.onReturn(bitmap,position);
+                onReturnBitmap.onReturn(bitmap, position);
             }
 
             @Override
@@ -200,30 +200,30 @@ public class VideoTool {
         return cacheVideoImage;
     }
 
-    public void setonBackPressed(){
+    public void setonBackPressed() {
         if (orientationUtils != null) {
             orientationUtils.backToProtVideo();
         }
-       try {
+        try {
             if (GSYVideoManager.backFromWindowFull(context)) {
                 return;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
-       }
+        }
     }
 
-    public void setonPause(){
+    public void setonPause() {
         mDetailPlayer.getCurrentPlayer().onVideoPause();
         isPause = true;
     }
 
-    public void setonResume(){
+    public void setonResume() {
         mDetailPlayer.getCurrentPlayer().onVideoResume(false);
         isPause = false;
     }
 
-    public void setonConfigurationChanged(Configuration newConfig){
+    public void setonConfigurationChanged(Configuration newConfig) {
         //如果旋转了就全屏
         if (isPlay && !isPause) {
             mDetailPlayer.onConfigurationChanged(activity, newConfig, orientationUtils, true, true);
@@ -234,12 +234,12 @@ public class VideoTool {
         if (isPlay) {
             mDetailPlayer.getCurrentPlayer().release();
         }
-        if (orientationUtils != null){
+        if (orientationUtils != null) {
             orientationUtils.releaseListener();
         }
     }
 
-    public interface OnReturnBitmap{
-        void onReturn(Bitmap bitmap,int position);
+    public interface OnReturnBitmap {
+        void onReturn(Bitmap bitmap, int position);
     }
 }

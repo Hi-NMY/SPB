@@ -79,6 +79,7 @@
     <!-- 网络请求-->
     <string name="httpHeader">http://nmy1206.natapp1.cc</string>
     <string name="httpHeadert">http://nmy1206.natapp1.cc/</string>
+    <string name="rong_api">https://api-cn.ronghub.com/user/getToken.json</string>
     <string name="prefix_img">http://nmy1206.natapp1.cc/upload/spb/UserImageServer/</string>
     <string name="suffix_head_img">/HeadImage/myHeadImage.png</string>
     <string name="suffix_bg_img">/HeadImage/myBackgroundImage.png</string>
@@ -142,6 +143,8 @@
     <string name="deleteDiary">http://nmy1206.natapp1.cc/diary/deleteDiary</string>
 
     <string name="queryFollowList">http://nmy1206.natapp1.cc/follow/queryFollowList</string>
+    <string name="queryFollowCount">http://nmy1206.natapp1.cc/follow/queryFollowCount</string>
+    <string name="queryFollowedCount">http://nmy1206.natapp1.cc/follow/queryFollowedCount</string>
     <string name="queryFollowUserList">http://nmy1206.natapp1.cc/follow/queryFollowUserList</string>
     <string name="addFollow">http://nmy1206.natapp1.cc/follow/addFollow</string>
     <string name="deleteFollow">http://nmy1206.natapp1.cc/follow/deleteFollow</string>
@@ -167,6 +170,7 @@
     <string name="queryVideoUserBarListForDate">http://nmy1206.natapp1.cc/postbar/queryVideoUserBarListForDate</string>
     <string name="deleteBar">http://nmy1206.natapp1.cc/postbar/deleteBar</string>
     <string name="addBar">http://nmy1206.natapp1.cc/postbar/addBar</string>
+    <string name="addBarVideo">http://nmy1206.natapp1.cc/postbar/addBarVideo</string>
 
     <string name="queryUserSign">http://nmy1206.natapp1.cc/sign/queryUserSign</string>
     <string name="queryUserBadge">http://nmy1206.natapp1.cc/sign/queryUserBadge</string>
@@ -251,5 +255,17 @@
     <string name="Push_pbid_key">pb_id</string>
     <string name="Push_commentid_key">comment_id</string>
     <string name="Push_system_key">Push_system_key</string>
+
+
+    <!--其他-->
+    <string name="rong_app_key">x18ywvqfx4z8c</string>
+    <string name="rong_app_secret">nCZrj6SCU1h0</string>
+    <string name="certification_badge">certification_badge.png</string>
+    <string name="like_badge_one">like_badge_one.png|</string>
+    <string name="like_badge_two">like_badge_one.png|like_badge_two.png|</string>
+    <string name="like_badge_three">like_badge_one.png|like_badge_two.png|like_badge_three.png|</string>
+    <string name="sign_badge_one">sign_badge_one.png|</string>
+    <string name="sign_badge_two">sign_badge_one.png|sign_badge_two.png|</string>
+    <string name="sign_badge_three">sign_badge_one.png|sign_badge_two.png|sign_badge_three.png|</string>
 
 </resources>

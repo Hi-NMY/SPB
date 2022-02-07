@@ -7,17 +7,22 @@ import com.example.spb.adapter.BarCommentAdapter;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.base.BasePresenter;
+import com.example.spb.common.RequestCode;
+import com.example.spb.common.RequestEntityJson;
+import com.example.spb.common.RequestListJson;
 import com.example.spb.entity.Bar;
 import com.example.spb.entity.Comment;
-import com.example.spb.model.InterTotal.SpbModelBasicInter;
-import com.example.spb.model.impl.BarModelImpl;
-import com.example.spb.model.impl.CommentModellmpl;
+import com.example.spb.entity.Dto.CommentDto;
+import com.example.spb.model.implA.CommentModelImpl;
+import com.example.spb.model.implA.PostBarModelImpl;
+import com.example.spb.model.inter.CommentModel;
+import com.example.spb.model.inter.PostBarModel;
 import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.inter.IPostBarDetailPageAPresenter;
+import com.example.spb.presenter.utils.DataVerificationTool;
 import com.example.spb.presenter.utils.InValues;
-import com.example.spb.presenter.utils.MyResolve;
 import com.example.spb.presenter.utils.SpbBroadcast;
-import com.example.spb.view.Component.MyToastClass;
+import com.example.spb.view.Component.ResponseToast;
 import com.example.spb.view.inter.IPostBarDetailPageAView;
 import com.example.spb.xserver.AndroidUnicast;
 import com.google.gson.Gson;
@@ -25,7 +30,6 @@ import com.google.gson.reflect.TypeToken;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,15 +41,15 @@ public class PostBarDetailPageAPresenterImpl extends BasePresenter<IPostBarDetai
     private String commenttouser = "";
     private String commentpbid = "";
     private String barUser = "";
-    private SpbModelBasicInter commentModel;
-    private SpbModelBasicInter barModel;
+    private final CommentModel commentModel;
+    private final PostBarModel barModel;
     private BarCommentAdapter barCommentAdapter;
-    private BaseMVPActivity baseMVPActivity;
+    private final BaseMVPActivity baseMVPActivity;
 
     public PostBarDetailPageAPresenterImpl(Activity activity) {
-        commentModel = new CommentModellmpl();
-        barModel = new BarModelImpl();
-        baseMVPActivity = (BaseMVPActivity)activity;
+        commentModel = new CommentModelImpl();
+        barModel = new PostBarModelImpl();
+        baseMVPActivity = (BaseMVPActivity) activity;
     }
 
     public boolean isUserFollowKey() {
@@ -88,21 +92,17 @@ public class PostBarDetailPageAPresenterImpl extends BasePresenter<IPostBarDetai
         this.barUser = barUser;
     }
 
-    public void obtainBar(String acc,String pbid,OnReturn onReturn){
-        Bar bar = new Bar();
-        bar.setUser_account(acc);
-        bar.setPb_one_id(pbid);
-        barModel.selectData(barModel.DATABAR_SELECT_SEVEN, bar, new MyCallBack() {
+    public void obtainBar(String pbid, OnReturn onReturn) {
+        barModel.queryBarDetatilForPbid(pbid, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    String a = response.body().string();
-                    if (Integer.valueOf(a.substring(0,3)) == 200){
-                        Bar b = new Gson().fromJson(a.substring(3),Bar.class);
-                        onReturn.onReturn(b);
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestEntityJson<Bar> requestEntityJson = new Gson().fromJson(value, new TypeToken<RequestEntityJson<Bar>>() {
+                    }.getType());
+                    if (ResponseToast.toToast(requestEntityJson.getResultCode())) {
+                        onReturn.onReturn(requestEntityJson.getData());
                     }
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
                 }
             }
 
@@ -113,30 +113,21 @@ public class PostBarDetailPageAPresenterImpl extends BasePresenter<IPostBarDetai
         });
     }
 
-    public void obtainCommentOne(int commentId,String pbId){
-        Comment comment = new Comment();
-        comment.setPb_one_id(pbId);
-        comment.setComment_id(commentId);
-        commentModel.selectData(commentModel.DATACOMMENT_SELECT_TWO, comment, new MyCallBack() {
+    public void obtainCommentOne(int commentId, String pbId) {
+        commentModel.queryCommentOne(pbId, String.valueOf(commentId), new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    String a = response.body().string();
-                    if (Integer.valueOf(a.substring(0,3)) == 200){
-                        Comment c = new Gson().fromJson(a.substring(3),Comment.class);
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestEntityJson<Comment> requestEntityJson = new Gson().fromJson(value, new TypeToken<RequestEntityJson<Comment>>() {
+                    }.getType());
+                    if (ResponseToast.toToast(requestEntityJson.getResultCode())) {
                         List<Comment> cs = new ArrayList<>();
-                        cs.add(c);
-                        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment),0,"",(Serializable) cs);
+                        cs.add(requestEntityJson.getData());
+                        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment), 0, "", (Serializable) cs);
+                    } else {
+                        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment), 0, "", new ArrayList<>());
                     }
-                } catch (Exception e) {
-                    baseMVPActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            List<Comment> cs = new ArrayList<>();
-                            MyToastClass.ShowToast(MyApplication.getContext(),"该评论已被删除");
-                            SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment),0,"",(Serializable) cs);
-                        }
-                    });
                 }
             }
 
@@ -147,20 +138,18 @@ public class PostBarDetailPageAPresenterImpl extends BasePresenter<IPostBarDetai
         });
     }
 
-    public void obtainComment(){
-        Comment comment = new Comment();
-        comment.setPb_one_id(getCommentpbid());
-        commentModel.selectData(commentModel.DATACOMMENT_SELECT_ONE, comment, new MyCallBack() {
+    public void obtainComment() {
+        commentModel.queryCommentList(getCommentpbid(), new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    String a = response.body().string();
-                    if (Integer.valueOf(a.substring(0,3)) == 200){
-                        List<Comment> comments = new Gson().fromJson(a.substring(3),new TypeToken<List<Comment>>(){}.getType());
-                        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment),0,"",(Serializable) comments);
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestListJson<Comment> requestListJson = new Gson().fromJson(value, new TypeToken<RequestListJson<Comment>>() {
+                    }.getType());
+                    if (ResponseToast.toToast(requestListJson.getResultCode())) {
+                        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment)
+                                , 0, "", (Serializable) requestListJson.getDataList());
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
 
@@ -171,56 +160,27 @@ public class PostBarDetailPageAPresenterImpl extends BasePresenter<IPostBarDetai
         });
     }
 
-    public void sendNewComment(String account,String baruser){
-        Comment comment = new Comment();
+    public void sendNewComment(String account, String baruser) {
+        CommentDto comment = new CommentDto();
         comment.setComment_art(getCommentText());
         comment.setComment_user(account);
         comment.setComment_touser(getCommenttouser());
         comment.setPb_one_id(getCommentpbid());
-        comment.setCache_account(baruser);
-        commentModel.addData(commentModel.DATACOMMENT_ADD_ONE, comment, new MyCallBack() {
+        if (!baruser.equals(account)) {
+            comment.setCache_account(baruser);
+        }
+        commentModel.addComment(comment, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    String a = response.body().string();
-                    if (Integer.valueOf(a.substring(0,3)) == 200){
-                        int nadNum = a.indexOf("&");
-                        Comment c = MyResolve.InComment(a.substring(3,nadNum));
-                        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment),1,"+1",(Serializable)c);
-                        String user_ip = a.substring(nadNum + 1);
-                        AndroidUnicast unicast = null;
-                        if (getCommenttouser() == null && !account.equals(baruser)){
-                            try {
-                                unicast = new AndroidUnicast();
-                                unicast.setDeviceToken(user_ip);
-                                unicast.setTicker( "Android unicast ticker");
-                                unicast.setTitle(InValues.send(R.string.Push_Title));
-                                unicast.setText(InValues.send(R.string.Push_Comment_txt));
-                                unicast.setExtraField(InValues.send(R.string.Push_fun),String.valueOf(unicast.PUSHCOMMENTKEY));
-                                unicast.setExtraField(InValues.send(R.string.Push_pbid_key),getCommentpbid());
-                                unicast.setExtraField(InValues.send(R.string.Push_commentid_key),String.valueOf(c.getComment_id()));
-                                unicast.clientSend(unicast);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }else if (getCommenttouser() != null && !account.equals(getCommenttouser())){
-                            try {
-                                unicast = new AndroidUnicast();
-                                unicast.setDeviceToken(user_ip);
-                                unicast.setTicker( "Android unicast ticker");
-                                unicast.setTitle(InValues.send(R.string.Push_Title));
-                                unicast.setText(InValues.send(R.string.Push_CommentToUser_txt));
-                                unicast.setExtraField(InValues.send(R.string.Push_fun),String.valueOf(unicast.PUSHCOMMENTTOUSERKEY));
-                                unicast.setExtraField(InValues.send(R.string.Push_pbid_key),getCommentpbid());
-                                unicast.setExtraField(InValues.send(R.string.Push_commentid_key),String.valueOf(c.getComment_id()));
-                                unicast.clientSend(unicast);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestEntityJson<CommentDto> requestEntityJson = new Gson().fromJson(value, new TypeToken<RequestEntityJson<CommentDto>>() {
+                    }.getType());
+                    if (ResponseToast.toToast(requestEntityJson.getResultCode())) {
+                        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment)
+                                , 1, "+1", requestEntityJson.getData());
+                        toMessage(requestEntityJson.getData());
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
 
@@ -229,30 +189,55 @@ public class PostBarDetailPageAPresenterImpl extends BasePresenter<IPostBarDetai
 
             }
         });
-
-        Bar bar = new Bar();
-        bar.setUser_account(baruser);
-        bar.setPb_one_id(getCommentpbid());
-        barModel.updateData(barModel.DATABAR_UPDATE_THREE,bar,null);
     }
 
-    public void removeComment(int commentid,String baruser){
-        if (barCommentAdapter != null){
+    private void toMessage(CommentDto c) {
+        AndroidUnicast unicast = null;
+        String ip = c.getUser_ip();
+        if (getCommenttouser() == null && !"".equals(ip)) {
+            try {
+                unicast = new AndroidUnicast();
+                unicast.setDeviceToken(ip);
+                unicast.setTicker("Android unicast ticker");
+                unicast.setTitle(InValues.send(R.string.Push_Title));
+                unicast.setText(InValues.send(R.string.Push_Comment_txt));
+                unicast.setExtraField(InValues.send(R.string.Push_fun), String.valueOf(AndroidUnicast.PUSHCOMMENTKEY));
+                unicast.setExtraField(InValues.send(R.string.Push_pbid_key), getCommentpbid());
+                unicast.setExtraField(InValues.send(R.string.Push_commentid_key), String.valueOf(c.getComment_id()));
+                unicast.clientSend(unicast);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (getCommenttouser() != null && !"".equals(ip)) {
+            try {
+                unicast = new AndroidUnicast();
+                unicast.setDeviceToken(ip);
+                unicast.setTicker("Android unicast ticker");
+                unicast.setTitle(InValues.send(R.string.Push_Title));
+                unicast.setText(InValues.send(R.string.Push_CommentToUser_txt));
+                unicast.setExtraField(InValues.send(R.string.Push_fun), String.valueOf(AndroidUnicast.PUSHCOMMENTTOUSERKEY));
+                unicast.setExtraField(InValues.send(R.string.Push_pbid_key), getCommentpbid());
+                unicast.setExtraField(InValues.send(R.string.Push_commentid_key), String.valueOf(c.getComment_id()));
+                unicast.clientSend(unicast);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void removeComment(int commentid) {
+        if (barCommentAdapter != null) {
             barCommentAdapter.removeComment();
         }
-        Comment comment = new Comment();
-        comment.setPb_one_id(getCommentpbid());
-        comment.setComment_id(commentid);
-        commentModel.deleteData(commentModel.DATACOMMENT_DELETE_ONE, comment, new MyCallBack() {
+        commentModel.deleteComment(getCommentpbid(), String.valueOf(commentid), new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    String a = response.body().string();
-                    if (Integer.valueOf(a) == 200){
-                        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment),1,"-1",null);
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestCode requestCode = new Gson().fromJson(value, RequestCode.class);
+                    if (ResponseToast.toToast(requestCode)) {
+                        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment), 1, "-1", null);
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
 
@@ -261,26 +246,21 @@ public class PostBarDetailPageAPresenterImpl extends BasePresenter<IPostBarDetai
 
             }
         });
-
-        Bar bar = new Bar();
-        bar.setUser_account(baruser);
-        bar.setPb_one_id(getCommentpbid());
-        barModel.updateData(barModel.DATABAR_UPDATE_FOUR,bar,null);
     }
 
-    public void setCommentList(List<Comment> c, RecyclerView recyclerView){
-        barCommentAdapter = new BarCommentAdapter(c,baseMVPActivity);
+    public void setCommentList(List<Comment> c, RecyclerView recyclerView) {
+        barCommentAdapter = new BarCommentAdapter(c, baseMVPActivity);
         barCommentAdapter.setBarUser(getBarUser());
         recyclerView.setAdapter(barCommentAdapter);
     }
 
-    public void addOneComment(Comment c){
-        if (barCommentAdapter != null){
+    public void addOneComment(Comment c) {
+        if (barCommentAdapter != null) {
             barCommentAdapter.addNewAcooment(c);
         }
     }
 
-    public interface OnReturn{
+    public interface OnReturn {
         void onReturn(Bar bar);
     }
 }

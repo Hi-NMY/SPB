@@ -71,7 +71,7 @@ public class MyDateClass {
             Capricorn_end = simpleDateFormat.parse("01-20");
             Aquarius_end = simpleDateFormat.parse("02-19");
             Pisces_end = simpleDateFormat.parse("03-20");
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
@@ -89,107 +89,104 @@ public class MyDateClass {
             Dusk_end = simpleDateFormat.parse("20:30:00");
             Night_start = simpleDateFormat.parse("20:30:01");
             Night_end = simpleDateFormat.parse("05:00:00");
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
 
 
-    public static int showYear(){
+    public static int showYear() {
         Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        return year;
+        return c.get(Calendar.YEAR);
     }
 
-    public static int showMonth(){
+    public static int showMonth() {
         Calendar c = Calendar.getInstance();
         int month = c.get(Calendar.MONTH);
-        return month+1;
+        return month + 1;
     }
 
-    public static int showMonthDay(){
+    public static int showMonthDay() {
         Calendar c = Calendar.getInstance();
-        int monthDay = c.get(Calendar.DAY_OF_MONTH);
-        return monthDay;
+        return c.get(Calendar.DAY_OF_MONTH);
     }
 
-    public static int showMaxNowMonth(){
+    public static int showMaxNowMonth() {
         Calendar c = Calendar.getInstance();
-        int maxMonth = c.getActualMaximum(Calendar.DATE);
-        return maxMonth;
+        return c.getActualMaximum(Calendar.DATE);
     }
 
-    public static String showNowDate(){
+    public static String showNowDate() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String nowTime = simpleDateFormat.format(System.currentTimeMillis());
-        return nowTime;
+        return simpleDateFormat.format(System.currentTimeMillis());
     }
 
-    public static String showNowDate2(){
+    public static String showNowDate2() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        String nowTime = simpleDateFormat.format(System.currentTimeMillis());
-        return nowTime;
+        return simpleDateFormat.format(System.currentTimeMillis());
     }
 
-    public static String showYearMonthDay(){
+    public static String showYearMonthDay() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String nowTime = simpleDateFormat.format(System.currentTimeMillis());
-        return nowTime;
+        return simpleDateFormat.format(System.currentTimeMillis());
     }
 
-    public static String showNowTime(){
+    public static String showNowTime() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
-        String nowTime = simpleDateFormat.format(System.currentTimeMillis());
-        return nowTime;
+        return simpleDateFormat.format(System.currentTimeMillis());
     }
 
-    public static String showNowTime2(){
+    public static String showNowTime2() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-        String nowTime = simpleDateFormat.format(System.currentTimeMillis());
-        return nowTime;
+        return simpleDateFormat.format(System.currentTimeMillis());
     }
 
-    public static String showYearMonthDayAddOneDay(){
+    public static String showYearMonthDayAddOneDay() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
-        c.add(Calendar.DAY_OF_MONTH,1);
-        String nowTime = simpleDateFormat.format(c.getTime());
-        return nowTime;
+        c.add(Calendar.DAY_OF_MONTH, 1);
+        return simpleDateFormat.format(c.getTime());
     }
 
-    public static String getStringDate(Date date){
+    public static String getStringDate(Date date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String d = simpleDateFormat.format(date);
-        return d;
+        return simpleDateFormat.format(date);
     }
 
-    public static String getStringDateMonth(Date date){
+    public static String getStringDateMonth(Date date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd");
-        String d = simpleDateFormat.format(date);
-        return d;
+        return simpleDateFormat.format(date);
     }
 
-    public static String showWeekTable(String date, int f){
+    public static String showWeekTable(String date, int f) {
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Calendar c = Calendar.getInstance();
             c.setTime(simpleDateFormat.parse(date));
             String mWay = String.valueOf(c.get(Calendar.DAY_OF_WEEK));
-            if (f == 0){
-                if ("1".equals(mWay)) {
-                    mWay = "星期天";
-                } else if ("2".equals(mWay)) {
-                    mWay = "星期一";
-                } else if ("3".equals(mWay)) {
-                    mWay = "星期二";
-                } else if ("4".equals(mWay)) {
-                    mWay = "星期三";
-                } else if ("5".equals(mWay)) {
-                    mWay = "星期四";
-                } else if ("6".equals(mWay)) {
-                    mWay = "星期五";
-                } else if ("7".equals(mWay)) {
-                    mWay = "星期六";
+            if (f == 0) {
+                switch (mWay) {
+                    case "1":
+                        mWay = "星期天";
+                        break;
+                    case "2":
+                        mWay = "星期一";
+                        break;
+                    case "3":
+                        mWay = "星期二";
+                        break;
+                    case "4":
+                        mWay = "星期三";
+                        break;
+                    case "5":
+                        mWay = "星期四";
+                        break;
+                    case "6":
+                        mWay = "星期五";
+                        break;
+                    case "7":
+                        mWay = "星期六";
+                        break;
                 }
             }
             return mWay;
@@ -199,42 +196,41 @@ public class MyDateClass {
         }
     }
 
-    public static String showDateClass(String thisDate){
+    public static String showDateClass(String thisDate) {
         Timestamp timestamp = new Timestamp(stringToDate(thisDate).getTime());
         Date now = new Date();
         long times = now.getTime() - timestamp.getTime();
-        long month = times/((24 * 60 * 60 * 1000) * 20);
-        long day = times/(24 * 60 * 60 * 1000);
-        long hour = (times/(60 * 60 * 1000) - day * 24);
-        long min = ((times/(60 * 1000)) - day * 24 * 60 - hour * 60);
-        long sec = (times/1000-day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+        long month = times / ((24 * 60 * 60 * 1000) * 20);
+        long day = times / (24 * 60 * 60 * 1000);
+        long hour = (times / (60 * 60 * 1000) - day * 24);
+        long min = ((times / (60 * 1000)) - day * 24 * 60 - hour * 60);
+        long sec = (times / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
 
-        StringBuffer stringBuffer = new StringBuffer();
-        if (month>0){
+        StringBuilder stringBuilder = new StringBuilder();
+        if (month > 0) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            stringBuffer.append(simpleDateFormat.format(timestamp));
-        }else if (day > 0){
-            if (day == 1){
-                stringBuffer.append("1天前");
-            }else if (day == 2){
-                stringBuffer.append("2天前");
-            }else if (day == 3){
-                stringBuffer.append("3天前");
-            }else {
-                stringBuffer.append(day+"天前");
+            stringBuilder.append(simpleDateFormat.format(timestamp));
+        } else if (day > 0) {
+            if (day == 1) {
+                stringBuilder.append("1天前");
+            } else if (day == 2) {
+                stringBuilder.append("2天前");
+            } else if (day == 3) {
+                stringBuilder.append("3天前");
+            } else {
+                stringBuilder.append(day).append("天前");
             }
-        }else if (hour>0){
-            stringBuffer.append(hour+"小时前");
-        }else if (min>0){
-            stringBuffer.append(min+"分钟前");
-        }else {
-            stringBuffer.append("刚刚");
+        } else if (hour > 0) {
+            stringBuilder.append(hour).append("小时前");
+        } else if (min > 0) {
+            stringBuilder.append(min).append("分钟前");
+        } else {
+            stringBuilder.append("刚刚");
         }
-        String aTime = stringBuffer.toString();
-        return aTime;
+        return stringBuilder.toString();
     }
 
-    public static Date stringToDate(String time){
+    public static Date stringToDate(String time) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = null;
         try {
@@ -245,7 +241,7 @@ public class MyDateClass {
         return date;
     }
 
-    public static Date stringToDate2(String time){
+    public static Date stringToDate2(String time) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
         try {
@@ -256,7 +252,7 @@ public class MyDateClass {
         return date;
     }
 
-    public static Date stringToTime(String time){
+    public static Date stringToTime(String time) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
         Date date = null;
         try {
@@ -267,49 +263,49 @@ public class MyDateClass {
         return date;
     }
 
-    public static String sendMath(int i){
+    public static String sendMath(int i) {
         float a = (float) i / 1000;
         String num = null;
-        if (a > 1){
-            String result = String.format("%.1f",a);
-            if (result.endsWith("0")){
+        if (a > 1) {
+            String result = String.format("%.1f", a);
+            if (result.endsWith("0")) {
                 num = String.valueOf(Integer.valueOf(result)) + "k";
-            }else {
+            } else {
                 num = result + "k";
             }
-        }else {
+        } else {
             num = String.valueOf(i);
         }
         return num;
     }
 
-    public static String getConstellation(String date){
+    public static String getConstellation(String date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd");
         try {
             Date birthdate = simpleDateFormat.parse(date);
-            if (birthdate.getTime() >= Aries_start.getTime() && birthdate.getTime() <= Aries_end.getTime()){
+            if (birthdate.getTime() >= Aries_start.getTime() && birthdate.getTime() <= Aries_end.getTime()) {
                 return "白羊座";
-            }else if (birthdate.getTime() >= Taurus_start.getTime() && birthdate.getTime() <= Taurus_end.getTime()){
+            } else if (birthdate.getTime() >= Taurus_start.getTime() && birthdate.getTime() <= Taurus_end.getTime()) {
                 return "金牛座";
-            }else if (birthdate.getTime() >= Gemini_start.getTime() && birthdate.getTime() <= Gemini_end.getTime()){
+            } else if (birthdate.getTime() >= Gemini_start.getTime() && birthdate.getTime() <= Gemini_end.getTime()) {
                 return "双子座";
-            }else if (birthdate.getTime() >= Cancer_start.getTime() && birthdate.getTime() <= Cancer_end.getTime()){
+            } else if (birthdate.getTime() >= Cancer_start.getTime() && birthdate.getTime() <= Cancer_end.getTime()) {
                 return "巨蟹座";
-            }else if (birthdate.getTime() >= Leo_start.getTime() && birthdate.getTime() <= Leo_end.getTime()){
+            } else if (birthdate.getTime() >= Leo_start.getTime() && birthdate.getTime() <= Leo_end.getTime()) {
                 return "狮子座";
-            }else if (birthdate.getTime() >= Virgo_start.getTime() && birthdate.getTime() <= Virgo_end.getTime()){
+            } else if (birthdate.getTime() >= Virgo_start.getTime() && birthdate.getTime() <= Virgo_end.getTime()) {
                 return "处女座";
-            }else if (birthdate.getTime() >= Libra_start.getTime() && birthdate.getTime() <= Libra_end.getTime()){
+            } else if (birthdate.getTime() >= Libra_start.getTime() && birthdate.getTime() <= Libra_end.getTime()) {
                 return "天秤座";
-            }else if (birthdate.getTime() >= Scorpio_start.getTime() && birthdate.getTime() <= Scorpio_end.getTime()){
+            } else if (birthdate.getTime() >= Scorpio_start.getTime() && birthdate.getTime() <= Scorpio_end.getTime()) {
                 return "天蝎座";
-            }else if (birthdate.getTime() >= Sagittarius_start.getTime() && birthdate.getTime() <= Sagittarius_end.getTime()){
+            } else if (birthdate.getTime() >= Sagittarius_start.getTime() && birthdate.getTime() <= Sagittarius_end.getTime()) {
                 return "射手座";
-            }else if (birthdate.getTime() >= Capricorn_start.getTime() || birthdate.getTime() <= Capricorn_end.getTime()){
+            } else if (birthdate.getTime() >= Capricorn_start.getTime() || birthdate.getTime() <= Capricorn_end.getTime()) {
                 return "摩羯座";
-            }else if (birthdate.getTime() >= Aquarius_start.getTime() && birthdate.getTime() <= Aquarius_end.getTime()){
+            } else if (birthdate.getTime() >= Aquarius_start.getTime() && birthdate.getTime() <= Aquarius_end.getTime()) {
                 return "水瓶座";
-            }else if (birthdate.getTime() >= Pisces_start.getTime() && birthdate.getTime() <= Pisces_end.getTime()){
+            } else if (birthdate.getTime() >= Pisces_start.getTime() && birthdate.getTime() <= Pisces_end.getTime()) {
                 return "双鱼座";
             }
         } catch (ParseException e) {
@@ -318,33 +314,33 @@ public class MyDateClass {
         return "";
     }
 
-    public static String getConstellationEImg(String date){
+    public static String getConstellationEImg(String date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd");
         try {
             Date birthdate = simpleDateFormat.parse(date);
-            if (birthdate.getTime() >= Aries_start.getTime() && birthdate.getTime() <= Aries_end.getTime()){
+            if (birthdate.getTime() >= Aries_start.getTime() && birthdate.getTime() <= Aries_end.getTime()) {
                 return "star_aries.png";
-            }else if (birthdate.getTime() >= Taurus_start.getTime() && birthdate.getTime() <= Taurus_end.getTime()){
+            } else if (birthdate.getTime() >= Taurus_start.getTime() && birthdate.getTime() <= Taurus_end.getTime()) {
                 return "star_taurus.png";
-            }else if (birthdate.getTime() >= Gemini_start.getTime() && birthdate.getTime() <= Gemini_end.getTime()){
+            } else if (birthdate.getTime() >= Gemini_start.getTime() && birthdate.getTime() <= Gemini_end.getTime()) {
                 return "star_gemini.png";
-            }else if (birthdate.getTime() >= Cancer_start.getTime() && birthdate.getTime() <= Cancer_end.getTime()){
+            } else if (birthdate.getTime() >= Cancer_start.getTime() && birthdate.getTime() <= Cancer_end.getTime()) {
                 return "star_cancer.png";
-            }else if (birthdate.getTime() >= Leo_start.getTime() && birthdate.getTime() <= Leo_end.getTime()){
+            } else if (birthdate.getTime() >= Leo_start.getTime() && birthdate.getTime() <= Leo_end.getTime()) {
                 return "star_leo.png";
-            }else if (birthdate.getTime() >= Virgo_start.getTime() && birthdate.getTime() <= Virgo_end.getTime()){
+            } else if (birthdate.getTime() >= Virgo_start.getTime() && birthdate.getTime() <= Virgo_end.getTime()) {
                 return "star_virgo.png";
-            }else if (birthdate.getTime() >= Libra_start.getTime() && birthdate.getTime() <= Libra_end.getTime()){
+            } else if (birthdate.getTime() >= Libra_start.getTime() && birthdate.getTime() <= Libra_end.getTime()) {
                 return "star_libra.png";
-            }else if (birthdate.getTime() >= Scorpio_start.getTime() && birthdate.getTime() <= Scorpio_end.getTime()){
+            } else if (birthdate.getTime() >= Scorpio_start.getTime() && birthdate.getTime() <= Scorpio_end.getTime()) {
                 return "star_scorpio.png";
-            }else if (birthdate.getTime() >= Sagittarius_start.getTime() && birthdate.getTime() <= Sagittarius_end.getTime()){
+            } else if (birthdate.getTime() >= Sagittarius_start.getTime() && birthdate.getTime() <= Sagittarius_end.getTime()) {
                 return "star_sagittarius.png";
-            }else if (birthdate.getTime() >= Capricorn_start.getTime() || birthdate.getTime() <= Capricorn_end.getTime()){
+            } else if (birthdate.getTime() >= Capricorn_start.getTime() || birthdate.getTime() <= Capricorn_end.getTime()) {
                 return "star_capricorn.png";
-            }else if (birthdate.getTime() >= Aquarius_start.getTime() && birthdate.getTime() <= Aquarius_end.getTime()){
+            } else if (birthdate.getTime() >= Aquarius_start.getTime() && birthdate.getTime() <= Aquarius_end.getTime()) {
                 return "star_aquarius.png";
-            }else if (birthdate.getTime() >= Pisces_start.getTime() && birthdate.getTime() <= Pisces_end.getTime()){
+            } else if (birthdate.getTime() >= Pisces_start.getTime() && birthdate.getTime() <= Pisces_end.getTime()) {
                 return "star_pisces.png";
             }
         } catch (ParseException e) {
@@ -357,15 +353,15 @@ public class MyDateClass {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
         try {
             Date timedate = simpleDateFormat.parse(date);
-            if (timedate.getTime() >= Morn_start.getTime() && timedate.getTime() <= Morn_end.getTime()){
+            if (timedate.getTime() >= Morn_start.getTime() && timedate.getTime() <= Morn_end.getTime()) {
                 return "早晨";
-            }else if (timedate.getTime() >= Morning_start.getTime() && timedate.getTime() <= Morning_end.getTime()){
+            } else if (timedate.getTime() >= Morning_start.getTime() && timedate.getTime() <= Morning_end.getTime()) {
                 return "上午";
-            }else if (timedate.getTime() >= Afternoon_start.getTime() && timedate.getTime() <= Afternoon_end.getTime()){
+            } else if (timedate.getTime() >= Afternoon_start.getTime() && timedate.getTime() <= Afternoon_end.getTime()) {
                 return "下午";
-            }else if (timedate.getTime() >= Dusk_start.getTime() && timedate.getTime() <= Dusk_end.getTime()){
+            } else if (timedate.getTime() >= Dusk_start.getTime() && timedate.getTime() <= Dusk_end.getTime()) {
                 return "黄昏傍晚";
-            }else if (timedate.getTime() >= Night_start.getTime() || timedate.getTime() <= Night_end.getTime()){
+            } else if (timedate.getTime() >= Night_start.getTime() || timedate.getTime() <= Night_end.getTime()) {
                 return "夜晚";
             }
         } catch (ParseException e) {

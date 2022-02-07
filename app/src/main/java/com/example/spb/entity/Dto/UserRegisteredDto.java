@@ -10,7 +10,6 @@ public class UserRegisteredDto {
     private String user_account;
     private String user_password;
     private String user_name;
-    private String user_token;
 
     public String getUser_account() {
         return user_account;
@@ -36,11 +35,4 @@ public class UserRegisteredDto {
         this.user_name = user_name;
     }
 
-    public String getUser_token() {
-        return user_token;
-    }
-
-    public void setUser_token(String user_token) {
-        this.user_token = user_token;
-    }
 }

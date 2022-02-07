@@ -1,18 +1,24 @@
 package com.example.spb.presenter.impl;
 
+import com.example.spb.R;
 import com.example.spb.base.BasePresenter;
+import com.example.spb.common.RequestCode;
+import com.example.spb.common.RequestEntityJson;
 import com.example.spb.entity.Bar;
-import com.example.spb.entity.Sign;
-import com.example.spb.model.InterTotal.SpbModelBasicInter;
-import com.example.spb.model.impl.BarModelImpl;
-import com.example.spb.model.impl.SignInModelImpl;
+import com.example.spb.model.implA.PostBarModelImpl;
+import com.example.spb.model.implA.SignModelImpl;
+import com.example.spb.model.inter.PostBarModel;
+import com.example.spb.model.inter.SignModel;
 import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.inter.ISignInBadgeFPresenter;
+import com.example.spb.presenter.utils.DataVerificationTool;
+import com.example.spb.presenter.utils.InValues;
+import com.example.spb.view.Component.ResponseToast;
 import com.example.spb.view.inter.ISignInBadgeFView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
 
 public class SignInBadgeFPresenterImpl extends BasePresenter<ISignInBadgeFView> implements ISignInBadgeFPresenter {
 
@@ -20,10 +26,8 @@ public class SignInBadgeFPresenterImpl extends BasePresenter<ISignInBadgeFView> 
     private int signBadgeNum = 0;
     private String starBadge = "";
     private int ctSign = 1;
-    private SpbModelBasicInter barModel;
-    private SpbModelBasicInter signModel;
-    private String likeBadge;
-    private String signBadge;
+    private final PostBarModel barModel;
+    private final SignModel signModel;
 
     public int getLikeBadgeNum() {
         return likeBadgeNum;
@@ -58,21 +62,23 @@ public class SignInBadgeFPresenterImpl extends BasePresenter<ISignInBadgeFView> 
     }
 
     public SignInBadgeFPresenterImpl() {
-        barModel = new BarModelImpl();
-        signModel = new SignInModelImpl();
+        barModel = new PostBarModelImpl();
+        signModel = new SignModelImpl();
     }
 
-    public void obtainBarLike(String account,OnReturn onReturn){
+    public void obtainBarLike(String account, OnReturn onReturn) {
         Bar bar = new Bar();
         bar.setUser_account(account);
-        barModel.selectData(barModel.DATABAR_SELECT_EIGHT, bar, new MyCallBack() {
+        barModel.queryUserBarLikeCount(account, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    String a = response.body().string();
-                    onReturn.onReturn(Integer.valueOf(a));
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestEntityJson<String> requestEntityJson = new Gson().fromJson(value, new TypeToken<RequestEntityJson<String>>() {
+                    }.getType());
+                    if (ResponseToast.toToast(requestEntityJson.getResultCode())) {
+                        onReturn.onReturn(Integer.parseInt(requestEntityJson.getData()));
+                    }
                 }
             }
 
@@ -83,20 +89,17 @@ public class SignInBadgeFPresenterImpl extends BasePresenter<ISignInBadgeFView> 
         });
     }
 
-    public void obtainStarBadge(String account,OnReturn onReturn){
-        Sign sign = new Sign();
-        sign.setUser_account(account);
-        sign.setSign_star_badge(getStarBadge());
-        signModel.updateData(signModel.DATASIGN_UPDATE_SIX, sign, new MyCallBack() {
+    public void obtainStarBadge(String account, OnReturn onReturn) {
+        signModel.updateSignStarBadge(account, getStarBadge(), new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    String a = response.body().string();
-                    if (Integer.valueOf(a) == 200){
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestEntityJson<String> requestEntityJson = new Gson().fromJson(value, new TypeToken<RequestEntityJson<String>>() {
+                    }.getType());
+                    if (ResponseToast.toToast(requestEntityJson.getResultCode())) {
                         onReturn.onReturn(0);
                     }
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
                 }
             }
 
@@ -107,27 +110,24 @@ public class SignInBadgeFPresenterImpl extends BasePresenter<ISignInBadgeFView> 
         });
     }
 
-    public void obtainLikeBadge(String account,int num,OnReturn onReturn){
-        if (num == 1){
-            likeBadge = "like_badge_one.png|";
-        }else if (num == 2){
-            likeBadge = "like_badge_one.png|like_badge_two.png|";
-        }else {
-            likeBadge = "like_badge_one.png|like_badge_two.png|like_badge_three.png|";
+    public void obtainLikeBadge(String account, int num, OnReturn onReturn) {
+        String likeBadge;
+        if (num == 1) {
+            likeBadge = InValues.send(R.string.like_badge_one);
+        } else if (num == 2) {
+            likeBadge = InValues.send(R.string.like_badge_two);
+        } else {
+            likeBadge = InValues.send(R.string.like_badge_three);
         }
-        Sign sign = new Sign();
-        sign.setUser_account(account);
-        sign.setSign_like_badge(likeBadge);
-        signModel.updateData(signModel.DATASIGN_UPDATE_SEVEN, sign, new MyCallBack() {
+        signModel.updateSignLikeBadge(account, likeBadge, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    String a = response.body().string();
-                    if (Integer.valueOf(a) == 200){
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestCode requestCode = new Gson().fromJson(value, RequestCode.class);
+                    if (ResponseToast.toToast(requestCode)) {
                         onReturn.onReturn(num);
                     }
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
                 }
             }
 
@@ -138,27 +138,24 @@ public class SignInBadgeFPresenterImpl extends BasePresenter<ISignInBadgeFView> 
         });
     }
 
-    public void obtainSignBadge(String account,int num,OnReturn onReturn){
-        if (num == 1){
-            signBadge = "sign_badge_one.png|";
-        }else if (num == 2){
-            signBadge = "sign_badge_one.png|sign_badge_two.png|";
-        }else {
-            signBadge = "sign_badge_one.png|sign_badge_two.png|sign_badge_three.png|";
+    public void obtainSignBadge(String account, int num, OnReturn onReturn) {
+        String signBadge;
+        if (num == 1) {
+            signBadge = InValues.send(R.string.sign_badge_one);
+        } else if (num == 2) {
+            signBadge = InValues.send(R.string.sign_badge_two);
+        } else {
+            signBadge = InValues.send(R.string.sign_badge_three);
         }
-        Sign sign = new Sign();
-        sign.setUser_account(account);
-        sign.setSign_task_badge(signBadge);
-        signModel.updateData(signModel.DATASIGN_UPDATE_EIGHT, sign, new MyCallBack() {
+        signModel.updateSignTaskBadge(account, signBadge, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    String a = response.body().string();
-                    if (Integer.valueOf(a) == 200){
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestCode requestCode = new Gson().fromJson(value, RequestCode.class);
+                    if (ResponseToast.toToast(requestCode)) {
                         onReturn.onReturn(num);
                     }
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
                 }
             }
 
@@ -169,7 +166,7 @@ public class SignInBadgeFPresenterImpl extends BasePresenter<ISignInBadgeFView> 
         });
     }
 
-    public interface OnReturn{
+    public interface OnReturn {
         void onReturn(int likeNum);
     }
 }

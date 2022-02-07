@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPFragment;
-import com.example.spb.entity.User;
+import com.example.spb.entity.Dto.UserDto;
 import com.example.spb.presenter.impl.BasicInformationFPresenterImpl;
 import com.example.spb.presenter.utils.InValues;
 import com.example.spb.presenter.utils.MyDateClass;
@@ -37,7 +37,7 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
     private LayoutInflater layoutInflater;
     private RefreshMsg refreshMsg;
     private UserToUser userToUser;
-    private User toUser;
+    private UserDto toUserDto;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -121,22 +121,22 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
 
     private void initUserData(){
         mBasicinformationChange.setVisibility(View.GONE);
-        mBasicinformationOnline.setText(toUser.getUser_longday() + "天");
-        if (toUser.getUser_home() != null && !toUser.getUser_home().equals("")){
-            mBasicinformationHome.setText(toUser.getUser_home());
+        mBasicinformationOnline.setText(toUserDto.getUser_longday() + "天");
+        if (toUserDto.getUser_home() != null && !toUserDto.getUser_home().equals("")){
+            mBasicinformationHome.setText(toUserDto.getUser_home());
         }else {
             mBasicinformationHome.setText("一个神秘的地方");
         }
 
-        if (toUser.getUser_birth() != null && !toUser.getUser_birth().equals("")){
-            mBasicinformationBirth.setText(toUser.getUser_birth());
-            mBasicinformationConstellation.setText(MyDateClass.getConstellation(toUser.getUser_birth().substring(5)));
+        if (toUserDto.getUser_birth() != null && !toUserDto.getUser_birth().equals("")){
+            mBasicinformationBirth.setText(toUserDto.getUser_birth());
+            mBasicinformationConstellation.setText(MyDateClass.getConstellation(toUserDto.getUser_birth().substring(5)));
         }else {
             mBasicinformationBirth.setText("无");
             mBasicinformationConstellation.setText("无");
         }
 
-        mBasicinformationFavorite.setAdapter(new TagAdapter<String>(mPresenter.setFavorite(toUser.getUser_favorite())) {
+        mBasicinformationFavorite.setAdapter(new TagAdapter<String>(mPresenter.setFavorite(toUserDto.getUser_favorite())) {
             @Override
             public View getView(FlowLayout parent, int position, String o) {
                 View view = layoutInflater.inflate(R.layout.item_favorite_tag_one, mBasicinformationFavorite, false);
@@ -240,9 +240,9 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
     class UserToUser extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
-            toUser = (User) intent.getSerializableExtra("key_two");
-            if (toUser.getUser_account().equals(personalSpacePage.userAccount)){
-                mPresenter.setMyPrivacy(toUser.getUser_privacy());
+            toUserDto = (UserDto) intent.getSerializableExtra("key_two");
+            if (toUserDto.getUser_account().equals(personalSpacePage.userAccount)){
+                mPresenter.setMyPrivacy(toUserDto.getUser_privacy());
                 initUserData();
             }
         }

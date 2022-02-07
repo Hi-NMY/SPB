@@ -321,7 +321,6 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
                         break;
                     case ERROR_BAR:
                         closeDialog(DIALOGLOADING);
-                        MyToastClass.ShowToast(MyApplication.getContext(),"出错了，请重试");
                         break;
                 }
             }
@@ -402,12 +401,12 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
 
             @Override
             public void initData() {
-                mHotTopicTag.setAdapter(new TagAdapter<Topic>(mPresenter.hotTopics) {
+                mHotTopicTag.setAdapter(new TagAdapter<String>(mPresenter.hotTopics) {
                     @Override
-                    public View getView(FlowLayout parent, int position, Topic topic) {
+                    public View getView(FlowLayout parent, int position, String topic) {
                         View view = layoutInflater.inflate(R.layout.item_tag_one, mHotTopicTag, false);
-                        TextView textView = (TextView) view.findViewById(R.id.text);
-                        textView.setText(topic.getTopic_name());
+                        TextView textView = view.findViewById(R.id.text);
+                        textView.setText(topic);
                         return view;
                     }
                 });
@@ -475,12 +474,12 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
     }
 
     public void setSearchTopic() {
-        mSearchTopicTag.setAdapter(new TagAdapter<Topic>(mPresenter.searchTopics) {
+        mSearchTopicTag.setAdapter(new TagAdapter<String>(mPresenter.searchTopics) {
             @Override
-            public View getView(FlowLayout parent, int position, Topic topic) {
+            public View getView(FlowLayout parent, int position, String topic) {
                 View view = layoutInflater.inflate(R.layout.item_tag_one, mSearchTopicTag, false);
-                TextView textView = (TextView) view.findViewById(R.id.text);
-                textView.setText(topic.getTopic_name());
+                TextView textView = view.findViewById(R.id.text);
+                textView.setText(topic);
                 return view;
             }
         });

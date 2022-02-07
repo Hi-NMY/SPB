@@ -58,7 +58,7 @@ public class SignInPage extends BaseMVPActivity<ISignInPageAView, SignInPageAPre
 
     @Override
     protected SignInPageAPresenterImpl createPresenter() {
-        return new SignInPageAPresenterImpl(this);
+        return new SignInPageAPresenterImpl();
     }
 
     @Override

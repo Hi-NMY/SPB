@@ -29,15 +29,14 @@ public class MyApplication extends Application implements RongIMClient.Connectio
             }
         }).start();
 
-        String appKey = "x18ywvqfx4z8c";
         LitePal.initialize(this);
         context = getApplicationContext();
-        RongIM.init(context, appKey);
+        RongIM.init(context, InValues.send(R.string.rong_app_key));
         RongIM.setConnectionStatusListener(this);
         RongIM.setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageWrapperListener() {
             @Override
             public boolean onReceived(Message message, int i, boolean b, boolean b1) {
-                SpbBroadcast.sendReceiver(getContext(), InValues.send(R.string.Bcr_new_messasge),0,null);
+                SpbBroadcast.sendReceiver(getContext(), InValues.send(R.string.Bcr_new_messasge), 0, null);
                 return false;
             }
         });

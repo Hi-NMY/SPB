@@ -10,7 +10,7 @@ import com.example.spb.view.inter.ISetUpAssistPageAView;
 
 public class SetUpAssistPageAPresenterImpl extends BasePresenter<ISetUpAssistPageAView> implements ISetUpAssistPageAPresenter {
 
-    private SharedPreferences.Editor editor;
+    private final SharedPreferences.Editor editor;
     private boolean classKey = true;
     private boolean activeKey = true;
 
@@ -20,7 +20,7 @@ public class SetUpAssistPageAPresenterImpl extends BasePresenter<ISetUpAssistPag
 
     public void setClssKey(boolean classKey) {
         this.classKey = classKey;
-        editor.putBoolean(InValues.send(R.string.assist_class),classKey);
+        editor.putBoolean(InValues.send(R.string.assist_class), classKey);
         editor.apply();
     }
 
@@ -30,7 +30,7 @@ public class SetUpAssistPageAPresenterImpl extends BasePresenter<ISetUpAssistPag
 
     public void setActiveKey(boolean activeKey) {
         this.activeKey = activeKey;
-        editor.putBoolean(InValues.send(R.string.assist_active),activeKey);
+        editor.putBoolean(InValues.send(R.string.assist_active), activeKey);
         editor.apply();
     }
 
@@ -39,9 +39,9 @@ public class SetUpAssistPageAPresenterImpl extends BasePresenter<ISetUpAssistPag
         getAssistSetUp();
     }
 
-    public void getAssistSetUp(){
+    public void getAssistSetUp() {
         SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_assist_setup));
-        activeKey = sharedPreferences.getBoolean(InValues.send(R.string.assist_active),true);
-        classKey = sharedPreferences.getBoolean(InValues.send(R.string.assist_class),true);
+        activeKey = sharedPreferences.getBoolean(InValues.send(R.string.assist_active), true);
+        classKey = sharedPreferences.getBoolean(InValues.send(R.string.assist_class), true);
     }
 }

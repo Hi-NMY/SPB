@@ -21,45 +21,45 @@ public class VoiceObtain {
         this.mediaRecorder = m;
     }
 
-    public boolean startVoice(){
-            try {
-                //设置麦克风
-                mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-                //设置输出格式
-                mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-                //设置编码
-                mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-                fileName = DateFormat.format("yyyyMMdd_HHmmss", Calendar.getInstance(Locale.CHINA)) + ".m4a";
-                String audioSaveDir = isExisDir("mygoodvoice") + fileName;
-                if (!FileUtils.isExternalStorageDocument(Uri.parse(FileUtils.getCreateFileName(audioSaveDir)))) {
-                    FileUtils.rename(audioSaveDir);
-                }
-                filePath = audioSaveDir;
-                //准备
-                mediaRecorder.setOutputFile(filePath);
-                mediaRecorder.prepare();
-                //开始
-                mediaRecorder.start();
-                return true;
-            } catch (IOException e) {
-                return false;
+    public boolean startVoice() {
+        try {
+            //设置麦克风
+            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            //设置输出格式
+            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+            //设置编码
+            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+            fileName = DateFormat.format("yyyyMMdd_HHmmss", Calendar.getInstance(Locale.CHINA)) + ".m4a";
+            String audioSaveDir = isExisDir("mygoodvoice") + fileName;
+            if (!FileUtils.isExternalStorageDocument(Uri.parse(FileUtils.getCreateFileName(audioSaveDir)))) {
+                FileUtils.rename(audioSaveDir);
             }
+            filePath = audioSaveDir;
+            //准备
+            mediaRecorder.setOutputFile(filePath);
+            mediaRecorder.prepare();
+            //开始
+            mediaRecorder.start();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
     }
 
-    public String stopVoice(){
+    public String stopVoice() {
         n = filePath;
         try {
             mediaRecorder.stop();
             mediaRecorder.release();
             mediaRecorder = null;
             filePath = "";
-        }catch (Exception e){
+        } catch (Exception e) {
             mediaRecorder.reset();
             mediaRecorder.release();
             mediaRecorder = null;
 
             File file = new File(filePath);
-            if (file.exists()){
+            if (file.exists()) {
                 file.delete();
                 filePath = "";
             }
@@ -68,8 +68,8 @@ public class VoiceObtain {
     }
 
     public String isExisDir(String saveDir) throws IOException {
-        File downloadFile = new File(Environment.getExternalStorageDirectory(),saveDir);
-        if (!downloadFile.mkdirs()){
+        File downloadFile = new File(Environment.getExternalStorageDirectory(), saveDir);
+        if (!downloadFile.mkdirs()) {
             downloadFile.createNewFile();
         }
 

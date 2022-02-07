@@ -28,7 +28,7 @@ public class DataVerificationTool {
         ResponseBody body = response.body();
         String str = null;
         try {
-            if (body == null){
+            if (body == null) {
                 return null;
             }
             str = body.string();

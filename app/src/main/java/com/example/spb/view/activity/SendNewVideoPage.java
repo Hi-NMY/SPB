@@ -217,11 +217,9 @@ public class SendNewVideoPage extends BaseMVPActivity<ISendNewVideoAView, SendNe
                     case RESPONSE_SUCCESS:
                         closeDialog(DIALOGLOADING);
                         finish();
-                        MyToastClass.ShowToast(MyApplication.getContext(),"发布成功");
                         break;
                     case RESPONSE_ERROR:
                         closeDialog(DIALOGLOADING);
-                        MyToastClass.ShowToast(MyApplication.getContext(),"错误，请重试");
                         break;
                     case RESPONSE_ONE:
                         createDialog();
@@ -350,12 +348,12 @@ public class SendNewVideoPage extends BaseMVPActivity<ISendNewVideoAView, SendNe
 
             @Override
             public void initData() {
-                mHotTopicTag.setAdapter(new TagAdapter<Topic>(mPresenter.hotTopics) {
+                mHotTopicTag.setAdapter(new TagAdapter<String>(mPresenter.hotTopics) {
                     @Override
-                    public View getView(FlowLayout parent, int position, Topic topic) {
+                    public View getView(FlowLayout parent, int position, String topic) {
                         View view = layoutInflater.inflate(R.layout.item_tag_one, mHotTopicTag, false);
-                        TextView textView = (TextView) view.findViewById(R.id.text);
-                        textView.setText(topic.getTopic_name());
+                        TextView textView = view.findViewById(R.id.text);
+                        textView.setText(topic);
                         return view;
                     }
                 });
@@ -423,12 +421,12 @@ public class SendNewVideoPage extends BaseMVPActivity<ISendNewVideoAView, SendNe
     }
 
     public void setSearchTopic() {
-        mSearchTopicTag.setAdapter(new TagAdapter<Topic>(mPresenter.searchTopics) {
+        mSearchTopicTag.setAdapter(new TagAdapter<String>(mPresenter.searchTopics) {
             @Override
-            public View getView(FlowLayout parent, int position, Topic topic) {
+            public View getView(FlowLayout parent, int position, String topic) {
                 View view = layoutInflater.inflate(R.layout.item_tag_one, mSearchTopicTag, false);
-                TextView textView = (TextView) view.findViewById(R.id.text);
-                textView.setText(topic.getTopic_name());
+                TextView textView = view.findViewById(R.id.text);
+                textView.setText(topic);
                 return view;
             }
         });

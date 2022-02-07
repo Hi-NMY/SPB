@@ -11,18 +11,20 @@ import com.example.spb.adapter.LocationAdapter;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.base.BasePresenter;
+import com.example.spb.common.RequestEntityJson;
+import com.example.spb.common.RequestListJson;
 import com.example.spb.entity.Bar;
 import com.example.spb.entity.LocationGps;
 import com.example.spb.entity.Topic;
-import com.example.spb.model.InterTotal.SpbModelBasicInter;
-import com.example.spb.model.impl.TopicModelImpl;
-import com.example.spb.model.impl.VideoModelImpl;
+import com.example.spb.model.implA.PostBarModelImpl;
+import com.example.spb.model.implA.TopicModelImpl;
+import com.example.spb.model.inter.PostBarModel;
+import com.example.spb.model.inter.TopicModel;
 import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.inter.ISendNewVideoAPresenter;
-import com.example.spb.presenter.utils.InValues;
-import com.example.spb.presenter.utils.MyResolve;
-import com.example.spb.presenter.utils.MySharedPreferences;
-import com.example.spb.presenter.utils.ObtainUserShared;
+import com.example.spb.presenter.utils.*;
+import com.example.spb.view.Component.ResponseToast;
+import com.example.spb.view.activity.SendNewVideoPage;
 import com.example.spb.view.inter.ISendNewVideoAView;
 import com.example.spb.xserver.SpbLocationServer;
 import com.example.spb.xserver.SpbSearchLocation;
@@ -33,27 +35,25 @@ import com.luck.picture.lib.tools.PictureFileUtils;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SendNewVideoAPresenterImpl extends BasePresenter<ISendNewVideoAView> implements ISendNewVideoAPresenter {
 
-    private SpbModelBasicInter topicModel;
-    private SpbModelBasicInter videoModel;
-    private Gson gson;
+    private final TopicModel topicModel;
+    private final PostBarModel postBarModel;
+    private final Gson gson;
     public List<Topic> topics;
     public Bar newBar;
-    private BaseMVPActivity baseMVPActivity;
-    public List<Topic> hotTopics;
-    public List<Topic> searchTopics;
+    private final BaseMVPActivity baseMVPActivity;
+    public List<String> hotTopics;
+    public List<String> searchTopics;
     private SpbLocationServer spbLocationServer;
     public String newVideoTxt = "";
     public String locationName = "";
     private int obtainInterval = 500;
     private List<LocationGps> locationGpsS;
-    private LocationAdapter locationAdapter;
-    private SpbSearchLocation spbSearchLocation;
     private Topic topic;
     private StringBuffer topicZ;
     private String videoPath = "";
@@ -92,9 +92,9 @@ public class SendNewVideoAPresenterImpl extends BasePresenter<ISendNewVideoAView
     }
 
     public SendNewVideoAPresenterImpl(Activity activity) {
-        this.baseMVPActivity = (BaseMVPActivity)activity;
+        this.baseMVPActivity = (BaseMVPActivity) activity;
         topicModel = new TopicModelImpl();
-        videoModel = new VideoModelImpl();
+        postBarModel = new PostBarModelImpl();
         gson = new Gson();
         hotTopics = new ArrayList<>();
         searchTopics = new ArrayList<>();
@@ -103,45 +103,43 @@ public class SendNewVideoAPresenterImpl extends BasePresenter<ISendNewVideoAView
         obtainHotTopic();
     }
 
-    public void obtainVideo(List<LocalMedia> result){
+    public void obtainVideo(List<LocalMedia> result) {
         for (LocalMedia media : result) {
-            if (media.isCompressed()){
-                setVideoPath(PictureFileUtils.getPath(MyApplication.getContext(),Uri.parse(media.getCompressPath())));
-                getView().response(null,getView().VIDEO_OBTAIN);
-            }else {
-                setVideoPath(PictureFileUtils.getPath(MyApplication.getContext(),Uri.parse(media.getPath())));
-                getView().response(null,getView().VIDEO_OBTAIN);
+            if (media.isCompressed()) {
+                setVideoPath(PictureFileUtils.getPath(MyApplication.getContext(), Uri.parse(media.getCompressPath())));
+            } else {
+                setVideoPath(PictureFileUtils.getPath(MyApplication.getContext(), Uri.parse(media.getPath())));
             }
+            getView().response(null, getView().VIDEO_OBTAIN);
         }
     }
 
-    public void sendNewMessage(){
+    public void sendNewMessage() {
         newBar.setUser_account(ObtainUserShared.getUserAccount());
-        newBar.setPb_video(getVideoPath()); //////写入Video地址
-        newBar.setPb_image_url(getVideoImagePath()); /////写入Video预览图
-        newBar.setPb_topic(topicZ == null ? "":String.valueOf(topicZ));
-        newBar.setPb_one_id(ObtainUserShared.getUserAccount());
+        newBar.setPb_topic(topicZ == null ? "" : String.valueOf(topicZ));
         newBar.setPb_location(getLocationName());
         newBar.setPb_article(getNewVideoTxt());
-        videoModel.addData(videoModel.DATAVIDEO_ADD_ONE, newBar, new MyCallBack() {
+        File video = null;
+        File videoImg = null;
+        if (!"".equals(videoPath)) {
+            video = new File(videoPath);
+        }
+        if (!"".equals(videoImagePath)) {
+            videoImg = new File(videoImagePath);
+        }
+        postBarModel.addBarVideo(newBar, video, videoImg, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    String a = response.body().string();
-                    switch (Integer.valueOf(a.substring(0,3))) {
-                        case 200:
-                            getView().response(null,getView().RESPONSE_SUCCESS);
-                            SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_userBar_Num));
-                            SharedPreferences.Editor editor = MySharedPreferences.saveShared(InValues.send(R.string.Shared_userBar_Num));
-                            editor.putInt(InValues.send(R.string.userBar_num),sharedPreferences.getInt(InValues.send(R.string.userBar_num),0) + 1);
-                            editor.apply();
-                            SharedPreferences.Editor e = MySharedPreferences.saveShared(InValues.send(R.string.Shared_sign_task));
-                            e.putInt(InValues.send(R.string.sign_task_bar),1);
-                            e.apply();
-                            break;
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestEntityJson<Bar> requestEntityJson = new Gson().fromJson(value, new TypeToken<RequestEntityJson<Bar>>() {
+                    }.getType());
+                    if (ResponseToast.toToast(requestEntityJson.getResultCode())) {
+                        getView().response(null, SendNewVideoPage.RESPONSE_SUCCESS);
+                        changeShare();
+                    } else {
+                        getView().response(null, SendNewVideoPage.RESPONSE_ERROR);
                     }
-                } catch (IOException e) {
-                    getView().response(null,getView().RESPONSE_SUCCESS);
                 }
             }
 
@@ -152,17 +150,28 @@ public class SendNewVideoAPresenterImpl extends BasePresenter<ISendNewVideoAView
         });
     }
 
-    public void obtainHotTopic(){
-        topicModel.selectData(topicModel.DATATOPIC_SELECT_ONE, null, new MyCallBack() {
+    private void changeShare() {
+        SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_userBar_Num));
+        SharedPreferences.Editor editor = MySharedPreferences.saveShared(InValues.send(R.string.Shared_userBar_Num));
+        editor.putInt(InValues.send(R.string.userBar_num), sharedPreferences.getInt(InValues.send(R.string.userBar_num), 0) + 1);
+        editor.apply();
+        SharedPreferences.Editor e = MySharedPreferences.saveShared(InValues.send(R.string.Shared_sign_task));
+        e.putInt(InValues.send(R.string.sign_task_bar), 1);
+        e.apply();
+    }
+
+    public void obtainHotTopic() {
+        topicModel.queryTopicNameList(new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    String a = response.body().string();
-                    hotTopics = gson.fromJson(a.substring(3),new TypeToken<List<Topic>>()
-                    {}.getType());
-                    getView().response(null,getView().RESPONSE_ONE);
-                } catch (IOException e) {
-
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestListJson<String> requestListJson = new Gson().fromJson(value, new TypeToken<RequestListJson<String>>() {
+                    }.getType());
+                    if (ResponseToast.toToast(requestListJson.getResultCode())) {
+                        hotTopics = requestListJson.getDataList();
+                        getView().response(null, SendNewVideoPage.RESPONSE_ONE);
+                    }
                 }
             }
 
@@ -173,8 +182,8 @@ public class SendNewVideoAPresenterImpl extends BasePresenter<ISendNewVideoAView
         });
     }
 
-    public void addTopic(String topicName){
-        if (topics != null && !topics.stream().anyMatch(topic -> topic.getTopic_name().equals(topicName))){
+    public void addTopic(String topicName) {
+        if (topics != null && !topics.stream().anyMatch(topic -> topic.getTopic_name().equals(topicName))) {
             Topic topic = new Topic();
             topic.setTopic_name(topicName);
             topics.add(topic);
@@ -182,30 +191,25 @@ public class SendNewVideoAPresenterImpl extends BasePresenter<ISendNewVideoAView
         }
     }
 
-    public void removeTopic(int position){
+    public void removeTopic(int position) {
         topics.remove(position);
     }
 
-    public void searchTopic(String search){
-        if (topic == null){
-            topic = new Topic();
-        }
-        topic.setTopic_name(search);
-        topicModel.selectData(topicModel.DATATOPIC_SELECT_TWO, topic, new MyCallBack() {
+    public void searchTopic(String search) {
+        topicModel.querySearchTopicNameList(search, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
-                try {
-                    String a = response.body().string();
-                    searchTopics = gson.fromJson(a.substring(3),new TypeToken<List<Topic>>()
-                    {}.getType());
-                    if (searchTopics != null && (!searchTopics.stream()
-                            .anyMatch(searchTopics -> searchTopics.getTopic_name().equals("#" + search)) || searchTopics.size() == 0)){
-                        topic.setTopic_name("新增" + " #" + search);
-                        searchTopics.add(0,topic);
+                String value = DataVerificationTool.isEmpty(response);
+                if (value != null) {
+                    RequestListJson<String> requestListJson = new Gson().fromJson(value, new TypeToken<RequestListJson<String>>() {
+                    }.getType());
+                    if (ResponseToast.toToast(requestListJson.getResultCode())) {
+                        searchTopics = requestListJson.getDataList();
+                        if (searchTopics != null && searchTopics.stream().noneMatch(searchTopics -> searchTopics.equals("#" + search))) {
+                            searchTopics.add(0, "新增 #" + search);
+                        }
+                        getView().response(null, SendNewVideoPage.RESPONSE_TWO);
                     }
-                    getView().response(null,getView().RESPONSE_TWO);
-                } catch (IOException e) {
-
                 }
             }
 
@@ -216,9 +220,9 @@ public class SendNewVideoAPresenterImpl extends BasePresenter<ISendNewVideoAView
         });
     }
 
-    public void searchLocation(String search , Activity activity, LinearLayoutManager linearLayoutManager, RecyclerView recyclerView){
-        if (spbLocationServer.obtainNowCity() != null){
-            spbSearchLocation = new SpbSearchLocation(spbLocationServer.obtainNowCity(),search);
+    public void searchLocation(String search, Activity activity, LinearLayoutManager linearLayoutManager, RecyclerView recyclerView) {
+        if (spbLocationServer.obtainNowCity() != null) {
+            SpbSearchLocation spbSearchLocation = new SpbSearchLocation(spbLocationServer.obtainNowCity(), search);
             spbSearchLocation.search(new SpbSearchLocation.OnReturn() {
                 @Override
                 public void onSuccess(List<LocationGps> locationGpsList) {
@@ -234,7 +238,7 @@ public class SendNewVideoAPresenterImpl extends BasePresenter<ISendNewVideoAView
         }
     }
 
-    public void initLocationList(Activity activity, LinearLayoutManager linearLayoutManager, RecyclerView recyclerView){
+    public void initLocationList(Activity activity, LinearLayoutManager linearLayoutManager, RecyclerView recyclerView) {
         spbLocationServer = new SpbLocationServer(MyApplication.getContext());
         obtainInterval = 1000;
         new Thread(new Runnable() {
@@ -242,13 +246,13 @@ public class SendNewVideoAPresenterImpl extends BasePresenter<ISendNewVideoAView
             public void run() {
                 Looper.prepare();
                 try {
-                    while ((spbLocationServer == null || spbLocationServer.obtainListener().locationGpsList == null) && obtainInterval < 2500){
+                    while ((spbLocationServer == null || spbLocationServer.obtainListener().locationGpsList == null) && obtainInterval < 2500) {
                         spbLocationServer.startGps();
                         Thread.sleep(obtainInterval);
-                        if (spbLocationServer.obtainListener().locType == 62){
+                        if (spbLocationServer.obtainListener().locType == 62) {
                             break;
-                        }else {
-                            if (spbLocationServer.obtainListener().locationGpsList != null){
+                        } else {
+                            if (spbLocationServer.obtainListener().locationGpsList != null) {
                                 locationGpsS = spbLocationServer.obtainListener().locationGpsList;
                                 activity.runOnUiThread(new Runnable() {
                                     @Override
@@ -256,15 +260,15 @@ public class SendNewVideoAPresenterImpl extends BasePresenter<ISendNewVideoAView
                                         setLocationList(activity, linearLayoutManager, recyclerView);
                                     }
                                 });
-                                getView().response(null,getView().RESPONSE_SEVEN);
-                            }else {
+                                getView().response(null, getView().RESPONSE_SEVEN);
+                            } else {
                                 obtainInterval += 500;
                             }
                         }
                     }
                     if (((spbLocationServer == null || spbLocationServer.obtainListener().locationGpsList == null) && obtainInterval >= 2500)
-                            || spbLocationServer.obtainListener().locType == 62){
-                        getView().response(null,getView().RESPONSE_EIGHT);
+                            || spbLocationServer.obtainListener().locType == 62) {
+                        getView().response(null, getView().RESPONSE_EIGHT);
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -274,16 +278,16 @@ public class SendNewVideoAPresenterImpl extends BasePresenter<ISendNewVideoAView
         }).start();
     }
 
-    public void setLocationList(Activity activity, LinearLayoutManager linearLayoutManager, RecyclerView recyclerView){
-        locationAdapter = new LocationAdapter(locationGpsS,activity);
-        if (recyclerView.getLayoutManager() == null){
+    public void setLocationList(Activity activity, LinearLayoutManager linearLayoutManager, RecyclerView recyclerView) {
+        LocationAdapter locationAdapter = new LocationAdapter(locationGpsS, activity);
+        if (recyclerView.getLayoutManager() == null) {
             recyclerView.setLayoutManager(linearLayoutManager);
         }
         recyclerView.setAdapter(locationAdapter);
     }
 
-    public void onStopGps(){
-        if (spbLocationServer != null){
+    public void onStopGps() {
+        if (spbLocationServer != null) {
             spbLocationServer.stopGps();
         }
     }

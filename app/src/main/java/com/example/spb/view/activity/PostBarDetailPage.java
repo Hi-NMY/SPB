@@ -100,7 +100,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
             initActView();
         } else {
             intentCommentIdKey = getIntent().getIntExtra(InValues.send(R.string.intent_commentid_start), -1);
-            mPresenter.obtainBar("", intentPbidKey, new PostBarDetailPageAPresenterImpl.OnReturn() {
+            mPresenter.obtainBar(intentPbidKey, new PostBarDetailPageAPresenterImpl.OnReturn() {
                 @Override
                 public void onReturn(Bar bar) {
                     runOnUiThread(new Runnable() {
@@ -602,7 +602,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
                     if (!c.getComment_user().equals(getDataUserMsgPresenter().getUser_account()) && !barData.getUser_account().equals(getDataUserMsgPresenter().getUser_account())) {
                         MyToastClass.ShowToast(MyApplication.getContext(), "不能删除别人的评论哦");
                     } else {
-                        mPresenter.removeComment(c.getComment_id(), barData.getUser_account());
+                        mPresenter.removeComment(c.getComment_id());
                     }
                     break;
             }

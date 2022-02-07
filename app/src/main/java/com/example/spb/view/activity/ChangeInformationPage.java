@@ -18,7 +18,7 @@ import com.bigkoo.pickerview.view.TimePickerView;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
-import com.example.spb.entity.User;
+import com.example.spb.entity.Dto.UserInformationDto;
 import com.example.spb.presenter.impl.ChangeInformationPageAPresenterImpl;
 import com.example.spb.presenter.utils.InValues;
 import com.example.spb.presenter.utils.MyDateClass;
@@ -146,16 +146,14 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
             public void run() {
                 switch (responseFlag){
                     case 200:
-                        getDataUserMsgPresenter().setUpdateUserMsg((User) response);
+                        getDataUserMsgPresenter().setUpdateUserMsg((UserInformationDto) response);
                         SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_userMsg),0,null);
                         closeDialog(LOADINGDIALOG);
                         finish();
-                        MyToastClass.ShowToast(MyApplication.getContext(),"修改成功");
                         mPresenter.updateRong(getDataUserMsgPresenter().getUser_account(),getDataUserMsgPresenter().getUser_name());
                         break;
                     default:
                         closeDialog(LOADINGDIALOG);
-                        MyToastClass.ShowToast(MyApplication.getContext(),"错误，请重试");
                         break;
                 }
             }
@@ -184,7 +182,7 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
                     @Override
                     public void onClick(View v) {
                         mChangeinformationSign.setText(mEditText.getText().toString());
-                        mPresenter.setUser_profile(mEditText.getText().toString());
+                        mPresenter.setUserProfile(mEditText.getText().toString());
                         closeDialog(CHANGESIGN);
                     }
                 });
@@ -201,7 +199,7 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
 
             @Override
             public void initData() {
-                mPresenter.getUser_favorite(getDataUserMsgPresenter().getUser_favorite());
+                mPresenter.getUserFavorite(getDataUserMsgPresenter().getUser_favorite());
                 mFavoriteTag.setAdapter(new TagAdapter<String>(tagList) {
                     @Override
                     public View getView(FlowLayout parent, int position, String tag) {
@@ -254,7 +252,7 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
                    @Override
                    public void onClick(View v) {
                        closeDialog(BOTTOMDIALOG);
-                       mPresenter.setUser_favorite();
+                       mPresenter.setUserFavorite();
                    }
                });
             }
@@ -313,7 +311,7 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
 
             @Override
             public void afterTextChanged(Editable s) {
-                mPresenter.setUser_name(mChangeinformationUsername.getText().toString().trim());
+                mPresenter.setUserName(mChangeinformationUsername.getText().toString().trim());
                 mX1.setText(mChangeinformationUsername.getText().length() + "/10");
             }
         });
@@ -365,7 +363,7 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
                 TimePickerView pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
                     @Override
                     public void onTimeSelect(Date date, View v) {
-                        mPresenter.setUser_birth(date);
+                        mPresenter.setUserBirth(date);
                         mChangeinformationBirth.setText(MyDateClass.getStringDate(date) + "   " + MyDateClass.getConstellation(MyDateClass.getStringDateMonth(date)));
                     }
                 }).setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
@@ -398,7 +396,7 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
                                 mPresenter.getOptions3Items().get(options1).get(options2).get(options3) : "";
 
                         String tx = opt1tx + "-" + opt2tx + "-" + opt3tx;
-                        mPresenter.setUser_home(tx);
+                        mPresenter.setUserHome(tx);
                         mChangeinformationHome.setText(tx);
                     }
                 })

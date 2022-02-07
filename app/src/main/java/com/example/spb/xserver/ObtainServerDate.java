@@ -16,7 +16,7 @@ public class ObtainServerDate {
                 .readTimeout(20, TimeUnit.SECONDS)
                 .build();
         Request request = new Request.Builder()
-                .url(InValues.send(R.string.ServerDate))
+                .url(InValues.send(R.string.dateTime))
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override

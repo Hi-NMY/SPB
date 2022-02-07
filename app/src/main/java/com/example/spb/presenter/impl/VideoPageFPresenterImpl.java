@@ -8,9 +8,7 @@ import com.example.spb.view.inter.IVideoPageFView;
 
 public class VideoPageFPresenterImpl extends BasePresenter<IVideoPageFView> implements IVideoPageFPresenter {
 
-    private BaseMVPActivity baseMVPActivity;
-
     public VideoPageFPresenterImpl(Activity activity) {
-        baseMVPActivity = (BaseMVPActivity)activity;
+
     }
 }

@@ -39,6 +39,8 @@ public interface PostBarModel {
 
     void deleteBar(String pbid, MyCallBack callBack);
 
-    void addBar(Bar bar, List<File> image, File voice, File video, MyCallBack callBack);
+    void addBar(Bar bar, List<File> image, File voice, MyCallBack callBack);
+
+    void addBarVideo(Bar bar, File video, File videoImg, MyCallBack callBack);
 
 }

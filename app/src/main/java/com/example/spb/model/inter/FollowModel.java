@@ -11,6 +11,8 @@ public interface FollowModel {
 
     void queryFollowList(String userAccount, MyCallBack callBack);
 
+    void queryFollowCount(String userAccount, MyCallBack callBack);
+
     void queryFollowUserList(String userAccount, MyCallBack callBack);
 
     void addFollow(String followAccount, String followedAccount, MyCallBack callBack);

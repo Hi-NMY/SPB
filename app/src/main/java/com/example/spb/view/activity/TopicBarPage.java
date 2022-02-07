@@ -339,7 +339,7 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
         mySmartRefresh.setMyRefreshListener(new MySmartRefresh.MyRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.obtainTopicBarList(topic, true, new TopicBarPageAPresenterImpl.StopRefresh() {
+                mPresenter.obtainTopicBarList(topic, new TopicBarPageAPresenterImpl.StopRefresh() {
                     @Override
                     public void stop() {
                         finishRRefresh(0);

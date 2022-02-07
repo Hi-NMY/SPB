@@ -25,7 +25,6 @@ public class UserRegisteredModelImpl extends SpbModelAbstrate implements UserReg
                 .addFormDataPart("user_account", userRegisteredDto.getUser_account())
                 .addFormDataPart("user_password", userRegisteredDto.getUser_password())
                 .addFormDataPart("user_name", userRegisteredDto.getUser_name())
-                .addFormDataPart("user_token", userRegisteredDto.getUser_token())
                 .addFormDataPart("file", file.getName(), RequestBody.Companion.create(file
                         , MediaType.Companion.parse("image/png")));
         requestBody = builder.build();

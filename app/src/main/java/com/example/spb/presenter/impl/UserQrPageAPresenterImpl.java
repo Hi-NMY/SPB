@@ -31,7 +31,7 @@ public class UserQrPageAPresenterImpl extends BasePresenter<IUserQrPageAView> im
         });
     }
 
-    public interface OnReturn{
+    public interface OnReturn {
         void onReturn();
     }
 }

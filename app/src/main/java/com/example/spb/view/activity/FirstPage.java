@@ -20,7 +20,7 @@ import androidx.annotation.Nullable;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
-import com.example.spb.entity.User;
+import com.example.spb.entity.Dto.UserDto;
 import com.example.spb.presenter.impl.FirstPageAPresenterImpl;
 import com.example.spb.presenter.utils.RemoveNullCharacter;
 import com.example.spb.view.Component.ComponentDialog;
@@ -63,7 +63,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
     private static Animation animationa;
     private static Animation animationb;
 
-    private User user;
+    private UserDto userDto;
 
     static {
         animationa = AnimationUtils.loadAnimation(MyApplication.getContext(), R.anim.enter_anim);
@@ -127,7 +127,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
     @Override
     protected void initActView() {
         setActivityBar();
-        user = new User();
+        userDto = new UserDto();
         mAccountNumberEdit = (EditText) findViewById(R.id.account_number_edit);
         mEmptyView = (ImageView) findViewById(R.id.empty_view);
         mEnterCheck = (ImageView) findViewById(R.id.enter_check);
@@ -245,15 +245,14 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
             case R.id.enter_next_btn:
                 if (ENTER_FUN == 1) {
                     showDialogS(DIALOGLOADING);
-                    user.setUser_password(mPasswordNumberEdit.getText().toString().trim());
-                    mPresenter.verifyPassword(user,verifyAccountHanlder);
+                    userDto.setUser_password(mPasswordNumberEdit.getText().toString().trim());
+                    mPresenter.verifyPassword(userDto,verifyAccountHanlder);
                 } else {
                     if (!ENTER_CHECK) {
                         MyToastClass.ShowToast(this, TOASTTXT);
                     } else {
                         showDialogS(DIALOGLOADING);
-                        user.setUser_account(mAccountNumberEdit.getText().toString().trim());
-                        mPresenter.verifyAccount(user,verifyAccountHanlder);
+                        mPresenter.verifyAccount(mAccountNumberEdit.getText().toString().trim(),verifyAccountHanlder);
                     }
                 }
                 break;
@@ -355,8 +354,8 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
                 break;
             case RESPONSE_SUCCESS_ONE:
                 closeDialog(DIALOGLOADING);
-                user = (User)response;
-                initUserData(user.getUser_account());
+                userDto = (UserDto)response;
+                initUserData(userDto.getUser_account());
                 this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -371,19 +370,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
                 ENTER_FUN = 1;
                 break;
             case RESPONSE_SUCCESS_TWO:
-                mPresenter.connectRong(user.getUser_token(),user.getUser_name(),user.getUser_account());
-                break;
-            case RESPONSE_ONE:
-                closeDialog(DIALOGLOADING);
-                MyToastClass.ShowToast(this,STRINGERROE_ONE);
-                break;
-            case RESPONSE_THREE:
-                closeDialog(DIALOGLOADING);
-                MyToastClass.ShowToast(this,STRINGERROE_THREE);
-                break;
-            case RESPONSE_ZERO:
-                closeDialog(DIALOGLOADING);
-                MyToastClass.ShowToast(this,STRINGERROE_ZERO);
+                mPresenter.connectRong(userDto.getUser_token(), userDto.getUser_name(), userDto.getUser_account());
                 break;
         }
     }

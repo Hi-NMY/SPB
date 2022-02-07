@@ -9,8 +9,6 @@ import com.example.spb.adapter.SubjectClassAdapter;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BasePresenter;
 import com.example.spb.entity.SchoolTable;
-import com.example.spb.model.InterTotal.SpbModelBasicInter;
-import com.example.spb.model.impl.BarModelImpl;
 import com.example.spb.presenter.inter.IUserPageFPresenter;
 import com.example.spb.presenter.utils.InValues;
 import com.example.spb.presenter.utils.MyDateClass;
@@ -23,57 +21,54 @@ import java.util.List;
 
 public class UserPageFPresenterImpl extends BasePresenter<IUserPageFView> implements IUserPageFPresenter {
 
-    private SpbModelBasicInter barModel;
     private List<SchoolTable> schoolTables;
-    private SubjectClassAdapter subjectClassAdapter;
-    private Activity activity;
+    private final Activity activity;
 
     public UserPageFPresenterImpl(Activity activity) {
         this.activity = activity;
-        barModel = new BarModelImpl();
         schoolTables = new ArrayList<>();
     }
 
-    public void obtainBarNum(OnReturn onReturn){
+    public void obtainBarNum(OnReturn onReturn) {
         SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_userBar_Num));
-        int a = sharedPreferences.getInt(InValues.send(R.string.userBar_num),0);
+        int a = sharedPreferences.getInt(InValues.send(R.string.userBar_num), 0);
         onReturn.onReturn(a);
     }
 
-    public void obtainMyCard(OnCardReturn onCardReturn){
+    public void obtainMyCard(OnCardReturn onCardReturn) {
         SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_assist_setup));
-        boolean activeKey = sharedPreferences.getBoolean(InValues.send(R.string.assist_active),true);
-        boolean classKey = sharedPreferences.getBoolean(InValues.send(R.string.assist_class),true);
-        onCardReturn.onReturn(classKey,activeKey);
+        boolean activeKey = sharedPreferences.getBoolean(InValues.send(R.string.assist_active), true);
+        boolean classKey = sharedPreferences.getBoolean(InValues.send(R.string.assist_class), true);
+        onCardReturn.onReturn(classKey, activeKey);
     }
 
-    public void obtainSubjectClass(OnClassReturn onClassReturn, RecyclerView recyclerView){
+    public void obtainSubjectClass(OnClassReturn onClassReturn, RecyclerView recyclerView) {
         String date = MyDateClass.showYearMonthDay();
-        schoolTables = LitePal.where("class_date = ?",date).order("class_date desc").find(SchoolTable.class);
-        if (schoolTables == null || schoolTables.size() == 0){
+        schoolTables = LitePal.where("class_date = ?", date).order("class_date desc").find(SchoolTable.class);
+        if (schoolTables == null || schoolTables.size() == 0) {
             onClassReturn.onReturn(false);
-        }else {
+        } else {
             onClassReturn.onReturn(true);
             setClassAdapter(recyclerView);
         }
     }
 
-    public void setClassAdapter(RecyclerView recyclerView){
-        subjectClassAdapter = new SubjectClassAdapter(schoolTables , activity);
+    public void setClassAdapter(RecyclerView recyclerView) {
+        SubjectClassAdapter subjectClassAdapter = new SubjectClassAdapter(schoolTables, activity);
         subjectClassAdapter.setCacheKey(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(MyApplication.getContext()));
         recyclerView.setAdapter(subjectClassAdapter);
     }
 
-    public interface OnReturn{
+    public interface OnReturn {
         void onReturn(int num);
     }
 
-    public interface OnCardReturn{
-        void onReturn(boolean classKey,boolean activeKey);
+    public interface OnCardReturn {
+        void onReturn(boolean classKey, boolean activeKey);
     }
 
-    public interface OnClassReturn{
+    public interface OnClassReturn {
         void onReturn(boolean key);
     }
 }

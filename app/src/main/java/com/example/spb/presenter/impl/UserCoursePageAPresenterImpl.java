@@ -18,7 +18,7 @@ public class UserCoursePageAPresenterImpl extends BasePresenter<IUserCoursePageA
 
     private List<SchoolTable> schoolTables;
     private SubjectClassAdapter subjectClassAdapter;
-    private Activity activity;
+    private final Activity activity;
 
     public SubjectClassAdapter getSubjectClassAdapter() {
         return subjectClassAdapter;
@@ -29,13 +29,13 @@ public class UserCoursePageAPresenterImpl extends BasePresenter<IUserCoursePageA
         this.activity = activity;
     }
 
-    public void obtainSubjectClass(RecyclerView recyclerView){
+    public void obtainSubjectClass(RecyclerView recyclerView) {
         schoolTables = LitePal.findAll(SchoolTable.class);
         setClassAdapter(recyclerView);
     }
 
-    public void setClassAdapter(RecyclerView recyclerView){
-        subjectClassAdapter = new SubjectClassAdapter(schoolTables , activity);
+    public void setClassAdapter(RecyclerView recyclerView) {
+        subjectClassAdapter = new SubjectClassAdapter(schoolTables, activity);
         recyclerView.setLayoutManager(new LinearLayoutManager(MyApplication.getContext()));
         recyclerView.setAdapter(subjectClassAdapter);
         recyclerView.scrollToPosition(getSubjectClassAdapter().getCachePosition());

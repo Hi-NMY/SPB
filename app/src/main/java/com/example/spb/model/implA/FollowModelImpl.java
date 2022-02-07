@@ -22,6 +22,14 @@ public class FollowModelImpl extends SpbModelAbstrate implements FollowModel {
     }
 
     @Override
+    public void queryFollowCount(String userAccount, MyCallBack callBack) {
+        requestBody = new FormBody.Builder()
+                .add("user_account", userAccount)
+                .build();
+        sendHttp(InValues.send(R.string.queryFollowCount), requestBody, callBack);
+    }
+
+    @Override
     public void queryFollowUserList(String userAccount, MyCallBack callBack) {
         requestBody = new FormBody.Builder()
                 .add("user_account", userAccount)

@@ -7,7 +7,9 @@ import com.example.spb.model.inter.PostBarModel;
 import com.example.spb.presenter.callback.MyCallBack;
 import com.example.spb.presenter.utils.InValues;
 import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 import java.io.File;
 import java.util.List;
@@ -129,16 +131,43 @@ public class PostBarModelImpl extends SpbModelAbstrate implements PostBarModel {
     }
 
     @Override
-    public void addBar(Bar bar, List<File> image, File voice, File video, MyCallBack callBack) {
-        MultipartBody.Builder b = new MultipartBody.Builder();
-        b.setType(MultipartBody.FORM)
+    public void addBar(Bar bar, List<File> image, File voice, MyCallBack callBack) {
+        builder = setBarBuilder(bar);
+        if (image != null && image.size() != 0){
+            for (File file : image) {
+                builder.addFormDataPart("image_file", file.getName()
+                        , RequestBody.Companion.create(file, MediaType.Companion.parse("image/png")));
+            }
+        }
+        if (voice != null){
+            builder.addFormDataPart("voice_file",voice.getName()
+                    ,RequestBody.Companion.create(voice,MediaType.Companion.parse("audio/m4a")));
+        }
+
+        requestBody = builder.build();
+        sendHttp(InValues.send(R.string.addBar), requestBody, callBack);
+    }
+
+    @Override
+    public void addBarVideo(Bar bar, File video, File videoImg, MyCallBack callBack) {
+        builder = setBarBuilder(bar);
+        if (video != null){
+            this.builder.addFormDataPart("video_file",video.getName()
+                    ,RequestBody.Companion.create(video,MediaType.Companion.parse("video/mp4")));
+        }
+        if (videoImg != null){
+            this.builder.addFormDataPart("img",videoImg.getName()
+                    ,RequestBody.Companion.create(videoImg,MediaType.Companion.parse("image/png")));
+        }
+        requestBody = this.builder.build();
+        sendHttp(InValues.send(R.string.addBar), requestBody, callBack);
+    }
+
+    private MultipartBody.Builder setBarBuilder(Bar bar){
+        return new MultipartBody.Builder().setType(MultipartBody.FORM)
                 .addFormDataPart("user_account", bar.getUser_account())
                 .addFormDataPart("pb_article", bar.getPb_article())
                 .addFormDataPart("pb_topic", bar.getPb_topic())
                 .addFormDataPart("pb_location", bar.getPb_location());
-
-
-        requestBody = b.build();
-        sendHttp(InValues.send(R.string.addBar), requestBody, callBack);
     }
 }

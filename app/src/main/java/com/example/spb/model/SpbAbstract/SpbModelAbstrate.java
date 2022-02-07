@@ -14,15 +14,22 @@ public abstract class SpbModelAbstrate {
     public RequestBody requestBody = null;
     public MultipartBody.Builder builder = null;
 
-    public void sendHttp(String path, RequestBody requestBody, MyCallBack callBack){
+    public void sendHttp(String path, RequestBody requestBody, MyCallBack callBack) {
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(20, TimeUnit.SECONDS)
-                .readTimeout(20,TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
                 .build();
-        Request request = new Request.Builder()
-                .url(path)
-                .post(requestBody)
-                .build();
+        Request request;
+        if (requestBody == null) {
+            request = new Request.Builder()
+                    .url(path)
+                    .build();
+        } else {
+            request = new Request.Builder()
+                    .url(path)
+                    .post(requestBody)
+                    .build();
+        }
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -31,7 +38,7 @@ public abstract class SpbModelAbstrate {
                 }
                 if (e instanceof ConnectException) {
                     callBack.onError(MyCallBack.ERROR_CONNECTION);
-                }else {
+                } else {
                     callBack.onError(-1);
                 }
                 clearBody();
@@ -39,7 +46,7 @@ public abstract class SpbModelAbstrate {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                if (callBack != null){
+                if (callBack != null) {
                     callBack.onSuccess(response);
                 }
                 clearBody();
@@ -47,11 +54,11 @@ public abstract class SpbModelAbstrate {
         });
     }
 
-    public String setString(Object o){
+    public String setString(Object o) {
         return String.valueOf(o);
     }
 
-    private void clearBody(){
+    private void clearBody() {
         requestBody = null;
     }
 
