@@ -127,7 +127,7 @@ public class BarCommentAdapter extends RecyclerView.Adapter<BarCommentAdapter.Vi
 
         if(holder.mItemCommentUserHeadimg.getTag() == null || !holder.mItemCommentUserHeadimg.getTag().equals(cacheKey)){
             Glide.with(baseMVPActivity)
-                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + comment.getComment_user() + "/HeadImage/myHeadImage.png")
+                    .load(InValues.send(R.string.prefix_img) + comment.getComment_user() + InValues.send(R.string.suffix_head_img))
                     .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()),1,1))
                     .into(holder.mItemCommentUserHeadimg);
             holder.mItemCommentUserHeadimg.setTag(cacheKey);

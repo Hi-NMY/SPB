@@ -174,7 +174,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
             mPresenter.obtainCommentOne(intentCommentIdKey, intentPbidKey);
         }
         Glide.with(this)
-                .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + barData.getUser_account() + "/HeadImage/myHeadImage.png")
+                .load(InValues.send(R.string.prefix_img) + barData.getUser_account() + InValues.send(R.string.suffix_head_img))
                 .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                 .into(mPostbarDetailUserHeadimg);
         if (barData.getUser_badge() == null || barData.getUser_badge().equals("")){
@@ -183,7 +183,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
             mPostbarDetailUserbadge.setVisibility(View.VISIBLE);
             //显示徽章！！！
             Glide.with(this)
-                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + barData.getUser_badge())
+                    .load(InValues.send(R.string.prefix_badge_img) + barData.getUser_badge())
                     .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                     .centerCrop()
                     .into(mPostbarDetailUserbadge);
@@ -314,12 +314,6 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
                 @Override
                 public void onReturn() {
                     finish();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            MyToastClass.ShowToast(MyApplication.getContext(), "帖子已被删除");
-                        }
-                    });
                 }
             });
         }

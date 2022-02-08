@@ -133,13 +133,13 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
             mUserPageUserbadge.setVisibility(View.INVISIBLE);
         } else {
             Glide.with(homePage)
-                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + homePage.getDataUserMsgPresenter().getUser_badge())
+                    .load(InValues.send(R.string.prefix_badge_img) + homePage.getDataUserMsgPresenter().getUser_badge())
                     .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                     .centerCrop()
                     .into(mUserPageUserbadge);
         }
         Glide.with(this)
-                .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + homePage.getDataUserMsgPresenter().getUser_account() + "/HeadImage/myHeadImage.png")
+                .load(InValues.send(R.string.prefix_img) + homePage.getDataUserMsgPresenter().getUser_account() + InValues.send(R.string.suffix_head_img))
                 .centerCrop()
                 .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                 .into(mUserPageUserHeadimg);
@@ -344,13 +344,13 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
                 String badge = intent.getStringExtra("key_two");
                 mUserPageUserbadge.setVisibility(View.VISIBLE);
                 Glide.with(homePage)
-                        .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + badge)
+                        .load(InValues.send(R.string.prefix_badge_img) + badge)
                         .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                         .centerCrop()
                         .into(mUserPageUserbadge);
             } else {
                 Glide.with(MyApplication.getContext())
-                        .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + homePage.getDataUserMsgPresenter().getUser_account() + "/HeadImage/myHeadImage.png")
+                        .load(InValues.send(R.string.prefix_img) + homePage.getDataUserMsgPresenter().getUser_account() + InValues.send(R.string.suffix_head_img))
                         .centerCrop()
                         .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                         .into(mUserPageUserHeadimg);

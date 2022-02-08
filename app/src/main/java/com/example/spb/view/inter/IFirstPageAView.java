@@ -9,7 +9,7 @@ public interface IFirstPageAView extends SpbInterOne {
     int RESPONSE_SUCCESS_TWO = 201;
     int RESPONSE_ACC = 111;//传递账号
     int RESPONSE_THREE = 300;//验证密码
-
+    int RESPONSE_ERROR = 4004;
 
     int DIALOGLOADING = 2;
     int DIALOGUSERNOTICE = 1;

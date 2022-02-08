@@ -24,6 +24,7 @@ import com.example.spb.view.utils.JumpIntent;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
+import org.jetbrains.annotations.NotNull;
 
 public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, BasicInformationFPresenterImpl> implements IBasicInformationFView, View.OnClickListener {
 
@@ -42,6 +43,10 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        refreshMsg = new RefreshMsg();
+        userToUser = new UserToUser();
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_userMsg),refreshMsg);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_UserSpace_user),userToUser);
     }
 
     @Override
@@ -56,10 +61,6 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
 
     @Override
     protected BasicInformationFPresenterImpl createPresenter() {
-        refreshMsg = new RefreshMsg();
-        userToUser = new UserToUser();
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_userMsg),refreshMsg);
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_UserSpace_user),userToUser);
         return new BasicInformationFPresenterImpl();
     }
 
@@ -230,6 +231,13 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SpbBroadcast.destroyBrc(refreshMsg);
+        SpbBroadcast.destroyBrc(userToUser);
+    }
+
     class RefreshMsg extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -239,7 +247,7 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
 
     class UserToUser extends BroadcastReceiver{
         @Override
-        public void onReceive(Context context, Intent intent) {
+        public void onReceive(Context context, @NotNull Intent intent) {
             toUserDto = (UserDto) intent.getSerializableExtra("key_two");
             if (toUserDto.getUser_account().equals(personalSpacePage.userAccount)){
                 mPresenter.setMyPrivacy(toUserDto.getUser_privacy());

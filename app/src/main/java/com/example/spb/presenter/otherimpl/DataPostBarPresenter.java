@@ -111,10 +111,13 @@ public class DataPostBarPresenter {
                     }.getType());
                     if (ResponseToast.toToast(requestListJson.getResultCode())) {
                         followbars = requestListJson.getDataList();
-                        cacheDate2 = followbars.get(followbars.size() - 1).getPb_date();
+                        if (followbars != null && followbars.size() > 0){
+                            cacheDate2 = followbars.get(followbars.size() - 1).getPb_date();
+                        }
                         if (loadingFun) {
                             SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_FollowUserBar), 0, (Serializable) followbars);
                         } else {
+                            assert followbars != null;
                             followbars.remove(0);
                             SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_FollowUserBar), 1, (Serializable) followbars);
                         }
@@ -142,10 +145,13 @@ public class DataPostBarPresenter {
                     }.getType());
                     if (ResponseToast.toToast(requestListJson.getResultCode())) {
                         barVideos = requestListJson.getDataList();
-                        cacheDate3 = barVideos.get(barVideos.size() - 1).getPb_date();
+                        if (barVideos != null && barVideos.size() > 0) {
+                            cacheDate3 = barVideos.get(barVideos.size() - 1).getPb_date();
+                        }
                         if (loadingFun) {
                             SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_new_video), 0, (Serializable) barVideos);
                         } else {
+                            assert barVideos != null;
                             barVideos.remove(0);
                             SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_new_video), 1, (Serializable) barVideos);
                         }

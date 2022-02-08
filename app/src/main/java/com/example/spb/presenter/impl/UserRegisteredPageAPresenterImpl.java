@@ -70,6 +70,8 @@ public class UserRegisteredPageAPresenterImpl extends BasePresenter<IUserRegiste
                     RequestCode requestCode = new Gson().fromJson(value, RequestCode.class);
                     if (ResponseToast.toToast(requestCode)) {
                         obtainRongUser();
+                    }else {
+                        handler.sendMessage(SendHandler.setMessage(UserRegisteredPage.RESPONSE_ERROR,null));
                     }
                 }
             }
@@ -123,7 +125,7 @@ public class UserRegisteredPageAPresenterImpl extends BasePresenter<IUserRegiste
                 String value = DataVerificationTool.isEmpty(response);
                 if (value != null) {
                     RequestCode requestCode = new Gson().fromJson(value, RequestCode.class);
-                    if (ResponseToast.toToast(requestCode)) {
+                    if (requestCode.getCode() == RequestCode.SUCCESS) {
                         setRongShared();
                         handler.sendMessage(SendHandler.setMessage(UserRegisteredPage.RESPONSE_SUCCESS, null));
                     }

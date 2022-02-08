@@ -79,7 +79,7 @@ public class MyBadgeAdapter extends RecyclerView.Adapter<MyBadgeAdapter.ViewHold
         }
 
         Glide.with(activity)
-                .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + badge)
+                .load(InValues.send(R.string.prefix_badge_img) + badge)
                 .centerCrop()
                 .into(holder.mItemBadgeImg);
 

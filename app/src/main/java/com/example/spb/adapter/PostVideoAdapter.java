@@ -178,7 +178,7 @@ public class PostVideoAdapter extends RecyclerView.Adapter<PostVideoAdapter.View
 
         if(holder.mItemPostvideoUserHeadimg.getTag() == null || !holder.mItemPostvideoUserHeadimg.getTag().equals(cacheKey)){
             Glide.with(activity)
-                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + videoBar.getUser_account() + "/HeadImage/myHeadImage.png")
+                    .load(InValues.send(R.string.prefix_img) + videoBar.getUser_account() + InValues.send(R.string.suffix_head_img))
                     .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()),1,1))
                     .into(holder.mItemPostvideoUserHeadimg);
             holder.mItemPostvideoUserHeadimg.setTag(cacheKey);
@@ -190,7 +190,7 @@ public class PostVideoAdapter extends RecyclerView.Adapter<PostVideoAdapter.View
             holder.mItemPostvideoUserbadge.setVisibility(View.VISIBLE);
             //显示徽章！！
             Glide.with(activity)
-                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + videoBar.getUser_badge())
+                    .load(InValues.send(R.string.prefix_badge_img) + videoBar.getUser_badge())
                     .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                     .centerCrop()
                     .into(holder.mItemPostvideoUserbadge);

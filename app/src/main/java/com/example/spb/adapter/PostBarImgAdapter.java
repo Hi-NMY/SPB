@@ -119,15 +119,15 @@ public class PostBarImgAdapter extends RecyclerView.Adapter<PostBarImgAdapter.Vi
                             .into(holder.mImageItemView);
                     break;
                 default:
-                    paramses.width = 360;
-                    paramses.height = 360;
+                    paramses.width = 310;
+                    paramses.height = 310;
                     holder.mImageItemView.setLayoutParams(paramses);
                     Glide.with(MyApplication.getContext())
                             .load(minImageList.get(position))
                             .placeholder(R.drawable.enterbg)
                             .fallback(R.drawable.enterbg)
                             .error(R.drawable.enterbg)
-                            .override(360, 360)
+                            .override(310, 310)
                             .centerCrop()
                             .into(holder.mImageItemView);
                     break;

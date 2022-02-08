@@ -18,21 +18,20 @@ import androidx.annotation.NonNull;
 import com.bumptech.glide.Glide;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPActivity;
-import com.example.spb.entity.Dto.UserDto;
 import com.example.spb.entity.Dto.UserRegisteredDto;
 import com.example.spb.presenter.impl.UserRegisteredPageAPresenterImpl;
 import com.example.spb.presenter.utils.RemoveNullCharacter;
 import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.Component.EasyDialog;
-import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
+import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.Component.SelectImage;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;
 import com.example.spb.view.InterComponent.SpbSelectImage;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.inter.IUserRegisteredPageAView;
 import com.example.spb.view.utils.HideKeyboard;
 import com.example.spb.view.utils.JumpIntent;
-import com.example.spb.view.Component.MyToastClass;
 import com.gyf.immersionbar.ImmersionBar;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.listener.OnResultCallbackListener;
@@ -61,11 +60,11 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
 
     private UserRegisteredDto userRegisteredDto = null;
 
-    private Handler userHanlder = new Handler(){
+    private Handler userHanlder = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
-            response(null,msg.what);
+            response(null, msg.what);
         }
     };
 
@@ -110,7 +109,7 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
 
     @Override
     public <T> void response(T response, int responseFlag) {
-        switch (responseFlag){
+        switch (responseFlag) {
             case IMAGE_SUCCESS:
                 Glide.with(this)
                         .load((String) response)
@@ -127,12 +126,16 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
                     }
                 });
                 break;
+            case RESPONSE_ERROR:
+                closeDialog(DIALOGLOADING);
+                break;
         }
     }
 
     private TextView mDialogCamera;
     private TextView mDialogPhotoalbum;
     private TextView mDialogClose;
+
     @Override
     public void createDialog() {
         dialogLoading = new EasyDialog(this, R.drawable.loading);
@@ -162,7 +165,7 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
                     @Override
                     public void onClick(View v) {
                         closeDialog(BOTTOMDIALOG);
-                        spbSelectImage.selectOneImg(IMAGENAME,new OnResultCallbackListener<LocalMedia>(){
+                        spbSelectImage.selectOneImg(IMAGENAME, new OnResultCallbackListener<LocalMedia>() {
                             @Override
                             public void onResult(List<LocalMedia> result) {
                                 mPresenter.getHeadImage(result);
@@ -235,7 +238,7 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                RemoveNullCharacter.setRemoveNull(mRegUserName,s).setSelection(mRegUserName.getText().length());
+                RemoveNullCharacter.setRemoveNull(mRegUserName, s).setSelection(mRegUserName.getText().length());
             }
 
             @Override
@@ -251,7 +254,7 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                RemoveNullCharacter.setRemoveNull(mRegUserAccount,s).setSelection(mRegUserAccount.getText().length());
+                RemoveNullCharacter.setRemoveNull(mRegUserAccount, s).setSelection(mRegUserAccount.getText().length());
             }
 
             @Override
@@ -267,7 +270,7 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                RemoveNullCharacter.setRemoveNull(mRegUserPassword,s).setSelection(mRegUserPassword.getText().length());
+                RemoveNullCharacter.setRemoveNull(mRegUserPassword, s).setSelection(mRegUserPassword.getText().length());
             }
 
             @Override
@@ -283,7 +286,7 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                RemoveNullCharacter.setRemoveNull(mRegUserPasswordAgain,s).setSelection(mRegUserPasswordAgain.getText().length());
+                RemoveNullCharacter.setRemoveNull(mRegUserPasswordAgain, s).setSelection(mRegUserPasswordAgain.getText().length());
             }
 
             @Override
@@ -313,7 +316,7 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
         });
     }
 
-    private UserRegisteredDto setUser(){
+    private UserRegisteredDto setUser() {
         userRegisteredDto = new UserRegisteredDto();
         userRegisteredDto.setUser_account(account);
         userRegisteredDto.setUser_name(name);
@@ -328,7 +331,7 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
             case R.id.reg_star_btn:
                 if (submit()) {
                     showDialogS(DIALOGLOADING);
-                    mPresenter.registerUser(setUser(),userHanlder);
+                    mPresenter.registerUser(setUser(), userHanlder);
                 }
                 break;
             case R.id.reg_password_eye:

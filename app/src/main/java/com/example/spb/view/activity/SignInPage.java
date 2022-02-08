@@ -92,7 +92,7 @@ public class SignInPage extends BaseMVPActivity<ISignInPageAView, SignInPageAPre
         });
         fragmentSignInSign.setLongDay(getDataUserMsgPresenter().getUser_longDay());
         Glide.with(this)
-                .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + getDataUserMsgPresenter().getUser_account() + "/HeadImage/myHeadImage.png")
+                .load(InValues.send(R.string.prefix_img) + getDataUserMsgPresenter().getUser_account() + InValues.send(R.string.suffix_head_img))
                 .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                 .into(mSignInHeadimg);
         mSignInUsername.setText(getDataUserMsgPresenter().getUser_name());

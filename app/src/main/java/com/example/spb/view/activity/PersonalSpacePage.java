@@ -86,7 +86,6 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
     private CommonNavigator commonNavigator;
     private MagicIndicator mPersonalspaceIdt;
     private ViewPager mPersonalspaceViewpager;
-    private NestedScrollView mPersonalspaceScrollview;
     private DialogInter bottomDialog;
     private SpbSelectImage spbSelectImage;
 
@@ -156,7 +155,6 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         mPersonalspaceCollapsinglayout = (CollapsingToolbarLayout) findViewById(R.id.personalspace_collapsinglayout);
         mPersonalspaceIdt = (MagicIndicator) findViewById(R.id.personalspace_idt);
         mPersonalspaceViewpager = (ViewPager) findViewById(R.id.personalspace_viewpager);
-        mPersonalspaceScrollview = (NestedScrollView) findViewById(R.id.personalspace_scrollview);
         mPersonalspaceAppbarlayout = (AppBarLayout) findViewById(R.id.personalspace_appbarlayout);
         mPersonalspaceBarR = (RelativeLayout) findViewById(R.id.personalspace_bar_R);
         mPersonalspaceUserHeadimg = (RoundedImageView) findViewById(R.id.personalspace_user_headimg);
@@ -174,8 +172,8 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         mR1 = (RelativeLayout) findViewById(R.id.r1);
         mR2 = (RelativeLayout) findViewById(R.id.r2);
         mR3 = (RelativeLayout) findViewById(R.id.r3);
-        totalData();
         intFollowViewPager();
+        totalData();
         setActivityBar();
         setMyListener();
         createDialog();
@@ -257,13 +255,13 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
             mPersonalspaceUserbadge.setVisibility(View.VISIBLE);
             //显示徽章
             Glide.with(PersonalSpacePage.this)
-                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + getDataUserMsgPresenter().getUser_badge())
+                    .load(InValues.send(R.string.prefix_badge_img) + getDataUserMsgPresenter().getUser_badge())
                     .centerCrop()
                     .into(mPersonalspaceUserbadge);
         }
         if (mPersonalspaceUserHeadimg.getTag() == null || !mPersonalspaceUserHeadimg.getTag().equals(cacheDate)) {
             Glide.with(MyApplication.getContext())
-                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + getDataUserMsgPresenter().getUser_account() + "/HeadImage/myHeadImage.png")
+                    .load(InValues.send(R.string.prefix_img) + getDataUserMsgPresenter().getUser_account() + InValues.send(R.string.suffix_head_img))
                     .placeholder(R.drawable.logo2)
                     .error(R.drawable.logo2)
                     .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
@@ -273,7 +271,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         }
         if (mPersonalspaceRBg.getTag() == null || !mPersonalspaceRBg.getTag().equals(cacheDate)) {
             Glide.with(MyApplication.getContext())
-                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + getDataUserMsgPresenter().getUser_account() + "/BackgroundImage/myBackgroundImage.png")
+                    .load(InValues.send(R.string.prefix_img) + getDataUserMsgPresenter().getUser_account() + InValues.send(R.string.suffix_bg_img))
                     .placeholder(R.drawable.enterbg)
                     .error(R.drawable.enterbg)
                     .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
@@ -357,13 +355,13 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
             mPersonalspaceUserbadge.setVisibility(View.VISIBLE);
             //显示徽章
             Glide.with(PersonalSpacePage.this)
-                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + toUserDto.getUser_badge())
+                    .load(InValues.send(R.string.prefix_badge_img) + toUserDto.getUser_badge())
                     .centerCrop()
                     .into(mPersonalspaceUserbadge);
         }
         if (mPersonalspaceUserHeadimg.getTag() == null || !mPersonalspaceUserHeadimg.getTag().equals(cacheDate)) {
             Glide.with(this)
-                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + toUserDto.getUser_account() + "/HeadImage/myHeadImage.png")
+                    .load(InValues.send(R.string.prefix_img) + toUserDto.getUser_account() + InValues.send(R.string.suffix_head_img))
                     .placeholder(R.drawable.logo2)
                     .error(R.drawable.logo2)
                     .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
@@ -373,7 +371,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         }
         if (mPersonalspaceRBg.getTag() == null || !mPersonalspaceRBg.getTag().equals(cacheDate)) {
             Glide.with(MyApplication.getContext())
-                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + toUserDto.getUser_account() + "/BackgroundImage/myBackgroundImage.png")
+                    .load(InValues.send(R.string.prefix_img) + toUserDto.getUser_account() + InValues.send(R.string.suffix_bg_img))
                     .placeholder(R.drawable.enterbg)
                     .error(R.drawable.enterbg)
                     .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
@@ -402,7 +400,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
         mR2.setClickable(false);
         mPersonalspaceAttentionBtn.setVisibility(View.VISIBLE);
         mPersonalspaceMessageBtn.setVisibility(View.VISIBLE);
-        SpbBroadcast.sendReceiver(this, InValues.send(R.string.Bcr_UserSpace_user), 0, toUserDto);
+        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_UserSpace_user), 0, toUserDto);
     }
 
     private void intFollowViewPager() {
@@ -520,7 +518,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                             MyToastClass.ShowToast(MyApplication.getContext(), "头像更换成功");
                             SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_headimg), 0, null);
                             Glide.with(MyApplication.getContext())
-                                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + getDataUserMsgPresenter().getUser_account() + "/HeadImage/myHeadImage.png")
+                                    .load(InValues.send(R.string.prefix_img) + getDataUserMsgPresenter().getUser_account() + InValues.send(R.string.suffix_head_img))
                                     .placeholder(R.drawable.logo2)
                                     .error(R.drawable.logo2)
                                     .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
@@ -530,7 +528,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                         } else {
                             MyToastClass.ShowToast(MyApplication.getContext(), "背景更换成功");
                             Glide.with(MyApplication.getContext())
-                                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + getDataUserMsgPresenter().getUser_account() + "/BackgroundImage/myBackgroundImage.png")
+                                    .load(InValues.send(R.string.prefix_img) + getDataUserMsgPresenter().getUser_account() + InValues.send(R.string.suffix_bg_img))
                                     .placeholder(R.drawable.logo2)
                                     .error(R.drawable.logo2)
                                     .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
@@ -908,7 +906,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                 mPresenter.updateUserBadge(getDataUserMsgPresenter().getUser_account(),badge);
                 mPersonalspaceUserbadge.setVisibility(View.VISIBLE);
                 Glide.with(PersonalSpacePage.this)
-                        .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + badge)
+                        .load(InValues.send(R.string.prefix_badge_img) + badge)
                         .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                         .centerCrop()
                         .into(mPersonalspaceUserbadge);

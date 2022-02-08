@@ -79,7 +79,7 @@ public class SignInPageAPresenterImpl extends BasePresenter<ISignInPageAView> im
                 } else {
                     old = 0;
                 }
-                calendar.setTime(MyDateClass.stringToDate(date));
+                calendar.setTime(MyDateClass.stringToDate(serverDate));
                 now = calendar.get(Calendar.DAY_OF_MONTH);
                 if (old != now) {
                     initTask();

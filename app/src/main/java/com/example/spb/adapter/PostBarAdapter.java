@@ -189,7 +189,7 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
 
         if (holder.mItemPostbarUserHeadimg.getTag() == null || !holder.mItemPostbarUserHeadimg.getTag().equals(cacheKey)) {
             Glide.with(activity)
-                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + bar.getUser_account() + "/HeadImage/myHeadImage.png")
+                    .load(InValues.send(R.string.prefix_img) + bar.getUser_account() + InValues.send(R.string.suffix_head_img))
                     .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                     .into(holder.mItemPostbarUserHeadimg);
             holder.mItemPostbarUserHeadimg.setTag(cacheKey);
@@ -202,7 +202,7 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
             if (holder.mItemPostbarUserbadge.getTag() == null || !holder.mItemPostbarUserbadge.getTag().equals(cacheKey)){
                 //显示徽章！
                 Glide.with(activity)
-                        .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + bar.getUser_badge())
+                        .load(InValues.send(R.string.prefix_badge_img) + bar.getUser_badge())
                         .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                         .centerCrop()
                         .into(holder.mItemPostbarUserbadge);

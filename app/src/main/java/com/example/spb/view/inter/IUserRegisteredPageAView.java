@@ -7,6 +7,7 @@ public interface IUserRegisteredPageAView extends SpbInterOne {
     //响应标记
     int IMAGE_SUCCESS = 001;//选择图片
     int RESPONSE_SUCCESS = 200;  //注册成功
+    int RESPONSE_ERROR = 4004;
 
 
     String IMAGENAME = "UserHeadImage.png";

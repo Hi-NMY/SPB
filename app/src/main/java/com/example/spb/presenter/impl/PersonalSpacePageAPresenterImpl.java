@@ -148,6 +148,11 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
         accountSecurityModel.queryVerifyAndUserFull(account, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 String value = DataVerificationTool.isEmpty(response);
                 if (value != null) {
                     RequestEntityJson<UserDto> requestEntityJson = new Gson().fromJson(value, new TypeToken<RequestEntityJson<UserDto>>() {
@@ -212,6 +217,11 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
         barModel.queryNoVideoUserBarListForDate(account, "", new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 String value = DataVerificationTool.isEmpty(response);
                 if (value != null) {
                     RequestListJson<Bar> requestListJson = new Gson().fromJson(value, new TypeToken<RequestListJson<Bar>>() {
@@ -233,6 +243,11 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
         barModel.queryVideoUserBarListForDate(account, "", new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 String value = DataVerificationTool.isEmpty(response);
                 if (value != null) {
                     RequestListJson<Bar> requestListJson = new Gson().fromJson(value, new TypeToken<RequestListJson<Bar>>() {
@@ -279,16 +294,16 @@ public class PersonalSpacePageAPresenterImpl extends BasePresenter<IPersonalSpac
 
     public List<String> obtainMyBadgeList(UserBadgeDto s) {
         List<String> badges = new ArrayList<>();
-        if (DataVerificationTool.isEmpty(s.getSign_star_badge())) {
+        if (!DataVerificationTool.isEmpty(s.getSign_star_badge())) {
             badges.add(s.getSign_star_badge());
         }
         if (s.getSign_ct_badge() == 0) {
             badges.add(InValues.send(R.string.certification_badge));
         }
-        if (DataVerificationTool.isEmpty(s.getSign_like_badge())) {
+        if (!DataVerificationTool.isEmpty(s.getSign_like_badge())) {
             badges.addAll(MyResolve.InBadge(s.getSign_like_badge()));
         }
-        if (DataVerificationTool.isEmpty(s.getSign_task_badge())) {
+        if (!DataVerificationTool.isEmpty(s.getSign_task_badge())) {
             badges.addAll(MyResolve.InBadge(s.getSign_task_badge()));
         }
         return badges;

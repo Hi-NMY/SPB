@@ -372,6 +372,9 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
             case RESPONSE_SUCCESS_TWO:
                 mPresenter.connectRong(userDto.getUser_token(), userDto.getUser_name(), userDto.getUser_account());
                 break;
+            case RESPONSE_ERROR:
+                closeDialog(DIALOGLOADING);
+                break;
         }
     }
 
