@@ -32,8 +32,8 @@ public class AttentionTopicPageAPresenterImpl extends BasePresenter<IAttentionTo
         }
     }
 
-    public Topic addAttentionAccount(String user_account, Topic topic) {
-        topic.setTopic_slogan(user_account);
+    public Topic addAttentionAccount(String userAccount, Topic topic) {
+        topic.setTopic_slogan(userAccount);
         return topic;
     }
 }

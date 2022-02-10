@@ -69,7 +69,7 @@ public class FirstPageAPresenterImpl extends BasePresenter<IFirstPageAView> impl
                         UserDto userDto = requestEntityJson.getData();
                         setUserMsg(userDto);
                         handler.sendMessage(SendHandler.setMessage(FirstPage.RESPONSE_SUCCESS_ONE, userDto));
-                    }else {
+                    } else {
                         handler.sendMessage(SendHandler.setMessage(FirstPage.RESPONSE_ERROR, null));
                     }
                 }
@@ -112,7 +112,7 @@ public class FirstPageAPresenterImpl extends BasePresenter<IFirstPageAView> impl
                     RequestCode requestCode = new Gson().fromJson(value, RequestCode.class);
                     if (ResponseToast.toToast(requestCode)) {
                         verifyAccountHanlder.sendMessage(SendHandler.setMessage(FirstPage.RESPONSE_SUCCESS_TWO, null));
-                    }else {
+                    } else {
                         verifyAccountHanlder.sendMessage(SendHandler.setMessage(FirstPage.RESPONSE_ERROR, null));
                     }
                 }

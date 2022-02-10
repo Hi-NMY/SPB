@@ -46,7 +46,6 @@ public class SendNewVideoAPresenterImpl extends BasePresenter<ISendNewVideoAView
     private final Gson gson;
     public List<Topic> topics;
     public Bar newBar;
-    private final BaseMVPActivity baseMVPActivity;
     public List<String> hotTopics;
     public List<String> searchTopics;
     private SpbLocationServer spbLocationServer;
@@ -92,7 +91,6 @@ public class SendNewVideoAPresenterImpl extends BasePresenter<ISendNewVideoAView
     }
 
     public SendNewVideoAPresenterImpl(Activity activity) {
-        this.baseMVPActivity = (BaseMVPActivity) activity;
         topicModel = new TopicModelImpl();
         postBarModel = new PostBarModelImpl();
         gson = new Gson();
@@ -183,7 +181,7 @@ public class SendNewVideoAPresenterImpl extends BasePresenter<ISendNewVideoAView
     }
 
     public void addTopic(String topicName) {
-        if (topics != null && !topics.stream().anyMatch(topic -> topic.getTopic_name().equals(topicName))) {
+        if (topics != null && topics.stream().noneMatch(topic -> topic.getTopic_name().equals(topicName))) {
             Topic topic = new Topic();
             topic.setTopic_name(topicName);
             topics.add(topic);

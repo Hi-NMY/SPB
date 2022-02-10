@@ -22,8 +22,8 @@ public class DataFollowedPresenter {
     private final String account;
     private final Gson gson;
 
-    public DataFollowedPresenter(String user_account) {
-        account = user_account;
+    public DataFollowedPresenter(String userAccount) {
+        account = userAccount;
         followedModel = new FollowedModelImpl();
         gson = new Gson();
         initDate();

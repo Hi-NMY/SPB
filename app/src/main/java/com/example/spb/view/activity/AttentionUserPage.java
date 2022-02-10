@@ -1,6 +1,8 @@
 package com.example.spb.view.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -12,8 +14,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 import com.example.spb.R;
 import com.example.spb.adapter.FragmentViewPageAdapter;
+import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
+import com.example.spb.entity.Dto.UserDto;
 import com.example.spb.presenter.impl.AttentionUserPageAPresenterImpl;
+import com.example.spb.presenter.utils.InValues;
+import com.example.spb.presenter.utils.SpbBroadcast;
 import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.fragment.attentionuser.Follow;
 import com.example.spb.view.fragment.attentionuser.Followed;
@@ -49,11 +55,14 @@ public class AttentionUserPage extends BaseMVPActivity<IAttentionUserPageAView, 
     private MagicIndicator mAttentionuserIdt;
     private ViewPager mAttentionuserViewpager;
     private RelativeLayout mExcessR;
+    private RefreshFUList refreshFollowList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attention_user_page);
+        refreshFollowList = new RefreshFUList();
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_Follow),refreshFollowList);
         NUM = getIntent().getIntExtra(SELECTNUM, 0);
         initActView();
     }
@@ -68,43 +77,17 @@ public class AttentionUserPage extends BaseMVPActivity<IAttentionUserPageAView, 
         mAttentionuserIdt = (MagicIndicator) findViewById(R.id.attentionuser_idt);
         mAttentionuserViewpager = (ViewPager) findViewById(R.id.attentionuser_viewpager);
         mExcessR = (RelativeLayout) findViewById(R.id.excess_r);
+        initData();
         intFollowViewPager();
         setActivityBar();
         setBar();
         setMyListener();
         createDialog();
-        initData();
     }
 
     @Override
     protected void initData() {
-        mPresenter.addFollowList(getDataUserMsgPresenter().getUser_account(), new AttentionUserPageAPresenterImpl.OnReturn() {
-            @Override
-            public void onReturn() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (NUM == 0){
-                            mExcessR.setVisibility(View.GONE);
-                        }
-                    }
-                });
-            }
-        });
         getDataFollowPresenter().initDate();
-        mPresenter.addFollowedList(getDataUserMsgPresenter().getUser_account(), new AttentionUserPageAPresenterImpl.OnReturn() {
-            @Override
-            public void onReturn() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (NUM == 1){
-                            mExcessR.setVisibility(View.GONE);
-                        }
-                    }
-                });
-            }
-        });
         getDataFollowedPresenter().initDate();
     }
 
@@ -213,5 +196,18 @@ public class AttentionUserPage extends BaseMVPActivity<IAttentionUserPageAView, 
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SpbBroadcast.destroyBrc(refreshFollowList);
+    }
+
+    class RefreshFUList extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mExcessR.setVisibility(View.GONE);
+        }
     }
 }

@@ -29,12 +29,12 @@ public class Task {
                 StringBuffer stringBuffer = new StringBuffer();
                 SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_task_like));
                 String pid = sharedPreferences.getString(InValues.send(R.string.task_pbid), "");
-                if (pid == null || pid.equals("")) {
-                    stringBuffer.append(pbID + "&");
+                if (pid.equals("")) {
+                    stringBuffer.append(pbID).append("&");
                 } else {
                     id = MyResolve.InSignLike(pid);
                     if (id.stream().filter(id -> id.equals(pbID)).findAny().orElse(null) == null) {
-                        stringBuffer.append(pid).append(pbID + "&");
+                        stringBuffer.append(pid).append(pbID).append("&");
                     } else {
                         stringBuffer.append(pid);
                     }
@@ -49,15 +49,11 @@ public class Task {
     public static boolean getLikeData() {
         SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_task_like));
         String pid = sharedPreferences.getString(InValues.send(R.string.task_pbid), "");
-        if (pid == null || pid.equals("")) {
+        if (pid.equals("")) {
             return false;
         } else {
             id = MyResolve.InSignLike(pid);
-            if (id.size() >= 10) {
-                return true;
-            } else {
-                return false;
-            }
+            return id.size() >= 10;
         }
     }
 
@@ -68,12 +64,12 @@ public class Task {
                 StringBuffer stringBuffer = new StringBuffer();
                 SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_task_Topic));
                 String topicid = sharedPreferences.getString(InValues.send(R.string.task_topic), "");
-                if (topicid == null || topicid.equals("")) {
-                    stringBuffer.append(topicName + "&");
+                if (topicid.equals("")) {
+                    stringBuffer.append(topicName).append("&");
                 } else {
                     topic = MyResolve.InSignTopic(topicid);
                     if (topic.stream().filter(topic -> topic.equals(topicName)).findAny().orElse(null) == null) {
-                        stringBuffer.append(topicid).append(topicName + "&");
+                        stringBuffer.append(topicid).append(topicName).append("&");
                     } else {
                         stringBuffer.append(topicid);
                     }
@@ -88,15 +84,11 @@ public class Task {
     public static boolean getTopicData() {
         SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_task_Topic));
         String topicid = sharedPreferences.getString(InValues.send(R.string.task_topic), "");
-        if (topicid == null || topicid.equals("")) {
+        if (topicid.equals("")) {
             return false;
         } else {
             topic = MyResolve.InSignTopic(topicid);
-            if (topic.size() >= 5) {
-                return true;
-            } else {
-                return false;
-            }
+            return topic.size() >= 5;
         }
     }
 

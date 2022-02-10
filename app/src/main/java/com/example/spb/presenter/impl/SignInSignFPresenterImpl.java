@@ -4,7 +4,6 @@ import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BasePresenter;
 import com.example.spb.common.RequestCode;
-import com.example.spb.entity.Sign;
 import com.example.spb.model.implA.SignModelImpl;
 import com.example.spb.model.inter.SignModel;
 import com.example.spb.presenter.callback.MyCallBack;

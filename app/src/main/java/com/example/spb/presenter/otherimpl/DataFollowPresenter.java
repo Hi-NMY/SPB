@@ -28,8 +28,8 @@ public class DataFollowPresenter {
     private final String user_account;
     private final Gson gson;
 
-    public DataFollowPresenter(String user_account) {
-        this.user_account = user_account;
+    public DataFollowPresenter(String userAccount) {
+        this.user_account = userAccount;
         followModel = new FollowModelImpl();
         followList = new ArrayList<>();
         gson = new Gson();

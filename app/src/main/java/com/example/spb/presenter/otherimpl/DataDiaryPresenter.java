@@ -29,8 +29,8 @@ public class DataDiaryPresenter {
 
     public List<Diary> diaryList;
 
-    public DataDiaryPresenter(String user_account) {
-        account = user_account;
+    public DataDiaryPresenter(String userAccount) {
+        account = userAccount;
         diaryModel = new DiaryModelImpl();
         gson = new Gson();
         initDate();

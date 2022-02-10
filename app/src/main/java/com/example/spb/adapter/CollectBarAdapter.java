@@ -27,15 +27,14 @@ import java.util.List;
 
 public class CollectBarAdapter extends RecyclerView.Adapter<CollectBarAdapter.ViewHolder> {
 
-    private List<Bar> collectBars;
-    private BaseMVPActivity baseMVPActivity;
-    private Bar bar;
+    private final List<Bar> collectBars;
+    private final BaseMVPActivity baseMVPActivity;
     private ComponentDialog componentDialog;
     private Button mButtonRight;
     private Button mButtonClose;
     private TextView mtxt;
     private TextView mtitle;
-    private String cacheKey;
+    private final String cacheKey;
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -43,12 +42,13 @@ public class CollectBarAdapter extends RecyclerView.Adapter<CollectBarAdapter.Vi
         TextView mItemCollectListUsername;
         TextView mItemCollectListTitle;
         RelativeLayout mCollectBarR;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mItemCollectListHeadimg = (RoundedImageView) itemView.findViewById(R.id.item_collect_list_headimg);
-            mItemCollectListUsername = (TextView) itemView.findViewById(R.id.item_collect_list_username);
-            mItemCollectListTitle = (TextView) itemView.findViewById(R.id.item_collect_list_title);
-            mCollectBarR = (RelativeLayout) itemView.findViewById(R.id.collect_bar_R);
+            mItemCollectListHeadimg = itemView.findViewById(R.id.item_collect_list_headimg);
+            mItemCollectListUsername = itemView.findViewById(R.id.item_collect_list_username);
+            mItemCollectListTitle = itemView.findViewById(R.id.item_collect_list_title);
+            mCollectBarR = itemView.findViewById(R.id.collect_bar_R);
         }
     }
 
@@ -58,11 +58,11 @@ public class CollectBarAdapter extends RecyclerView.Adapter<CollectBarAdapter.Vi
         cacheKey = MyDateClass.showNowDate();
     }
 
-    public void removeData(String pbid){
+    public void removeData(String pbid) {
         Bar cache = collectBars.stream().filter(collectBars -> collectBars.getPb_one_id().equals(pbid)).findAny().orElse(null);
-        if (cache != null){
+        if (cache != null) {
             int a = collectBars.indexOf(cache);
-            if (a != -1){
+            if (a != -1) {
                 collectBars.remove(a);
                 notifyItemRemoved(a);
                 notifyItemRangeChanged(a, collectBars.size() + 1);
@@ -74,20 +74,19 @@ public class CollectBarAdapter extends RecyclerView.Adapter<CollectBarAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_collect_bar, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        bar = collectBars.get(position);
+        Bar bar = collectBars.get(position);
         holder.mItemCollectListUsername.setText(bar.getUser_name());
         holder.mItemCollectListTitle.setText(bar.getPb_article());
 
-        if(holder.mItemCollectListHeadimg.getTag() == null || !holder.mItemCollectListHeadimg.getTag().equals(cacheKey)){
+        if (holder.mItemCollectListHeadimg.getTag() == null || !holder.mItemCollectListHeadimg.getTag().equals(cacheKey)) {
             Glide.with(baseMVPActivity)
-                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + bar.getUser_account() + "/HeadImage/myHeadImage.png")
-                    .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()),1,1))
+                    .load(InValues.send(R.string.prefix_img) + bar.getUser_account() + InValues.send(R.string.suffix_head_img))
+                    .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                     .into(holder.mItemCollectListHeadimg);
             holder.mItemCollectListHeadimg.setTag(cacheKey);
         }
@@ -98,7 +97,7 @@ public class CollectBarAdapter extends RecyclerView.Adapter<CollectBarAdapter.Vi
                 JumpIntent.startMsgIntent(PostBarDetailPage.class, new JumpIntent.SetMsg() {
                     @Override
                     public void setMessage(Intent intent) {
-                        intent.putExtra(InValues.send(R.string.intent_Bar),collectBars.get(position));
+                        intent.putExtra(InValues.send(R.string.intent_Bar), collectBars.get(position));
                     }
                 });
             }
@@ -107,39 +106,7 @@ public class CollectBarAdapter extends RecyclerView.Adapter<CollectBarAdapter.Vi
         holder.mCollectBarR.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                componentDialog = new ComponentDialog(baseMVPActivity, R.layout.dialog_longclick_view, new ComponentDialog.InitDialog() {
-                    @Override
-                    public void initView(View view) {
-                        mButtonClose = (Button)view.findViewById(R.id.button_close);
-                        mButtonRight = (Button)view.findViewById(R.id.button_right);
-                        mtitle = (TextView)view.findViewById(R.id.topic_name);
-                        mtxt = (TextView)view.findViewById(R.id.txt);
-                    }
-
-                    @Override
-                    public void initData() {
-                        mtitle.setVisibility(View.GONE);
-                        mtxt.setText("取消收藏");
-                    }
-
-                    @Override
-                    public void initListener() {
-                        mButtonClose.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                componentDialog.closeMyDialog();
-                            }
-                        });
-                        mButtonRight.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                baseMVPActivity.getDataCollectBarPresenter().removeCollectBar(collectBars.get(position).getPb_one_id());
-                                componentDialog.closeMyDialog();
-                            }
-                        });
-                    }
-                });
-                componentDialog.showMyDialog();
+                setComponentDialog(position);
                 return true;
             }
         });
@@ -150,15 +117,51 @@ public class CollectBarAdapter extends RecyclerView.Adapter<CollectBarAdapter.Vi
                 JumpIntent.startMsgIntent(PersonalSpacePage.class, new JumpIntent.SetMsg() {
                     @Override
                     public void setMessage(Intent intent) {
-                        intent.putExtra(InValues.send(R.string.intent_User_account),collectBars.get(position).getUser_account());
+                        intent.putExtra(InValues.send(R.string.intent_User_account), collectBars.get(position).getUser_account());
                     }
                 });
             }
         });
     }
 
+    private void setComponentDialog(int position) {
+        componentDialog = new ComponentDialog(baseMVPActivity, R.layout.dialog_longclick_view, new ComponentDialog.InitDialog() {
+            @Override
+            public void initView(View view) {
+                mButtonClose = view.findViewById(R.id.button_close);
+                mButtonRight = view.findViewById(R.id.button_right);
+                mtitle = view.findViewById(R.id.topic_name);
+                mtxt = view.findViewById(R.id.txt);
+            }
+
+            @Override
+            public void initData() {
+                mtitle.setVisibility(View.GONE);
+                mtxt.setText("取消收藏");
+            }
+
+            @Override
+            public void initListener() {
+                mButtonClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        componentDialog.closeMyDialog();
+                    }
+                });
+                mButtonRight.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        baseMVPActivity.getDataCollectBarPresenter().removeCollectBar(collectBars.get(position).getPb_one_id());
+                        componentDialog.closeMyDialog();
+                    }
+                });
+            }
+        });
+        componentDialog.showMyDialog();
+    }
+
     @Override
     public int getItemCount() {
-        return collectBars.size();
+        return collectBars == null ? 0 : collectBars.size();
     }
 }

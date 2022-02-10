@@ -438,7 +438,7 @@ public class SendNewVideoPage extends BaseMVPActivity<ISendNewVideoAView, SendNe
                     MyToastClass.ShowToast(MyApplication.getContext(), "最多添加5个话题噢");
                 } else {
                     if (textView.getText().toString().substring(0, 2).equals("新增")) {
-                        mPresenter.addTopic(textView.getText().toString().substring(2));
+                        mPresenter.addTopic(textView.getText().toString().substring(3));
                     } else {
                         mPresenter.addTopic(textView.getText().toString());
                     }

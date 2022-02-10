@@ -32,8 +32,8 @@ public class DataCollectBarPresenter {
     private final Gson gson;
     private String cacheAccount = "";
 
-    public DataCollectBarPresenter(String user_account) {
-        account = user_account;
+    public DataCollectBarPresenter(String userAccount) {
+        account = userAccount;
         collectBarModel = new CollectBarModelImpl();
         gson = new Gson();
         initDate();

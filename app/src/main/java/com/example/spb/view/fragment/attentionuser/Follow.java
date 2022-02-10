@@ -75,7 +75,7 @@ public class Follow extends BaseMVPFragment<IFollowFView, FollowFPresenterImpl> 
 
     @Override
     protected void initData() {
-
+        mPresenter.addFollowList(attentionUserPage.getDataUserMsgPresenter().getUser_account());
     }
 
     @Override

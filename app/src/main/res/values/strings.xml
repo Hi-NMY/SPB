@@ -84,9 +84,9 @@
     <string name="prefix_badge_img">http://192.168.3.6:8088/upload/UserImageServer/badge/</string>
     <string name="suffix_head_img">/HeadImage/myHeadImage.png</string>
     <string name="suffix_bg_img">/BackgroundImage/myBackgroundImage.png</string>
+    <string name="local_certification_badge">http://192.168.3.6:8088/upload/UserImageServer/badge/certification_badge.png</string>
     <string name="isVerison">http://192.168.3.6:8088/appVersion/isVerison</string>
     <string name="SPBAPK">http://192.168.3.6:8088/upload/spb/UserImageServer/Data/SPB.apk</string>
-
 
     <string name="updateUserPassword">http://192.168.3.6:8088/accountSecurity/updateUserPassword</string>
     <string name="queryVerifyAndUserFull">http://192.168.3.6:8088/accountSecurity/queryVerifyAndUserFull</string>

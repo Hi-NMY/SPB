@@ -20,32 +20,32 @@ import java.util.List;
 
 public class MyBadgeAdapter extends RecyclerView.Adapter<MyBadgeAdapter.ViewHolder> {
 
-    private List<String> badges;
-    private Activity activity;
-    private BaseMVPActivity baseMVPActivity;
-    private String badge;
+    private final List<String> badges;
+    private final Activity activity;
+    private final BaseMVPActivity baseMVPActivity;
     private String nowBadge;
-    private boolean accountKey;
+    private final boolean accountKey;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView mItemBadgeImg;
         Button mItemBadgeBtn;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mItemBadgeImg = (ImageView) itemView.findViewById(R.id.item_badge_img);
-            mItemBadgeBtn = (Button) itemView.findViewById(R.id.item_badge_btn);
+            mItemBadgeImg = itemView.findViewById(R.id.item_badge_img);
+            mItemBadgeBtn = itemView.findViewById(R.id.item_badge_btn);
         }
     }
 
-    public MyBadgeAdapter(List<String> badges,boolean key, String nowBadge ,Activity activity) {
+    public MyBadgeAdapter(List<String> badges, boolean key, String nowBadge, Activity activity) {
         this.badges = badges;
         this.activity = activity;
         this.nowBadge = nowBadge;
         this.accountKey = key;
-        baseMVPActivity = (BaseMVPActivity) activity;
+        this.baseMVPActivity = (BaseMVPActivity) activity;
     }
 
-    public void refreshNowBadge(String b){
+    public void refreshNowBadge(String b) {
         nowBadge = b;
         notifyDataSetChanged();
     }
@@ -54,27 +54,26 @@ public class MyBadgeAdapter extends RecyclerView.Adapter<MyBadgeAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user_badge, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        badge = badges.get(position);
+        String badge = badges.get(position);
 
-        if (badge.equals(nowBadge)){
+        if (badge.equals(nowBadge)) {
             holder.mItemBadgeBtn.setText("已设置");
-            holder.mItemBadgeBtn.setTextColor(ContextCompat.getColor(MyApplication.getContext(),R.color.qihei));
+            holder.mItemBadgeBtn.setTextColor(ContextCompat.getColor(MyApplication.getContext(), R.color.qihei));
             holder.mItemBadgeBtn.setBackground(activity.getDrawable(R.drawable.sign_bg));
-        }else {
+        } else {
             holder.mItemBadgeBtn.setText("设置");
-            holder.mItemBadgeBtn.setTextColor(ContextCompat.getColor(MyApplication.getContext(),R.color.beijing));
+            holder.mItemBadgeBtn.setTextColor(ContextCompat.getColor(MyApplication.getContext(), R.color.beijing));
             holder.mItemBadgeBtn.setBackground(activity.getDrawable(R.drawable.no_sign_bg));
         }
 
-        if (accountKey){
+        if (accountKey) {
             holder.mItemBadgeBtn.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             holder.mItemBadgeBtn.setVisibility(View.GONE);
         }
 
@@ -86,10 +85,10 @@ public class MyBadgeAdapter extends RecyclerView.Adapter<MyBadgeAdapter.ViewHold
         holder.mItemBadgeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!badges.get(position).equals(nowBadge)){
+                if (!badges.get(position).equals(nowBadge)) {
                     refreshNowBadge(badges.get(position));
                     baseMVPActivity.getDataUserMsgPresenter().setUser_badge(badges.get(position));
-                    SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_refresh_headimg),1,badges.get(position));
+                    SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_headimg), 1, badges.get(position));
                 }
             }
         });
@@ -97,6 +96,6 @@ public class MyBadgeAdapter extends RecyclerView.Adapter<MyBadgeAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return badges.size();
+        return badges == null ? 0 : badges.size();
     }
 }

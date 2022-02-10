@@ -96,7 +96,7 @@ public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresen
         mPresenter.setUserAttTopic(homePage, homePage.getDataAttentionTopicPresenter().attentionTopicList
                 , new GridLayoutManager(homePage, 2), mTopicpageUseratList, new TopicPageFPresenterImpl.I() {
                     @Override
-                    public void A() {
+                    public void a() {
 
                     }
 
@@ -155,7 +155,7 @@ public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresen
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 mPresenter.obtainHotTopic(homePage, new TopicPageFPresenterImpl.I() {
                     @Override
-                    public void A() {
+                    public void a() {
                         finishRRefresh(0);
                     }
 
@@ -166,7 +166,7 @@ public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresen
                 });
                 mPresenter.obtainUserAttTopic(homePage, new TopicPageFPresenterImpl.I() {
                     @Override
-                    public void A() {
+                    public void a() {
 
                     }
 

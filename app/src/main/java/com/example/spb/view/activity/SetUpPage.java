@@ -92,6 +92,7 @@ public class SetUpPage extends BaseMVPActivity<ISetUpPageAView, SetUpPageAPresen
         mR3.setOnClickListener(this);
         mR4.setOnClickListener(this);
         mR5.setOnClickListener(this);
+        mQuitLogin.setOnClickListener(this);
     }
 
     @Override

@@ -41,7 +41,7 @@ public class TopicPageFPresenterImpl extends BasePresenter<ITopicPageFView> impl
                     public void run() {
                         randomTopicAdapter.refreshTopic(homePage.getDataAttentionTopicPresenter().topics);
                         if (i != null) {
-                            i.A();
+                            i.a();
                         }
                     }
                 });
@@ -94,7 +94,7 @@ public class TopicPageFPresenterImpl extends BasePresenter<ITopicPageFView> impl
     }
 
     public interface I {
-        void A();
+        void a();
 
         void onReturn(boolean a);
     }

@@ -423,7 +423,7 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
                 SearchFun.search(mTopicSearchEdt, new SearchFun.GoSearch() {
                     @Override
                     public void afterTextChangedSearch(String text) {
-                        if (!text.equals(" ")) {
+                        if (text.length() > 0) {
                             mHotTopicR.setVisibility(View.GONE);
                             mSearchTopicR.setVisibility(View.VISIBLE);
                             mPresenter.searchTopic(mTopicSearchEdt.getText().toString().trim());
@@ -491,7 +491,7 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
                     MyToastClass.ShowToast(MyApplication.getContext(), "最多添加5个话题噢");
                 } else {
                     if (textView.getText().toString().substring(0, 2).equals("新增")) {
-                        mPresenter.addTopic(textView.getText().toString().substring(2));
+                        mPresenter.addTopic(textView.getText().toString().substring(3));
                     } else {
                         mPresenter.addTopic(textView.getText().toString());
                     }

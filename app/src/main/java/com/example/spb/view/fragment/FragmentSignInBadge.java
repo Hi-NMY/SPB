@@ -177,7 +177,7 @@ public class FragmentSignInBadge extends BaseMVPFragment<ISignInBadgeFView, Sign
             //glide展示认证徽章
             mBadgeCertification.setTag(0);
             Glide.with(signInPage)
-                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/certification_badge.png")
+                    .load(InValues.send(R.string.local_certification_badge))
                     .into(mBadgeCertification);
         } else {
             mBadgeCertification.setTag(1);
@@ -187,7 +187,7 @@ public class FragmentSignInBadge extends BaseMVPFragment<ISignInBadgeFView, Sign
             //glide展示星座徽章
             mBadgeStar.setTag(0);
             Glide.with(signInPage)
-                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + mPresenter.getStarBadge())
+                    .load(InValues.send(R.string.prefix_badge_img) + mPresenter.getStarBadge())
                     .into(mBadgeStar);
         } else {
             mBadgeStar.setTag(1);
@@ -222,7 +222,7 @@ public class FragmentSignInBadge extends BaseMVPFragment<ISignInBadgeFView, Sign
                                             //glide展示星座徽章
                                             mBadgeStar.setTag(0);
                                             Glide.with(signInPage)
-                                                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/badge/" + mPresenter.getStarBadge())
+                                                    .load(InValues.send(R.string.prefix_badge_img) + mPresenter.getStarBadge())
                                                     .into(mBadgeStar);
                                         }
                                     });

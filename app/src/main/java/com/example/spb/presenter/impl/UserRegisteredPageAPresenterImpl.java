@@ -70,8 +70,8 @@ public class UserRegisteredPageAPresenterImpl extends BasePresenter<IUserRegiste
                     RequestCode requestCode = new Gson().fromJson(value, RequestCode.class);
                     if (ResponseToast.toToast(requestCode)) {
                         obtainRongUser();
-                    }else {
-                        handler.sendMessage(SendHandler.setMessage(UserRegisteredPage.RESPONSE_ERROR,null));
+                    } else {
+                        handler.sendMessage(SendHandler.setMessage(UserRegisteredPage.RESPONSE_ERROR, null));
                     }
                 }
             }

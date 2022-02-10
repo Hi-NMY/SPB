@@ -154,15 +154,15 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
         mExcessR = (RelativeLayout) findViewById(R.id.excess_r);
         gifShow = new GIFShow(mVoiceGif);
         barMoreOperateDialog = new BarMoreOperateDialog(this);
-        if (keyboardStartKey) {
-            showKeyBoard();
-        }
         setMyListener();
         setBar();
         setActivityBar();
         initData();
         createDialog();
         createRefresh();
+        if (keyboardStartKey) {
+            showKeyBoard();
+        }
     }
 
     @Override

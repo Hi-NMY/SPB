@@ -26,18 +26,14 @@ import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
 
-import static com.example.spb.xserver.AndroidUnicast.PUSHCOLLECTKEY;
-import static com.example.spb.xserver.AndroidUnicast.PUSHCOMMENTKEY;
-import static com.example.spb.xserver.AndroidUnicast.PUSHFOLLOWKEY;
-import static com.example.spb.xserver.AndroidUnicast.PUSHLIKEKEY;
-import static com.example.spb.xserver.AndroidUnicast.PUSHCOMMENTTOUSERKEY;
+import static com.example.spb.xserver.AndroidUnicast.*;
 
 public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder> {
 
-    private List<Notice> notices;
-    private BaseMVPActivity activity;
+    private final List<Notice> notices;
+    private final BaseMVPActivity activity;
     private Notice notice;
-    private String cacheKey;
+    private final String cacheKey;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView mItemNoticeListHeadimg;
@@ -47,15 +43,16 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
         TextView mItemNoticeListTitle;
         TextView mItemNoticeListDate;
         RelativeLayout mItemNoticeListR;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mItemNoticeListHeadimg = (RoundedImageView) itemView.findViewById(R.id.item_notice_list_headimg);
-            mItemNoticeListTitleName = (TextView) itemView.findViewById(R.id.item_notice_list_title_name);
-            mItemNoticeListTitleImg = (ImageView) itemView.findViewById(R.id.item_notice_list_title_img);
-            mItemNoticeListTitleBlock = (TextView) itemView.findViewById(R.id.item_notice_list_title_block);
-            mItemNoticeListTitle = (TextView) itemView.findViewById(R.id.item_notice_list_title);
-            mItemNoticeListDate = (TextView) itemView.findViewById(R.id.item_notice_list_date);
-            mItemNoticeListR = (RelativeLayout) itemView.findViewById(R.id.item_notice_list_R);
+            mItemNoticeListHeadimg = itemView.findViewById(R.id.item_notice_list_headimg);
+            mItemNoticeListTitleName = itemView.findViewById(R.id.item_notice_list_title_name);
+            mItemNoticeListTitleImg = itemView.findViewById(R.id.item_notice_list_title_img);
+            mItemNoticeListTitleBlock = itemView.findViewById(R.id.item_notice_list_title_block);
+            mItemNoticeListTitle = itemView.findViewById(R.id.item_notice_list_title);
+            mItemNoticeListDate = itemView.findViewById(R.id.item_notice_list_date);
+            mItemNoticeListR = itemView.findViewById(R.id.item_notice_list_R);
         }
     }
 
@@ -65,8 +62,8 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
         cacheKey = MyDateClass.showNowDate();
     }
 
-    public void refreshSee(int position,int see){
-        if (see == 1){
+    public void refreshSee(int position, int see) {
+        if (see == 1) {
             activity.getDataNoticePresenter().updateSee(notices.get(position).getNotice_date());
             notices.get(position).setSee(0);
             notifyItemChanged(position);
@@ -77,17 +74,16 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notice_list, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         notice = notices.get(position);
-        if(holder.mItemNoticeListHeadimg.getTag() == null || !holder.mItemNoticeListHeadimg.getTag().equals(cacheKey)){
+        if (holder.mItemNoticeListHeadimg.getTag() == null || !holder.mItemNoticeListHeadimg.getTag().equals(cacheKey)) {
             Glide.with(activity)
-                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + notice.getUser_account() + "/HeadImage/myHeadImage.png")
-                    .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()),1,1))
+                    .load(InValues.send(R.string.prefix_img) + notice.getUser_account() + InValues.send(R.string.suffix_head_img))
+                    .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                     .into(holder.mItemNoticeListHeadimg);
             holder.mItemNoticeListHeadimg.setTag(cacheKey);
         }
@@ -99,27 +95,21 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
                 JumpIntent.startMsgIntent(PersonalSpacePage.class, new JumpIntent.SetMsg() {
                     @Override
                     public void setMessage(Intent intent) {
-                        intent.putExtra(InValues.send(R.string.intent_User_account),notice.getUser_account());
+                        intent.putExtra(InValues.send(R.string.intent_User_account), notice.getUser_account());
                     }
                 });
             }
         });
 
-        if (notice.getSee() == 1){
-            holder.mItemNoticeListTitleName.setTextColor(ContextCompat.getColor(MyApplication.getContext(),R.color.qihei));
-            holder.mItemNoticeListDate.setTextColor(ContextCompat.getColor(MyApplication.getContext(),R.color.qihei));
-            holder.mItemNoticeListTitleBlock.setTextColor(ContextCompat.getColor(MyApplication.getContext(),R.color.qihei));
-            holder.mItemNoticeListTitle.setTextColor(ContextCompat.getColor(MyApplication.getContext(),R.color.qihei));
-        }else {
-            holder.mItemNoticeListTitleName.setTextColor(ContextCompat.getColor(MyApplication.getContext(),R.color.grey));
-            holder.mItemNoticeListDate.setTextColor(ContextCompat.getColor(MyApplication.getContext(),R.color.grey));
-            holder.mItemNoticeListTitleBlock.setTextColor(ContextCompat.getColor(MyApplication.getContext(),R.color.grey));
-            holder.mItemNoticeListTitle.setTextColor(ContextCompat.getColor(MyApplication.getContext(),R.color.grey));
+        if (notice.getSee() == 1) {
+            noSee(holder);
+        } else {
+            yesSee(holder);
         }
 
         holder.mItemNoticeListTitleName.setText(notice.getUser_name() + " ");
         holder.mItemNoticeListDate.setText(MyDateClass.showDateClass(notice.getNotice_date()));
-        switch (notice.getPush_fun()){
+        switch (notice.getPush_fun()) {
             case PUSHLIKEKEY:
                 holder.mItemNoticeListTitleImg.setVisibility(View.VISIBLE);
                 holder.mItemNoticeListTitleBlock.setText("赞");
@@ -128,14 +118,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
                 holder.mItemNoticeListR.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        refreshSee(position,notices.get(position).getSee());
-                        //直接跳转动态详细
-                        JumpIntent.startMsgIntent(PostBarDetailPage.class, new JumpIntent.SetMsg() {
-                            @Override
-                            public void setMessage(Intent intent) {
-                                intent.putExtra(InValues.send(R.string.intent_pbid_start),notices.get(position).getPb_id());
-                            }
-                        });
+                        jumpPostBarDetail(position);
                     }
                 });
                 break;
@@ -146,15 +129,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
                 holder.mItemNoticeListR.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        refreshSee(position,notices.get(position).getSee());
-                        //直接跳转动态详细
-                        JumpIntent.startMsgIntent(PostBarDetailPage.class, new JumpIntent.SetMsg() {
-                            @Override
-                            public void setMessage(Intent intent) {
-                                intent.putExtra(InValues.send(R.string.intent_pbid_start),notices.get(position).getPb_id());
-                                intent.putExtra(InValues.send(R.string.intent_commentid_start),notices.get(position).getComment_id());
-                            }
-                        });
+                        jumpPostBarDetailComment(position);
                     }
                 });
                 break;
@@ -165,14 +140,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
                 holder.mItemNoticeListR.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        refreshSee(position,notices.get(position).getSee());
-                        //直接跳转动态详细
-                        JumpIntent.startMsgIntent(PostBarDetailPage.class, new JumpIntent.SetMsg() {
-                            @Override
-                            public void setMessage(Intent intent) {
-                                intent.putExtra(InValues.send(R.string.intent_pbid_start),notices.get(position).getPb_id());
-                            }
-                        });
+                        jumpPostBarDetail(position);
                     }
                 });
                 break;
@@ -187,10 +155,10 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
                         JumpIntent.startMsgIntent(PersonalSpacePage.class, new JumpIntent.SetMsg() {
                             @Override
                             public void setMessage(Intent intent) {
-                                intent.putExtra(InValues.send(R.string.intent_User_account),notices.get(position).getUser_account());
+                                intent.putExtra(InValues.send(R.string.intent_User_account), notices.get(position).getUser_account());
                             }
                         });
-                        refreshSee(position,notices.get(position).getSee());
+                        refreshSee(position, notices.get(position).getSee());
                     }
                 });
                 break;
@@ -201,23 +169,54 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
                 holder.mItemNoticeListR.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        refreshSee(position,notices.get(position).getSee());
-                        //直接跳转动态详细
-                        JumpIntent.startMsgIntent(PostBarDetailPage.class, new JumpIntent.SetMsg() {
-                            @Override
-                            public void setMessage(Intent intent) {
-                                intent.putExtra(InValues.send(R.string.intent_pbid_start),notices.get(position).getPb_id());
-                                intent.putExtra(InValues.send(R.string.intent_commentid_start),notices.get(position).getComment_id());
-                            }
-                        });
+                        jumpPostBarDetailComment(position);
                     }
                 });
+                break;
+            default:
                 break;
         }
     }
 
+    private void jumpPostBarDetailComment(int position) {
+        refreshSee(position, notices.get(position).getSee());
+        //直接跳转动态详细
+        JumpIntent.startMsgIntent(PostBarDetailPage.class, new JumpIntent.SetMsg() {
+            @Override
+            public void setMessage(Intent intent) {
+                intent.putExtra(InValues.send(R.string.intent_pbid_start), notices.get(position).getPb_id());
+                intent.putExtra(InValues.send(R.string.intent_commentid_start), notices.get(position).getComment_id());
+            }
+        });
+    }
+
+    private void jumpPostBarDetail(int position) {
+        refreshSee(position, notices.get(position).getSee());
+        //直接跳转动态详细
+        JumpIntent.startMsgIntent(PostBarDetailPage.class, new JumpIntent.SetMsg() {
+            @Override
+            public void setMessage(Intent intent) {
+                intent.putExtra(InValues.send(R.string.intent_pbid_start), notices.get(position).getPb_id());
+            }
+        });
+    }
+
+    private void noSee(@NonNull ViewHolder holder) {
+        holder.mItemNoticeListTitleName.setTextColor(ContextCompat.getColor(MyApplication.getContext(), R.color.qihei));
+        holder.mItemNoticeListDate.setTextColor(ContextCompat.getColor(MyApplication.getContext(), R.color.qihei));
+        holder.mItemNoticeListTitleBlock.setTextColor(ContextCompat.getColor(MyApplication.getContext(), R.color.qihei));
+        holder.mItemNoticeListTitle.setTextColor(ContextCompat.getColor(MyApplication.getContext(), R.color.qihei));
+    }
+
+    private void yesSee(@NonNull ViewHolder holder) {
+        holder.mItemNoticeListTitleName.setTextColor(ContextCompat.getColor(MyApplication.getContext(), R.color.grey));
+        holder.mItemNoticeListDate.setTextColor(ContextCompat.getColor(MyApplication.getContext(), R.color.grey));
+        holder.mItemNoticeListTitleBlock.setTextColor(ContextCompat.getColor(MyApplication.getContext(), R.color.grey));
+        holder.mItemNoticeListTitle.setTextColor(ContextCompat.getColor(MyApplication.getContext(), R.color.grey));
+    }
+
     @Override
     public int getItemCount() {
-        return notices.size();
+        return notices == null ? 0 : notices.size();
     }
 }

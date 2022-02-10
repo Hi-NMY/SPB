@@ -126,7 +126,7 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
                     @Override
                     public void run() {
                         topic = t;
-                        mPresenter.setTopiCName(topic.getTopic_name());
+                        mPresenter.setTopicName(topic.getTopic_name());
                         mPresenter.returnAttentionKey(getDataAttentionTopicPresenter().determineAttention(topic.getId()));
                         mExcessR.setVisibility(View.GONE);
                         initData();
@@ -147,27 +147,33 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
         } else {
             noAtt();
         }
-        Glide.with(this)
-                .load(InValues.send(R.string.httpHeadert) + topic.getTopic_image())
-                .into(mTopicbarImg);
-        Glide.with(this)
-                .load(InValues.send(R.string.httpHeadert) + mPresenter.obtainBlurImg(topic.getTopic_image()))
-                .into(new CustomViewTarget<RelativeLayout, Drawable>(mTopicbarRBg) {
-                    @Override
-                    protected void onResourceCleared(@Nullable Drawable placeholder) {
+        if (!"".equals(topic.getTopic_image())){
+            Glide.with(this)
+                    .load(InValues.send(R.string.httpHeadert) + topic.getTopic_image())
+                    .placeholder(R.drawable.icon_topic)
+                    .error(R.drawable.icon_topic)
+                    .into(mTopicbarImg);
+            Glide.with(this)
+                    .load(InValues.send(R.string.httpHeadert) + mPresenter.obtainBlurImg(topic.getTopic_image()))
+                    .placeholder(R.drawable.icon_topic)
+                    .error(R.drawable.icon_topic)
+                    .into(new CustomViewTarget<RelativeLayout, Drawable>(mTopicbarRBg) {
+                        @Override
+                        protected void onResourceCleared(@Nullable Drawable placeholder) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                        @Override
+                        public void onLoadFailed(@Nullable Drawable errorDrawable) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                        mTopicbarRBg.setBackground(resource);
-                    }
-                });
+                        @Override
+                        public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                            mTopicbarRBg.setBackground(resource);
+                        }
+                    });
+        }
     }
 
     public void yesAtt() {

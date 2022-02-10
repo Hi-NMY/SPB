@@ -31,7 +31,7 @@ public class PostBarModelImpl extends SpbModelAbstrate implements PostBarModel {
     @Override
     public void queryNoVideoTopicBarListForThumbNum(String thumbNum, String topicName, MyCallBack callBack) {
         requestBody = new FormBody.Builder()
-                .add("pb_topic", topicName)
+                .add("topic_name", topicName)
                 .add("pb_thumb_num", thumbNum)
                 .build();
         sendHttp(InValues.send(R.string.queryNoVideoTopicBarListForThumbNum), requestBody, callBack);
@@ -40,7 +40,7 @@ public class PostBarModelImpl extends SpbModelAbstrate implements PostBarModel {
     @Override
     public void queryNoVideoTopicBarListForDate(String pbDate, String topicName, MyCallBack callBack) {
         requestBody = new FormBody.Builder()
-                .add("pb_topic", topicName)
+                .add("topic_name", topicName)
                 .add("pb_date", pbDate)
                 .build();
         sendHttp(InValues.send(R.string.queryNoVideoTopicBarListForDate), requestBody, callBack);
@@ -107,7 +107,7 @@ public class PostBarModelImpl extends SpbModelAbstrate implements PostBarModel {
     @Override
     public void queryVideoTopicBarListForDate(String pbDate, String topicName, MyCallBack callBack) {
         requestBody = new FormBody.Builder()
-                .add("pb_topic", topicName)
+                .add("topic_name", topicName)
                 .add("pb_date", pbDate)
                 .build();
         sendHttp(InValues.send(R.string.queryVideoTopicBarListForDate), requestBody, callBack);
@@ -156,7 +156,7 @@ public class PostBarModelImpl extends SpbModelAbstrate implements PostBarModel {
                     ,RequestBody.Companion.create(video,MediaType.Companion.parse("video/mp4")));
         }
         if (videoImg != null){
-            this.builder.addFormDataPart("img",videoImg.getName()
+            this.builder.addFormDataPart("video_image_file",videoImg.getName()
                     ,RequestBody.Companion.create(videoImg,MediaType.Companion.parse("image/png")));
         }
         requestBody = this.builder.build();

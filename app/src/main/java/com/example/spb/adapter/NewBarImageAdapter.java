@@ -11,7 +11,6 @@ import com.bumptech.glide.Glide;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.entity.ImageDouble;
-import com.example.spb.presenter.utils.MyDateClass;
 import com.hitomi.tilibrary.style.index.NumberIndexIndicator;
 import com.hitomi.tilibrary.style.progress.ProgressBarIndicator;
 import com.hitomi.tilibrary.transfer.TransferConfig;
@@ -24,30 +23,28 @@ import java.util.List;
 
 public class NewBarImageAdapter extends RecyclerView.Adapter<NewBarImageAdapter.ViewHolder> {
 
-    public View view;
-    private Activity activity;
-    private ViewHolder viewHolder;
-    private List<String> newBarImageList;
-    private String imageDouble;
+    private final Activity activity;
+    private final List<String> newBarImageList;
     private Transferee transferee;
-    private RemoveImg removeImg;
-    private TransferConfig config;
+    private final RemoveImg removeImg;
+    private final TransferConfig config;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView mImageItemView;
         ImageView mImageClear;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mImageItemView = (RoundedImageView)itemView.findViewById(R.id.image_item_view);
-            mImageClear = (ImageView)itemView.findViewById(R.id.image_clear);
+            mImageItemView = itemView.findViewById(R.id.image_item_view);
+            mImageClear = itemView.findViewById(R.id.image_clear);
         }
     }
 
-    public NewBarImageAdapter(Activity a,List<ImageDouble> imgList,RemoveImg r){
+    public NewBarImageAdapter(Activity a, List<ImageDouble> imgList, RemoveImg r) {
         this.activity = a;
         this.removeImg = r;
         newBarImageList = new ArrayList<>();
-        for (ImageDouble img : imgList){
+        for (ImageDouble img : imgList) {
             newBarImageList.add(img.getMaxPath());
         }
         config = TransferConfig.build()
@@ -58,7 +55,7 @@ public class NewBarImageAdapter extends RecyclerView.Adapter<NewBarImageAdapter.
                 .create();
     }
 
-    public void removeImage(int option){
+    public void removeImage(int option) {
         notifyItemRemoved(option);
         newBarImageList.remove(option);
         notifyDataSetChanged();
@@ -67,22 +64,20 @@ public class NewBarImageAdapter extends RecyclerView.Adapter<NewBarImageAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_newbar_img_list, parent, false);
-        viewHolder = new ViewHolder(view);
-        return viewHolder;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_newbar_img_list, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (transferee == null){
+        if (transferee == null) {
             transferee = Transferee.getDefault(activity);
         }
-        imageDouble = newBarImageList.get(position);
-        String time = MyDateClass.showNowDate();
+        String imageDouble = newBarImageList.get(position);
         Glide.with(MyApplication.getContext())
                 .load(imageDouble)
                 .centerCrop()
-                .override(288,288)
+                .override(288, 288)
                 .into(holder.mImageItemView);
 
         holder.mImageItemView.setOnClickListener(new View.OnClickListener() {
@@ -100,16 +95,16 @@ public class NewBarImageAdapter extends RecyclerView.Adapter<NewBarImageAdapter.
         });
     }
 
-    public void destroyTransFeree(){
+    public void destroyTransFeree() {
         transferee.destroy();
     }
 
     @Override
     public int getItemCount() {
-        return newBarImageList.size();
+        return newBarImageList == null ? 0 : newBarImageList.size();
     }
 
-    public interface RemoveImg{
+    public interface RemoveImg {
         void removeImg(int option);
     }
 }

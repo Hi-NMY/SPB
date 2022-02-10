@@ -28,15 +28,15 @@ import java.io.IOException;
 
 public class VideoTool {
 
-    private static Activity activity;
-    private static Context context;
-    private StandardGSYVideoPlayer mDetailPlayer;
+    private final Activity activity;
+    private final Context context;
+    private final StandardGSYVideoPlayer mDetailPlayer;
     private boolean isPlay = false;
     private boolean isPause = false;
     private OrientationUtils orientationUtils;
     private static String cacheVideoImage = "";
     private static Bitmap bitmap;
-    private ImageView imageView;
+    private final ImageView imageView;
     private String videoPath;
     private int videoKey = 0;
 
@@ -170,10 +170,8 @@ public class VideoTool {
             stream.flush();
             stream.close();
             cacheVideoImage = cacheVideoImage + "cacheVideoImage.png";
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | IOException e) {
             e.printStackTrace();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
         } finally {
             retriever.release();
         }
@@ -205,11 +203,9 @@ public class VideoTool {
             orientationUtils.backToProtVideo();
         }
         try {
-            if (GSYVideoManager.backFromWindowFull(context)) {
-                return;
-            }
+            GSYVideoManager.backFromWindowFull(context);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 

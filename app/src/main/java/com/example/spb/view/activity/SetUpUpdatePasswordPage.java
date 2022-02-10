@@ -178,7 +178,6 @@ public class SetUpUpdatePasswordPage extends BaseMVPActivity<ISetUpUpdatePasswor
                                 @Override
                                 public void run() {
                                     closeDialog(0);
-                                    MyToastClass.ShowToast(MyApplication.getContext(),"密码修改成功");
                                     finish();
                                 }
                             });

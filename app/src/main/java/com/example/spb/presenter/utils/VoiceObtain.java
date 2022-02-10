@@ -14,8 +14,6 @@ import java.util.Locale;
 public class VoiceObtain {
     private MediaRecorder mediaRecorder;
     private static String filePath;
-    private static String fileName;
-    private static String n;
 
     public VoiceObtain(MediaRecorder m) {
         this.mediaRecorder = m;
@@ -29,7 +27,7 @@ public class VoiceObtain {
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
             //设置编码
             mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-            fileName = DateFormat.format("yyyyMMdd_HHmmss", Calendar.getInstance(Locale.CHINA)) + ".m4a";
+            String fileName = DateFormat.format("yyyyMMdd_HHmmss", Calendar.getInstance(Locale.CHINA)) + ".m4a";
             String audioSaveDir = isExisDir("mygoodvoice") + fileName;
             if (!FileUtils.isExternalStorageDocument(Uri.parse(FileUtils.getCreateFileName(audioSaveDir)))) {
                 FileUtils.rename(audioSaveDir);
@@ -47,7 +45,7 @@ public class VoiceObtain {
     }
 
     public String stopVoice() {
-        n = filePath;
+        String n = filePath;
         try {
             mediaRecorder.stop();
             mediaRecorder.release();
@@ -73,7 +71,6 @@ public class VoiceObtain {
             downloadFile.createNewFile();
         }
 
-        String savePath = downloadFile.getAbsolutePath();
-        return savePath;
+        return downloadFile.getAbsolutePath();
     }
 }

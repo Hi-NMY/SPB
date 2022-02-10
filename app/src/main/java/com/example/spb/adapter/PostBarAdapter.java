@@ -18,8 +18,8 @@ import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.entity.Bar;
 import com.example.spb.entity.Topic;
-import com.example.spb.presenter.utils.*;
 import com.example.spb.presenter.otherimpl.DataLikePresenter;
+import com.example.spb.presenter.utils.*;
 import com.example.spb.view.Component.BarMoreOperateDialog;
 import com.example.spb.view.Component.ThumbAnima;
 import com.example.spb.view.activity.PersonalSpacePage;
@@ -41,18 +41,15 @@ import java.util.Map;
 
 public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHolder> {
 
-    private Activity activity;
-    private BaseMVPActivity baseMVPActivity;
-    private List<Bar> bars;
+    private final Activity activity;
+    private final BaseMVPActivity baseMVPActivity;
+    private final List<Bar> bars;
     private Bar bar;
-    private LayoutInflater layoutInflater;
-    private GridLayoutManager gridLayoutManager;
-    private PostBarImgAdapter postBarImgAdapter;
+    private final LayoutInflater layoutInflater;
     private String cacheKey = "";
-    private BarMoreOperateDialog barMoreOperateDialog;
     private int cachePosition = -1;
-    private String commentIDKey = "";
-    private Map<Integer,String> timeMap;
+    private String commentIdKey = "";
+    private final Map<Integer, String> timeMap;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView mItemPostbarUserHeadimg;
@@ -70,30 +67,30 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
         RelativeLayout mItemPostbarCommentR;
         TextView mItemPostbarLikeNum;
         RelativeLayout mItemPostbarLikeR;
-        RelativeLayout mItemPostbarRA;
+        RelativeLayout mItemPostbarRa;
         ImageView mItemPostbarLikeImg;
         ImageView mItemPostbarUserbadge;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mItemPostbarUserHeadimg = (RoundedImageView) itemView.findViewById(R.id.item_postbar_user_headimg);
-            mItemPostbarUsername = (TextView) itemView.findViewById(R.id.item_postbar_username);
-            mItemPostbarPostdate = (TextView) itemView.findViewById(R.id.item_postbar_postdate);
-            mItemPostbarMore = (ImageView) itemView.findViewById(R.id.item_postbar_more);
-            mItemPostbarImagelist = (RecyclerView) itemView.findViewById(R.id.item_postbar_imagelist);
-            mItemPostbarTxt = (TextView) itemView.findViewById(R.id.item_postbar_txt);
-            mVoiceGif = (GifImageView) itemView.findViewById(R.id.voice_gif);
-            mVoiceTime = (TextView) itemView.findViewById(R.id.voice_time);
-            mItemPostbarVoice = (RelativeLayout) itemView.findViewById(R.id.item_postbar_voice);
-            mItemPostbarTopic = (TagFlowLayout) itemView.findViewById(R.id.item_postbar_topic);
-            mItemPostbarLocation = (TextView) itemView.findViewById(R.id.item_postbar_location);
-            mItemPostbarCommentNum = (TextView) itemView.findViewById(R.id.item_postbar_comment_num);
-            mItemPostbarCommentR = (RelativeLayout) itemView.findViewById(R.id.item_postbar_comment_R);
-            mItemPostbarLikeNum = (TextView) itemView.findViewById(R.id.item_postbar_like_num);
-            mItemPostbarLikeR = (RelativeLayout) itemView.findViewById(R.id.item_postbar_like_R);
-            mItemPostbarRA = (RelativeLayout) itemView.findViewById(R.id.item_postbar_RA);
-            mItemPostbarLikeImg = (ImageView) itemView.findViewById(R.id.item_postbar_like_img);
-            mItemPostbarUserbadge = (ImageView) itemView.findViewById(R.id.item_postbar_userbadge);
+            mItemPostbarUserHeadimg = itemView.findViewById(R.id.item_postbar_user_headimg);
+            mItemPostbarUsername = itemView.findViewById(R.id.item_postbar_username);
+            mItemPostbarPostdate = itemView.findViewById(R.id.item_postbar_postdate);
+            mItemPostbarMore = itemView.findViewById(R.id.item_postbar_more);
+            mItemPostbarImagelist = itemView.findViewById(R.id.item_postbar_imagelist);
+            mItemPostbarTxt = itemView.findViewById(R.id.item_postbar_txt);
+            mVoiceGif = itemView.findViewById(R.id.voice_gif);
+            mVoiceTime = itemView.findViewById(R.id.voice_time);
+            mItemPostbarVoice = itemView.findViewById(R.id.item_postbar_voice);
+            mItemPostbarTopic = itemView.findViewById(R.id.item_postbar_topic);
+            mItemPostbarLocation = itemView.findViewById(R.id.item_postbar_location);
+            mItemPostbarCommentNum = itemView.findViewById(R.id.item_postbar_comment_num);
+            mItemPostbarCommentR = itemView.findViewById(R.id.item_postbar_comment_R);
+            mItemPostbarLikeNum = itemView.findViewById(R.id.item_postbar_like_num);
+            mItemPostbarLikeR = itemView.findViewById(R.id.item_postbar_like_R);
+            mItemPostbarRa = itemView.findViewById(R.id.item_postbar_RA);
+            mItemPostbarLikeImg = itemView.findViewById(R.id.item_postbar_like_img);
+            mItemPostbarUserbadge = itemView.findViewById(R.id.item_postbar_userbadge);
         }
     }
 
@@ -123,7 +120,7 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
     }
 
     public void refreshCommentItem(int num) {
-        Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(commentIDKey)).findAny().orElse(null);
+        Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(commentIdKey)).findAny().orElse(null);
         if (cachebar != null) {
             int a = bars.indexOf(cachebar);
             if (a != -1) {
@@ -134,7 +131,7 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
     }
 
     public void refreshNowCommentItem(int num) {
-        Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(commentIDKey)).findAny().orElse(null);
+        Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(commentIdKey)).findAny().orElse(null);
         if (cachebar != null) {
             int a = bars.indexOf(cachebar);
             if (a != -1) {
@@ -158,17 +155,17 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
         }
     }
 
-    public void refreshVoiceTime(int position,String time){
-        timeMap.put(position,time);
+    public void refreshVoiceTime(int position, String time) {
+        timeMap.put(position, time);
         notifyItemChanged(position);
     }
 
     public void refreshNoewVoice(int position) {
         if (position == -1) {
             notifyItemChanged(cachePosition);
-        }else if (cachePosition == position){
+        } else if (cachePosition == position) {
             notifyItemChanged(position);
-        }else {
+        } else {
             notifyItemChanged(cachePosition);
             notifyItemChanged(position);
         }
@@ -178,14 +175,16 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post_bar_list, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         bar = bars.get(position);
         holder.mItemPostbarUsername.setText(bar.getUser_name());
+        holder.mItemPostbarTxt.setVisibility(View.VISIBLE);
+        holder.mItemPostbarTxt.setText(bar.getPb_article());
+        holder.mItemPostbarPostdate.setText(MyDateClass.showDateClass(bar.getPb_date()));
 
         if (holder.mItemPostbarUserHeadimg.getTag() == null || !holder.mItemPostbarUserHeadimg.getTag().equals(cacheKey)) {
             Glide.with(activity)
@@ -195,11 +194,11 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
             holder.mItemPostbarUserHeadimg.setTag(cacheKey);
         }
 
-        if (bar.getUser_badge() == null || bar.getUser_badge().equals("")){
+        if (DataVerificationTool.isEmpty(bar.getUser_badge())) {
             holder.mItemPostbarUserbadge.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             holder.mItemPostbarUserbadge.setVisibility(View.VISIBLE);
-            if (holder.mItemPostbarUserbadge.getTag() == null || !holder.mItemPostbarUserbadge.getTag().equals(cacheKey)){
+            if (holder.mItemPostbarUserbadge.getTag() == null || !holder.mItemPostbarUserbadge.getTag().equals(cacheKey)) {
                 //显示徽章！
                 Glide.with(activity)
                         .load(InValues.send(R.string.prefix_badge_img) + bar.getUser_badge())
@@ -210,13 +209,7 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
             }
         }
 
-        if (bar.getPb_article() != null && !bar.getPb_article().equals("")) {
-            holder.mItemPostbarTxt.setVisibility(View.VISIBLE);
-            holder.mItemPostbarTxt.setText(bar.getPb_article());
-        }
-        holder.mItemPostbarPostdate.setText(MyDateClass.showDateClass(bar.getPb_date()));
-
-        if (bar.getPb_location() != null && !bar.getPb_location().equals("")) {
+        if (!DataVerificationTool.isEmpty(bar.getPb_location())) {
             holder.mItemPostbarLocation.setVisibility(View.VISIBLE);
             holder.mItemPostbarLocation.setText(bar.getPb_location());
         }
@@ -239,14 +232,14 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
             holder.mItemPostbarLikeImg.setBackground(MyApplication.getContext().getDrawable(R.drawable.icon_likeal));
         }
 
-        holder.mItemPostbarRA.setOnClickListener(new View.OnClickListener() {
+        holder.mItemPostbarRa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //直接跳转动态详细
                 JumpIntent.startMsgIntent(PostBarDetailPage.class, new JumpIntent.SetMsg() {
                     @Override
                     public void setMessage(Intent intent) {
-                        commentIDKey = bars.get(position).getPb_one_id();
+                        commentIdKey = bars.get(position).getPb_one_id();
                         intent.putExtra(InValues.send(R.string.intent_Bar), bars.get(position));
                     }
                 });
@@ -270,20 +263,7 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 //显示dialog更多功能
-                barMoreOperateDialog = new BarMoreOperateDialog(activity);
-                barMoreOperateDialog.setData(baseMVPActivity.getDataFollowPresenter().determineFollow(bars.get(position).getUser_account()),
-                        baseMVPActivity.getDataCollectBarPresenter().determineCollect(bars.get(position).getPb_one_id()),
-                        bars.get(position).getPb_one_id(), bars.get(position).getUser_account(), bars.get(position).getUser_name());
-                if (!bars.get(position).getUser_account().equals(baseMVPActivity.getDataUserMsgPresenter().getUser_account())) {
-                    barMoreOperateDialog.funChat();
-                    barMoreOperateDialog.funCollect();
-                    barMoreOperateDialog.funFOllow();
-                    barMoreOperateDialog.funReport();
-                } else {
-                    barMoreOperateDialog.funCollect();
-                    barMoreOperateDialog.funReport();
-                }
-                barMoreOperateDialog.showMyDialog();
+                setBarMoreOperateDialog(position);
             }
         });
 
@@ -294,7 +274,7 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
                 JumpIntent.startMsgIntent(PostBarDetailPage.class, new JumpIntent.SetMsg() {
                     @Override
                     public void setMessage(Intent intent) {
-                        commentIDKey = bars.get(position).getPb_one_id();
+                        commentIdKey = bars.get(position).getPb_one_id();
                         intent.putExtra(InValues.send(R.string.intent_Bar), bars.get(position));
                         intent.putExtra(InValues.send(R.string.intent_keyboard_start), true);
                     }
@@ -323,13 +303,13 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
             }
         });
 
-        if (bar.getPb_topic() != null && !bar.getPb_topic().equals("") && !bar.getPb_topic().equals("null")) {
+        if (!DataVerificationTool.isEmpty(bar.getPb_topic())) {
             holder.mItemPostbarTopic.setAdapter(new TagAdapter<Topic>(MyResolve.InTopic(bar.getPb_topic())) {
                 @Override
                 public View getView(FlowLayout parent, int position, Topic o) {
                     View view = layoutInflater.inflate(R.layout.item_tag_two, holder.mItemPostbarTopic, false);
-                    TextView textView = (TextView) view.findViewById(R.id.text);
-                    ImageView imageView = (ImageView) view.findViewById(R.id.delete_tag);
+                    TextView textView = view.findViewById(R.id.text);
+                    ImageView imageView = view.findViewById(R.id.delete_tag);
                     imageView.setVisibility(View.GONE);
                     textView.setText(o.getTopic_name());
                     textView.setOnClickListener(new View.OnClickListener() {
@@ -350,27 +330,27 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
             });
         }
 
-        if (bar.getPb_image_url() != null && !bar.getPb_image_url().equals("")) {
+        if (!DataVerificationTool.isEmpty(bar.getPb_image_url())) {
             holder.mItemPostbarImagelist.setVisibility(View.VISIBLE);
-            gridLayoutManager = BarImageInFlater.getInflater(activity, bar.getPb_image_url());
+            GridLayoutManager gridLayoutManager = BarImageInFlater.getInflater(activity, bar.getPb_image_url());
             holder.mItemPostbarImagelist.setLayoutManager(gridLayoutManager);
-            postBarImgAdapter = new PostBarImgAdapter(activity, MyResolve.InDoubleImage(bar.getPb_image_url()));
+            PostBarImgAdapter postBarImgAdapter = new PostBarImgAdapter(activity, MyResolve.InDoubleImage(bar.getPb_image_url()));
             holder.mItemPostbarImagelist.setAdapter(postBarImgAdapter);
         }
 
-        if (bar.getPb_voice() != null && !bar.getPb_voice().equals("")) {
+        if (!DataVerificationTool.isEmpty(bar.getPb_voice())) {
             holder.mItemPostbarVoice.setVisibility(View.VISIBLE);
             GIFShow gifShow = new GIFShow(holder.mVoiceGif);
-            if (timeMap.containsKey(position)){
+            if (timeMap.containsKey(position)) {
                 holder.mVoiceTime.setText(timeMap.get(position));
-            }else {
+            } else {
                 EasyVoice.getVoiceTime(InValues.send(R.string.httpHeadert) + bar.getPb_voice(), position, new EasyVoice.TimeReturn() {
                     @Override
                     public void onReturn(int time, int position) {
                         baseMVPActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                refreshVoiceTime(position,String.valueOf(time));
+                                refreshVoiceTime(position, String.valueOf(time));
                             }
                         });
                     }
@@ -379,18 +359,18 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
             holder.mItemPostbarVoice.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (baseMVPActivity.getEasyVoice() == null || position != cachePosition) {
-                        if (baseMVPActivity.getEasyVoice() != null) {
-                            baseMVPActivity.getEasyVoice().stopPlayer();
+                    if (BaseMVPActivity.getEasyVoice() == null || position != cachePosition) {
+                        if (BaseMVPActivity.getEasyVoice() != null) {
+                            BaseMVPActivity.getEasyVoice().stopPlayer();
                         }
                         baseMVPActivity.toVoice(bars.get(position).getPb_voice(), holder.mVoiceTime, gifShow);
                         cachePosition = position;
-                        baseMVPActivity.getEasyVoice().startPlayer();
-                    }else {
-                        if (baseMVPActivity.getEasyVoice().isVoicePlayerKey()){
-                            baseMVPActivity.getEasyVoice().startPlayer();
-                        }else {
-                            baseMVPActivity.getEasyVoice().stopPlayer();
+                        BaseMVPActivity.getEasyVoice().startPlayer();
+                    } else {
+                        if (BaseMVPActivity.getEasyVoice().isVoicePlayerKey()) {
+                            BaseMVPActivity.getEasyVoice().startPlayer();
+                        } else {
+                            BaseMVPActivity.getEasyVoice().stopPlayer();
                         }
                     }
                     refreshNoewVoice(position);
@@ -401,12 +381,24 @@ public class PostBarAdapter extends RecyclerView.Adapter<PostBarAdapter.ViewHold
         }
     }
 
+    private void setBarMoreOperateDialog(int position) {
+        BarMoreOperateDialog barMoreOperateDialog = new BarMoreOperateDialog(activity);
+        barMoreOperateDialog.setData(baseMVPActivity.getDataFollowPresenter().determineFollow(bars.get(position).getUser_account()),
+                baseMVPActivity.getDataCollectBarPresenter().determineCollect(bars.get(position).getPb_one_id()),
+                bars.get(position).getPb_one_id(), bars.get(position).getUser_account(), bars.get(position).getUser_name());
+        if (!bars.get(position).getUser_account().equals(baseMVPActivity.getDataUserMsgPresenter().getUser_account())) {
+            barMoreOperateDialog.funChat();
+            barMoreOperateDialog.funCollect();
+            barMoreOperateDialog.funFOllow();
+        } else {
+            barMoreOperateDialog.funCollect();
+        }
+        barMoreOperateDialog.funReport();
+        barMoreOperateDialog.showMyDialog();
+    }
+
     @Override
     public int getItemCount() {
-        if (bars == null) {
-            return 0;
-        } else {
-            return bars.size();
-        }
+        return bars == null ? 0 : bars.size();
     }
 }

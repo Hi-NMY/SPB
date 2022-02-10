@@ -31,10 +31,10 @@ public class TopicBarPageAPresenterImpl extends BasePresenter<ITopicBarPageAView
     public boolean attentionKey = false;
     private final TopicModel topicModel;
     private final PostBarModel barModel;
-    private String topiCName;
+    private String topicName;
 
-    public void setTopiCName(String topiCName) {
-        this.topiCName = topiCName;
+    public void setTopicName(String topicName) {
+        this.topicName = topicName;
     }
 
     public TopicBarPageAPresenterImpl() {
@@ -52,8 +52,8 @@ public class TopicBarPageAPresenterImpl extends BasePresenter<ITopicBarPageAView
         return String.valueOf(stringBuffer);
     }
 
-    public Topic addAttentionAccount(String user_account, Topic topic) {
-        topic.setTopic_slogan(user_account);
+    public Topic addAttentionAccount(String userAccount, Topic topic) {
+        topic.setTopic_slogan(userAccount);
         return topic;
     }
 
@@ -94,7 +94,7 @@ public class TopicBarPageAPresenterImpl extends BasePresenter<ITopicBarPageAView
                         List<Bar> b = requestListJson.getDataList();
                         if (b != null && b.size() != 0) {
                             SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_hottopicbar)
-                                    , 0, topiCName, (Serializable) b);
+                                    , 0, topicName, (Serializable) b);
                         }
                         if (stopRefresh != null) {
                             stopRefresh.stop();
@@ -119,7 +119,7 @@ public class TopicBarPageAPresenterImpl extends BasePresenter<ITopicBarPageAView
                         List<Bar> b = requestListJson.getDataList();
                         if (b != null && b.size() != 0) {
                             SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_newtopicbar)
-                                    , 0, topiCName, (Serializable) b);
+                                    , 0, topicName, (Serializable) b);
                         }
                         if (stopRefresh != null) {
                             stopRefresh.stop();
@@ -144,7 +144,7 @@ public class TopicBarPageAPresenterImpl extends BasePresenter<ITopicBarPageAView
                         List<Bar> b = requestListJson.getDataList();
                         if (b != null && b.size() != 0) {
                             SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_newtopicvideo)
-                                    , 0, topiCName, (Serializable) b);
+                                    , 0, topicName, (Serializable) b);
                         }
                         if (stopRefresh != null) {
                             stopRefresh.stop();

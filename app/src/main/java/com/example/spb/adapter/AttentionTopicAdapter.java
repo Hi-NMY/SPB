@@ -26,10 +26,8 @@ import java.util.List;
 
 public class AttentionTopicAdapter extends RecyclerView.Adapter<AttentionTopicAdapter.ViewHolder> {
 
-    private View view;
-    private Activity activity;
-    private List<Topic> attTopics;
-    private Topic topic;
+    private final Activity activity;
+    private final List<Topic> attTopics;
     private ComponentDialog componentDialog;
     private Button mButtonRight;
     private Button mButtonClose;
@@ -39,34 +37,34 @@ public class AttentionTopicAdapter extends RecyclerView.Adapter<AttentionTopicAd
         RoundedImageView mItemAtttopicListHeadimg;
         TextView mItemAtttopicListTitle;
         RelativeLayout mItemAtttopicListR;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mItemAtttopicListHeadimg = (RoundedImageView) itemView.findViewById(R.id.item_atttopic_list_headimg);
-            mItemAtttopicListTitle = (TextView) itemView.findViewById(R.id.item_atttopic_list_title);
-            mItemAtttopicListR = (RelativeLayout) itemView.findViewById(R.id.item_atttopic_list_R);
+            mItemAtttopicListHeadimg = itemView.findViewById(R.id.item_atttopic_list_headimg);
+            mItemAtttopicListTitle = itemView.findViewById(R.id.item_atttopic_list_title);
+            mItemAtttopicListR = itemView.findViewById(R.id.item_atttopic_list_R);
         }
     }
 
-    public AttentionTopicAdapter(Activity activity,List<Topic> attTopics) {
+    public AttentionTopicAdapter(Activity activity, List<Topic> attTopics) {
         this.activity = activity;
         this.attTopics = attTopics;
     }
 
-    public void refreshA(){
+    public void refreshA() {
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_attention_topic_list, null);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_attention_topic_list, null);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        topic = attTopics.get(position);
+        Topic topic = attTopics.get(position);
         holder.mItemAtttopicListTitle.setText(topic.getTopic_name());
         Glide.with(activity)
                 .load(InValues.send(R.string.httpHeadert) + topic.getTopic_image())
@@ -77,9 +75,9 @@ public class AttentionTopicAdapter extends RecyclerView.Adapter<AttentionTopicAd
                 componentDialog = new ComponentDialog(activity, R.layout.dialog_longclick_view, new ComponentDialog.InitDialog() {
                     @Override
                     public void initView(View view) {
-                        mButtonClose = (Button)view.findViewById(R.id.button_close);
-                        mButtonRight = (Button)view.findViewById(R.id.button_right);
-                        mTopicName = (TextView)view.findViewById(R.id.topic_name);
+                        mButtonClose = (Button) view.findViewById(R.id.button_close);
+                        mButtonRight = (Button) view.findViewById(R.id.button_right);
+                        mTopicName = (TextView) view.findViewById(R.id.topic_name);
                     }
 
                     @Override
@@ -98,7 +96,7 @@ public class AttentionTopicAdapter extends RecyclerView.Adapter<AttentionTopicAd
                         mButtonRight.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_reAttTopic),0,attTopics.get(position));
+                                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_reAttTopic), 0, attTopics.get(position));
                                 componentDialog.closeMyDialog();
                             }
                         });
@@ -115,11 +113,11 @@ public class AttentionTopicAdapter extends RecyclerView.Adapter<AttentionTopicAd
                     JumpIntent.startMsgIntent(TopicBarPage.class, new JumpIntent.SetMsg() {
                         @Override
                         public void setMessage(Intent intent) {
-                            intent.putExtra(InValues.send(R.string.intent_Topic),attTopics.get(position));
+                            intent.putExtra(InValues.send(R.string.intent_Topic), attTopics.get(position));
                         }
                     });
-                }catch (Exception e){
-                    MyToastClass.ShowToast(MyApplication.getContext(),"话题已不存在，请刷新重试");
+                } catch (Exception e) {
+                    MyToastClass.ShowToast(MyApplication.getContext(), "话题已不存在，请刷新重试");
                 }
             }
         });
@@ -127,6 +125,6 @@ public class AttentionTopicAdapter extends RecyclerView.Adapter<AttentionTopicAd
 
     @Override
     public int getItemCount() {
-        return attTopics.size();
+        return attTopics == null ? 0 : attTopics.size();
     }
 }

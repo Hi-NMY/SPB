@@ -33,9 +33,8 @@ public class SetUpUpdatePasswordPageAPresenterImpl extends BasePresenter<ISetUpU
                 String value = DataVerificationTool.isEmpty(response);
                 if (value != null) {
                     RequestCode requestCode = new Gson().fromJson(value, RequestCode.class);
-                    if (ResponseToast.toToast(requestCode)) {
-                        onReturn.onReturn();
-                    }
+                    ResponseToast.toToast(requestCode);
+                    onReturn.onReturn();
                 }
             }
 

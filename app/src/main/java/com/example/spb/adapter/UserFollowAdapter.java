@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.MediaStoreSignature;
 import com.example.spb.R;
 import com.example.spb.entity.Dto.UserDto;
+import com.example.spb.presenter.utils.DataVerificationTool;
 import com.example.spb.presenter.utils.InValues;
 import com.example.spb.presenter.utils.MyDateClass;
 import com.example.spb.view.Component.ComponentDialog;
@@ -28,9 +29,8 @@ import java.util.List;
 public class UserFollowAdapter extends RecyclerView.Adapter<UserFollowAdapter.ViewHolder> {
 
     private List<UserDto> userDtos;
-    private UserDto userDto;
-    private AttentionUserPage attentionUserPage;
-    private Activity activity;
+    private final AttentionUserPage attentionUserPage;
+    private final Activity activity;
     private String cacheKey;
     private ComponentDialog componentDialog;
     private Button mButtonRight;
@@ -43,13 +43,14 @@ public class UserFollowAdapter extends RecyclerView.Adapter<UserFollowAdapter.Vi
         ImageView mItemUserFollowUsersex;
         ImageView mItemUserFollowUserbadge;
         RelativeLayout mItemUserFollowR;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mItemUserFollowHeadimg = (RoundedImageView) itemView.findViewById(R.id.item_user_follow_headimg);
-            mItemUserFollowTitle = (TextView)itemView.findViewById(R.id.item_user_follow_title);
-            mItemUserFollowUsersex = (ImageView)itemView.findViewById(R.id.item_user_follow_usersex);
-            mItemUserFollowUserbadge = (ImageView)itemView.findViewById(R.id.item_user_follow_userbadge);
-            mItemUserFollowR = (RelativeLayout)itemView.findViewById(R.id.item_user_follow_R);
+            mItemUserFollowHeadimg = itemView.findViewById(R.id.item_user_follow_headimg);
+            mItemUserFollowTitle = itemView.findViewById(R.id.item_user_follow_title);
+            mItemUserFollowUsersex = itemView.findViewById(R.id.item_user_follow_usersex);
+            mItemUserFollowUserbadge = itemView.findViewById(R.id.item_user_follow_userbadge);
+            mItemUserFollowR = itemView.findViewById(R.id.item_user_follow_R);
         }
     }
 
@@ -60,7 +61,7 @@ public class UserFollowAdapter extends RecyclerView.Adapter<UserFollowAdapter.Vi
         cacheKey = MyDateClass.showNowDate();
     }
 
-    public void setNewList(List<UserDto> userDtos){
+    public void setNewList(List<UserDto> userDtos) {
         this.userDtos = userDtos;
         cacheKey = MyDateClass.showNowDate();
         notifyDataSetChanged();
@@ -70,25 +71,24 @@ public class UserFollowAdapter extends RecyclerView.Adapter<UserFollowAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user_follow_list, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        userDto = userDtos.get(position);
+        UserDto userDto = userDtos.get(position);
         holder.mItemUserFollowTitle.setText(userDto.getUser_name());
-        if(holder.mItemUserFollowHeadimg.getTag() == null || !holder.mItemUserFollowHeadimg.getTag().equals(cacheKey)){
+        if (holder.mItemUserFollowHeadimg.getTag() == null || !holder.mItemUserFollowHeadimg.getTag().equals(cacheKey)) {
             Glide.with(activity)
                     .load(InValues.send(R.string.prefix_img) + userDto.getUser_account() + InValues.send(R.string.suffix_head_img))
-                    .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()),1,1))
+                    .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                     .into(holder.mItemUserFollowHeadimg);
             holder.mItemUserFollowHeadimg.setTag(cacheKey);
         }
 
-        if (userDto.getUser_badge() == null || userDto.getUser_badge().equals("")){
+        if (DataVerificationTool.isEmpty(userDto.getUser_badge())) {
             holder.mItemUserFollowUserbadge.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             holder.mItemUserFollowUserbadge.setVisibility(View.VISIBLE);
             //写入徽章
             Glide.with(activity)
@@ -98,7 +98,7 @@ public class UserFollowAdapter extends RecyclerView.Adapter<UserFollowAdapter.Vi
                     .into(holder.mItemUserFollowUserbadge);
         }
 
-        if (userDto.getStu_sex() != null && userDto.getStu_sex().equals("男")) {
+        if (userDto.getStu_sex() != null && "男".equals(userDto.getStu_sex())) {
             holder.mItemUserFollowUsersex.setImageResource(R.drawable.icon_boy);
         } else {
             holder.mItemUserFollowUsersex.setImageResource(R.drawable.icon_girl);
@@ -118,40 +118,44 @@ public class UserFollowAdapter extends RecyclerView.Adapter<UserFollowAdapter.Vi
         holder.mItemUserFollowR.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                componentDialog = new ComponentDialog(activity, R.layout.dialog_longclick_view, new ComponentDialog.InitDialog() {
-                    @Override
-                    public void initView(View view) {
-                        mButtonClose = (Button)view.findViewById(R.id.button_close);
-                        mButtonRight = (Button)view.findViewById(R.id.button_right);
-                        mTopicName = (TextView)view.findViewById(R.id.topic_name);
-                    }
-
-                    @Override
-                    public void initData() {
-                        mTopicName.setText(userDtos.get(position).getUser_name());
-                    }
-
-                    @Override
-                    public void initListener() {
-                        mButtonClose.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                componentDialog.closeMyDialog();
-                            }
-                        });
-                        mButtonRight.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                attentionUserPage.getDataFollowPresenter().removeFollow(userDtos.get(position).getUser_account());
-                                componentDialog.closeMyDialog();
-                            }
-                        });
-                    }
-                });
-                componentDialog.showMyDialog();
+                setComponentDialog(position);
                 return true;
             }
         });
+    }
+
+    private void setComponentDialog(int position) {
+        componentDialog = new ComponentDialog(activity, R.layout.dialog_longclick_view, new ComponentDialog.InitDialog() {
+            @Override
+            public void initView(View view) {
+                mButtonClose = view.findViewById(R.id.button_close);
+                mButtonRight = view.findViewById(R.id.button_right);
+                mTopicName = view.findViewById(R.id.topic_name);
+            }
+
+            @Override
+            public void initData() {
+                mTopicName.setText(userDtos.get(position).getUser_name());
+            }
+
+            @Override
+            public void initListener() {
+                mButtonClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        componentDialog.closeMyDialog();
+                    }
+                });
+                mButtonRight.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        attentionUserPage.getDataFollowPresenter().removeFollow(userDtos.get(position).getUser_account());
+                        componentDialog.closeMyDialog();
+                    }
+                });
+            }
+        });
+        componentDialog.showMyDialog();
     }
 
     @Override

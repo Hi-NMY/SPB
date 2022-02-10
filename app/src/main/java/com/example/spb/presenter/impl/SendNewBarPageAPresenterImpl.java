@@ -259,8 +259,9 @@ public class SendNewBarPageAPresenterImpl extends BasePresenter<ISendNewBarPageA
                             }
                         }
                     }
-                    if (((spbLocationServer == null || spbLocationServer.obtainListener().locationGpsList == null) && obtainInterval >= 2500)
-                            || spbLocationServer.obtainListener().locType == 62) {
+                    boolean a = ((spbLocationServer == null || spbLocationServer.obtainListener().locationGpsList == null) && obtainInterval >= 2500)
+                            || spbLocationServer.obtainListener().locType == 62;
+                    if (a) {
                         getView().response(null, SendNewBarPage.RESPONSE_EIGHT);
                     }
                 } catch (InterruptedException e) {

@@ -25,10 +25,9 @@ import java.util.List;
 
 public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.ViewHolder> {
 
-    private List<UserDto> userDtos;
-    private UserDto userDto;
-    private BaseMVPActivity activity;
-    private String cacheKey;
+    private final List<UserDto> userDtos;
+    private final BaseMVPActivity activity;
+    private final String cacheKey;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView mItemUserFollowHeadimg;
@@ -36,13 +35,14 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
         ImageView mItemUserFollowUsersex;
         ImageView mItemUserFollowUserbadge;
         RelativeLayout mItemUserFollowR;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mItemUserFollowHeadimg = (RoundedImageView) itemView.findViewById(R.id.item_user_follow_headimg);
-            mItemUserFollowTitle = (TextView)itemView.findViewById(R.id.item_user_follow_title);
-            mItemUserFollowUsersex = (ImageView)itemView.findViewById(R.id.item_user_follow_usersex);
-            mItemUserFollowUserbadge = (ImageView)itemView.findViewById(R.id.item_user_follow_userbadge);
-            mItemUserFollowR = (RelativeLayout)itemView.findViewById(R.id.item_user_follow_R);
+            mItemUserFollowHeadimg = itemView.findViewById(R.id.item_user_follow_headimg);
+            mItemUserFollowTitle = itemView.findViewById(R.id.item_user_follow_title);
+            mItemUserFollowUsersex = itemView.findViewById(R.id.item_user_follow_usersex);
+            mItemUserFollowUserbadge = itemView.findViewById(R.id.item_user_follow_userbadge);
+            mItemUserFollowR = itemView.findViewById(R.id.item_user_follow_R);
         }
     }
 
@@ -56,22 +56,21 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user_follow_list, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        userDto = userDtos.get(position);
+        UserDto userDto = userDtos.get(position);
         holder.mItemUserFollowTitle.setText(userDto.getUser_name());
-        if(holder.mItemUserFollowHeadimg.getTag() == null || !holder.mItemUserFollowHeadimg.getTag().equals(cacheKey)){
+        if (holder.mItemUserFollowHeadimg.getTag() == null || !holder.mItemUserFollowHeadimg.getTag().equals(cacheKey)) {
             Glide.with(activity)
-                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + userDto.getUser_account() + "/HeadImage/myHeadImage.png")
-                    .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()),1,1))
+                    .load(InValues.send(R.string.prefix_img) + userDto.getUser_account() + InValues.send(R.string.suffix_head_img))
+                    .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                     .into(holder.mItemUserFollowHeadimg);
             holder.mItemUserFollowHeadimg.setTag(cacheKey);
         }
-        if (userDto.getStu_sex() != null && userDto.getStu_sex().equals("男")) {
+        if (userDto.getStu_sex() != null && "男".equals(userDto.getStu_sex())) {
             holder.mItemUserFollowUsersex.setImageResource(R.drawable.icon_boy);
         } else {
             holder.mItemUserFollowUsersex.setImageResource(R.drawable.icon_girl);
@@ -92,6 +91,6 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return userDtos.size();
+        return userDtos == null ? 0 : userDtos.size();
     }
 }

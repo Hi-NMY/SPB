@@ -95,9 +95,8 @@ public class SignInBadgeFPresenterImpl extends BasePresenter<ISignInBadgeFView> 
             public void onSuccess(@NotNull Response response) {
                 String value = DataVerificationTool.isEmpty(response);
                 if (value != null) {
-                    RequestEntityJson<String> requestEntityJson = new Gson().fromJson(value, new TypeToken<RequestEntityJson<String>>() {
-                    }.getType());
-                    if (ResponseToast.toToast(requestEntityJson.getResultCode())) {
+                    RequestCode requestCode = new Gson().fromJson(value, RequestCode.class);
+                    if (ResponseToast.toToast(requestCode)) {
                         onReturn.onReturn(0);
                     }
                 }

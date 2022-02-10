@@ -22,8 +22,7 @@ public class DataEncryption {
             SecretKey sk = sf.generateSecret(dkey);
             Cipher c = Cipher.getInstance("DES");
             c.init(Cipher.ENCRYPT_MODE, sk, sr);
-            String e = new BASE64Encoder().encode(c.doFinal(s.getBytes()));
-            return e;
+            return new BASE64Encoder().encode(c.doFinal(s.getBytes()));
         } catch (Exception e) {
 
         }

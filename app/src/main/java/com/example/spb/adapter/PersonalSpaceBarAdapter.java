@@ -19,8 +19,8 @@ import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.entity.Bar;
 import com.example.spb.entity.Topic;
-import com.example.spb.presenter.utils.*;
 import com.example.spb.presenter.otherimpl.DataLikePresenter;
+import com.example.spb.presenter.utils.*;
 import com.example.spb.view.Component.BarMoreOperateDialog;
 import com.example.spb.view.Component.ThumbAnima;
 import com.example.spb.view.activity.PostBarDetailPage;
@@ -41,19 +41,15 @@ import java.util.Map;
 
 public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceBarAdapter.ViewHolder> {
 
-    private List<Bar> bars;
+    private final List<Bar> bars;
     private Bar bar;
-    private View view;
-    private Activity activity;
-    private LayoutInflater layoutInflater;
-    private GridLayoutManager gridLayoutManager;
-    private PostBarImgAdapter postBarImgAdapter;
-    private BaseMVPActivity baseMVPActivity;
-    private BarMoreOperateDialog barMoreOperateDialog;
+    private final Activity activity;
+    private final LayoutInflater layoutInflater;
+    private final BaseMVPActivity baseMVPActivity;
     private int cachePosition = -1;
     private EasyVoice e;
-    private String commentIDKey = "";
-    private Map<Integer,String> timeMap;
+    private String commentIdKey = "";
+    private final Map<Integer, String> timeMap;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView mItemUserspaceBarPostdate;
@@ -77,24 +73,24 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mItemUserspaceBarPostdate = (TextView) itemView.findViewById(R.id.item_userspace_bar_postdate);
-            mItemUserspaceBarMore = (ImageView) itemView.findViewById(R.id.item_userspace_bar_more);
-            mItemUserspaceBarImagelist = (RecyclerView) itemView.findViewById(R.id.item_userspace_bar_imagelist);
-            mItemUserspaceBarTxt = (TextView) itemView.findViewById(R.id.item_userspace_bar_txt);
-            mVoiceGif = (GifImageView) itemView.findViewById(R.id.voice_gif);
-            mVoiceTime = (TextView) itemView.findViewById(R.id.voice_time);
-            mItemUserspaceBarVoice = (RelativeLayout) itemView.findViewById(R.id.item_userspace_bar_voice);
-            mItemUserspaceBarTopic = (TagFlowLayout) itemView.findViewById(R.id.item_userspace_bar_topic);
-            mItemUserspaceBarLocation = (TextView) itemView.findViewById(R.id.item_userspace_bar_location);
-            mItemPostbarDiscussImg = (ImageView) itemView.findViewById(R.id.item_postbar_discuss_img);
-            mItemPostbarDiscussNum = (TextView) itemView.findViewById(R.id.item_postbar_discuss_num);
-            mItemPostbarDiscussR = (RelativeLayout) itemView.findViewById(R.id.item_postbar_discuss_R);
-            mItemPostbarLikeImg = (ImageView) itemView.findViewById(R.id.item_postbar_like_img);
-            mItemPostbarLikeNum = (TextView) itemView.findViewById(R.id.item_postbar_like_num);
-            mItemPostbarLikeR = (RelativeLayout) itemView.findViewById(R.id.item_postbar_like_R);
-            mItempostBarRa = (RelativeLayout) itemView.findViewById(R.id.item_postbar_RA);
-            mDetailPlayer = (StandardGSYVideoPlayer) itemView.findViewById(R.id.detail_player);
-            mVideoCard = (CardView)itemView.findViewById(R.id.video_card);
+            mItemUserspaceBarPostdate = itemView.findViewById(R.id.item_userspace_bar_postdate);
+            mItemUserspaceBarMore = itemView.findViewById(R.id.item_userspace_bar_more);
+            mItemUserspaceBarImagelist = itemView.findViewById(R.id.item_userspace_bar_imagelist);
+            mItemUserspaceBarTxt = itemView.findViewById(R.id.item_userspace_bar_txt);
+            mVoiceGif = itemView.findViewById(R.id.voice_gif);
+            mVoiceTime = itemView.findViewById(R.id.voice_time);
+            mItemUserspaceBarVoice = itemView.findViewById(R.id.item_userspace_bar_voice);
+            mItemUserspaceBarTopic = itemView.findViewById(R.id.item_userspace_bar_topic);
+            mItemUserspaceBarLocation = itemView.findViewById(R.id.item_userspace_bar_location);
+            mItemPostbarDiscussImg = itemView.findViewById(R.id.item_postbar_discuss_img);
+            mItemPostbarDiscussNum = itemView.findViewById(R.id.item_postbar_discuss_num);
+            mItemPostbarDiscussR = itemView.findViewById(R.id.item_postbar_discuss_R);
+            mItemPostbarLikeImg = itemView.findViewById(R.id.item_postbar_like_img);
+            mItemPostbarLikeNum = itemView.findViewById(R.id.item_postbar_like_num);
+            mItemPostbarLikeR = itemView.findViewById(R.id.item_postbar_like_R);
+            mItempostBarRa = itemView.findViewById(R.id.item_postbar_RA);
+            mDetailPlayer = itemView.findViewById(R.id.detail_player);
+            mVideoCard = itemView.findViewById(R.id.video_card);
         }
     }
 
@@ -124,7 +120,7 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
     }
 
     public void refreshCommentItem(int num) {
-        Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(commentIDKey)).findAny().orElse(null);
+        Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(commentIdKey)).findAny().orElse(null);
         if (cachebar != null) {
             int a = bars.indexOf(cachebar);
             if (a != -1) {
@@ -135,7 +131,7 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
     }
 
     public void refreshNowCommentItem(int num) {
-        Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(commentIDKey)).findAny().orElse(null);
+        Bar cachebar = bars.stream().filter(bars -> bars.getPb_one_id().equals(commentIdKey)).findAny().orElse(null);
         if (cachebar != null) {
             int a = bars.indexOf(cachebar);
             if (a != -1) {
@@ -157,7 +153,7 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
         }
     }
 
-    public void refreshBitmap(Bitmap bitmap, int position){
+    public void refreshBitmap(Bitmap bitmap, int position) {
         bars.get(position).setVideoBitmap(bitmap);
         new Handler().post(new Runnable() {
             @Override
@@ -167,49 +163,41 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
         });
     }
 
-    public void refreshVoiceTime(int position,String time){
-        timeMap.put(position,time);
+    public void refreshVoiceTime(int position, String time) {
+        timeMap.put(position, time);
         notifyItemChanged(position);
     }
 
     public void refreshNoewVoice(int position) {
         if (position == -1) {
             notifyItemChanged(cachePosition);
-        }else if (cachePosition == position){
+        } else if (cachePosition == position) {
             notifyItemChanged(position);
-        }else {
+        } else {
             notifyItemChanged(cachePosition);
             notifyItemChanged(position);
         }
     }
 
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_userspace_bar_list, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_userspace_bar_list, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         bar = bars.get(position);
-        if (bar.getPb_article() != null && !bar.getPb_article().equals("")) {
-            holder.mItemUserspaceBarTxt.setVisibility(View.VISIBLE);
-            holder.mItemUserspaceBarTxt.setText(bar.getPb_article());
-        } else {
-            holder.mItemUserspaceBarTxt.setVisibility(View.GONE);
-            holder.mItemUserspaceBarTxt.setText("");
-        }
+        holder.mItemUserspaceBarTxt.setVisibility(View.VISIBLE);
+        holder.mItemUserspaceBarTxt.setText(bar.getPb_article());
         holder.mItemUserspaceBarPostdate.setText(MyDateClass.showDateClass(bar.getPb_date()));
 
-        if (bar.getPb_location() != null && !bar.getPb_location().equals("")) {
+        if (!DataVerificationTool.isEmpty(bar.getPb_location())) {
             holder.mItemUserspaceBarLocation.setVisibility(View.VISIBLE);
             holder.mItemUserspaceBarLocation.setText(bar.getPb_location());
         } else {
             holder.mItemUserspaceBarLocation.setVisibility(View.GONE);
-            holder.mItemUserspaceBarLocation.setText("");
         }
 
         if (bar.getPb_comment_num() != 0) {
@@ -239,7 +227,7 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
                 JumpIntent.startMsgIntent(PostBarDetailPage.class, new JumpIntent.SetMsg() {
                     @Override
                     public void setMessage(Intent intent) {
-                        commentIDKey = bars.get(position).getPb_one_id();
+                        commentIdKey = bars.get(position).getPb_one_id();
                         bars.get(position).setVideoBitmap(null);
                         intent.putExtra(InValues.send(R.string.intent_Bar), bars.get(position));
                     }
@@ -250,21 +238,7 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
             @Override
             public void onClick(View v) {
                 //显示dialog更多功能
-                barMoreOperateDialog = new BarMoreOperateDialog(activity);
-                barMoreOperateDialog.setData(baseMVPActivity.getDataFollowPresenter().determineFollow(bars.get(position).getUser_account()),
-                        baseMVPActivity.getDataCollectBarPresenter().determineCollect(bars.get(position).getPb_one_id()),
-                        bars.get(position).getPb_one_id(), bars.get(position).getUser_account(), bars.get(position).getUser_name());
-                if (!bars.get(position).getUser_account().equals(baseMVPActivity.getDataUserMsgPresenter().getUser_account())) {
-                    barMoreOperateDialog.funChat();
-                    barMoreOperateDialog.funCollect();
-                    barMoreOperateDialog.funFOllow();
-                    barMoreOperateDialog.funReport();
-                } else {
-                    barMoreOperateDialog.funDeleteBar(null);
-                    barMoreOperateDialog.funCollect();
-                    barMoreOperateDialog.funReport();
-                }
-                barMoreOperateDialog.showMyDialog();
+                setBarMoreOperateDialog(position);
             }
         });
 
@@ -275,7 +249,7 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
                 JumpIntent.startMsgIntent(PostBarDetailPage.class, new JumpIntent.SetMsg() {
                     @Override
                     public void setMessage(Intent intent) {
-                        commentIDKey = bars.get(position).getPb_one_id();
+                        commentIdKey = bars.get(position).getPb_one_id();
                         bars.get(position).setVideoBitmap(null);
                         intent.putExtra(InValues.send(R.string.intent_Bar), bars.get(position));
                         intent.putExtra(InValues.send(R.string.intent_keyboard_start), true);
@@ -304,13 +278,13 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
             }
         });
 
-        if (bar.getPb_topic() != null && !bar.getPb_topic().equals("") && !bar.getPb_topic().equals("null")) {
+        if (!DataVerificationTool.isEmpty(bar.getPb_topic())) {
             holder.mItemUserspaceBarTopic.setAdapter(new TagAdapter<Topic>(MyResolve.InTopic(bar.getPb_topic())) {
                 @Override
                 public View getView(FlowLayout parent, int position, Topic o) {
                     View view = layoutInflater.inflate(R.layout.item_tag_two, holder.mItemUserspaceBarTopic, false);
-                    TextView textView = (TextView) view.findViewById(R.id.text);
-                    ImageView imageView = (ImageView) view.findViewById(R.id.delete_tag);
+                    TextView textView = view.findViewById(R.id.text);
+                    ImageView imageView = view.findViewById(R.id.delete_tag);
                     imageView.setVisibility(View.GONE);
                     textView.setText(o.getTopic_name());
                     textView.setOnClickListener(new View.OnClickListener() {
@@ -330,43 +304,43 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
             });
         }
 
-        if (bar.getPb_image_url() != null && !bar.getPb_image_url().equals("")) {
+        if (!DataVerificationTool.isEmpty(bar.getPb_image_url())) {
             holder.mItemUserspaceBarImagelist.setVisibility(View.VISIBLE);
-            gridLayoutManager = BarImageInFlater.getInflater(activity, bar.getPb_image_url());
+            GridLayoutManager gridLayoutManager = BarImageInFlater.getInflater(activity, bar.getPb_image_url());
             holder.mItemUserspaceBarImagelist.setLayoutManager(gridLayoutManager);
-            postBarImgAdapter = new PostBarImgAdapter(activity, MyResolve.InDoubleImage(bar.getPb_image_url()));
+            PostBarImgAdapter postBarImgAdapter = new PostBarImgAdapter(activity, MyResolve.InDoubleImage(bar.getPb_image_url()));
             holder.mItemUserspaceBarImagelist.setAdapter(postBarImgAdapter);
         } else {
             holder.mItemUserspaceBarImagelist.setVisibility(View.GONE);
         }
 
-        if (bar.getVideoBitmap() == null && bar.getPb_video() != null && !bar.getPb_video().equals("")){
+        if (bar.getVideoBitmap() == null && !DataVerificationTool.isEmpty(bar.getPb_video())) {
             holder.mVideoCard.setVisibility(View.VISIBLE);
             VideoTool.gethttpBitmap(MyApplication.getContext(), position
                     , InValues.send(R.string.httpHeadert) + bar.getPb_video(), new VideoTool.OnReturnBitmap() {
                         @Override
                         public void onReturn(Bitmap bitmap, int position) {
-                            refreshBitmap(bitmap,position);
+                            refreshBitmap(bitmap, position);
                         }
                     });
-        }else {
-            VideoTool videoTool = new VideoTool(baseMVPActivity,MyApplication.getContext(),holder.mDetailPlayer);
-            videoTool.creatVideo(InValues.send(R.string.httpHeadert) + bar.getPb_video(),bar.getVideoBitmap());
+        } else {
+            VideoTool videoTool = new VideoTool(baseMVPActivity, MyApplication.getContext(), holder.mDetailPlayer);
+            videoTool.creatVideo(InValues.send(R.string.httpHeadert) + bar.getPb_video(), bar.getVideoBitmap());
         }
 
-        if (bar.getPb_voice() != null && !bar.getPb_voice().equals("")) {
+        if (!DataVerificationTool.isEmpty(bar.getPb_voice())) {
             holder.mItemUserspaceBarVoice.setVisibility(View.VISIBLE);
             GIFShow gifShow = new GIFShow(holder.mVoiceGif);
-            if (timeMap.containsKey(position)){
+            if (timeMap.containsKey(position)) {
                 holder.mVoiceTime.setText(timeMap.get(position));
-            }else {
+            } else {
                 EasyVoice.getVoiceTime(InValues.send(R.string.httpHeadert) + bar.getPb_voice(), position, new EasyVoice.TimeReturn() {
                     @Override
                     public void onReturn(int time, int position) {
                         baseMVPActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                refreshVoiceTime(position,String.valueOf(time));
+                                refreshVoiceTime(position, String.valueOf(time));
                             }
                         });
                     }
@@ -375,18 +349,18 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
             holder.mItemUserspaceBarVoice.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (baseMVPActivity.getEasyVoice() == null || position != cachePosition) {
-                        if (baseMVPActivity.getEasyVoice() != null) {
-                            baseMVPActivity.getEasyVoice().stopPlayer();
+                    if (BaseMVPActivity.getEasyVoice() == null || position != cachePosition) {
+                        if (BaseMVPActivity.getEasyVoice() != null) {
+                            BaseMVPActivity.getEasyVoice().stopPlayer();
                         }
                         baseMVPActivity.toVoice(bars.get(position).getPb_voice(), holder.mVoiceTime, gifShow);
                         cachePosition = position;
-                        baseMVPActivity.getEasyVoice().startPlayer();
-                    }else {
-                        if (baseMVPActivity.getEasyVoice().isVoicePlayerKey()){
-                            baseMVPActivity.getEasyVoice().startPlayer();
-                        }else {
-                            baseMVPActivity.getEasyVoice().stopPlayer();
+                        BaseMVPActivity.getEasyVoice().startPlayer();
+                    } else {
+                        if (BaseMVPActivity.getEasyVoice().isVoicePlayerKey()) {
+                            BaseMVPActivity.getEasyVoice().startPlayer();
+                        } else {
+                            BaseMVPActivity.getEasyVoice().stopPlayer();
                         }
                     }
                     refreshNoewVoice(position);
@@ -398,8 +372,25 @@ public class PersonalSpaceBarAdapter extends RecyclerView.Adapter<PersonalSpaceB
 
     }
 
+    private void setBarMoreOperateDialog(int position) {
+        BarMoreOperateDialog barMoreOperateDialog = new BarMoreOperateDialog(activity);
+        barMoreOperateDialog.setData(baseMVPActivity.getDataFollowPresenter().determineFollow(bars.get(position).getUser_account()),
+                baseMVPActivity.getDataCollectBarPresenter().determineCollect(bars.get(position).getPb_one_id()),
+                bars.get(position).getPb_one_id(), bars.get(position).getUser_account(), bars.get(position).getUser_name());
+        if (!bars.get(position).getUser_account().equals(baseMVPActivity.getDataUserMsgPresenter().getUser_account())) {
+            barMoreOperateDialog.funChat();
+            barMoreOperateDialog.funCollect();
+            barMoreOperateDialog.funFOllow();
+        } else {
+            barMoreOperateDialog.funDeleteBar(null);
+            barMoreOperateDialog.funCollect();
+        }
+        barMoreOperateDialog.funReport();
+        barMoreOperateDialog.showMyDialog();
+    }
+
     @Override
     public int getItemCount() {
-        return bars.size();
+        return bars == null ? 0 : bars.size();
     }
 }

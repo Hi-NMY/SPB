@@ -5,7 +5,7 @@ import com.example.spb.R;
 
 public class ObtainUserShared {
 
-    private static SharedPreferences sharedPreferences;
+    private static final SharedPreferences sharedPreferences;
 
     static {
         sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_User));

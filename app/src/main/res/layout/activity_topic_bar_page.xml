@@ -73,7 +73,7 @@
                                 android:layout_marginRight="@dimen/margin_20"
                                 android:layout_marginTop="@dimen/margin_32"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/enterbg"
+                                android:src="@drawable/icon_topic"
                                 android:layout_width="@dimen/icon_image_56"
                                 android:layout_height="@dimen/icon_image_56"
                                 app:riv_corner_radius="@dimen/corner_20"/>

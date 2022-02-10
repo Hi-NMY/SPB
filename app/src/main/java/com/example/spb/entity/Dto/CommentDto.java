@@ -9,15 +9,6 @@ import com.example.spb.entity.Comment;
  */
 public class CommentDto extends Comment {
 
-    public String pb_one_id;
-    public String comment_art;
-    public String comment_date;
-    public String comment_user;
-    public String user_name;
-    public String comment_touser;
-    public String user_toname;
-    public int comment_id;
-    public String cache_account;
     public String user_ip;
 
     public String getPb_one_id() {

@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.entity.Diary;
+import com.example.spb.presenter.utils.DataVerificationTool;
 import com.example.spb.presenter.utils.InValues;
 import com.example.spb.presenter.utils.MyDateClass;
 import com.example.spb.view.Component.ComponentDialog;
@@ -55,14 +56,14 @@ public class UserDiaryAdapter extends RecyclerView.Adapter<UserDiaryAdapter.View
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mDiaryDateYear = (TextView) itemView.findViewById(R.id.diary_date_year);
-            mDiaryDateMonth = (TextView) itemView.findViewById(R.id.diary_date_month);
-            mDiaryDateWeek = (TextView) itemView.findViewById(R.id.diary_date_week);
-            mDiaryDateTime = (TextView) itemView.findViewById(R.id.diary_date_time);
-            mDiaryWeather = (ImageView) itemView.findViewById(R.id.diary_weather);
-            mDiaryMessage = (TextView) itemView.findViewById(R.id.diary_message);
-            mDiaryImg = (RoundedImageView) itemView.findViewById(R.id.diary_img);
-            mDiaryItemR = (RelativeLayout) itemView.findViewById(R.id.diary_item_r);
+            mDiaryDateYear = itemView.findViewById(R.id.diary_date_year);
+            mDiaryDateMonth = itemView.findViewById(R.id.diary_date_month);
+            mDiaryDateWeek = itemView.findViewById(R.id.diary_date_week);
+            mDiaryDateTime = itemView.findViewById(R.id.diary_date_time);
+            mDiaryWeather = itemView.findViewById(R.id.diary_weather);
+            mDiaryMessage = itemView.findViewById(R.id.diary_message);
+            mDiaryImg = itemView.findViewById(R.id.diary_img);
+            mDiaryItemR = itemView.findViewById(R.id.diary_item_r);
         }
     }
 
@@ -71,7 +72,7 @@ public class UserDiaryAdapter extends RecyclerView.Adapter<UserDiaryAdapter.View
         this.baseMVPActivity = (BaseMVPActivity) activity;
         stringspath = new ArrayList<>();
         for (Diary d : diaryList) {
-            if (d.getDia_image() != null && !d.getDia_image().equals("")) {
+            if (!DataVerificationTool.isEmpty(d.getDia_image())) {
                 stringspath.add(InValues.send(R.string.httpHeadert) + d.getDia_image());
             }
         }
@@ -150,9 +151,11 @@ public class UserDiaryAdapter extends RecyclerView.Adapter<UserDiaryAdapter.View
             case 9:
                 holder.mDiaryWeather.setBackground(baseMVPActivity.getDrawable(R.drawable.icon_weather_snow2));
                 break;
+            default:
+                break;
         }
 
-        if (diary.getDia_image() != null && !diary.getDia_image().equals("")) {
+        if (!DataVerificationTool.isEmpty(diary.getDia_image())) {
             holder.mDiaryImg.setVisibility(View.VISIBLE);
             Glide.with(baseMVPActivity)
                     .load(InValues.send(R.string.httpHeadert) + diary.getDia_image())
@@ -172,47 +175,51 @@ public class UserDiaryAdapter extends RecyclerView.Adapter<UserDiaryAdapter.View
         holder.mDiaryItemR.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                componentDialog = new ComponentDialog(baseMVPActivity, R.layout.dialog_longclick_view, new ComponentDialog.InitDialog() {
-                    @Override
-                    public void initView(View view) {
-                        mButtonClose = (Button) view.findViewById(R.id.button_close);
-                        mButtonRight = (Button) view.findViewById(R.id.button_right);
-                        mtitle = (TextView) view.findViewById(R.id.topic_name);
-                        mtxt = (TextView) view.findViewById(R.id.txt);
-                    }
-
-                    @Override
-                    public void initData() {
-                        mtitle.setVisibility(View.GONE);
-                        mtxt.setText("删除日记");
-                    }
-
-                    @Override
-                    public void initListener() {
-                        mButtonClose.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                componentDialog.closeMyDialog();
-                            }
-                        });
-                        mButtonRight.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                baseMVPActivity.getDataDiaryPresenter().removeDiary(diaryList.get(position).getId());
-                                componentDialog.closeMyDialog();
-                                removeData(position);
-                            }
-                        });
-                    }
-                });
-                componentDialog.showMyDialog();
+                setComponentDialog(position);
                 return true;
             }
         });
     }
 
+    private void setComponentDialog(int position) {
+        componentDialog = new ComponentDialog(baseMVPActivity, R.layout.dialog_longclick_view, new ComponentDialog.InitDialog() {
+            @Override
+            public void initView(View view) {
+                mButtonClose = view.findViewById(R.id.button_close);
+                mButtonRight = view.findViewById(R.id.button_right);
+                mtitle = view.findViewById(R.id.topic_name);
+                mtxt = view.findViewById(R.id.txt);
+            }
+
+            @Override
+            public void initData() {
+                mtitle.setVisibility(View.GONE);
+                mtxt.setText("删除日记");
+            }
+
+            @Override
+            public void initListener() {
+                mButtonClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        componentDialog.closeMyDialog();
+                    }
+                });
+                mButtonRight.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        baseMVPActivity.getDataDiaryPresenter().removeDiary(diaryList.get(position).getId());
+                        componentDialog.closeMyDialog();
+                        removeData(position);
+                    }
+                });
+            }
+        });
+        componentDialog.showMyDialog();
+    }
+
     @Override
     public int getItemCount() {
-        return diaryList.size();
+        return diaryList == null ? 0 : diaryList.size();
     }
 }

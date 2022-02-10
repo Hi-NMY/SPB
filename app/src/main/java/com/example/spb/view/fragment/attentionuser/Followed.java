@@ -72,7 +72,7 @@ public class Followed extends BaseMVPFragment<IFollowedFView, FollowedFPresenter
 
     @Override
     protected void initData() {
-
+        mPresenter.addFollowedList(attentionUserPage.getDataUserMsgPresenter().getUser_account());
     }
 
     @Override

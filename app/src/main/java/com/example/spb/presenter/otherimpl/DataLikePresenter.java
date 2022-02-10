@@ -25,8 +25,8 @@ public class DataLikePresenter {
     private final String account;
     private final Gson gson;
 
-    public DataLikePresenter(String user_account) {
-        account = user_account;
+    public DataLikePresenter(String userAccount) {
+        account = userAccount;
         likeModel = new LikeModelImpl();
         gson = new Gson();
         initDate();
@@ -96,7 +96,7 @@ public class DataLikePresenter {
             unicast.setTicker("Android unicast ticker");
             unicast.setTitle(InValues.send(R.string.Push_Title));
             unicast.setText(InValues.send(R.string.Push_Like_txt));
-            unicast.setExtraField(InValues.send(R.string.Push_fun), String.valueOf(unicast.PUSHLIKEKEY));
+            unicast.setExtraField(InValues.send(R.string.Push_fun), String.valueOf(AndroidUnicast.PUSHLIKEKEY));
             unicast.setExtraField(InValues.send(R.string.Push_pbid_key), barId);
             unicast.clientSend(unicast);
         } catch (Exception e) {

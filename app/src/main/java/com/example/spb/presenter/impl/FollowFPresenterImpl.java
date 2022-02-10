@@ -5,7 +5,7 @@ import com.example.spb.R;
 import com.example.spb.adapter.UserFollowAdapter;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BasePresenter;
-import com.example.spb.common.RequestEntityJson;
+import com.example.spb.common.RequestListJson;
 import com.example.spb.entity.Dto.UserDto;
 import com.example.spb.model.implA.FollowModelImpl;
 import com.example.spb.model.inter.FollowModel;
@@ -51,11 +51,11 @@ public class FollowFPresenterImpl extends BasePresenter<IFollowFView> implements
             public void onSuccess(@NotNull Response response) {
                 String value = DataVerificationTool.isEmpty(response);
                 if (value != null) {
-                    RequestEntityJson<UserDto> requestEntityJson = new Gson().fromJson(value, new TypeToken<RequestEntityJson<UserDto>>() {
+                    RequestListJson<UserDto> requestListJson = new Gson().fromJson(value, new TypeToken<RequestListJson<UserDto>>() {
                     }.getType());
-                    if (ResponseToast.toToast(requestEntityJson.getResultCode())) {
+                    if (ResponseToast.toToast(requestListJson.getResultCode())) {
                         SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_Follow),
-                                0, requestEntityJson.getData());
+                                0, (Serializable) requestListJson.getDataList());
                     }
                 }
             }

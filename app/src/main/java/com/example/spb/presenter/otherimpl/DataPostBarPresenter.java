@@ -34,8 +34,8 @@ public class DataPostBarPresenter {
     private static String cacheDate2 = "";
     private static String cacheDate3 = "";
 
-    public DataPostBarPresenter(String user_account) {
-        this.user_account = user_account;
+    public DataPostBarPresenter(String userAccount) {
+        this.user_account = userAccount;
         barModel = new PostBarModelImpl();
         gson = new Gson();
         obtainNewBar(true);

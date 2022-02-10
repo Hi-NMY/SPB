@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.MediaStoreSignature;
 import com.example.spb.R;
 import com.example.spb.entity.Dto.UserDto;
+import com.example.spb.presenter.utils.DataVerificationTool;
 import com.example.spb.presenter.utils.InValues;
 import com.example.spb.view.activity.PersonalSpacePage;
 import com.example.spb.view.utils.JumpIntent;
@@ -22,21 +23,21 @@ import java.util.List;
 
 public class AllSearchUserAdapter extends RecyclerView.Adapter<AllSearchUserAdapter.ViewHolder> {
 
-    private List<UserDto> userDtos;
-    private Activity activity;
-    private UserDto userDto;
+    private final List<UserDto> userDtos;
+    private final Activity activity;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView mItemAllsearchUserHeadimg;
         TextView mItemAllsearchUserName;
         ImageView mItemUserFollowUsersex;
         ImageView mItemUserFollowUserbadge;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mItemAllsearchUserHeadimg = (RoundedImageView) itemView.findViewById(R.id.item_allsearch_user_headimg);
-            mItemAllsearchUserName = (TextView) itemView.findViewById(R.id.item_allsearch_user_name);
-            mItemUserFollowUsersex = (ImageView) itemView.findViewById(R.id.item_allsearch_user_usersex);
-            mItemUserFollowUserbadge = (ImageView)itemView.findViewById(R.id.item_allsearch_user_userbadge);
+            mItemAllsearchUserHeadimg = itemView.findViewById(R.id.item_allsearch_user_headimg);
+            mItemAllsearchUserName = itemView.findViewById(R.id.item_allsearch_user_name);
+            mItemUserFollowUsersex = itemView.findViewById(R.id.item_allsearch_user_usersex);
+            mItemUserFollowUserbadge = itemView.findViewById(R.id.item_allsearch_user_userbadge);
         }
     }
 
@@ -49,30 +50,29 @@ public class AllSearchUserAdapter extends RecyclerView.Adapter<AllSearchUserAdap
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_allsearch_user_list, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        userDto = userDtos.get(position);
+        UserDto userDto = userDtos.get(position);
 
         holder.mItemAllsearchUserName.setText(userDto.getUser_name());
 
         Glide.with(activity)
                 .load(InValues.send(R.string.prefix_img) + userDto.getUser_account() + InValues.send(R.string.suffix_head_img))
-                .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()),1,1))
+                .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                 .into(holder.mItemAllsearchUserHeadimg);
 
-        if (userDto.getStu_sex() != null && userDto.getStu_sex().equals("男")) {
+        if (userDto.getStu_sex() != null && "男".equals(userDto.getStu_sex())) {
             holder.mItemUserFollowUsersex.setImageResource(R.drawable.icon_boy);
         } else {
             holder.mItemUserFollowUsersex.setImageResource(R.drawable.icon_girl);
         }
 
-        if (userDto.getUser_badge() == null || userDto.getUser_badge().equals("")){
+        if (DataVerificationTool.isEmpty(userDto.getUser_badge())) {
             holder.mItemUserFollowUserbadge.setVisibility(View.GONE);
-        }else {
+        } else {
             holder.mItemUserFollowUserbadge.setVisibility(View.VISIBLE);
             //写入徽章
             Glide.with(activity)

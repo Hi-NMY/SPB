@@ -5,9 +5,8 @@ import com.example.spb.R;
 import com.example.spb.adapter.UserFollowAdapter;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BasePresenter;
-import com.example.spb.common.RequestEntityJson;
+import com.example.spb.common.RequestListJson;
 import com.example.spb.entity.Dto.UserDto;
-import com.example.spb.entity.Followed;
 import com.example.spb.model.implA.FollowedModelImpl;
 import com.example.spb.model.inter.FollowedModel;
 import com.example.spb.presenter.callback.MyCallBack;
@@ -47,18 +46,16 @@ public class FollowedFPresenterImpl extends BasePresenter<IFollowedFView> implem
     }
 
     public void addFollowedList(String account) {
-        Followed followed = new Followed();
-        followed.setUser_account(account);
         followedModel.queryFollowedUserList(account, new MyCallBack() {
             @Override
             public void onSuccess(@NotNull Response response) {
                 String value = DataVerificationTool.isEmpty(response);
                 if (value != null) {
-                    RequestEntityJson<UserDto> requestEntityJson = new Gson().fromJson(value, new TypeToken<RequestEntityJson<UserDto>>() {
+                    RequestListJson<UserDto> requestListJson = new Gson().fromJson(value, new TypeToken<RequestListJson<UserDto>>() {
                     }.getType());
-                    if (ResponseToast.toToast(requestEntityJson.getResultCode())) {
+                    if (ResponseToast.toToast(requestListJson.getResultCode())) {
                         SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_Followed),
-                                0, requestEntityJson.getData());
+                                0, (Serializable) requestListJson.getDataList());
                     }
                 }
             }

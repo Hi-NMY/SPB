@@ -108,23 +108,23 @@ public class ChangeInformationPageAPresenterImpl extends BasePresenter<IChangeIn
     public void updateUser(String userAccount) {
         UserInformationDto user = new UserInformationDto();
         user.setUser_account(userAccount);
-        if (userName == null || "".equals(userName)) {
+        if (DataVerificationTool.isEmpty(userName)) {
             user.setUser_name(getView().getUser_name());
         } else {
             user.setUser_name(userName);
         }
-        if (userBirth == null || "".equals(userBirth)) {
+        if (DataVerificationTool.isEmpty(userBirth)) {
             user.setUser_birth(getView().getUser_birth());
         } else {
             user.setUser_birth(userBirth);
         }
         user.setUser_favorite(String.valueOf(userFavorite));
-        if (userProfile == null || "".equals(userProfile)) {
+        if (DataVerificationTool.isEmpty(userProfile)) {
             user.setUser_profile(getView().getUser_profile());
         } else {
             user.setUser_profile(userProfile);
         }
-        if (userHome == null || "".equals(userHome)) {
+        if (DataVerificationTool.isEmpty(userHome)) {
             user.setUser_home(getView().getUser_home());
         } else {
             user.setUser_home(userHome);
