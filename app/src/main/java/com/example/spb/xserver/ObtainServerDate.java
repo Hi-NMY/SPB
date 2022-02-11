@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ObtainServerDate {
 
-    public static void obtainDate(OnReturn onReturn){
+    public static void obtainDate(OnReturn onReturn) {
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
@@ -32,7 +32,7 @@ public class ObtainServerDate {
         });
     }
 
-    public interface OnReturn{
+    public interface OnReturn {
         void onReturn(String date);
     }
 

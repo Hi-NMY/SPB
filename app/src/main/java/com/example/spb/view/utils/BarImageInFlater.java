@@ -13,11 +13,9 @@ public class BarImageInFlater {
         List<ImageDouble> imageDoubles = MyResolve.InDoubleImage(doubleImages);
         switch (imageDoubles.size()) {
             case 3:
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(a, 3);
-                return gridLayoutManager;
+                return new GridLayoutManager(a, 3);
             case 1:
-                gridLayoutManager = new GridLayoutManager(a, 1);
-                return gridLayoutManager;
+                return new GridLayoutManager(a, 1);
             default:
                 return new GridLayoutManager(a, 2);
         }

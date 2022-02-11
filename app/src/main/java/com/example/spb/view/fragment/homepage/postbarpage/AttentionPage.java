@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.R;
 import com.example.spb.adapter.PostBarAdapter;
 import com.example.spb.app.MyApplication;
+import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.entity.Bar;
 import com.example.spb.entity.Comment;
@@ -72,9 +73,9 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (homePage.getEasyVoice() != null) {
-            homePage.getEasyVoice().stopPlayer();
-            homePage.setEasyVoice(null);
+        if (BaseMVPActivity.getEasyVoice() != null) {
+            BaseMVPActivity.getEasyVoice().stopPlayer();
+            BaseMVPActivity.setEasyVoice(null);
             postBarAdapter.refreshNoewVoice(-1);
         }
     }
@@ -91,12 +92,12 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
 
     @Override
     protected void initFragView(View view) {
-        mAttentionpageRefreshTgif = (GifImageView) view.findViewById(R.id.attentionpage_refresh_tgif);
-        mAttentionpageRecyclerview = (RecyclerView) view.findViewById(R.id.attentionpage_recyclerview);
-        mAttentionpageRefreshTip = (TextView) view.findViewById(R.id.attentionpage_refresh_tip);
-        mAttentionpageRefreshBgif = (GifImageView) view.findViewById(R.id.attentionpage_refresh_bgif);
-        mAttentionpageRefresh = (SmartRefreshLayout) view.findViewById(R.id.attentionpage_refresh);
-        mAttentionpageRecyclerview = MyListAnimation.setListAnimation(homePage, mAttentionpageRecyclerview);
+        mAttentionpageRefreshTgif = view.findViewById(R.id.attentionpage_refresh_tgif);
+        mAttentionpageRecyclerview = view.findViewById(R.id.attentionpage_recyclerview);
+        mAttentionpageRefreshTip = view.findViewById(R.id.attentionpage_refresh_tip);
+        mAttentionpageRefreshBgif = view.findViewById(R.id.attentionpage_refresh_bgif);
+        mAttentionpageRefresh = view.findViewById(R.id.attentionpage_refresh);
+        MyListAnimation.setListAnimation(homePage, mAttentionpageRecyclerview);
         createRefresh();
     }
 
@@ -144,8 +145,8 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
         mySmartRefresh.setMyRefreshListener(new MySmartRefresh.MyRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                if (homePage.getEasyVoice() != null) {
-                    homePage.getEasyVoice().stopPlayer();
+                if (BaseMVPActivity.getEasyVoice() != null) {
+                    BaseMVPActivity.getEasyVoice().stopPlayer();
                     postBarAdapter.refreshNoewVoice(-1);
                 }
                 homePage.getDataPostBarPresenter().obtainFollowUserBar(true);
@@ -153,8 +154,8 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if (homePage.getEasyVoice() != null) {
-                    homePage.getEasyVoice().stopPlayer();
+                if (BaseMVPActivity.getEasyVoice() != null) {
+                    BaseMVPActivity.getEasyVoice().stopPlayer();
                     postBarAdapter.refreshNoewVoice(-1);
                 }
                 homePage.getDataPostBarPresenter().obtainFollowUserBar(false);
@@ -204,7 +205,7 @@ public class AttentionPage extends BaseMVPFragment<IAttentionPageFView, Attentio
                     postBarAdapter.refreshNowCommentItem(comments.size());
                     break;
                 case 1:
-                    postBarAdapter.refreshCommentItem(Integer.valueOf(num));
+                    postBarAdapter.refreshCommentItem(Integer.parseInt(num));
                     break;
             }
         }

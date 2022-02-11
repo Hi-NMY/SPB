@@ -9,8 +9,7 @@ import com.example.spb.view.InterComponent.MyPopupWindowInter;
 
 public class MyPopupWindow extends PopupWindow implements MyPopupWindowInter {
 
-    private Context mcontext;
-    private View mview;
+    private final Context mcontext;
 
     public MyPopupWindow(Context context) {
         super(context);
@@ -18,7 +17,7 @@ public class MyPopupWindow extends PopupWindow implements MyPopupWindowInter {
     }
 
     public void init(int viewId, InitWindow initWindow) {
-        mview = LayoutInflater.from(mcontext).inflate(viewId, null);
+        View mview = LayoutInflater.from(mcontext).inflate(viewId, null);
         initWindow.initView(mview);
         initWindow.initData();
         initWindow.initListener();

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
+import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.entity.Bar;
 import com.example.spb.entity.Comment;
@@ -70,10 +71,10 @@ public class VideoTopicBar extends BaseMVPFragment<IVideoTopicBarFView, VideoTop
 
     @Override
     protected void initFragView(View view) {
-        mNewtopicvideoRecyclerview = (RecyclerView) view.findViewById(R.id.newtopicvideo_recyclerview);
-        mNewtopicvideoMoreGif = (GifImageView) view.findViewById(R.id.newtopicvideo_more_gif);
-        mNewtopicvideoRefresh = (SmartRefreshLayout) view.findViewById(R.id.newtopicvideo_refresh);
-        mNewtopicvideoRecyclerview = MyListAnimation.setListAnimation(topicBarPage,mNewtopicvideoRecyclerview);
+        mNewtopicvideoRecyclerview = view.findViewById(R.id.newtopicvideo_recyclerview);
+        mNewtopicvideoMoreGif = view.findViewById(R.id.newtopicvideo_more_gif);
+        mNewtopicvideoRefresh = view.findViewById(R.id.newtopicvideo_refresh);
+        MyListAnimation.setListAnimation(topicBarPage, mNewtopicvideoRecyclerview);
         createRefresh();
     }
 
@@ -160,7 +161,7 @@ public class VideoTopicBar extends BaseMVPFragment<IVideoTopicBarFView, VideoTop
                     mPresenter.addNewTopicList(bars,mNewtopicvideoRecyclerview,true);
                     break;
                 case 3:
-                    mPresenter.deleteBarData(topicBarPage.getDeletePbId());
+                    mPresenter.deleteBarData(BaseMVPActivity.getDeletePbId());
                     break;
             }
         }
@@ -185,7 +186,7 @@ public class VideoTopicBar extends BaseMVPFragment<IVideoTopicBarFView, VideoTop
                     mPresenter.refreshNowComment(comments.size());
                     break;
                 case 1:
-                    mPresenter.refreshComment(Integer.valueOf(num));
+                    mPresenter.refreshComment(Integer.parseInt(num));
                     break;
             }
         }

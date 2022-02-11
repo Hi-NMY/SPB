@@ -22,9 +22,6 @@ import org.litepal.LitePal;
 
 public class EnterPage extends BaseMVPActivity<IEnterPageAView, EnterPageAPresenterImpl> implements IEnterPageAView {
 
-    private ImageView mBgimage;
-    private ImageView mLogoimage;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +38,7 @@ public class EnterPage extends BaseMVPActivity<IEnterPageAView, EnterPageAPresen
     @Override
     protected void initActView() {
         ImmersionBar.with(this).init();
-        mBgimage = (ImageView) findViewById(R.id.bgimage);
-        mLogoimage = (ImageView) findViewById(R.id.logoimage);
+        ImageView mLogoimage = findViewById(R.id.logoimage);
         Glide.with(this)
                 .load(R.drawable.mylogo)
                 .transform(new GlideRoundTransform(5))
@@ -57,10 +53,10 @@ public class EnterPage extends BaseMVPActivity<IEnterPageAView, EnterPageAPresen
             public void run() {
                 try {
                     Thread.sleep(1000);
-                    if (mPresenter.getFirstLogIn()){
-                        Intent intent = new Intent(MyApplication.getContext(),FirstPage.class);
+                    if (mPresenter.getFirstLogIn()) {
+                        Intent intent = new Intent(MyApplication.getContext(), FirstPage.class);
                         startActivity(intent);
-                    }else {
+                    } else {
                         mPresenter.setUserIp();
                         mPresenter.initDate(EnterPage.this, new EnterPageAPresenterImpl.Jump() {
                             @Override
@@ -73,10 +69,11 @@ public class EnterPage extends BaseMVPActivity<IEnterPageAView, EnterPageAPresen
                                 RongIM.connect(getDataUserMsgPresenter().getUser_token(), new RongIMClient.ConnectCallback() {
                                     @Override
                                     public void onSuccess(String s) {
-                                        UserInfo userInfo = new UserInfo(getDataUserMsgPresenter().getUser_account(),getDataUserMsgPresenter().getUser_name(), Uri.parse(InValues
-                                                .send(R.string.httpHeader) +"/UserImageServer/"+getDataUserMsgPresenter().getUser_account()+"/HeadImage/myHeadImage.png"));
+                                        UserInfo userInfo = new UserInfo(getDataUserMsgPresenter().getUser_account()
+                                                , getDataUserMsgPresenter().getUser_name()
+                                                , Uri.parse(InValues.send(R.string.prefix_img) + getDataUserMsgPresenter().getUser_account() + InValues.send(R.string.suffix_head_img)));
                                         RongIM.getInstance().setCurrentUserInfo(userInfo);
-                                        Log.d("rongLink","true");
+                                        Log.d("rongLink", "true");
                                     }
 
                                     @Override

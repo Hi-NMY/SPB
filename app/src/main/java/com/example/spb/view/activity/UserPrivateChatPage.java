@@ -2,16 +2,16 @@ package com.example.spb.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.View;
 import android.os.Bundle;
+import android.view.View;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.spb.R;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.base.BasePresenter;
 import com.example.spb.presenter.utils.InValues;
-import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.InterTotal.SpbInterOne;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.utils.JumpIntent;
 import com.gyf.immersionbar.ImmersionBar;
 import io.rong.imkit.RongIM;
@@ -23,7 +23,6 @@ import io.rong.imlib.model.UserInfo;
 public class UserPrivateChatPage extends BaseMVPActivity implements SpbInterOne {
 
     public String username;
-    private FragmentSpbAvtivityBar bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +58,12 @@ public class UserPrivateChatPage extends BaseMVPActivity implements SpbInterOne 
                 JumpIntent.startMsgIntent(PersonalSpacePage.class, new JumpIntent.SetMsg() {
                     @Override
                     public void setMessage(Intent intent) {
-                        intent.putExtra(InValues.send(R.string.intent_User_account),user.getUserId());
+                        intent.putExtra(InValues.send(R.string.intent_User_account), user.getUserId());
                     }
                 });
                 return true;
             }
+
             /**
              * 用户头像长按事件
              *
@@ -77,6 +77,7 @@ public class UserPrivateChatPage extends BaseMVPActivity implements SpbInterOne 
             public boolean onUserPortraitLongClick(Context context, Conversation.ConversationType conversationType, UserInfo user, String targetId) {
                 return false;
             }
+
             /**
              * 消息点击事件
              *
@@ -89,6 +90,7 @@ public class UserPrivateChatPage extends BaseMVPActivity implements SpbInterOne 
             public boolean onMessageClick(Context context, View view, Message message) {
                 return false;
             }
+
             /**
              * 消息超链接内容点击事件
              *
@@ -101,6 +103,7 @@ public class UserPrivateChatPage extends BaseMVPActivity implements SpbInterOne 
             public boolean onMessageLinkClick(Context context, String link, Message message) {
                 return false;
             }
+
             /**
              * 消息长按事件
              *
@@ -163,8 +166,8 @@ public class UserPrivateChatPage extends BaseMVPActivity implements SpbInterOne 
 
     @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.private_message_bar);
-        bar.barCentralTxt(username,null);
+        FragmentSpbAvtivityBar bar = setMyActivityBar(R.id.private_message_bar);
+        bar.barCentralTxt(username, null);
         bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
             public void onClick() {

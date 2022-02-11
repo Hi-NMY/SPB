@@ -11,8 +11,8 @@ import java.util.List;
 
 public class SpbSearchLocation {
 
-    private String city;
-    private String search;
+    private final String city;
+    private final String search;
     private SuggestionSearch suggestionSearch;
     public List<LocationGps> locationGpsList;
     private LocationGps locationGps;
@@ -22,7 +22,7 @@ public class SpbSearchLocation {
         this.search = search;
     }
 
-    public void search(OnReturn onReturn){
+    public void search(OnReturn onReturn) {
 //        new Thread(new Runnable() {
 //            @Override
 //            public void run() {
@@ -41,8 +41,8 @@ public class SpbSearchLocation {
             public void onGetSuggestionResult(SuggestionResult suggestionResult) {
                 locationGpsList = new ArrayList<>();
                 try {
-                    if (suggestionResult != null && suggestionResult.getAllSuggestions().size() != 0){
-                        for (int j = 0 ; j < suggestionResult.getAllSuggestions().size() ; j++){
+                    if (suggestionResult != null && suggestionResult.getAllSuggestions().size() != 0) {
+                        for (int j = 0; j < suggestionResult.getAllSuggestions().size(); j++) {
                             locationGps = new LocationGps();
                             locationGps.setLocationName(suggestionResult.getAllSuggestions().get(j).getKey());
                             locationGps.setLocationDetail(suggestionResult.getAllSuggestions().get(j).getAddress());
@@ -50,7 +50,7 @@ public class SpbSearchLocation {
                         }
                     }
                     onReturn.onSuccess(locationGpsList);
-                }catch (Exception e){
+                } catch (Exception e) {
                     onReturn.onError();
                 }
             }
@@ -61,12 +61,13 @@ public class SpbSearchLocation {
                 .keyword(search));
     }
 
-    public void stopSearchLoc(){
+    public void stopSearchLoc() {
         suggestionSearch.destroy();
     }
 
-    public interface OnReturn{
+    public interface OnReturn {
         void onSuccess(List<LocationGps> locationGpsList);
+
         void onError();
     }
 }

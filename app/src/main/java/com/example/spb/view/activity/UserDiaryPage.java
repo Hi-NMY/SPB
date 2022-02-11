@@ -42,7 +42,6 @@ import java.util.List;
 public class UserDiaryPage extends BaseMVPActivity<IUserDiaryPageAView, UserDiaryPageAPresenterImpl>
         implements IUserDiaryPageAView {
 
-    private FragmentSpbAvtivityBar bar;
     private DialogInter componentDialog;
     private DialogInter easyDialog;
     private TextView mDiarysendDateYear;
@@ -63,11 +62,9 @@ public class UserDiaryPage extends BaseMVPActivity<IUserDiaryPageAView, UserDiar
     private Button mEnterBtn;
     private List<ImageView> imageViews;
     private SpbSelectImage selectImage;
-    private AddDiary addDiary;
-    private GifImageView mUserdiaryRefreshTgif;
     private RecyclerView mUserdiaryRecyclerview;
-    private SmartRefreshLayout mUserdiaryRefresh;
     private MySmartRefresh mySmartRefresh;
+    private AddDiary addDiary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,11 +83,11 @@ public class UserDiaryPage extends BaseMVPActivity<IUserDiaryPageAView, UserDiar
     @Override
     protected void initActView() {
         selectImage = new SelectImage(this);
-        mUserdiaryRefreshTgif = (GifImageView) findViewById(R.id.userdiary_refresh_tgif);
-        mUserdiaryRecyclerview = (RecyclerView) findViewById(R.id.userdiary_recyclerview);
-        mUserdiaryRefresh = (SmartRefreshLayout) findViewById(R.id.userdiary_refresh);
-        mUserdiaryRecyclerview = MyListAnimation.setListAnimation(this,mUserdiaryRecyclerview);
-        mySmartRefresh = new MySmartRefresh(mUserdiaryRefresh,mUserdiaryRefreshTgif,null);
+        GifImageView mUserdiaryRefreshTgif = findViewById(R.id.userdiary_refresh_tgif);
+        mUserdiaryRecyclerview = findViewById(R.id.userdiary_recyclerview);
+        SmartRefreshLayout mUserdiaryRefresh = findViewById(R.id.userdiary_refresh);
+        MyListAnimation.setListAnimation(this, mUserdiaryRecyclerview);
+        mySmartRefresh = new MySmartRefresh(mUserdiaryRefresh, mUserdiaryRefreshTgif, null);
         setActivityBar();
         setBar();
         setMyListener();
@@ -101,7 +98,7 @@ public class UserDiaryPage extends BaseMVPActivity<IUserDiaryPageAView, UserDiar
 
     @Override
     protected void initData() {
-        mPresenter.addDiary(getDataDiaryPresenter().diaryList,mUserdiaryRecyclerview);
+        mPresenter.addDiary(getDataDiaryPresenter().diaryList, mUserdiaryRecyclerview);
     }
 
     @Override
@@ -120,22 +117,22 @@ public class UserDiaryPage extends BaseMVPActivity<IUserDiaryPageAView, UserDiar
         componentDialog = new ComponentDialog(this, R.layout.dialog_send_diary, new ComponentDialog.InitDialog() {
             @Override
             public void initView(View view) {
-                mDiarysendDateYear = (TextView) view.findViewById(R.id.diarysend_date_year);
-                mDiarysendDateMonth = (TextView) view.findViewById(R.id.diarysend_date_month);
-                mDiarysendDateWeek = (TextView) view.findViewById(R.id.diarysend_date_week);
-                mDiarysendDateTime = (TextView) view.findViewById(R.id.diarysend_date_time);
-                mDiarysendWeather1 = (ImageView) view.findViewById(R.id.diarysend_weather1);
-                mDiarysendWeather2 = (ImageView) view.findViewById(R.id.diarysend_weather2);
-                mDiarysendWeather3 = (ImageView) view.findViewById(R.id.diarysend_weather3);
-                mDiarysendWeather4 = (ImageView) view.findViewById(R.id.diarysend_weather4);
-                mDiarysendWeather5 = (ImageView) view.findViewById(R.id.diarysend_weather5);
-                mDiarysendWeather6 = (ImageView) view.findViewById(R.id.diarysend_weather6);
-                mDiarysendWeather7 = (ImageView) view.findViewById(R.id.diarysend_weather7);
-                mDiarysendWeather8 = (ImageView) view.findViewById(R.id.diarysend_weather8);
-                mDiarysendWeather9 = (ImageView) view.findViewById(R.id.diarysend_weather9);
-                mDiarysendMessage = (EditText) view.findViewById(R.id.diarysend_message);
-                mDiarysendImg = (RoundedImageView) view.findViewById(R.id.diarysend_img);
-                mEnterBtn = (Button) view.findViewById(R.id.enter_btn);
+                mDiarysendDateYear = view.findViewById(R.id.diarysend_date_year);
+                mDiarysendDateMonth = view.findViewById(R.id.diarysend_date_month);
+                mDiarysendDateWeek = view.findViewById(R.id.diarysend_date_week);
+                mDiarysendDateTime = view.findViewById(R.id.diarysend_date_time);
+                mDiarysendWeather1 = view.findViewById(R.id.diarysend_weather1);
+                mDiarysendWeather2 = view.findViewById(R.id.diarysend_weather2);
+                mDiarysendWeather3 = view.findViewById(R.id.diarysend_weather3);
+                mDiarysendWeather4 = view.findViewById(R.id.diarysend_weather4);
+                mDiarysendWeather5 = view.findViewById(R.id.diarysend_weather5);
+                mDiarysendWeather6 = view.findViewById(R.id.diarysend_weather6);
+                mDiarysendWeather7 = view.findViewById(R.id.diarysend_weather7);
+                mDiarysendWeather8 = view.findViewById(R.id.diarysend_weather8);
+                mDiarysendWeather9 = view.findViewById(R.id.diarysend_weather9);
+                mDiarysendMessage = view.findViewById(R.id.diarysend_message);
+                mDiarysendImg = view.findViewById(R.id.diarysend_img);
+                mEnterBtn = view.findViewById(R.id.enter_btn);
                 imageViews = new ArrayList<>();
                 imageViews.add(mDiarysendWeather1);
                 imageViews.add(mDiarysendWeather2);
@@ -227,9 +224,9 @@ public class UserDiaryPage extends BaseMVPActivity<IUserDiaryPageAView, UserDiar
                 mEnterBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (mPresenter.getMessgae() == null || mPresenter.getMessgae().equals("")){
-                            MyToastClass.ShowToast(MyApplication.getContext(),"请写入内容");
-                        }else {
+                        if (mPresenter.getMessgae() == null || mPresenter.getMessgae().equals("")) {
+                            MyToastClass.ShowToast(MyApplication.getContext(), "请写入内容");
+                        } else {
                             showDialogS(EASYDIALOG);
                             mPresenter.sendNewDiary();
                         }
@@ -279,8 +276,14 @@ public class UserDiaryPage extends BaseMVPActivity<IUserDiaryPageAView, UserDiar
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SpbBroadcast.destroyBrc(addDiary);
+    }
+
+    @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.userdiary_actbar);
+        FragmentSpbAvtivityBar bar = setMyActivityBar(R.id.userdiary_actbar);
         bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
             public void onClick() {
@@ -325,13 +328,13 @@ public class UserDiaryPage extends BaseMVPActivity<IUserDiaryPageAView, UserDiar
             switch (a) {
                 case 0:
                     mySmartRefresh.finishMyRefresh();
-                    mPresenter.addDiary(diaryList,mUserdiaryRecyclerview);
+                    mPresenter.addDiary(diaryList, mUserdiaryRecyclerview);
                     break;
                 case 1:
 
                     break;
                 case 2:
-                    if (easyDialog != null){
+                    if (easyDialog != null) {
                         closeDialog(EASYDIALOG);
                     }
                     closeDialog(COMPONENTDIALOG);

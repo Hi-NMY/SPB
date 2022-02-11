@@ -44,11 +44,7 @@ public class QRPage extends AppCompatActivity implements SpbInterOne, OnCaptureC
     private SelectImage spbSelectImage;
     private String selectImgFile;
 
-    private String TITLETXT = "扫描二维码";
-    private String RIGHTTXT = "相册";
-
     private CaptureHelper mCaptureHelper;
-    private ImageView mIvImg;
 
     private String cacheDate = "";
 
@@ -78,7 +74,7 @@ public class QRPage extends AppCompatActivity implements SpbInterOne, OnCaptureC
         setBar();
         setActivityBar();
         spbSelectImage = new SelectImage(this);
-        mIvImg = (ImageView) findViewById(R.id.ivImg);
+        ImageView mIvImg =  findViewById(R.id.ivImg);
         surfaceView = findViewById(getSurfaceViewId());
         int viewfinderViewId = getViewfinderViewId();
         if (viewfinderViewId != 0) {
@@ -231,6 +227,7 @@ public class QRPage extends AppCompatActivity implements SpbInterOne, OnCaptureC
         TextView textView2 = (TextView)bar.getmBarCentralTxt();
         textView.setTextColor(ContextCompat.getColor(this,R.color.beijing));
         textView2.setTextColor(ContextCompat.getColor(this,R.color.beijing));
+        String TITLETXT = "扫描二维码";
         bar.barCentralTxt(TITLETXT,null);
         bar.barLeftImg(R.drawable.left_return_white, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
@@ -238,6 +235,7 @@ public class QRPage extends AppCompatActivity implements SpbInterOne, OnCaptureC
                 finish();
             }
         });
+        String RIGHTTXT = "相册";
         bar.barRightTxt1(RIGHTTXT, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
             public void onClick() {

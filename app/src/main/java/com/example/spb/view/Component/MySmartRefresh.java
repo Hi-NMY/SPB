@@ -9,9 +9,7 @@ import pl.droidsonroids.gif.GifImageView;
 
 public class MySmartRefresh {
 
-    private SmartRefreshLayout refreshLayout;
-    private GifImageView tGif;
-    private GifImageView bGif;
+    private final SmartRefreshLayout refreshLayout;
     private GIFShow tgifShow;
     private GIFShow bgifShow;
 
@@ -19,12 +17,10 @@ public class MySmartRefresh {
         this.refreshLayout = smartRefreshLayout;
         refreshLayout.setEnableAutoLoadMore(false);
         if (topGif != null){
-            this.tGif = topGif;
-            tgifShow = new GIFShow(tGif);
+            tgifShow = new GIFShow(topGif);
         }
         if (bottomGif != null){
-            this.bGif = bottomGif;
-            bgifShow = new GIFShow(bGif);
+            bgifShow = new GIFShow(bottomGif);
         }
     }
 

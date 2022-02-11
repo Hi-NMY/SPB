@@ -17,7 +17,6 @@ import com.gyf.immersionbar.ImmersionBar;
 
 public class SetUpPage extends BaseMVPActivity<ISetUpPageAView, SetUpPageAPresenterImpl> implements ISetUpPageAView, View.OnClickListener {
 
-    private FragmentSpbAvtivityBar bar;
     private RelativeLayout mR1;
     private RelativeLayout mR2;
     private RelativeLayout mR3;
@@ -40,13 +39,13 @@ public class SetUpPage extends BaseMVPActivity<ISetUpPageAView, SetUpPageAPresen
 
     @Override
     protected void initActView() {
-        mR1 = (RelativeLayout) findViewById(R.id.r1);
-        mR2 = (RelativeLayout) findViewById(R.id.r2);
-        mR3 = (RelativeLayout) findViewById(R.id.r3);
-        mR4 = (RelativeLayout) findViewById(R.id.r4);
-        mR5 = (RelativeLayout) findViewById(R.id.r5);
-        mQuitLogin = (RelativeLayout) findViewById(R.id.quit_login);
-        mVersionText = (TextView) findViewById(R.id.version_text);
+        mR1 = findViewById(R.id.r1);
+        mR2 = findViewById(R.id.r2);
+        mR3 = findViewById(R.id.r3);
+        mR4 = findViewById(R.id.r4);
+        mR5 = findViewById(R.id.r5);
+        mQuitLogin = findViewById(R.id.quit_login);
+        mVersionText = findViewById(R.id.version_text);
         initData();
         setActivityBar();
         setBar();
@@ -106,7 +105,7 @@ public class SetUpPage extends BaseMVPActivity<ISetUpPageAView, SetUpPageAPresen
 
     @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.setup_actbar);
+        FragmentSpbAvtivityBar bar = setMyActivityBar(R.id.setup_actbar);
         bar.barCentralTxt(TITLE, null);
         bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
@@ -132,8 +131,8 @@ public class SetUpPage extends BaseMVPActivity<ISetUpPageAView, SetUpPageAPresen
                 JumpIntent.startMyIntent(SetUpAssistPage.class);
                 break;
             case R.id.r5:
-                AppVersion appVersion = new AppVersion(MyApplication.getContext(),this);
-                appVersion.startVersion(String.valueOf(ObtainVersion.versionCode(this)),true);
+                AppVersion appVersion = new AppVersion(MyApplication.getContext(), this);
+                appVersion.startVersion(String.valueOf(ObtainVersion.versionCode(this)), true);
                 break;
             case R.id.quit_login:
                 mPresenter.loginOut(getDataUserMsgPresenter().getUser_account(), new SetUpPageAPresenterImpl.OnReturn() {

@@ -23,6 +23,7 @@ import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.entity.Topic;
 import com.example.spb.presenter.impl.SendNewBarPageAPresenterImpl;
 import com.example.spb.presenter.utils.InValues;
+import com.example.spb.presenter.utils.RequestForAccess;
 import com.example.spb.presenter.utils.SpbBroadcast;
 import com.example.spb.view.Component.*;
 import com.example.spb.view.InterComponent.DialogInter;
@@ -30,7 +31,6 @@ import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.inter.ISendNewBarPageAView;
 import com.example.spb.view.utils.GIFShow;
 import com.example.spb.view.utils.HideKeyboard;
-import com.example.spb.presenter.utils.RequestForAccess;
 import com.example.spb.view.utils.SearchFun;
 import com.gyf.immersionbar.ImmersionBar;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -46,9 +46,8 @@ import java.util.List;
 
 public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNewBarPageAPresenterImpl> implements ISendNewBarPageAView, View.OnClickListener {
 
-    private String[] titleTag = new String[]{"我的位置", "添加话题"};
-    private List<String> titleTagList = Arrays.asList(titleTag);
-    private FragmentSpbAvtivityBar bar;
+    private final String[] titleTag = new String[]{"我的位置", "添加话题"};
+    private final List<String> titleTagList = Arrays.asList(titleTag);
     private EditText mSendnewbarTxt;
     private RecyclerView mSendnewbarImageList;
     private RoundedImageView mSendnewbarImageAdd;
@@ -58,7 +57,6 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
     private SelectImage selectImage;
     private RelativeLayout mBottomVoiceR;
     public DialogInter dialogLoading;
-    public String newBarTxt;
 
     public DialogInter bottomLocation;
     public DialogInter bottomTopic;
@@ -80,9 +78,9 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
     private TextView mVoiceTxtTip;
     private RelativeLayout mCircleR;
     private int voiceNow = 0;
-    private static Animation animation;
-    private static Animation animation1;
-    private static Animation animation2;
+    private static final Animation animation;
+    private static final Animation animation1;
+    private static final Animation animation2;
 
     static {
         animation = new ScaleAnimation(1.0f, 0.4f, 1.0f, 0.4f,
@@ -115,7 +113,6 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
     private GIFShow gifShow;
     private TextView mLocationClose;
     private EditText mLocationSearchEdt;
-    private RelativeLayout mLocationSearchR;
     private GifImageView mLocationLoading;
     private RelativeLayout mLocationErrorR;
     private RecyclerView mLocationRecycler;
@@ -126,7 +123,7 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_new_bar_page);
         transferLoc = new TransferLoc();
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_transfer_loc),transferLoc);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_transfer_loc), transferLoc);
         layoutInflater = LayoutInflater.from(this);
         initActView();
         setAccess();
@@ -172,29 +169,29 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
     @Override
     protected void initActView() {
         selectImage = new SelectImage(this);
-        mSendnewbarTxt = (EditText) findViewById(R.id.sendnewbar_txt);
-        mSendnewbarImageList = (RecyclerView) findViewById(R.id.sendnewbar_image_list);
-        mSendnewbarImageAdd = (RoundedImageView) findViewById(R.id.sendnewbar_image_add);
-        mBottomFlowlayout = (TagFlowLayout) findViewById(R.id.bottom_flowlayout);
-        mBottomAddImage = (ImageView) findViewById(R.id.bottom_add_image);
-        mBottomAddVoice = (ImageView) findViewById(R.id.bottom_add_voice);
-        mBottomVoiceR = (RelativeLayout) findViewById(R.id.bottom_voice_r);
-        mSelectTopicFlowlayout = (TagFlowLayout) findViewById(R.id.selectTopic_flowlayout);
+        mSendnewbarTxt = findViewById(R.id.sendnewbar_txt);
+        mSendnewbarImageList = findViewById(R.id.sendnewbar_image_list);
+        mSendnewbarImageAdd = findViewById(R.id.sendnewbar_image_add);
+        mBottomFlowlayout = findViewById(R.id.bottom_flowlayout);
+        mBottomAddImage = findViewById(R.id.bottom_add_image);
+        mBottomAddVoice = findViewById(R.id.bottom_add_voice);
+        mBottomVoiceR = findViewById(R.id.bottom_voice_r);
+        mSelectTopicFlowlayout = findViewById(R.id.selectTopic_flowlayout);
 
-        mVoiceTimeMath = (TextView) findViewById(R.id.voice_time_math);
-        mVoiceTimeL = (LinearLayout) findViewById(R.id.voice_time_l);
-        mCircleOne = (RoundedImageView) findViewById(R.id.circle_one);
-        mCircleProgressbar = (CircleProgressBar) findViewById(R.id.circleProgressbar);
-        mCircleTwo = (RoundedImageView) findViewById(R.id.circle_two);
-        mVoiceDelete = (ImageView) findViewById(R.id.voice_delete);
-        mVoiceTxtTip = (TextView) findViewById(R.id.voice_txt_tip);
-        mCircleR = (RelativeLayout) findViewById(R.id.circle_r);
-        mVoiceIcon = (ImageView) findViewById(R.id.voice_icon);
-        mVoiceSubmit = (ImageView) findViewById(R.id.voice_submit);
-        mVoiceGif = (GifImageView) findViewById(R.id.voice_gif);
-        mVoiceTime = (TextView) findViewById(R.id.voice_time);
-        mVoiceClose = (ImageView) findViewById(R.id.voice_close);
-        mSendnewbarVoiceR = (RelativeLayout) findViewById(R.id.sendnewbar_voice_r);
+        mVoiceTimeMath = findViewById(R.id.voice_time_math);
+        mVoiceTimeL = findViewById(R.id.voice_time_l);
+        mCircleOne = findViewById(R.id.circle_one);
+        mCircleProgressbar = findViewById(R.id.circleProgressbar);
+        mCircleTwo = findViewById(R.id.circle_two);
+        mVoiceDelete = findViewById(R.id.voice_delete);
+        mVoiceTxtTip = findViewById(R.id.voice_txt_tip);
+        mCircleR = findViewById(R.id.circle_r);
+        mVoiceIcon = findViewById(R.id.voice_icon);
+        mVoiceSubmit = findViewById(R.id.voice_submit);
+        mVoiceGif = findViewById(R.id.voice_gif);
+        mVoiceTime = findViewById(R.id.voice_time);
+        mVoiceClose = findViewById(R.id.voice_close);
+        mSendnewbarVoiceR = findViewById(R.id.sendnewbar_voice_r);
         gifShow = new GIFShow(mVoiceGif);
 
         setActivityBar();
@@ -210,8 +207,8 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
             @Override
             public View getView(FlowLayout parent, int position, String o) {
                 View v = mInflater.inflate(R.layout.other_newbar_tag, mBottomFlowlayout, false);
-                TextView t = (TextView) v.findViewById(R.id.text);
-                ImageView i = (ImageView) v.findViewById(R.id.image);
+                TextView t = v.findViewById(R.id.text);
+                ImageView i = v.findViewById(R.id.image);
                 if (position == 0) {
                     i.setBackground(getDrawable(R.drawable.icon_location));
                     if (!o.equals("我的位置")) {
@@ -230,7 +227,7 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
             @Override
             public boolean onTagClick(View view, int position, FlowLayout parent) {
                 if (position == 0) {
-                    if (setAccess()){
+                    if (setAccess()) {
                         showDialogS(BOTTOMLOCATION);
                     }
                 }
@@ -254,7 +251,7 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
 
             @Override
             public void afterTextChanged(Editable s) {
-                    mPresenter.setString(mSendnewbarTxt.getText().toString());
+                mPresenter.setString(mSendnewbarTxt.getText().toString());
             }
         });
     }
@@ -278,7 +275,7 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
                         break;
                     case RESPONSE_THREE:
                         mCircleProgressbar.setProgress((Float) response);
-                        mVoiceTimeMath.setText(String.valueOf(Integer.valueOf(mVoiceTimeMath.getText().toString()) + 1));
+                        mVoiceTimeMath.setText(String.valueOf(Integer.parseInt(mVoiceTimeMath.getText().toString()) + 1));
                         mVoiceTimeMath.postInvalidate();
                         break;
                     case RESPONSE_FOUR:
@@ -334,12 +331,11 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
         bottomLocation = new ComponentDialog(this, R.layout.dialog_bottom_location, R.style.dialogHomeSend, new ComponentDialog.InitDialog() {
             @Override
             public void initView(View view) {
-                mLocationClose = (TextView) view.findViewById(R.id.location_close);
-                mLocationSearchEdt = (EditText) view.findViewById(R.id.location_search_edt);
-                mLocationSearchR = (RelativeLayout) view.findViewById(R.id.location_search_r);
-                mLocationLoading = (GifImageView) view.findViewById(R.id.location_loading);
-                mLocationErrorR = (RelativeLayout) view.findViewById(R.id.location_error_r);
-                mLocationRecycler = (RecyclerView) view.findViewById(R.id.location_recycler);
+                mLocationClose = view.findViewById(R.id.location_close);
+                mLocationSearchEdt = view.findViewById(R.id.location_search_edt);
+                mLocationLoading = view.findViewById(R.id.location_loading);
+                mLocationErrorR = view.findViewById(R.id.location_error_r);
+                mLocationRecycler = view.findViewById(R.id.location_recycler);
             }
 
             @Override
@@ -360,16 +356,16 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
                     public void onClick(View v) {
                         mLocationErrorR.setVisibility(View.GONE);
                         mLocationLoading.setVisibility(View.VISIBLE);
-                        mPresenter.initLocationList(SendNewBarPage.this,new LinearLayoutManager(MyApplication.getContext()),mLocationRecycler);
+                        mPresenter.initLocationList(SendNewBarPage.this, new LinearLayoutManager(MyApplication.getContext()), mLocationRecycler);
                     }
                 });
                 SearchFun.search(mLocationSearchEdt, new SearchFun.GoSearch() {
                     @Override
                     public void afterTextChangedSearch(String text) {
-                        if (text.equals("")){
-                            mPresenter.initLocationList(SendNewBarPage.this,new LinearLayoutManager(MyApplication.getContext()),mLocationRecycler);
-                        }else {
-                            mPresenter.searchLocation(text,SendNewBarPage.this,new LinearLayoutManager(MyApplication.getContext()),mLocationRecycler);
+                        if (text.equals("")) {
+                            mPresenter.initLocationList(SendNewBarPage.this, new LinearLayoutManager(MyApplication.getContext()), mLocationRecycler);
+                        } else {
+                            mPresenter.searchLocation(text, SendNewBarPage.this, new LinearLayoutManager(MyApplication.getContext()), mLocationRecycler);
                         }
                     }
                 });
@@ -381,7 +377,7 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
                     closeDialog(BOTTOMLOCATION);
                     return true;
-                }else {
+                } else {
                     return false;
                 }
             }
@@ -391,12 +387,12 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
         bottomTopic = new ComponentDialog(this, R.layout.dialog_bottom_topic, R.style.dialogHomeSend, new ComponentDialog.InitDialog() {
             @Override
             public void initView(View view) {
-                mTopicClose = (TextView) view.findViewById(R.id.topic_close);
-                mTopicSearchEdt = (EditText) view.findViewById(R.id.topic_search_edt);
-                mHotTopicTag = (TagFlowLayout) view.findViewById(R.id.hot_topic_tag);
-                mHotTopicR = (RelativeLayout) view.findViewById(R.id.hot_topic_r);
-                mSearchTopicTag = (TagFlowLayout) view.findViewById(R.id.search_topic_tag);
-                mSearchTopicR = (RelativeLayout) view.findViewById(R.id.search_topic_r);
+                mTopicClose = view.findViewById(R.id.topic_close);
+                mTopicSearchEdt = view.findViewById(R.id.topic_search_edt);
+                mHotTopicTag = view.findViewById(R.id.hot_topic_tag);
+                mHotTopicR = view.findViewById(R.id.hot_topic_r);
+                mSearchTopicTag = view.findViewById(R.id.search_topic_tag);
+                mSearchTopicR = view.findViewById(R.id.search_topic_r);
             }
 
             @Override
@@ -436,7 +432,7 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
                 mHotTopicTag.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
                     @Override
                     public boolean onTagClick(View view, int position, FlowLayout parent) {
-                        TextView textView = (TextView) view.findViewById(R.id.text);
+                        TextView textView = view.findViewById(R.id.text);
                         if (mPresenter.topics.size() == 5) {
                             MyToastClass.ShowToast(MyApplication.getContext(), "最多添加5个话题噢");
                         } else {
@@ -458,8 +454,8 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
             @Override
             public View getView(FlowLayout parent, int position, Topic topic) {
                 View view = layoutInflater.inflate(R.layout.item_tag_two, mSelectTopicFlowlayout, false);
-                TextView textView = (TextView) view.findViewById(R.id.text);
-                ImageView imageView = (ImageView) view.findViewById(R.id.delete_tag);
+                TextView textView = view.findViewById(R.id.text);
+                ImageView imageView = view.findViewById(R.id.delete_tag);
                 textView.setText(topic.getTopic_name());
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -486,7 +482,7 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
         mSearchTopicTag.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
             @Override
             public boolean onTagClick(View view, int position, FlowLayout parent) {
-                TextView textView = (TextView) view.findViewById(R.id.text);
+                TextView textView = view.findViewById(R.id.text);
                 if (mPresenter.topics.size() == 5) {
                     MyToastClass.ShowToast(MyApplication.getContext(), "最多添加5个话题噢");
                 } else {
@@ -511,7 +507,7 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
         createDialog();
         switch (i) {
             case BOTTOMLOCATION:
-                mPresenter.initLocationList(SendNewBarPage.this,new LinearLayoutManager(MyApplication.getContext()) ,mLocationRecycler);
+                mPresenter.initLocationList(SendNewBarPage.this, new LinearLayoutManager(MyApplication.getContext()), mLocationRecycler);
                 bottomLocation.showMyDialog();
                 break;
             case BOTTOMTOPIC:
@@ -562,7 +558,7 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
 
     @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.sendnewbar_actbar);
+        FragmentSpbAvtivityBar bar = setMyActivityBar(R.id.sendnewbar_actbar);
         bar.barLeftImg(R.drawable.close_black, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
             public void onClick() {
@@ -573,9 +569,9 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
         bar.barRightTxt1(SENDTITLE, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
             public void onClick() {
-                if (mSendnewbarTxt.getText().toString().trim().equals("")){
-                    MyToastClass.ShowToast(MyApplication.getContext(),"内容不能为空噢");
-                }else {
+                if (mSendnewbarTxt.getText().toString().trim().equals("")) {
+                    MyToastClass.ShowToast(MyApplication.getContext(), "内容不能为空噢");
+                } else {
                     showDialogS(DIALOGLOADING);
                     mPresenter.sendNewMessage();
                 }
@@ -592,10 +588,6 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
                 mBottomVoiceR.setVisibility(View.GONE);
                 break;
             case R.id.sendnewbar_image_add:
-                selectImage();
-                changeIcon(HAVEIMAGE);
-                mBottomVoiceR.setVisibility(View.GONE);
-                break;
             case R.id.bottom_add_image:
                 selectImage();
                 changeIcon(HAVEIMAGE);
@@ -647,7 +639,7 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
                     voiceNow = VOICE_START;
                 } else {
                     gifShow.startGif();
-                    mPresenter.startPlayer(Integer.valueOf(mVoiceTime.getText().toString()));
+                    mPresenter.startPlayer(Integer.parseInt(mVoiceTime.getText().toString()));
                     voiceNow = VOICE_STOP;
                 }
                 break;
@@ -694,7 +686,7 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
             mBottomAddVoice.setBackground(ContextCompat.getDrawable(this, R.drawable.icon_newbar_voice_no));
             mBottomAddVoice.setClickable(false);
         }
-        if (a == 100){
+        if (a == 100) {
             if (mPresenter.voicePath == null || mPresenter.voicePath.equals("")) {
                 mBottomAddVoice.setClickable(true);
                 mBottomAddImage.setClickable(true);
@@ -757,7 +749,7 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
                 voiceNow = VOICE_STOP;
                 mVoiceIcon.setBackground(getDrawable(R.drawable.icon_voice_stop));
                 mVoiceDelete.setVisibility(View.GONE);
-                mPresenter.startPlayer(Integer.valueOf(mVoiceTimeMath.getText().toString()));
+                mPresenter.startPlayer(Integer.parseInt(mVoiceTimeMath.getText().toString()));
                 mVoiceTxtTip.setText("正在播放");
                 break;
             case VOICE_STOP:
@@ -778,18 +770,19 @@ public class SendNewBarPage extends BaseMVPActivity<ISendNewBarPageAView, SendNe
             mPresenter.newBarImageAdapter.destroyTransFeree();
         }
         mPresenter.onStopGps();
+        SpbBroadcast.destroyBrc(transferLoc);
     }
 
     class TransferLoc extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             String loc = intent.getStringExtra("key_two");
-            int id = intent.getIntExtra("key_one",0);
-            if (id != 0){
-                titleTagList.set(0,loc);
+            int id = intent.getIntExtra("key_one", 0);
+            if (id != 0) {
+                titleTagList.set(0, loc);
                 mPresenter.setLoc(loc);
-            }else {
-                titleTagList.set(0,"我的位置");
+            } else {
+                titleTagList.set(0, "我的位置");
             }
             initData();
             closeDialog(BOTTOMLOCATION);

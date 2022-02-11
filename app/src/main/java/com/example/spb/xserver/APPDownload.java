@@ -17,29 +17,29 @@ import java.io.File;
 
 public class APPDownload {
 
-    private NotificationCompat.Builder b;
+    private final NotificationCompat.Builder b;
     private NotificationManager m;
-    private static String NOTIFICATIONID = "1";
-    private static int ID = 1;
-    private Activity activity;
-    private static Context context;
+    private static final String NOTIFICATIONID = "1";
+    private static final int ID = 1;
+    private final Activity activity;
+    private final Context context;
 
     public APPDownload(Context c, Activity a) {
         this.context = c;
         this.activity = a;
-        b = new NotificationCompat.Builder(c,NOTIFICATIONID);
+        b = new NotificationCompat.Builder(c, NOTIFICATIONID);
         b.setSmallIcon(R.mipmap.ic_launcher);
         b.setContentTitle("下载更新");
         b.setContentText("更新");
     }
 
-    public void startDownload(){
+    public void startDownload() {
         m = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
-        m.notify(ID,b.build());
-        b.setProgress(100,0,false);
-        if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O){
+        m.notify(ID, b.build());
+        b.setProgress(100, 0, false);
+        if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             //只在Android O之上需要渠道，这里的第一个参数要和下面的channelId一样
-            NotificationChannel notificationChannel = new NotificationChannel(String.valueOf(NOTIFICATIONID),"name",NotificationManager.IMPORTANCE_HIGH);
+            NotificationChannel notificationChannel = new NotificationChannel(String.valueOf(NOTIFICATIONID), "name", NotificationManager.IMPORTANCE_HIGH);
             //如果这里用IMPORTANCE_NOENE就需要在系统的设置里面开启渠道，通知才能正常弹出
             m.createNotificationChannel(notificationChannel);
         }
@@ -61,10 +61,10 @@ public class APPDownload {
 
             @Override
             public void onDownloading(int progress) {
-                b.setProgress(100,progress,false);
-                m.notify(ID,b.build());
+                b.setProgress(100, progress, false);
+                m.notify(ID, b.build());
                 //下载进度提示
-                b.setContentText("下载"+progress+"%");
+                b.setContentText("下载" + progress + "%");
             }
 
             @Override
@@ -72,7 +72,7 @@ public class APPDownload {
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        MyToastClass.ShowToast(context,"下载错误,请重新下载");
+                        MyToastClass.ShowToast(context, "下载错误,请重新下载");
                     }
                 });
             }

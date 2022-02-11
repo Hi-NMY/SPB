@@ -16,8 +16,6 @@ import java.util.List;
 
 public class SetUpMessagePage extends BaseMVPActivity<ISetUpMessagePageAView, SetUpMessagePageAPresenterImpl> implements ISetUpMessagePageAView {
 
-    private FragmentSpbAvtivityBar bar;
-    private Switch mSwitch1;
     private List<Switch> switches;
 
     @Override
@@ -35,7 +33,7 @@ public class SetUpMessagePage extends BaseMVPActivity<ISetUpMessagePageAView, Se
     @Override
     protected void initActView() {
         switches = new ArrayList<>();
-        mSwitch1 = (Switch) findViewById(R.id.switch1);
+        Switch mSwitch1 = findViewById(R.id.switch1);
         switches.add(mSwitch1);
         setActivityBar();
         setBar();
@@ -45,11 +43,7 @@ public class SetUpMessagePage extends BaseMVPActivity<ISetUpMessagePageAView, Se
 
     @Override
     protected void initData() {
-        if (mPresenter.isNotifyAll()){
-            switches.get(0).setChecked(true);
-        }else {
-            switches.get(0).setChecked(false);
-        }
+        switches.get(0).setChecked(mPresenter.isNotifyAll());
     }
 
     @Override
@@ -79,9 +73,8 @@ public class SetUpMessagePage extends BaseMVPActivity<ISetUpMessagePageAView, Se
 
     @Override
     public void setMyListener() {
-        for (int i = 0 ; i < switches.size() ; i++){
-            int finalI = i;
-            switches.get(i).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        for (Switch aSwitch : switches) {
+            aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     mPresenter.setNotifyAll(isChecked);
@@ -107,7 +100,7 @@ public class SetUpMessagePage extends BaseMVPActivity<ISetUpMessagePageAView, Se
 
     @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.setup_message_actbar);
+        FragmentSpbAvtivityBar bar = setMyActivityBar(R.id.setup_message_actbar);
         bar.barCentralTxt(TITLE, null);
         bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override

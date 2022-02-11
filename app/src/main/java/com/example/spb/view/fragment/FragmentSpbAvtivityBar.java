@@ -1,11 +1,9 @@
 package com.example.spb.view.fragment;
 
-import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import androidx.annotation.ColorInt;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPFragment;
@@ -14,7 +12,6 @@ import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;
 
 public class FragmentSpbAvtivityBar extends BaseMVPFragment<ISpbAvtivityBarFView, SpbAvtivityBarFPresenterImpl> implements ISpbAvtivityBarFView {
 
-    private SpbAvtivityBarFPresenterImpl mISpbAvtivityBarFPresenter;
     private ImageView mBarLeftImg;
     private TextView mBarLeftTxt;
     private ImageView mBarRightImg1;
@@ -30,7 +27,7 @@ public class FragmentSpbAvtivityBar extends BaseMVPFragment<ISpbAvtivityBarFView
     private boolean KEYLEFTIMG = false;
     private boolean KEYLEFTTXT = false;
     private boolean KEYRIGHTIMG1 = false;
-    private boolean KEYRIGHTTXT1= false;
+    private boolean KEYRIGHTTXT1 = false;
     private boolean KEYRIGHTIMG2 = false;
     private boolean KEYRIGHTTXT2 = false;
     private boolean KEYNEWNOTICE = false;
@@ -38,12 +35,9 @@ public class FragmentSpbAvtivityBar extends BaseMVPFragment<ISpbAvtivityBarFView
     private boolean KEYSEARCHRLT = false;
     private boolean KEYSIGHRLT = false;
 
-    private View viewS;
-
     @Override
     protected SpbAvtivityBarFPresenterImpl createPresenter() {
-        mISpbAvtivityBarFPresenter = new SpbAvtivityBarFPresenterImpl();
-        return mISpbAvtivityBarFPresenter;
+        return new SpbAvtivityBarFPresenterImpl();
     }
 
     @Override
@@ -53,7 +47,6 @@ public class FragmentSpbAvtivityBar extends BaseMVPFragment<ISpbAvtivityBarFView
 
     @Override
     protected void initFragView(View view) {
-        viewS = view;
         mSpbActivityBar = (RelativeLayout) view.findViewById(R.id.spb_activity_bar);
         mBarLeftImg = (ImageView) view.findViewById(R.id.bar_left_img);
         mBarLeftTxt = (TextView) view.findViewById(R.id.bar_left_txt);
@@ -63,8 +56,8 @@ public class FragmentSpbAvtivityBar extends BaseMVPFragment<ISpbAvtivityBarFView
         mBarRightImg2 = (ImageView) view.findViewById(R.id.bar_right_img2);
         mBarRightTxt2 = (TextView) view.findViewById(R.id.bar_right_txt2);
         mBarCentralTxt = (TextView) view.findViewById(R.id.bar_central_txt);
-        mSearchRlt = (RelativeLayout)view.findViewById(R.id.search_rlt);
-        mSignRlt = (RelativeLayout)view.findViewById(R.id.sign_rlt);
+        mSearchRlt = (RelativeLayout) view.findViewById(R.id.search_rlt);
+        mSignRlt = (RelativeLayout) view.findViewById(R.id.sign_rlt);
     }
 
     public RelativeLayout getmSpbActivityBar() {
@@ -179,14 +172,14 @@ public class FragmentSpbAvtivityBar extends BaseMVPFragment<ISpbAvtivityBarFView
     public void barSearchView(OnMyClick onMyClick) {
         KEYSEARCHRLT = true;
         removeInvisible(mSearchRlt);
-        barOnClickListener(mSearchRlt,onMyClick);
+        barOnClickListener(mSearchRlt, onMyClick);
     }
 
     @Override
     public void barSignView(OnMyClick onMyClick) {
         KEYSIGHRLT = true;
         removeInvisible(mSignRlt);
-        barOnClickListener(mSignRlt,onMyClick);
+        barOnClickListener(mSignRlt, onMyClick);
     }
 
     @Override
@@ -197,7 +190,7 @@ public class FragmentSpbAvtivityBar extends BaseMVPFragment<ISpbAvtivityBarFView
 
     @Override
     public void barOnClickListener(View view, OnMyClick onMyClick) {
-        if (onMyClick !=null){
+        if (onMyClick != null) {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -208,51 +201,50 @@ public class FragmentSpbAvtivityBar extends BaseMVPFragment<ISpbAvtivityBarFView
     }
 
 
-
     @Override
     public void removeInvisible(View view) {
-        searchShow(view,0);
-        view.setVisibility(view.VISIBLE);
+        searchShow(view, 0);
+        view.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void searchShow(View view,int fun) {
-        if (fun == 0){
+    public void searchShow(View view, int fun) {
+        if (fun == 0) {
             if (!KEYLEFTIMG) {
-                mBarLeftImg.setVisibility(view.INVISIBLE);
+                mBarLeftImg.setVisibility(View.INVISIBLE);
             }
             if (!KEYLEFTTXT) {
-                mBarLeftTxt.setVisibility(view.INVISIBLE);
+                mBarLeftTxt.setVisibility(View.INVISIBLE);
             }
             if (!KEYRIGHTIMG1) {
-                mBarRightImg1.setVisibility(view.INVISIBLE);
+                mBarRightImg1.setVisibility(View.INVISIBLE);
             }
             if (!KEYNEWNOTICE) {
-                mBarNewnoticeView.setVisibility(view.INVISIBLE);
+                mBarNewnoticeView.setVisibility(View.INVISIBLE);
             }
             if (!KEYRIGHTTXT1) {
-                mBarRightTxt1.setVisibility(view.INVISIBLE);
+                mBarRightTxt1.setVisibility(View.INVISIBLE);
             }
             if (!KEYRIGHTIMG2) {
-                mBarRightImg2.setVisibility(view.INVISIBLE);
+                mBarRightImg2.setVisibility(View.INVISIBLE);
             }
             if (!KEYRIGHTTXT2) {
-                mBarRightTxt2.setVisibility(view.INVISIBLE);
+                mBarRightTxt2.setVisibility(View.INVISIBLE);
             }
             if (!KEYCENTRALTXT) {
-                mBarCentralTxt.setVisibility(view.INVISIBLE);
+                mBarCentralTxt.setVisibility(View.INVISIBLE);
             }
             if (!KEYSEARCHRLT) {
-                mSearchRlt.setVisibility(view.INVISIBLE);
+                mSearchRlt.setVisibility(View.INVISIBLE);
             }
             if (!KEYSIGHRLT) {
-                mSignRlt.setVisibility(view.GONE);
+                mSignRlt.setVisibility(View.GONE);
             }
-        }else {
+        } else {
             KEYLEFTIMG = false;
             KEYLEFTTXT = false;
             KEYRIGHTIMG1 = false;
-            KEYRIGHTTXT1= false;
+            KEYRIGHTTXT1 = false;
             KEYRIGHTIMG2 = false;
             KEYRIGHTTXT2 = false;
             KEYNEWNOTICE = false;

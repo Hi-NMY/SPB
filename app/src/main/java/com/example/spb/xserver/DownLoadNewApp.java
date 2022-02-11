@@ -16,19 +16,19 @@ public class DownLoadNewApp {
     private static DownLoadNewApp downLoadNewApp;
     private final OkHttpClient okHttpClient;
 
-    public static DownLoadNewApp get(){
-        if (downLoadNewApp == null){
+    public static DownLoadNewApp get() {
+        if (downLoadNewApp == null) {
             downLoadNewApp = new DownLoadNewApp();
         }
 
         return downLoadNewApp;
     }
 
-    public DownLoadNewApp(){
+    public DownLoadNewApp() {
         okHttpClient = new OkHttpClient();
     }
 
-    public void downLoad(String url, String saveDir, OnDownloadListener onDownloadListener){
+    public void downLoad(String url, String saveDir, OnDownloadListener onDownloadListener) {
         Request request = new Request.Builder().url(url).build();
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
@@ -37,7 +37,7 @@ public class DownLoadNewApp {
             }
 
             @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response){
+            public void onResponse(@NotNull Call call, @NotNull Response response) {
                 InputStream i = null;
                 byte[] bytes = new byte[3072];
                 int len = 0;
@@ -46,21 +46,21 @@ public class DownLoadNewApp {
                     String savePath = isExisDir(saveDir);
                     i = response.body().byteStream();
                     long total = response.body().contentLength();
-                    File file = new File(savePath,getNameFile(url));
+                    File file = new File(savePath, getNameFile(url));
                     fileOutputStream = new FileOutputStream(file);
                     long num = 0;
-                    while ((len = i.read(bytes)) != -1){
-                        fileOutputStream.write(bytes,0,len);
+                    while ((len = i.read(bytes)) != -1) {
+                        fileOutputStream.write(bytes, 0, len);
                         num += len;
-                        int progress = (int)(num * 1.0f / total * 100);
+                        int progress = (int) (num * 1.0f / total * 100);
                         onDownloadListener.onDownloading(progress);
                     }
                     fileOutputStream.flush();
                     onDownloadListener.onDownloadSuccess(file);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     onDownloadListener.onDownloadError();
-                }finally {
+                } finally {
                     try {
                         if (i != null)
                             i.close();
@@ -78,26 +78,28 @@ public class DownLoadNewApp {
 
     public String isExisDir(String saveDir) throws IOException {
         File downloadFile;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
-            downloadFile = new File(MyApplication.getContext().getExternalFilesDir(null),saveDir);
-        }else {
-            downloadFile = new File(Environment.getExternalStorageDirectory(),saveDir);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            downloadFile = new File(MyApplication.getContext().getExternalFilesDir(null), saveDir);
+        } else {
+            downloadFile = new File(Environment.getExternalStorageDirectory(), saveDir);
         }
 
-        if (!downloadFile.mkdirs()){
+        if (!downloadFile.mkdirs()) {
             downloadFile.createNewFile();
         }
         String savePath = downloadFile.getAbsolutePath();
         return savePath;
     }
 
-    private String getNameFile(String url){
+    private String getNameFile(String url) {
         return url.substring(url.lastIndexOf("/") + 1);
     }
 
-    public interface OnDownloadListener{
+    public interface OnDownloadListener {
         void onDownloadSuccess(File file);
+
         void onDownloading(int progress);
+
         void onDownloadError();
     }
 }

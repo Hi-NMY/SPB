@@ -17,10 +17,7 @@ import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.entity.Sign;
 import com.example.spb.presenter.impl.SignInBadgeFPresenterImpl;
-import com.example.spb.presenter.utils.InValues;
-import com.example.spb.presenter.utils.MyDateClass;
-import com.example.spb.presenter.utils.MyResolve;
-import com.example.spb.presenter.utils.SpbBroadcast;
+import com.example.spb.presenter.utils.*;
 import com.example.spb.view.Component.EasyDialog;
 import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.InterComponent.DialogInter;
@@ -67,16 +64,16 @@ public class FragmentSignInBadge extends BaseMVPFragment<ISignInBadgeFView, Sign
 
     @Override
     protected void initFragView(View view) {
-        mBadgeStar = (RoundedImageView) view.findViewById(R.id.badge_star);
-        mBadgeStarBtn = (Button) view.findViewById(R.id.badge_star_btn);
-        mBadgeCertification = (RoundedImageView) view.findViewById(R.id.badge_certification);
-        mBadgeCertificationBtn = (Button) view.findViewById(R.id.badge_certification_btn);
-        mBadgeLikeTwoBtn = (Button) view.findViewById(R.id.badge_like_two_btn);
-        mBadgeLikeOneBtn = (Button) view.findViewById(R.id.badge_like_one_btn);
-        mBadgeLikeThreeBtn = (Button) view.findViewById(R.id.badge_like_three_btn);
-        mBadgeTaskTwoBtn = (Button) view.findViewById(R.id.badge_task_two_btn);
-        mBadgeTaskOneBtn = (Button) view.findViewById(R.id.badge_task_one_btn);
-        mBadgeTaskThreeBtn = (Button) view.findViewById(R.id.badge_task_three_btn);
+        mBadgeStar = view.findViewById(R.id.badge_star);
+        mBadgeStarBtn = view.findViewById(R.id.badge_star_btn);
+        mBadgeCertification = view.findViewById(R.id.badge_certification);
+        mBadgeCertificationBtn = view.findViewById(R.id.badge_certification_btn);
+        mBadgeLikeTwoBtn = view.findViewById(R.id.badge_like_two_btn);
+        mBadgeLikeOneBtn = view.findViewById(R.id.badge_like_one_btn);
+        mBadgeLikeThreeBtn = view.findViewById(R.id.badge_like_three_btn);
+        mBadgeTaskTwoBtn = view.findViewById(R.id.badge_task_two_btn);
+        mBadgeTaskOneBtn = view.findViewById(R.id.badge_task_one_btn);
+        mBadgeTaskThreeBtn = view.findViewById(R.id.badge_task_three_btn);
         createDialog();
         setMyListener();
     }
@@ -429,18 +426,18 @@ public class FragmentSignInBadge extends BaseMVPFragment<ISignInBadgeFView, Sign
         @Override
         public void onReceive(Context context, Intent intent) {
             Sign sign = (Sign) intent.getSerializableExtra("key_two");
-            if (sign.getSign_like_badge() == null || sign.getSign_like_badge().equals("")) {
+            if (DataVerificationTool.isEmpty(sign.getSign_like_badge())) {
                 mPresenter.setLikeBadgeNum(0);
             } else {
                 mPresenter.setLikeBadgeNum(MyResolve.InBadge(sign.getSign_like_badge()).size());
             }
-            if (sign.getSign_task_badge() == null || sign.getSign_task_badge().equals("")) {
+            if (DataVerificationTool.isEmpty(sign.getSign_task_badge())) {
                 mPresenter.setSignBadgeNum(0);
             } else {
                 mPresenter.setSignBadgeNum(MyResolve.InBadge(sign.getSign_task_badge()).size());
             }
             mPresenter.setCtSign(sign.getSign_ct_badge());
-            mPresenter.setStarBadge(sign.getSign_star_badge() == null || sign.getSign_star_badge().equals("") ? "" : sign.getSign_star_badge());
+            mPresenter.setStarBadge(DataVerificationTool.isEmpty(sign.getSign_star_badge()) ? "" : sign.getSign_star_badge());
             initBadgeView();
         }
     }

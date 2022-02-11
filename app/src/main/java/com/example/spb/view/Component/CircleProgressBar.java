@@ -19,8 +19,6 @@ public class CircleProgressBar extends View {
     private float radius;
     //圆环宽度
     private float strokeWidth;
-    //总进度
-    private float maxProgress = 100;
     //当前进度
     private float newProgress;
 
@@ -55,7 +53,9 @@ public class CircleProgressBar extends View {
         if (newProgress > 0) {
             RectF rectF = new RectF(getWidth() / 2 - radius, getHeight() / 2 - radius, getWidth() / 2 + radius, getHeight() / 2 + radius);
             canvas.drawArc(rectF, 0, 0, false, paint);
-            canvas.drawArc(rectF, -90, ((float) newProgress / maxProgress) * 360, false, paint);
+            //总进度
+            float maxProgress = 100;
+            canvas.drawArc(rectF, -90, (newProgress / maxProgress) * 360, false, paint);
         }
     }
 

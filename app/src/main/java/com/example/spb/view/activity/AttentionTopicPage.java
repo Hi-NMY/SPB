@@ -26,10 +26,7 @@ import pl.droidsonroids.gif.GifImageView;
 public class AttentionTopicPage extends BaseMVPActivity<IAttentionTopicPageAView, AttentionTopicPageAPresenterImpl>
         implements IAttentionTopicPageAView {
 
-    private FragmentSpbAvtivityBar bar;
-    private GifImageView mAttentiontopicRefreshTgif;
     private RecyclerView mAttentiontopicRecyclerview;
-    private SmartRefreshLayout mAttentiontopicRefresh;
     private MySmartRefresh mySmartRefresh;
     private RefreshAttTopic refreshAttTopic;
 
@@ -49,11 +46,11 @@ public class AttentionTopicPage extends BaseMVPActivity<IAttentionTopicPageAView
 
     @Override
     protected void initActView() {
-        mAttentiontopicRefreshTgif = (GifImageView) findViewById(R.id.attentiontopic_refresh_tgif);
-        mAttentiontopicRecyclerview = (RecyclerView) findViewById(R.id.attentiontopic_recyclerview);
-        mAttentiontopicRefresh = (SmartRefreshLayout) findViewById(R.id.attentiontopic_refresh);
-        mAttentiontopicRecyclerview = MyListAnimation.setListAnimation(this,mAttentiontopicRecyclerview);
-        mySmartRefresh = new MySmartRefresh(mAttentiontopicRefresh,mAttentiontopicRefreshTgif,null);
+        mAttentiontopicRecyclerview =  findViewById(R.id.attentiontopic_recyclerview);
+        GifImageView mAttentiontopicRefreshTgif =  findViewById(R.id.attentiontopic_refresh_tgif);
+        SmartRefreshLayout mAttentiontopicRefresh =  findViewById(R.id.attentiontopic_refresh);
+        MyListAnimation.setListAnimation(this, mAttentiontopicRecyclerview);
+        mySmartRefresh = new MySmartRefresh(mAttentiontopicRefresh, mAttentiontopicRefreshTgif,null);
         setActivityBar();
         setBar();
         setMyListener();
@@ -107,7 +104,7 @@ public class AttentionTopicPage extends BaseMVPActivity<IAttentionTopicPageAView
 
     @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.attentiontopic_actbar);
+        FragmentSpbAvtivityBar bar = setMyActivityBar(R.id.attentiontopic_actbar);
         bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
             public void onClick() {

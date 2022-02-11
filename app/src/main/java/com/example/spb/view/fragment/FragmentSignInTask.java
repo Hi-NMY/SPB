@@ -31,14 +31,14 @@ import com.example.spb.view.utils.JumpIntent;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInTaskFPresenterImpl> implements ISignInTaskFView, View.OnClickListener {
+public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView, SignInTaskFPresenterImpl> implements ISignInTaskFView, View.OnClickListener {
 
     private Button mTostart;
     private Button mTostart1;
     private Button mTostart2;
     private Button mTostart3;
     private Button mTostart4;
-    private Map<Integer,Button> btnMap;
+    private Map<Integer, Button> btnMap;
     private ObtainSignData obtainSignData;
     private AddNewSign addNewSign;
     private SignInPage signInPage;
@@ -71,16 +71,16 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
     @Override
     protected void initFragView(View view) {
         btnMap = new HashMap<>();
-        mTostart = (Button) view.findViewById(R.id.tostart);
-        mTostart1 = (Button) view.findViewById(R.id.tostart1);
-        mTostart2 = (Button) view.findViewById(R.id.tostart2);
-        mTostart3 = (Button) view.findViewById(R.id.tostart3);
-        mTostart4 = (Button) view.findViewById(R.id.tostart4);
-        btnMap.put(1,mTostart);
-        btnMap.put(2,mTostart1);
-        btnMap.put(3,mTostart2);
-        btnMap.put(4,mTostart3);
-        btnMap.put(5,mTostart4);
+        mTostart = view.findViewById(R.id.tostart);
+        mTostart1 = view.findViewById(R.id.tostart1);
+        mTostart2 = view.findViewById(R.id.tostart2);
+        mTostart3 = view.findViewById(R.id.tostart3);
+        mTostart4 = view.findViewById(R.id.tostart4);
+        btnMap.put(1, mTostart);
+        btnMap.put(2, mTostart1);
+        btnMap.put(3, mTostart2);
+        btnMap.put(4, mTostart3);
+        btnMap.put(5, mTostart4);
         setMyListener();
         createDialog();
     }
@@ -90,8 +90,8 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
 
     }
 
-    public void initTaskData(){
-        switch (mPresenter.getInSignKey()){
+    public void initTaskData() {
+        switch (mPresenter.getInSignKey()) {
             case 1:
                 setReceiveTask(1);
                 break;
@@ -99,7 +99,7 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
                 setAlreadyTask(1);
                 break;
         }
-        switch (mPresenter.getInBarKey()){
+        switch (mPresenter.getInBarKey()) {
             case 1:
                 setReceiveTask(2);
                 break;
@@ -107,7 +107,7 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
                 setAlreadyTask(2);
                 break;
         }
-        switch (mPresenter.getInlikeKey()){
+        switch (mPresenter.getInlikeKey()) {
             case 1:
                 setReceiveTask(3);
                 break;
@@ -115,7 +115,7 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
                 setAlreadyTask(3);
                 break;
         }
-        switch (mPresenter.getIntolikeKey()){
+        switch (mPresenter.getIntolikeKey()) {
             case 1:
                 setReceiveTask(4);
                 break;
@@ -123,7 +123,7 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
                 setAlreadyTask(4);
                 break;
         }
-        switch (mPresenter.getInvideoKey()){
+        switch (mPresenter.getInvideoKey()) {
             case 1:
                 setReceiveTask(5);
                 break;
@@ -133,14 +133,14 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
         }
     }
 
-    public void setReceiveTask(int a){
+    public void setReceiveTask(int a) {
         btnMap.get(a).setText("领取");
         btnMap.get(a).setBackgroundResource(R.drawable.task_obtain_bg);
     }
 
-    public void setAlreadyTask(int a){
+    public void setAlreadyTask(int a) {
         btnMap.get(a).setText("已完成");
-        btnMap.get(a).setTextColor(ContextCompat.getColor(MyApplication.getContext(),R.color.qihei));
+        btnMap.get(a).setTextColor(ContextCompat.getColor(MyApplication.getContext(), R.color.qihei));
         btnMap.get(a).setBackgroundResource(R.drawable.task_already_bg);
     }
 
@@ -160,8 +160,8 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
         coinDialog = new ComponentDialog(signInPage, R.layout.dialog_coin, new ComponentDialog.InitDialog() {
             @Override
             public void initView(View view) {
-                mClose = (ImageView) view.findViewById(R.id.close);
-                mCoinSize = (TextView) view.findViewById(R.id.coin_size);
+                mClose = view.findViewById(R.id.close);
+                mCoinSize = view.findViewById(R.id.coin_size);
             }
 
             @Override
@@ -185,7 +185,7 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
 
     @Override
     public void showDialogS(int i) {
-        switch (i){
+        switch (i) {
             case LOADINGDIALOG:
                 loadingDialog.showMyDialog();
                 break;
@@ -197,7 +197,7 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
 
     @Override
     public void closeDialog(int i) {
-        switch (i){
+        switch (i) {
             case LOADINGDIALOG:
                 loadingDialog.closeMyDialog();
                 break;
@@ -235,9 +235,9 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tostart:
-                switch (mPresenter.getInSignKey()){
+                switch (mPresenter.getInSignKey()) {
                     case 0:
 
                         break;
@@ -248,7 +248,7 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
                 }
                 break;
             case R.id.tostart1:
-                switch (mPresenter.getInBarKey()){
+                switch (mPresenter.getInBarKey()) {
                     case 0:
                         signInPage.finish();
                         JumpIntent.startMyIntent(SendNewBarPage.class);
@@ -260,7 +260,7 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
                 }
                 break;
             case R.id.tostart2:
-                switch (mPresenter.getInlikeKey()){
+                switch (mPresenter.getInlikeKey()) {
                     case 0:
                         signInPage.finish();
                         break;
@@ -271,7 +271,7 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
                 }
                 break;
             case R.id.tostart3:
-                switch (mPresenter.getIntolikeKey()){
+                switch (mPresenter.getIntolikeKey()) {
                     case 0:
                         signInPage.finish();
                         break;
@@ -282,7 +282,7 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
                 }
                 break;
             case R.id.tostart4:
-                switch (mPresenter.getInvideoKey()){
+                switch (mPresenter.getInvideoKey()) {
                     case 0:
                         signInPage.finish();
                         JumpIntent.startMyIntent(SendNewVideoPage.class);
@@ -296,7 +296,7 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
         }
     }
 
-    public void obtainCoin(){
+    public void obtainCoin() {
         showDialogS(LOADINGDIALOG);
         mPresenter.alreadyTask(signInPage.getDataUserMsgPresenter().getUser_account(), new SignInTaskFPresenterImpl.OnReturn() {
             @Override
@@ -307,35 +307,35 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
                         closeDialog(LOADINGDIALOG);
                         showDialogS(COINDIALOG);
                         SharedPreferences.Editor editor = MySharedPreferences.saveShared(InValues.send(R.string.Shared_sign_task));
-                        switch (TASKKEY){
+                        switch (TASKKEY) {
                             case 1:
                                 setAlreadyTask(1);
                                 mPresenter.setInSignKey(2);
-                                editor.putInt(InValues.send(R.string.sign_task_daysign),2);
+                                editor.putInt(InValues.send(R.string.sign_task_daysign), 2);
                                 editor.commit();
                                 break;
                             case 2:
                                 setAlreadyTask(2);
                                 mPresenter.setInBarKey(2);
-                                editor.putInt(InValues.send(R.string.sign_task_bar),2);
+                                editor.putInt(InValues.send(R.string.sign_task_bar), 2);
                                 editor.commit();
                                 break;
                             case 3:
                                 setAlreadyTask(3);
                                 mPresenter.setInlikeKey(2);
-                                editor.putInt(InValues.send(R.string.sign_task_like),2);
+                                editor.putInt(InValues.send(R.string.sign_task_like), 2);
                                 editor.commit();
                                 break;
                             case 4:
                                 setAlreadyTask(4);
                                 mPresenter.setIntolikeKey(2);
-                                editor.putInt(InValues.send(R.string.sign_task_tolike),2);
+                                editor.putInt(InValues.send(R.string.sign_task_tolike), 2);
                                 editor.commit();
                                 break;
                             case 5:
                                 setAlreadyTask(5);
                                 mPresenter.setInvideoKey(2);
-                                editor.putInt(InValues.send(R.string.sign_task_video),2);
+                                editor.putInt(InValues.send(R.string.sign_task_video), 2);
                                 editor.commit();
                                 break;
                         }
@@ -351,15 +351,15 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
             boolean likeKey = Task.getLikeData();
             boolean topicKey = Task.getTopicData();
             SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_sign_task));
-            mPresenter.setInBarKey(sharedPreferences.getInt(InValues.send(R.string.sign_task_bar),0));
-            mPresenter.setInlikeKey(sharedPreferences.getInt(InValues.send(R.string.sign_task_like),0));
-            mPresenter.setInSignKey(sharedPreferences.getInt(InValues.send(R.string.sign_task_daysign),0));
-            mPresenter.setIntolikeKey(sharedPreferences.getInt(InValues.send(R.string.sign_task_tolike),0));
-            mPresenter.setInvideoKey(sharedPreferences.getInt(InValues.send(R.string.sign_task_video),0));
-            if (likeKey && mPresenter.getInlikeKey() == 0){
+            mPresenter.setInBarKey(sharedPreferences.getInt(InValues.send(R.string.sign_task_bar), 0));
+            mPresenter.setInlikeKey(sharedPreferences.getInt(InValues.send(R.string.sign_task_like), 0));
+            mPresenter.setInSignKey(sharedPreferences.getInt(InValues.send(R.string.sign_task_daysign), 0));
+            mPresenter.setIntolikeKey(sharedPreferences.getInt(InValues.send(R.string.sign_task_tolike), 0));
+            mPresenter.setInvideoKey(sharedPreferences.getInt(InValues.send(R.string.sign_task_video), 0));
+            if (likeKey && mPresenter.getInlikeKey() == 0) {
                 mPresenter.setInlikeKey(1);
             }
-            if (topicKey && mPresenter.getIntolikeKey() == 0){
+            if (topicKey && mPresenter.getIntolikeKey() == 0) {
                 mPresenter.setIntolikeKey(1);
             }
             initTaskData();
@@ -371,11 +371,11 @@ public class FragmentSignInTask extends BaseMVPFragment<ISignInTaskFView,SignInT
         public void onReceive(Context context, Intent intent) {
             //通知已签到。修改领取奖励
             int coin = intent.getIntExtra("key_one", 0);
-            if (coin != 10){
+            if (coin != 10) {
                 setReceiveTask(1);
                 mPresenter.setInSignKey(1);
                 SharedPreferences.Editor editor = MySharedPreferences.saveShared(InValues.send(R.string.Shared_sign_task));
-                editor.putInt(InValues.send(R.string.sign_task_daysign),1);
+                editor.putInt(InValues.send(R.string.sign_task_daysign), 1);
                 editor.commit();
             }
         }

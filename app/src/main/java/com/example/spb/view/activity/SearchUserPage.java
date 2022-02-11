@@ -13,8 +13,8 @@ import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.SearchUserPageAPresenterImpl;
 import com.example.spb.presenter.utils.RemoveNullCharacter;
 import com.example.spb.view.Component.EasyDialog;
-import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.InterComponent.DialogInter;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.inter.ISearchUserPageAView;
 import com.example.spb.view.utils.HideKeyboard;
 import com.example.spb.view.utils.MyListAnimation;
@@ -22,7 +22,6 @@ import com.gyf.immersionbar.ImmersionBar;
 
 public class SearchUserPage extends BaseMVPActivity<ISearchUserPageAView, SearchUserPageAPresenterImpl> implements ISearchUserPageAView {
 
-    private FragmentSpbAvtivityBar bar;
     private EditText mSearchMessage;
     private RecyclerView mSearchuserList;
     private DialogInter easyDialog;
@@ -41,9 +40,9 @@ public class SearchUserPage extends BaseMVPActivity<ISearchUserPageAView, Search
 
     @Override
     protected void initActView() {
-        mSearchMessage = (EditText) findViewById(R.id.search_message);
-        mSearchuserList = (RecyclerView) findViewById(R.id.searchuser_list);
-        mSearchuserList = MyListAnimation.setListAnimation(this,mSearchuserList);
+        mSearchMessage = findViewById(R.id.search_message);
+        mSearchuserList = findViewById(R.id.searchuser_list);
+        MyListAnimation.setListAnimation(this, mSearchuserList);
         setBar();
         setActivityBar();
         initData();
@@ -68,7 +67,7 @@ public class SearchUserPage extends BaseMVPActivity<ISearchUserPageAView, Search
 
     @Override
     public void createDialog() {
-        easyDialog = new EasyDialog(this,R.drawable.loading);
+        easyDialog = new EasyDialog(this, R.drawable.loading);
     }
 
     @Override
@@ -91,7 +90,7 @@ public class SearchUserPage extends BaseMVPActivity<ISearchUserPageAView, Search
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                RemoveNullCharacter.setRemoveNull(mSearchMessage,s).setSelection(mSearchMessage.getText().length());
+                RemoveNullCharacter.setRemoveNull(mSearchMessage, s).setSelection(mSearchMessage.getText().length());
             }
 
             @Override
@@ -104,10 +103,10 @@ public class SearchUserPage extends BaseMVPActivity<ISearchUserPageAView, Search
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    if (!mSearchMessage.getText().toString().trim().equals("")){
+                    if (!mSearchMessage.getText().toString().trim().equals("")) {
                         HideKeyboard.hideboard(mSearchMessage);
                         showDialogS(0);
-                        mPresenter.searUser(mSearchMessage.getText().toString().trim(),mSearchuserList);
+                        mPresenter.searUser(mSearchMessage.getText().toString().trim(), mSearchuserList);
                     }
                 }
                 return false;
@@ -126,7 +125,7 @@ public class SearchUserPage extends BaseMVPActivity<ISearchUserPageAView, Search
 
     @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.searchuser_actbar);
+        FragmentSpbAvtivityBar bar = setMyActivityBar(R.id.searchuser_actbar);
         bar.setBarBackground(R.color.TransColor);
         bar.barCentralTxt(TITLE, null);
         bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {

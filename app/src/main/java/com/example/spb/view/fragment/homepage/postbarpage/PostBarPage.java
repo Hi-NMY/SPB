@@ -24,7 +24,6 @@ import com.example.spb.view.inter.IPostBarPageFView;
 import com.example.spb.view.utils.JumpIntent;
 import com.example.spb.view.utils.ScaleTransitionPagerTitleView;
 import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
@@ -49,21 +48,13 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
     private SimplePagerTitleView simplePagerTitleView;
     private ViewPager mPostbarPageViewpager;
     private static final String[] title = new String[]{"关注", "最新", "话题"};
-    private List<String> myTitleList = Arrays.asList(title);
-    private ArrayList<Fragment> fragments;
-    private FragmentManager fragmentManager;
-    private FragmentViewPageAdapter pagerAdapter;
-    private CommonNavigator commonNavigator;
+    private final List<String> myTitleList = Arrays.asList(title);
 
     private AppBarLayout mPostbarAppbarlayout;
     private ImageView mPostbarSearchIcon;
-    private CollapsingToolbarLayout mPostbarCollapsinglayout;
     private RelativeLayout mPostbarR;
     private RelativeLayout mSignRlt;
     private RelativeLayout mSearchRlt;
-
-    private AttentionPage attentionPage;
-    private NewPostPage newPostPage;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,14 +73,13 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
 
     @Override
     protected void initFragView(View view) {
-        mPostbarPageIdt = (MagicIndicator) view.findViewById(R.id.postbar_page_idt);
-        mPostbarPageViewpager = (ViewPager) view.findViewById(R.id.postbar_page_viewpager);
-        mPostbarAppbarlayout = (AppBarLayout) view.findViewById(R.id.postbar_appbarlayout);
-        mPostbarSearchIcon = (ImageView) view.findViewById(R.id.postbar_search_icon);
-        mPostbarCollapsinglayout = (CollapsingToolbarLayout) view.findViewById(R.id.postbar_collapsinglayout);
-        mPostbarR = (RelativeLayout) view.findViewById(R.id.postbar_R);
-        mSignRlt = (RelativeLayout) view.findViewById(R.id.sign_rlt);
-        mSearchRlt = (RelativeLayout) view.findViewById(R.id.search_rlt);
+        mPostbarPageIdt = view.findViewById(R.id.postbar_page_idt);
+        mPostbarPageViewpager = view.findViewById(R.id.postbar_page_viewpager);
+        mPostbarAppbarlayout = view.findViewById(R.id.postbar_appbarlayout);
+        mPostbarSearchIcon = view.findViewById(R.id.postbar_search_icon);
+        mPostbarR = view.findViewById(R.id.postbar_R);
+        mSignRlt = view.findViewById(R.id.sign_rlt);
+        mSearchRlt = view.findViewById(R.id.search_rlt);
         mPostbarSearchIcon.bringToFront();
         intFollowViewPager();
         listenViewMove();
@@ -116,25 +106,18 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
                     mPostbarR.setBackgroundColor(color);
                     topA = 1 - (topA + 0.2f);
                     mPostbarSearchIcon.setAlpha(topA);
-                    if (mPostbarSearchIcon.getAlpha() > 0) {
-                        mPostbarR.setVisibility(View.VISIBLE);
-                        mPostbarSearchIcon.setVisibility(View.VISIBLE);
-                    } else {
-                        mPostbarR.setVisibility(View.INVISIBLE);
-                        mPostbarSearchIcon.setVisibility(View.INVISIBLE);
-                    }
                 } else {
                     mPostbarPageIdt.setBackgroundColor(Color.argb(0, 249, 249, 249));
                     mPostbarR.setBackgroundColor(Color.argb(0, 249, 249, 249));
                     mPostbarAppbarlayout.setAlpha(1 - (1 - appBarLayout.getTotalScrollRange()) / 65f);
                     mPostbarSearchIcon.setAlpha(1 - (1 - (1 - appBarLayout.getTotalScrollRange()) / 65f + 0.2f));
-                    if (mPostbarSearchIcon.getAlpha() > 0) {
-                        mPostbarR.setVisibility(View.VISIBLE);
-                        mPostbarSearchIcon.setVisibility(View.VISIBLE);
-                    } else {
-                        mPostbarR.setVisibility(View.INVISIBLE);
-                        mPostbarSearchIcon.setVisibility(View.INVISIBLE);
-                    }
+                }
+                if (mPostbarSearchIcon.getAlpha() > 0) {
+                    mPostbarR.setVisibility(View.VISIBLE);
+                    mPostbarSearchIcon.setVisibility(View.VISIBLE);
+                } else {
+                    mPostbarR.setVisibility(View.INVISIBLE);
+                    mPostbarSearchIcon.setVisibility(View.INVISIBLE);
                 }
 
             }
@@ -143,16 +126,14 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
     }
 
     private void intFollowViewPager() {
-        fragments = new ArrayList<>();
-        attentionPage = new AttentionPage();
-        newPostPage = new NewPostPage();
-        fragments.add(attentionPage);
-        fragments.add(newPostPage);
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        fragments.add(new AttentionPage());
+        fragments.add(new NewPostPage());
         fragments.add(new TopicPage());
 
-        fragmentManager = getChildFragmentManager();
+        FragmentManager fragmentManager = getChildFragmentManager();
 
-        pagerAdapter = new FragmentViewPageAdapter(fragmentManager, fragments, 3);
+        FragmentViewPageAdapter pagerAdapter = new FragmentViewPageAdapter(fragmentManager, fragments, 3);
         mPostbarPageViewpager.setOffscreenPageLimit(2);
         mPostbarPageViewpager.setAdapter(pagerAdapter);
         highViewPager();
@@ -160,11 +141,11 @@ public class PostBarPage extends BaseMVPFragment<IPostBarPageFView, PostBarPageF
 
 
     private void highViewPager() {
-        commonNavigator = new CommonNavigator(MyApplication.getContext());
+        CommonNavigator commonNavigator = new CommonNavigator(MyApplication.getContext());
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
-                return myTitleList == null ? 0 : myTitleList.size();
+                return myTitleList.size();
             }
 
             @Override

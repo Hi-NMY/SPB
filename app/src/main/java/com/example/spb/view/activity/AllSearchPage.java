@@ -17,8 +17,8 @@ import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.entity.Bar;
-import com.example.spb.entity.Topic;
 import com.example.spb.entity.Dto.UserDto;
+import com.example.spb.entity.Topic;
 import com.example.spb.presenter.impl.AllSearchPageAPresenterImpl;
 import com.example.spb.presenter.utils.RemoveNullCharacter;
 import com.example.spb.view.Component.EasyDialog;
@@ -33,7 +33,6 @@ import java.util.List;
 
 public class AllSearchPage extends BaseMVPActivity<IAllSearchPageAView, AllSearchPageAPresenterImpl> implements IAllSearchPageAView {
 
-    private FragmentSpbAvtivityBar bar;
     private EditText mSearchMessage;
     private TextView mTopicTipOne;
     private RecyclerView mTopicSearchList;
@@ -58,14 +57,14 @@ public class AllSearchPage extends BaseMVPActivity<IAllSearchPageAView, AllSearc
 
     @Override
     protected void initActView() {
-        mSearchMessage = (EditText) findViewById(R.id.search_message);
-        mTopicTipOne = (TextView) findViewById(R.id.topic_tip_one);
-        mTopicSearchList = (RecyclerView) findViewById(R.id.topic_search_list);
-        mUserTipOne = (TextView) findViewById(R.id.user_tip_one);
-        mUserSearchList = (RecyclerView) findViewById(R.id.user_search_list);
-        mBarSearchRecyclerview = (RecyclerView) findViewById(R.id.bar_search_recyclerview);
-        mR1 = (RelativeLayout) findViewById(R.id.r1);
-        mR2 = (RelativeLayout) findViewById(R.id.r2);
+        mSearchMessage = findViewById(R.id.search_message);
+        mTopicTipOne = findViewById(R.id.topic_tip_one);
+        mTopicSearchList = findViewById(R.id.topic_search_list);
+        mUserTipOne = findViewById(R.id.user_tip_one);
+        mUserSearchList = findViewById(R.id.user_search_list);
+        mBarSearchRecyclerview = findViewById(R.id.bar_search_recyclerview);
+        mR1 = findViewById(R.id.r1);
+        mR2 = findViewById(R.id.r2);
         initData();
         setActivityBar();
         setBar();
@@ -91,22 +90,22 @@ public class AllSearchPage extends BaseMVPActivity<IAllSearchPageAView, AllSearc
                 closeDialog(0);
                 switch (responseFlag) {
                     case BAR_SUCCESS:
-                        List<Bar> bars = (List<Bar>)response;
-                        if (bars != null){
+                        List<Bar> bars = (List<Bar>) response;
+                        if (bars != null) {
                             mBarSearchRecyclerview.setVisibility(View.VISIBLE);
                             mPresenter.setBarAdapter(bars, new GridLayoutManager(MyApplication.getContext(), 1), mBarSearchRecyclerview);
-                        }else {
+                        } else {
                             mBarSearchRecyclerview.setVisibility(View.INVISIBLE);
                         }
                         break;
                     case TOPIC_SUCCESS:
-                        List<Topic> topics = (List<Topic>)response;
+                        List<Topic> topics = (List<Topic>) response;
                         mR1.setVisibility(View.VISIBLE);
-                        if (topics != null){
+                        if (topics != null) {
                             mTopicTipOne.setVisibility(View.INVISIBLE);
                             mTopicSearchList.setVisibility(View.VISIBLE);
                             mPresenter.setTopicAdapter(topics, new GridLayoutManager(MyApplication.getContext(), 2), mTopicSearchList);
-                        }else {
+                        } else {
                             mTopicTipOne.setVisibility(View.VISIBLE);
                             mTopicSearchList.setVisibility(View.GONE);
                         }
@@ -114,11 +113,11 @@ public class AllSearchPage extends BaseMVPActivity<IAllSearchPageAView, AllSearc
                     case USER_SUCCESS:
                         List<UserDto> userDtos = (List<UserDto>) response;
                         mR2.setVisibility(View.VISIBLE);
-                        if (userDtos != null){
+                        if (userDtos != null) {
                             mUserTipOne.setVisibility(View.INVISIBLE);
                             mUserSearchList.setVisibility(View.VISIBLE);
                             mPresenter.setUserAdapter(userDtos, new LinearLayoutManager(MyApplication.getContext()), mUserSearchList);
-                        }else {
+                        } else {
                             mUserTipOne.setVisibility(View.VISIBLE);
                             mUserSearchList.setVisibility(View.GONE);
                         }
@@ -188,7 +187,7 @@ public class AllSearchPage extends BaseMVPActivity<IAllSearchPageAView, AllSearc
 
     @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.allsearch_actbar);
+        FragmentSpbAvtivityBar bar = setMyActivityBar(R.id.allsearch_actbar);
         bar.barCentralTxt(TITLE, null);
         bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override

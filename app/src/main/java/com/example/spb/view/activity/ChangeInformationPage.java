@@ -26,9 +26,9 @@ import com.example.spb.presenter.utils.RemoveNullCharacter;
 import com.example.spb.presenter.utils.SpbBroadcast;
 import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.Component.EasyDialog;
-import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.InterComponent.DialogInter;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.inter.IChangeInformationPageAView;
 import com.example.spb.view.utils.HideKeyboard;
 import com.gyf.immersionbar.ImmersionBar;
@@ -41,8 +41,6 @@ import java.util.Date;
 
 public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPageAView, ChangeInformationPageAPresenterImpl>
         implements IChangeInformationPageAView, View.OnClickListener {
-
-    private FragmentSpbAvtivityBar bar;
 
     private DialogInter bottomDialog;
     private DialogInter dialogSign;
@@ -79,16 +77,16 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
 
     @Override
     protected void initActView() {
-        mRFavorite = (RelativeLayout) findViewById(R.id.r_favorite);
-        mRBirth = (RelativeLayout) findViewById(R.id.r_birth);
-        mRHome = (RelativeLayout) findViewById(R.id.r_home);
-        mChangeinformationHome = (TextView) findViewById(R.id.changeinformation_home);
-        mChangeinformationBirth = (TextView) findViewById(R.id.changeinformation_birth);
-        mChangeinformationUsername = (EditText) findViewById(R.id.changeinformation_username);
-        mChangeinformationFavorite = (TextView) findViewById(R.id.changeinformation_favorite);
-        mChangeinformationSign = (TextView) findViewById(R.id.changeinformation_sign);
-        mRSign = (RelativeLayout) findViewById(R.id.r_sign);
-        mX1 = (TextView) findViewById(R.id.x1);
+        mRFavorite = findViewById(R.id.r_favorite);
+        mRBirth = findViewById(R.id.r_birth);
+        mRHome = findViewById(R.id.r_home);
+        mChangeinformationHome = findViewById(R.id.changeinformation_home);
+        mChangeinformationBirth = findViewById(R.id.changeinformation_birth);
+        mChangeinformationUsername = findViewById(R.id.changeinformation_username);
+        mChangeinformationFavorite = findViewById(R.id.changeinformation_favorite);
+        mChangeinformationSign = findViewById(R.id.changeinformation_sign);
+        mRSign = findViewById(R.id.r_sign);
+        mX1 = findViewById(R.id.x1);
         mPresenter.initCityJsonData();
         initData();
         setMyListener();
@@ -144,13 +142,13 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                switch (responseFlag){
+                switch (responseFlag) {
                     case 200:
                         getDataUserMsgPresenter().setUpdateUserMsg((UserInformationDto) response);
-                        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_userMsg),0,null);
+                        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_userMsg), 0, null);
                         closeDialog(LOADINGDIALOG);
                         finish();
-                        mPresenter.updateRong(getDataUserMsgPresenter().getUser_account(),getDataUserMsgPresenter().getUser_name());
+                        mPresenter.updateRong(getDataUserMsgPresenter().getUser_account(), getDataUserMsgPresenter().getUser_name());
                         break;
                     default:
                         closeDialog(LOADINGDIALOG);
@@ -167,8 +165,8 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
         dialogSign = new ComponentDialog(this, R.layout.dialog_change_sign, new ComponentDialog.InitDialog() {
             @Override
             public void initView(View view) {
-                mEditText = (EditText) view.findViewById(R.id.edit_text);
-                mClickTrue = (TextView) view.findViewById(R.id.click_true);
+                mEditText = view.findViewById(R.id.edit_text);
+                mClickTrue = view.findViewById(R.id.click_true);
             }
 
             @Override
@@ -192,9 +190,9 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
         bottomDialog = new ComponentDialog(this, R.layout.dialog_favorite, R.style.dialogHomeSend, new ComponentDialog.InitDialog() {
             @Override
             public void initView(View view) {
-                mFavoriteClose = (TextView) view.findViewById(R.id.favorite_close);
-                mFavoriteNext = (TextView) view.findViewById(R.id.favorite_next);
-                mFavoriteTag = (TagFlowLayout) view.findViewById(R.id.favorite_tag);
+                mFavoriteClose = view.findViewById(R.id.favorite_close);
+                mFavoriteNext = view.findViewById(R.id.favorite_next);
+                mFavoriteTag = view.findViewById(R.id.favorite_tag);
             }
 
             @Override
@@ -204,7 +202,7 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
                     @Override
                     public View getView(FlowLayout parent, int position, String tag) {
                         View view = layoutInflater.inflate(R.layout.item_favorite_tag_one, mFavoriteTag, false);
-                        TextView textView = (TextView) view.findViewById(R.id.text);
+                        TextView textView = view.findViewById(R.id.text);
                         textView.setText(tag);
                         return view;
                     }
@@ -212,13 +210,13 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
                     @Override
                     public void onSelected(int position, View view) {
                         super.onSelected(position, view);
-                        if (mPresenter.uf.size() == 9){
-                            MyToastClass.ShowToast(MyApplication.getContext(),"最多只能选择9个哦");
-                        }else {
-                            RelativeLayout relativeLayout = (RelativeLayout)view.findViewById(R.id.r);
-                            TextView textView = (TextView) view.findViewById(R.id.text);
+                        if (mPresenter.uf.size() == 9) {
+                            MyToastClass.ShowToast(MyApplication.getContext(), "最多只能选择9个哦");
+                        } else {
+                            RelativeLayout relativeLayout = view.findViewById(R.id.r);
+                            TextView textView = view.findViewById(R.id.text);
                             mPresenter.addFavorite(textView.getText().toString());
-                            textView.setTextColor(ContextCompat.getColor(MyApplication.getContext(),R.color.theme_color));
+                            textView.setTextColor(ContextCompat.getColor(MyApplication.getContext(), R.color.theme_color));
                             relativeLayout.setBackground(getDrawable(R.drawable.favorite_tag_two));
                         }
                     }
@@ -226,35 +224,36 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
                     @Override
                     public void unSelected(int position, View view) {
                         super.unSelected(position, view);
-                        RelativeLayout relativeLayout = (RelativeLayout)view.findViewById(R.id.r);
-                        TextView textView = (TextView) view.findViewById(R.id.text);
+                        RelativeLayout relativeLayout = view.findViewById(R.id.r);
+                        TextView textView = view.findViewById(R.id.text);
                         mPresenter.clearFavorite(textView.getText().toString());
-                        textView.setTextColor(ContextCompat.getColor(MyApplication.getContext(),R.color.grey));
+                        textView.setTextColor(ContextCompat.getColor(MyApplication.getContext(), R.color.grey));
                         relativeLayout.setBackground(getDrawable(R.drawable.favorite_tag_one));
                     }
                 });
-                for (int a = 0; a < titleTag.length;a++){
-                    if (mPresenter.verificationString(titleTag[a])){
+                for (int a = 0; a < titleTag.length; a++) {
+                    if (mPresenter.verificationString(titleTag[a])) {
                         mFavoriteTag.getChildAt(a).performClick();
                     }
                 }
             }
+
             @Override
             public void initListener() {
-               mFavoriteClose.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View v) {
-                       closeDialog(BOTTOMDIALOG);
-                       mPresenter.deleteFa();
-                   }
-               });
-               mFavoriteNext.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View v) {
-                       closeDialog(BOTTOMDIALOG);
-                       mPresenter.setUserFavorite();
-                   }
-               });
+                mFavoriteClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        closeDialog(BOTTOMDIALOG);
+                        mPresenter.deleteFa();
+                    }
+                });
+                mFavoriteNext.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        closeDialog(BOTTOMDIALOG);
+                        mPresenter.setUserFavorite();
+                    }
+                });
             }
         });
         bottomDialog.setBottomStyle();
@@ -306,7 +305,7 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                RemoveNullCharacter.setRemoveNull(mChangeinformationUsername,s).setSelection(mChangeinformationUsername.getText().length());
+                RemoveNullCharacter.setRemoveNull(mChangeinformationUsername, s).setSelection(mChangeinformationUsername.getText().length());
             }
 
             @Override
@@ -328,7 +327,7 @@ public class ChangeInformationPage extends BaseMVPActivity<IChangeInformationPag
 
     @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.changeinformation_actbar);
+        FragmentSpbAvtivityBar bar = setMyActivityBar(R.id.changeinformation_actbar);
         TextView rightTxt = bar.getmBarRightTxt1();
         rightTxt.setTextColor(ContextCompat.getColor(this, R.color.theme_color));
         bar.barCentralTxt(TITLE, null);

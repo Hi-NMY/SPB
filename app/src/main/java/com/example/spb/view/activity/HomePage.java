@@ -20,10 +20,10 @@ import com.example.spb.presenter.utils.RequestForAccess;
 import com.example.spb.presenter.utils.SpbBroadcast;
 import com.example.spb.view.Component.AppVersion;
 import com.example.spb.view.Component.ComponentDialog;
-import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.fragment.homepage.messagepage.MessagePage;
 import com.example.spb.view.fragment.homepage.postbarpage.PostBarPage;
 import com.example.spb.view.fragment.homepage.userpage.UserPage;
@@ -39,16 +39,15 @@ import com.shuyu.gsyvideoplayer.GSYVideoManager;
 public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAPresenterImpl> implements IUserHomePageAView, View.OnClickListener {
 
     private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
     private PostBarPage postBarPage;
     private VideoPage videoPage;
     private MessagePage messagePage;
     private UserPage userPage;
     private int PAGENUMBER = 1;
-    private int POSTBARPAGE = 1;
-    private int VIDEOPAGE = 2;
-    private int MESSAGEPAGE = 3;
-    private int USERPAGE = 4;
+    private final int POSTBARPAGE = 1;
+    private final int VIDEOPAGE = 2;
+    private final int MESSAGEPAGE = 3;
+    private final int USERPAGE = 4;
 
     private ISpbAvtivityBarFView bar;
     private DialogInter dialogHomeSend;
@@ -71,8 +70,8 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_new_messasge), newMessage);
         initActView();
         selectionFragment(1);
-        AppVersion appVersion = new AppVersion(MyApplication.getContext(),this);
-        appVersion.startVersion(String.valueOf(ObtainVersion.versionCode(this)),false);
+        AppVersion appVersion = new AppVersion(MyApplication.getContext(), this);
+        appVersion.startVersion(String.valueOf(ObtainVersion.versionCode(this)), false);
     }
 
     @Override
@@ -82,10 +81,10 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
 
     @Override
     protected void initActView() {
-        bar2 = (View) findViewById(R.id.homepage_bar);
-        mViewNewMessage = (View) findViewById(R.id.view_newMessage);
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.homepage_bottom_btn);
-        mHomepageSend = (RelativeLayout) findViewById(R.id.homepage_send);
+        bar2 = findViewById(R.id.homepage_bar);
+        mViewNewMessage = findViewById(R.id.view_newMessage);
+        bottomNavigationView = findViewById(R.id.homepage_bottom_btn);
+        mHomepageSend = findViewById(R.id.homepage_send);
         mHomepageSend.bringToFront();
         bottomNavigationView.setItemIconTintList(null);
 
@@ -105,7 +104,7 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
         if (fragmentManager == null) {
             fragmentManager = this.getSupportFragmentManager();
         }
-        fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         hideFragments(fragmentTransaction);
         if (userPage == null || videoPage == null || messagePage == null || postBarPage == null) {
             userPage = new UserPage();
@@ -412,7 +411,7 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
     @Override
     protected void onPause() {
         super.onPause();
-        if (getEasyVoice() != null){
+        if (getEasyVoice() != null) {
             getEasyVoice().stopPlayer();
             setEasyVoice(null);
         }
@@ -422,10 +421,10 @@ public class HomePage extends BaseMVPActivity<IUserHomePageAView, UserHomePageAP
         @Override
         public void onReceive(Context context, Intent intent) {
             getDataNoticePresenter().obtainNotice(false);
-            int key = intent.getIntExtra("key_one",0);
-            if (key == 0){
+            int key = intent.getIntExtra("key_one", 0);
+            if (key == 0) {
                 mViewNewMessage.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 mViewNewMessage.setVisibility(View.INVISIBLE);
             }
         }

@@ -1,12 +1,9 @@
 package com.example.spb.view.activity;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,32 +21,24 @@ import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.entity.Topic;
 import com.example.spb.presenter.impl.TopicBarPageAPresenterImpl;
+import com.example.spb.presenter.otherimpl.DataAttentionTopicPresenter;
 import com.example.spb.presenter.utils.InValues;
 import com.example.spb.presenter.utils.MyDateClass;
 import com.example.spb.presenter.utils.SpbBroadcast;
-import com.example.spb.presenter.otherimpl.DataAttentionTopicPresenter;
+import com.example.spb.view.Component.MySmartRefresh;
 import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
-import com.example.spb.view.Component.MySmartRefresh;
 import com.example.spb.view.fragment.topicbarpage.HotTopicBar;
 import com.example.spb.view.fragment.topicbarpage.NewTopicBar;
 import com.example.spb.view.fragment.topicbarpage.VideoTopicBar;
 import com.example.spb.view.inter.ITopicBarPageAView;
-import com.example.spb.view.utils.ScaleTransitionPagerTitleView;
+import com.example.spb.view.utils.SetCommonNavigator;
 import com.google.android.material.appbar.AppBarLayout;
 import com.gyf.immersionbar.ImmersionBar;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import net.lucode.hackware.magicindicator.MagicIndicator;
-import net.lucode.hackware.magicindicator.ViewPagerHelper;
-import net.lucode.hackware.magicindicator.buildins.UIUtil;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 import pl.droidsonroids.gif.GifImageView;
 
 import java.util.ArrayList;
@@ -59,13 +48,8 @@ import java.util.List;
 public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPageAPresenterImpl> implements ITopicBarPageAView, View.OnClickListener {
 
     private FragmentSpbAvtivityBar bar;
-    private SimplePagerTitleView simplePagerTitleView;
     private static final String[] title = new String[]{"最新", "最热", "视频"};
-    private List<String> myTitleList = Arrays.asList(title);
-    private ArrayList<Fragment> fragments;
-    private FragmentManager fragmentManager;
-    private FragmentViewPageAdapter pagerAdapter;
-    private CommonNavigator commonNavigator;
+    private final List<String> myTitleList = Arrays.asList(title);
     private MagicIndicator mTopicbarIdt;
     private ViewPager mTopicbarViewpager;
     private RelativeLayout mTopicbarBarR;
@@ -78,8 +62,6 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
     private TextView mTopicbarSlogan;
     private Button mTopicbarAttentionBtn;
     private RelativeLayout mTopicbarRBg;
-    private GifImageView mTopicbarRefreshGif;
-    private SmartRefreshLayout mTopicbarRefresh;
     private MySmartRefresh mySmartRefresh;
     private RelativeLayout mExcessR;
 
@@ -98,20 +80,20 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
 
     @Override
     protected void initActView() {
-        mExcessR = (RelativeLayout) findViewById(R.id.excess_r);
-        mTopicbarIdt = (MagicIndicator) findViewById(R.id.topicbar_idt);
-        mTopicbarViewpager = (ViewPager) findViewById(R.id.topicbar_viewpager);
-        mTopicbarBarR = (RelativeLayout) findViewById(R.id.topicbar_bar_R);
-        mTopicbarAppbarlayout = (AppBarLayout) findViewById(R.id.topicbar_appbarlayout);
-        mTopicbarImg = (RoundedImageView) findViewById(R.id.topicbar_img);
-        mTopicbarName = (TextView) findViewById(R.id.topicbar_name);
-        mTopicbarAttentionNum = (TextView) findViewById(R.id.topicbar_attention_num);
-        mTopicbarBarNum = (TextView) findViewById(R.id.topicbar_bar_num);
-        mTopicbarSlogan = (TextView) findViewById(R.id.topicbar_slogan);
-        mTopicbarAttentionBtn = (Button) findViewById(R.id.topicbar_attention_btn);
-        mTopicbarRBg = (RelativeLayout) findViewById(R.id.topicbar_R_bg);
-        mTopicbarRefreshGif = (GifImageView) findViewById(R.id.topicbar_refresh_gif);
-        mTopicbarRefresh = (SmartRefreshLayout) findViewById(R.id.topicbar_refresh);
+        mExcessR = findViewById(R.id.excess_r);
+        mTopicbarIdt = findViewById(R.id.topicbar_idt);
+        mTopicbarViewpager = findViewById(R.id.topicbar_viewpager);
+        mTopicbarBarR = findViewById(R.id.topicbar_bar_R);
+        mTopicbarAppbarlayout = findViewById(R.id.topicbar_appbarlayout);
+        mTopicbarImg = findViewById(R.id.topicbar_img);
+        mTopicbarName = findViewById(R.id.topicbar_name);
+        mTopicbarAttentionNum = findViewById(R.id.topicbar_attention_num);
+        mTopicbarBarNum = findViewById(R.id.topicbar_bar_num);
+        mTopicbarSlogan = findViewById(R.id.topicbar_slogan);
+        mTopicbarAttentionBtn = findViewById(R.id.topicbar_attention_btn);
+        mTopicbarRBg = findViewById(R.id.topicbar_R_bg);
+        GifImageView mTopicbarRefreshGif = findViewById(R.id.topicbar_refresh_gif);
+        SmartRefreshLayout mTopicbarRefresh = findViewById(R.id.topicbar_refresh);
         mySmartRefresh = new MySmartRefresh(mTopicbarRefresh, mTopicbarRefreshGif, null);
         intFollowViewPager();
         setActivityBar();
@@ -119,7 +101,7 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
         setMyListener();
         createDialog();
         createRefresh();
-        mPresenter.obtainTopicInfo(topic,getDataAttentionTopicPresenter().determineTopic(topic), new TopicBarPageAPresenterImpl.OnReturn() {
+        mPresenter.obtainTopicInfo(topic, getDataAttentionTopicPresenter().determineTopic(topic), new TopicBarPageAPresenterImpl.OnReturn() {
             @Override
             public void onReturn(Topic t) {
                 runOnUiThread(new Runnable() {
@@ -147,7 +129,7 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
         } else {
             noAtt();
         }
-        if (!"".equals(topic.getTopic_image())){
+        if (!"".equals(topic.getTopic_image())) {
             Glide.with(this)
                     .load(InValues.send(R.string.httpHeadert) + topic.getTopic_image())
                     .placeholder(R.drawable.icon_topic)
@@ -187,61 +169,21 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
     }
 
     private void intFollowViewPager() {
-        fragments = new ArrayList<>();
+        ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(new NewTopicBar());
         fragments.add(new HotTopicBar());
         fragments.add(new VideoTopicBar());
 
-        fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
-        pagerAdapter = new FragmentViewPageAdapter(fragmentManager, fragments, 3);
+        FragmentViewPageAdapter pagerAdapter = new FragmentViewPageAdapter(fragmentManager, fragments, 3);
         mTopicbarViewpager.setOffscreenPageLimit(2);
         mTopicbarViewpager.setAdapter(pagerAdapter);
         highViewPager();
     }
 
     private void highViewPager() {
-        commonNavigator = new CommonNavigator(this);
-        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
-            @Override
-            public int getCount() {
-                return myTitleList == null ? 0 : myTitleList.size();
-            }
-
-            @Override
-            public IPagerTitleView getTitleView(Context context, int index) {
-                simplePagerTitleView = new ScaleTransitionPagerTitleView(context);
-                simplePagerTitleView.setText(myTitleList.get(index));
-                simplePagerTitleView.setTextSize(18);
-                simplePagerTitleView.setNormalColor(Color.parseColor("#808080"));
-                simplePagerTitleView.setSelectedColor(Color.parseColor("#000000"));
-                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mTopicbarViewpager.setCurrentItem(index);
-                    }
-                });
-
-                return simplePagerTitleView;
-            }
-
-            @Override
-            public IPagerIndicator getIndicator(Context context) {
-                LinePagerIndicator indicator = new LinePagerIndicator(context);
-                indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
-                indicator.setLineHeight(UIUtil.dip2px(context, 4));
-                indicator.setLineWidth(UIUtil.dip2px(context, 12));
-                indicator.setRoundRadius(UIUtil.dip2px(context, 3));
-                indicator.setStartInterpolator(new AccelerateInterpolator());
-                indicator.setEndInterpolator(new DecelerateInterpolator(2.0f));
-                indicator.setColors(Color.parseColor("#46B3E6"));
-                return indicator;
-            }
-        });
-
-        mTopicbarIdt.setNavigator(commonNavigator);
-        ViewPagerHelper.bind(mTopicbarIdt, mTopicbarViewpager);
-        mTopicbarViewpager.setCurrentItem(1);
+        mTopicbarViewpager = SetCommonNavigator.setNavigator(myTitleList, mTopicbarIdt, mTopicbarViewpager, 1);
         mTopicbarViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -250,7 +192,7 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
 
             @Override
             public void onPageSelected(int position) {
-                SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_stop_voice),0,null);
+                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_stop_voice), 0, null);
             }
 
             @Override
@@ -295,7 +237,7 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                MyToastClass.ShowToast(MyApplication.getContext(),"huidiao");
+                MyToastClass.ShowToast(MyApplication.getContext(), "huidiao");
             }
         });
     }
@@ -351,7 +293,7 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
                         finishRRefresh(0);
                     }
                 });
-                if (getEasyVoice() != null){
+                if (getEasyVoice() != null) {
                     getEasyVoice().stopPlayer();
                 }
             }
@@ -383,9 +325,9 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    mTopicbarAttentionNum.setText(MyDateClass.sendMath(Integer.valueOf(mTopicbarAttentionNum.getText().toString()) - 1));
+                                    mTopicbarAttentionNum.setText(MyDateClass.sendMath(Integer.parseInt(mTopicbarAttentionNum.getText().toString()) - 1));
                                     mTopicbarAttentionNum.postInvalidate();
-                                    SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_reAttTopic),1,null);
+                                    SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_reAttTopic), 1, null);
                                     SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_topic), 0, null);
                                 }
                             });
@@ -394,7 +336,7 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
                     });
                 } else {
                     yesAtt();
-                    getDataAttentionTopicPresenter().addAttentionTopic(topic , new DataAttentionTopicPresenter.ReturnTopic() {
+                    getDataAttentionTopicPresenter().addAttentionTopic(topic, new DataAttentionTopicPresenter.ReturnTopic() {
                         @Override
                         public void onReturn() {
                             runOnUiThread(new Runnable() {
@@ -402,7 +344,7 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
                                 public void run() {
                                     mTopicbarAttentionNum.setText(MyDateClass.sendMath(Integer.valueOf(mTopicbarAttentionNum.getText().toString()) + 1));
                                     mTopicbarAttentionNum.postInvalidate();
-                                    SpbBroadcast.sendReceiver(MyApplication.getContext(),InValues.send(R.string.Bcr_reAttTopic),1,null);
+                                    SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_reAttTopic), 1, null);
                                     SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_topic), 0, null);
                                 }
                             });
@@ -417,8 +359,8 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        SpbBroadcast.sendReceiver(this,InValues.send(R.string.Bcr_stop_voice),0,null);
-        if (getEasyVoice() != null){
+        SpbBroadcast.sendReceiver(this, InValues.send(R.string.Bcr_stop_voice), 0, null);
+        if (getEasyVoice() != null) {
             getEasyVoice().stopPlayer();
             setEasyVoice(null);
         }
@@ -427,7 +369,7 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
     @Override
     protected void onPause() {
         super.onPause();
-        if (getEasyVoice() != null){
+        if (getEasyVoice() != null) {
             getEasyVoice().stopPlayer();
             setEasyVoice(null);
         }
@@ -436,6 +378,6 @@ public class TopicBarPage extends BaseMVPActivity<ITopicBarPageAView, TopicBarPa
     @Override
     protected void onStop() {
         super.onStop();
-        SpbBroadcast.sendReceiver(this,InValues.send(R.string.Bcr_stop_voice),0,null);
+        SpbBroadcast.sendReceiver(this, InValues.send(R.string.Bcr_stop_voice), 0, null);
     }
 }

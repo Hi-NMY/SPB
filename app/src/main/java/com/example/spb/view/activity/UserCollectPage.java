@@ -13,8 +13,8 @@ import com.example.spb.entity.Bar;
 import com.example.spb.presenter.impl.UserCollectPageAPresenterImpl;
 import com.example.spb.presenter.utils.InValues;
 import com.example.spb.presenter.utils.SpbBroadcast;
-import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.Component.MySmartRefresh;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.inter.IUserCollectPageAView;
 import com.example.spb.view.utils.MyListAnimation;
 import com.gyf.immersionbar.ImmersionBar;
@@ -27,10 +27,7 @@ import java.util.List;
 public class UserCollectPage extends BaseMVPActivity<IUserCollectPageAView, UserCollectPageAPresenterImpl>
         implements IUserCollectPageAView {
 
-    private FragmentSpbAvtivityBar bar;
-    private GifImageView mUsercollectRefreshTgif;
     private RecyclerView mUsercollectRecyclerview;
-    private SmartRefreshLayout mUsercollectRefresh;
     private MySmartRefresh mySmartRefresh;
     private AddCollectBarData addCollectBarData;
 
@@ -39,7 +36,7 @@ public class UserCollectPage extends BaseMVPActivity<IUserCollectPageAView, User
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_collect_page);
         addCollectBarData = new AddCollectBarData();
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_CollectBar),addCollectBarData);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_CollectBar), addCollectBarData);
         initActView();
     }
 
@@ -50,11 +47,11 @@ public class UserCollectPage extends BaseMVPActivity<IUserCollectPageAView, User
 
     @Override
     protected void initActView() {
-        mUsercollectRefreshTgif = (GifImageView) findViewById(R.id.usercollect_refresh_tgif);
-        mUsercollectRecyclerview = (RecyclerView) findViewById(R.id.usercollect_recyclerview);
-        mUsercollectRefresh = (SmartRefreshLayout) findViewById(R.id.usercollect_refresh);
-        mUsercollectRecyclerview = MyListAnimation.setListAnimation(this,mUsercollectRecyclerview);
-        mySmartRefresh = new MySmartRefresh(mUsercollectRefresh,mUsercollectRefreshTgif,null);
+        GifImageView mUsercollectRefreshTgif = findViewById(R.id.usercollect_refresh_tgif);
+        mUsercollectRecyclerview = findViewById(R.id.usercollect_recyclerview);
+        SmartRefreshLayout mUsercollectRefresh = findViewById(R.id.usercollect_refresh);
+        MyListAnimation.setListAnimation(this, mUsercollectRecyclerview);
+        mySmartRefresh = new MySmartRefresh(mUsercollectRefresh, mUsercollectRefreshTgif, null);
         createRefresh();
         setActivityBar();
         setBar();
@@ -108,7 +105,7 @@ public class UserCollectPage extends BaseMVPActivity<IUserCollectPageAView, User
 
     @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.usercollect_actbar);
+        FragmentSpbAvtivityBar bar = setMyActivityBar(R.id.usercollect_actbar);
         bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
             public void onClick() {
@@ -146,15 +143,15 @@ public class UserCollectPage extends BaseMVPActivity<IUserCollectPageAView, User
         SpbBroadcast.destroyBrc(addCollectBarData);
     }
 
-    class AddCollectBarData extends BroadcastReceiver{
+    class AddCollectBarData extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int a = intent.getIntExtra("key_one",0);
-            List<Bar> cbs = (List<Bar>)intent.getSerializableExtra("key_two");
-            if (a == 0){
-                mPresenter.addCollectData(cbs,mUsercollectRecyclerview);
+            int a = intent.getIntExtra("key_one", 0);
+            List<Bar> cbs = (List<Bar>) intent.getSerializableExtra("key_two");
+            if (a == 0) {
+                mPresenter.addCollectData(cbs, mUsercollectRecyclerview);
                 finishRRefresh(0);
-            }else {
+            } else {
                 mPresenter.removeCollect(cbs.get(0).getPb_one_id());
             }
         }

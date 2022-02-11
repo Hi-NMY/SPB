@@ -27,8 +27,8 @@ import java.util.concurrent.TimeUnit;
 
 public class AppVersion {
 
-    private Context context;
-    private Activity activity;
+    private final Context context;
+    private final Activity activity;
     private DialogInter versionDialog;
     private Button mButtonRight;
     private Button mButtonClose;
@@ -54,25 +54,23 @@ public class AppVersion {
                     versionDialog = new ComponentDialog(activity, R.layout.dialog_downloadapp_view, new ComponentDialog.InitDialog() {
                         @Override
                         public void initView(View view) {
-                            mButtonRight = (Button) view.findViewById(R.id.button_right);
-                            mButtonClose = (Button) view.findViewById(R.id.button_close);
-                            mAppDetailed = (TextView) view.findViewById(R.id.app_detailed);
-                            mCodeNum = (TextView) view.findViewById(R.id.code_num);
+                            mButtonRight = view.findViewById(R.id.button_right);
+                            mButtonClose = view.findViewById(R.id.button_close);
+                            mAppDetailed = view.findViewById(R.id.app_detailed);
+                            mCodeNum = view.findViewById(R.id.code_num);
                         }
 
                         @Override
                         public void initData() {
-                            StringBuffer stringBuffer = new StringBuffer();
-                            if (strings != null || strings.size() != 0) {
-                                for (int i = 0; i < strings.size(); i++) {
-                                    if (i == 0) {
-                                        mCodeNum.setText(strings.get(0));
-                                    } else {
-                                        stringBuffer.append(strings.get(i) + "\n");
-                                    }
+                            StringBuilder stringBuilder = new StringBuilder();
+                            for (int i = 0; i < strings.size(); i++) {
+                                if (i == 0) {
+                                    mCodeNum.setText(strings.get(0));
+                                } else {
+                                    stringBuilder.append(strings.get(i)).append("\n");
                                 }
-                                mAppDetailed.setText(stringBuffer.toString());
                             }
+                            mAppDetailed.setText(stringBuilder.toString());
                         }
 
                         @Override

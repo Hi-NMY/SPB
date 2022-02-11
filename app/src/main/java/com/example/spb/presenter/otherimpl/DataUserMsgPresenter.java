@@ -24,7 +24,7 @@ import org.litepal.LitePal;
 import java.io.IOException;
 import java.util.List;
 
-public class DataUserMsgPresenter {
+public class DataUserMsgPresenter extends UserDto{
 
     private static SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;

@@ -23,21 +23,20 @@ import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.entity.Dto.UserDto;
 import com.example.spb.presenter.impl.FirstPageAPresenterImpl;
 import com.example.spb.presenter.utils.RemoveNullCharacter;
+import com.example.spb.presenter.utils.RequestForAccess;
 import com.example.spb.view.Component.ComponentDialog;
 import com.example.spb.view.Component.EasyDialog;
-import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
+import com.example.spb.view.Component.MyToastClass;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.view.InterComponent.ISpbAvtivityBarFView;
+import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.inter.IFirstPageAView;
 import com.example.spb.view.utils.HideKeyboard;
 import com.example.spb.view.utils.JumpIntent;
-import com.example.spb.view.Component.MyToastClass;
-import com.example.spb.presenter.utils.RequestForAccess;
 import com.gyf.immersionbar.ImmersionBar;
 
 public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresenterImpl> implements IFirstPageAView, View.OnClickListener {
 
-    private ISpbAvtivityBarFView bar;
     private EditText mAccountNumberEdit;
     private ImageView mEmptyView;
     private ImageView mEnterCheck;
@@ -45,23 +44,23 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
     private TextView mEnterUserRegistered;
     private Button mEnterNextBtn;
     private static RelativeLayout mEnterR1;
+    private static RelativeLayout mEnterR2;
     private EditText mPasswordNumberEdit;
     private ImageView mPasswordEye;
     private ImageView mEmptyViewP;
     private TextView mEnterUserForgotPassword;
-    private static RelativeLayout mEnterR2;
 
     private DialogInter dialogLoading;
     private DialogInter dialogUserNotice;
 
     private boolean ENTER_CHECK = false;
-    private boolean CLICKYES = true;
-    private boolean CLICKNO = false;
+    private final boolean CLICKYES = true;
+    private final boolean CLICKNO = false;
     private boolean SEE = false;
     private int ENTER_FUN = 0;
 
-    private static Animation animationa;
-    private static Animation animationb;
+    private static final Animation animationa;
+    private static final Animation animationb;
 
     private UserDto userDto;
 
@@ -104,11 +103,11 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
         });
     }
 
-    private Handler verifyAccountHanlder = new Handler(){
+    private final Handler verifyAccountHanlder = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
-            response(msg.obj,msg.what);
+            response(msg.obj, msg.what);
         }
     };
 
@@ -128,18 +127,18 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
     protected void initActView() {
         setActivityBar();
         userDto = new UserDto();
-        mAccountNumberEdit = (EditText) findViewById(R.id.account_number_edit);
-        mEmptyView = (ImageView) findViewById(R.id.empty_view);
-        mEnterCheck = (ImageView) findViewById(R.id.enter_check);
-        mEnterUsernotice = (TextView) findViewById(R.id.enter_usernotice);
-        mEnterUserRegistered = (TextView) findViewById(R.id.enter_user_registered);
-        mEnterNextBtn = (Button) findViewById(R.id.enter_next_btn);
-        mEnterR1 = (RelativeLayout) findViewById(R.id.enter_r1);
-        mPasswordNumberEdit = (EditText) findViewById(R.id.password_number_edit);
-        mPasswordEye = (ImageView) findViewById(R.id.password_eye);
-        mEmptyViewP = (ImageView) findViewById(R.id.empty_view_p);
-        mEnterUserForgotPassword = (TextView) findViewById(R.id.enter_user_forgot_password);
-        mEnterR2 = (RelativeLayout) findViewById(R.id.enter_r2);
+        mAccountNumberEdit = findViewById(R.id.account_number_edit);
+        mEmptyView = findViewById(R.id.empty_view);
+        mEnterCheck = findViewById(R.id.enter_check);
+        mEnterUsernotice = findViewById(R.id.enter_usernotice);
+        mEnterUserRegistered = findViewById(R.id.enter_user_registered);
+        mEnterNextBtn = findViewById(R.id.enter_next_btn);
+        mEnterR1 = findViewById(R.id.enter_r1);
+        mPasswordNumberEdit = findViewById(R.id.password_number_edit);
+        mPasswordEye = findViewById(R.id.password_eye);
+        mEmptyViewP = findViewById(R.id.empty_view_p);
+        mEnterUserForgotPassword = findViewById(R.id.enter_user_forgot_password);
+        mEnterR2 = findViewById(R.id.enter_r2);
 
         mEnterUsernotice.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         createDialog();
@@ -180,7 +179,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
 
     @Override
     public TextWatcher setAccountTextWatcher() {
-        TextWatcher textWatcher = new TextWatcher() {
+        return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -188,7 +187,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                RemoveNullCharacter.setRemoveNull(mAccountNumberEdit,s).setSelection(mAccountNumberEdit.getText().length());
+                RemoveNullCharacter.setRemoveNull(mAccountNumberEdit, s).setSelection(mAccountNumberEdit.getText().length());
             }
 
             @Override
@@ -205,12 +204,11 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
                 }
             }
         };
-        return textWatcher;
     }
 
     @Override
     public TextWatcher setPasswordTextWatcher() {
-        TextWatcher textWatcher = new TextWatcher() {
+        return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -218,7 +216,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                RemoveNullCharacter.setRemoveNull(mPasswordNumberEdit,s).setSelection(mPasswordNumberEdit.getText().length());
+                RemoveNullCharacter.setRemoveNull(mPasswordNumberEdit, s).setSelection(mPasswordNumberEdit.getText().length());
             }
 
             @Override
@@ -228,14 +226,13 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
                 } else {
                     setEmptyPVisibility(false);
                 }
-                if (mPasswordNumberEdit.getText().toString().trim().length() >= 8 && mPasswordNumberEdit.getText().toString().trim().length() <=16) {
+                if (mPasswordNumberEdit.getText().toString().trim().length() >= 8 && mPasswordNumberEdit.getText().toString().trim().length() <= 16) {
                     setBtnClick(CLICKYES);
                 } else {
                     setBtnClick(CLICKNO);
                 }
             }
         };
-        return textWatcher;
     }
 
     @Override
@@ -246,13 +243,13 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
                 if (ENTER_FUN == 1) {
                     showDialogS(DIALOGLOADING);
                     userDto.setUser_password(mPasswordNumberEdit.getText().toString().trim());
-                    mPresenter.verifyPassword(userDto.getUser_password(),verifyAccountHanlder);
+                    mPresenter.verifyPassword(userDto.getUser_password(), verifyAccountHanlder);
                 } else {
                     if (!ENTER_CHECK) {
                         MyToastClass.ShowToast(this, TOASTTXT);
                     } else {
                         showDialogS(DIALOGLOADING);
-                        mPresenter.verifyAccount(mAccountNumberEdit.getText().toString().trim(),verifyAccountHanlder);
+                        mPresenter.verifyAccount(mAccountNumberEdit.getText().toString().trim(), verifyAccountHanlder);
                     }
                 }
                 break;
@@ -324,9 +321,10 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
     @Override
     public void goIntent() {
         closeDialog(DIALOGLOADING);
-        if (mPresenter.setFirstLogIn()){
+        if (mPresenter.setFirstLogIn()) {
             JumpIntent.startNewIntent(HomePage.class);
-        };
+        }
+        ;
         finish();
     }
 
@@ -348,13 +346,13 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
 
     @Override
     public <T> void response(T response, int responseFlag) {
-        switch (responseFlag){
+        switch (responseFlag) {
             case RESPONSE_ACC:
                 mAccountNumberEdit.setText((String) response);
                 break;
             case RESPONSE_SUCCESS_ONE:
                 closeDialog(DIALOGLOADING);
-                userDto = (UserDto)response;
+                userDto = (UserDto) response;
                 initUserData(userDto.getUser_account());
                 this.runOnUiThread(new Runnable() {
                     @Override
@@ -404,7 +402,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
 
     @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.first_actbar);
+        ISpbAvtivityBarFView bar = setMyActivityBar(R.id.first_actbar);
         bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
             public void onClick() {
@@ -499,7 +497,7 @@ public class FirstPage extends BaseMVPActivity<IFirstPageAView, FirstPageAPresen
             mEnterR2.setVisibility(View.GONE);
             setBtnClick(CLICKYES);
             ENTER_FUN = 0;
-        }else {
+        } else {
             finish();
         }
         return false;

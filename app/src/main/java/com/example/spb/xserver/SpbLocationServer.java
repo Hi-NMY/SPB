@@ -4,7 +4,6 @@ import android.content.Context;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
-import com.example.spb.app.MyApplication;
 
 public class SpbLocationServer {
 
@@ -14,7 +13,7 @@ public class SpbLocationServer {
     public SpbLocationServer() {
     }
 
-    public SpbLocationServer(Context context){
+    public SpbLocationServer(Context context) {
         SDKInitializer.initialize(context);
         locationClient = new LocationClient(context);
         locationClient.registerLocationListener(locationListener);
@@ -28,22 +27,22 @@ public class SpbLocationServer {
         locationClient.setLocOption(locationClientOption);
     }
 
-    public SpbLocationListener obtainListener(){
+    public SpbLocationListener obtainListener() {
         return locationListener;
     }
 
-    public void stopGps(){
+    public void stopGps() {
         locationListener.nowCity = null;
         locationListener.locType = 62;
         locationListener.locationGpsList = null;
         locationClient.stop();
     }
 
-    public void startGps(){
+    public void startGps() {
         locationClient.start();
     }
 
-    public String obtainNowCity(){
+    public String obtainNowCity() {
         return locationListener.nowCity;
     }
 }

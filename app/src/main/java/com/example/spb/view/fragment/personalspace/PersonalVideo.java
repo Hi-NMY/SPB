@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
+import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.entity.Bar;
 import com.example.spb.entity.Comment;
@@ -43,7 +44,7 @@ public class PersonalVideo extends BaseMVPFragment<IPersonalVideoFView, Personal
         refreshThumb = new RefreshThumb();
         addPersonalBar = new AddPersonalBar();
         refreshComment = new RefreshComment();
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment),refreshComment);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment), refreshComment);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_personal_videobar), addPersonalBar);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_thumb), refreshThumb);
     }
@@ -70,10 +71,10 @@ public class PersonalVideo extends BaseMVPFragment<IPersonalVideoFView, Personal
 
     @Override
     protected void initFragView(View view) {
-        mPersonalVideoRecyclerview = (RecyclerView)view.findViewById(R.id.personal_video_recyclerview);
-        mPersonalVideoMoreGif = (GifImageView)view.findViewById(R.id.personal_video_more_gif);
-        mPersonalVideoRefresh = (SmartRefreshLayout)view.findViewById(R.id.personal_video_refresh);
-        mPersonalVideoRecyclerview = MyListAnimation.setListAnimation(personalSpacePage,mPersonalVideoRecyclerview);
+        mPersonalVideoRecyclerview = view.findViewById(R.id.personal_video_recyclerview);
+        mPersonalVideoMoreGif = view.findViewById(R.id.personal_video_more_gif);
+        mPersonalVideoRefresh = view.findViewById(R.id.personal_video_refresh);
+        MyListAnimation.setListAnimation(personalSpacePage, mPersonalVideoRecyclerview);
         createRefresh();
     }
 
@@ -114,7 +115,7 @@ public class PersonalVideo extends BaseMVPFragment<IPersonalVideoFView, Personal
 
     @Override
     public void createRefresh() {
-        mySmartRefresh = new MySmartRefresh(mPersonalVideoRefresh,null,mPersonalVideoMoreGif);
+        mySmartRefresh = new MySmartRefresh(mPersonalVideoRefresh, null, mPersonalVideoMoreGif);
         mySmartRefresh.setMyRefreshListener(new MySmartRefresh.MyRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -145,23 +146,23 @@ public class PersonalVideo extends BaseMVPFragment<IPersonalVideoFView, Personal
     class AddPersonalBar extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int a = intent.getIntExtra("key_one",0);
+            int a = intent.getIntExtra("key_one", 0);
             List<Bar> bars = (List<Bar>) intent.getSerializableExtra("key_three");
             String account = intent.getStringExtra("key_two");
-            if(account.equals(personalSpacePage.userAccount)){
-                if (bars != null && bars.size() != 0){
+            if (account.equals(personalSpacePage.userAccount)) {
+                if (bars != null && bars.size() != 0) {
                     mPresenter.setCacheDate(bars.get(bars.size() - 1).getPb_date());
                 }
-                switch (a){
+                switch (a) {
                     case 1:
-                        mPresenter.addPersonalBarList(bars,mPersonalVideoRecyclerview,false);
+                        mPresenter.addPersonalBarList(bars, mPersonalVideoRecyclerview, false);
                         finishRRefresh(0);
                         break;
                     case 0:
-                        mPresenter.addPersonalBarList(bars,mPersonalVideoRecyclerview,true);
+                        mPresenter.addPersonalBarList(bars, mPersonalVideoRecyclerview, true);
                         break;
                     case 3:
-                        mPresenter.deleteBarData(personalSpacePage.getDeletePbId());
+                        mPresenter.deleteBarData(BaseMVPActivity.getDeletePbId());
                         break;
                 }
             }
@@ -173,22 +174,22 @@ public class PersonalVideo extends BaseMVPFragment<IPersonalVideoFView, Personal
         public void onReceive(Context context, Intent intent) {
             int a = intent.getIntExtra("key_one", 0);
             String pbId = intent.getStringExtra("key_two");
-            mPresenter.refreshThumb(a,pbId);
+            mPresenter.refreshThumb(a, pbId);
         }
     }
 
-    class RefreshComment extends BroadcastReceiver{
+    class RefreshComment extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int a = intent.getIntExtra("key_one",-1);
+            int a = intent.getIntExtra("key_one", -1);
             String num = intent.getStringExtra("key_two");
-            switch (a){
+            switch (a) {
                 case 0:
-                    List<Comment> comments = (List<Comment>)intent.getSerializableExtra("key_three");
+                    List<Comment> comments = (List<Comment>) intent.getSerializableExtra("key_three");
                     mPresenter.refreshNowComment(comments.size());
                     break;
                 case 1:
-                    mPresenter.refreshComment(Integer.valueOf(num));
+                    mPresenter.refreshComment(Integer.parseInt(num));
                     break;
             }
         }

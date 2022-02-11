@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.MediaStoreSignature;
 import com.example.spb.R;
@@ -36,11 +35,8 @@ public class SignInPage extends BaseMVPActivity<ISignInPageAView, SignInPageAPre
     private TextView mSignInUsername;
     private TextView mCoinSizeText;
     private RelativeLayout mExcessR;
-    private FragmentSpbAvtivityBar bar;
     private ObtainSignData obtainSignData;
     private AddNewSign addNewSign;
-    private FragmentSignInSign fragmentSignInSign;
-    private NestedScrollView mScrollview;
     private DialogInter tipDilaog;
     private ImageView mCloseTips;
     private TextView mV5;
@@ -63,11 +59,10 @@ public class SignInPage extends BaseMVPActivity<ISignInPageAView, SignInPageAPre
 
     @Override
     protected void initActView() {
-        mScrollview = (NestedScrollView) findViewById(R.id.scrollview);
-        mSignInHeadimg = (RoundedImageView) findViewById(R.id.sign_in_headimg);
-        mSignInUsername = (TextView) findViewById(R.id.sign_in_username);
-        mCoinSizeText = (TextView) findViewById(R.id.coin_size_text);
-        mExcessR = (RelativeLayout) findViewById(R.id.excess_r);
+        mSignInHeadimg = findViewById(R.id.sign_in_headimg);
+        mSignInUsername = findViewById(R.id.sign_in_username);
+        mCoinSizeText = findViewById(R.id.coin_size_text);
+        mExcessR = findViewById(R.id.excess_r);
         initData();
         setMyListener();
         setActivityBar();
@@ -78,7 +73,7 @@ public class SignInPage extends BaseMVPActivity<ISignInPageAView, SignInPageAPre
 
     @Override
     protected void initData() {
-        fragmentSignInSign = (FragmentSignInSign) getSupportFragmentManager().findFragmentById(R.id.sign_signin_frag);
+        FragmentSignInSign fragmentSignInSign = (FragmentSignInSign) getSupportFragmentManager().findFragmentById(R.id.sign_signin_frag);
         mPresenter.obtainUserSignDate(getDataUserMsgPresenter().getUser_account(), new SignInPageAPresenterImpl.OnReturn() {
             @Override
             public void onReturn() {
@@ -118,14 +113,14 @@ public class SignInPage extends BaseMVPActivity<ISignInPageAView, SignInPageAPre
         tipDilaog = new ComponentDialog(this, R.layout.dialog_sign_trouble, new ComponentDialog.InitDialog() {
             @Override
             public void initView(View view) {
-                mCloseTips = (ImageView) view.findViewById(R.id.close_tips);
-                mV5 = (TextView) view.findViewById(R.id.v5);
+                mCloseTips = view.findViewById(R.id.close_tips);
+                mV5 = view.findViewById(R.id.v5);
             }
 
             @Override
             public void initData() {
                 SpannableStringBuilder builder = new SpannableStringBuilder(mV5.getText().toString());
-                builder.setSpan(new ForegroundColorSpan(ContextCompat.getColor(MyApplication.getContext(),R.color.theme_color)), 4, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                builder.setSpan(new ForegroundColorSpan(ContextCompat.getColor(MyApplication.getContext(), R.color.theme_color)), 4, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 mV5.setText(builder);
             }
 
@@ -167,7 +162,7 @@ public class SignInPage extends BaseMVPActivity<ISignInPageAView, SignInPageAPre
 
     @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.sign_in_actbar);
+        FragmentSpbAvtivityBar bar = setMyActivityBar(R.id.sign_in_actbar);
         bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
             public void onClick() {

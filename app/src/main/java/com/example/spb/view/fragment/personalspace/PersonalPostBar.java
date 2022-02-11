@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
+import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.entity.Bar;
 import com.example.spb.entity.Comment;
@@ -39,11 +40,11 @@ public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView, Pers
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        personalSpacePage = (PersonalSpacePage)getActivity();
+        personalSpacePage = (PersonalSpacePage) getActivity();
         refreshThumb = new RefreshThumb();
         addPersonalBar = new AddPersonalBar();
         refreshComment = new RefreshComment();
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment),refreshComment);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_comment), refreshComment);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_personal_bar), addPersonalBar);
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_thumb), refreshThumb);
     }
@@ -70,19 +71,19 @@ public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView, Pers
 
     @Override
     protected void initFragView(View view) {
-        mPersonalBarRecyclerview = (RecyclerView)view.findViewById(R.id.personal_bar_recyclerview);
-        mPersonalBarMoreGif = (GifImageView)view.findViewById(R.id.personal_bar_more_gif);
-        mPersonalBarRefresh = (SmartRefreshLayout)view.findViewById(R.id.personal_bar_refresh);
-        mPersonalBarRecyclerview = MyListAnimation.setListAnimation(personalSpacePage,mPersonalBarRecyclerview);
+        mPersonalBarRecyclerview = view.findViewById(R.id.personal_bar_recyclerview);
+        mPersonalBarMoreGif = view.findViewById(R.id.personal_bar_more_gif);
+        mPersonalBarRefresh = view.findViewById(R.id.personal_bar_refresh);
+        MyListAnimation.setListAnimation(personalSpacePage, mPersonalBarRecyclerview);
         createRefresh();
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (personalSpacePage.getEasyVoice() != null){
-            personalSpacePage.getEasyVoice().stopPlayer();
-            personalSpacePage.setEasyVoice(null);
+        if (BaseMVPActivity.getEasyVoice() != null) {
+            BaseMVPActivity.getEasyVoice().stopPlayer();
+            BaseMVPActivity.setEasyVoice(null);
             mPresenter.stopvoice();
         }
     }
@@ -125,7 +126,7 @@ public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView, Pers
 
     @Override
     public void createRefresh() {
-        mySmartRefresh = new MySmartRefresh(mPersonalBarRefresh,null,mPersonalBarMoreGif);
+        mySmartRefresh = new MySmartRefresh(mPersonalBarRefresh, null, mPersonalBarMoreGif);
         mySmartRefresh.setMyRefreshListener(new MySmartRefresh.MyRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -134,8 +135,8 @@ public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView, Pers
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if (personalSpacePage.getEasyVoice() != null){
-                    personalSpacePage.getEasyVoice().stopPlayer();
+                if (BaseMVPActivity.getEasyVoice() != null) {
+                    BaseMVPActivity.getEasyVoice().stopPlayer();
                     mPresenter.stopvoice();
                 }
                 mPresenter.obtainMorePersonalBar(personalSpacePage.getDataUserMsgPresenter().getUser_account());
@@ -160,23 +161,23 @@ public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView, Pers
     class AddPersonalBar extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int a = intent.getIntExtra("key_one",0);
+            int a = intent.getIntExtra("key_one", 0);
             List<Bar> bars = (List<Bar>) intent.getSerializableExtra("key_three");
             String account = intent.getStringExtra("key_two");
-            if(account.equals(personalSpacePage.userAccount)){
-                if (bars != null && bars.size() != 0){
+            if (account.equals(personalSpacePage.userAccount)) {
+                if (bars != null && bars.size() != 0) {
                     mPresenter.setCacheDate(bars.get(bars.size() - 1).getPb_date());
                 }
-                switch (a){
+                switch (a) {
                     case 1:
                         finishRRefresh(0);
-                        mPresenter.addPersonalBarList(bars,mPersonalBarRecyclerview,false);
+                        mPresenter.addPersonalBarList(bars, mPersonalBarRecyclerview, false);
                         break;
                     case 0:
-                        mPresenter.addPersonalBarList(bars,mPersonalBarRecyclerview,true);
+                        mPresenter.addPersonalBarList(bars, mPersonalBarRecyclerview, true);
                         break;
                     case 3:
-                        mPresenter.deleteBarData(personalSpacePage.getDeletePbId());
+                        mPresenter.deleteBarData(BaseMVPActivity.getDeletePbId());
                         break;
                 }
             }
@@ -188,22 +189,22 @@ public class PersonalPostBar extends BaseMVPFragment<IPersonalPostBarFView, Pers
         public void onReceive(Context context, Intent intent) {
             int a = intent.getIntExtra("key_one", 0);
             String pbId = intent.getStringExtra("key_two");
-            mPresenter.refreshThumb(a,pbId);
+            mPresenter.refreshThumb(a, pbId);
         }
     }
 
-    class RefreshComment extends BroadcastReceiver{
+    class RefreshComment extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int a = intent.getIntExtra("key_one",-1);
+            int a = intent.getIntExtra("key_one", -1);
             String num = intent.getStringExtra("key_two");
-            switch (a){
+            switch (a) {
                 case 0:
-                    List<Comment> comments = (List<Comment>)intent.getSerializableExtra("key_three");
+                    List<Comment> comments = (List<Comment>) intent.getSerializableExtra("key_three");
                     mPresenter.refreshNowComment(comments.size());
                     break;
                 case 1:
-                    mPresenter.refreshComment(Integer.valueOf(num));
+                    mPresenter.refreshComment(Integer.parseInt(num));
                     break;
             }
         }

@@ -10,9 +10,8 @@ public class EasyVoice {
     private int voiceTime = 0;
     private int cacheTime = 0;
     private boolean voicePlayerKey = true;
-    private DownTime downTime;
-    private OnVoice onVoice;
-    private String url;
+    private final OnVoice onVoice;
+    private final String url;
 
     public EasyVoice(String url, OnVoice o) {
         this.onVoice = o;
@@ -70,7 +69,7 @@ public class EasyVoice {
         returnSet();
         mediaPlayer.start();
         voicePlayerKey = false;
-        downTime = new DownTime();
+        DownTime downTime = new DownTime();
         downTime.start();
     }
 

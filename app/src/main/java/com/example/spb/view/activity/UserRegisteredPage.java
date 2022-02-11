@@ -41,7 +41,6 @@ import java.util.List;
 
 public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView, UserRegisteredPageAPresenterImpl> implements IUserRegisteredPageAView, View.OnClickListener {
 
-    private ISpbAvtivityBarFView bar;
     private RoundedImageView mRegisteredUserHeadimg;
     private EditText mRegUserName;
     private EditText mRegUserAccount;
@@ -58,9 +57,7 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
 
     private boolean SEE = false;
 
-    private UserRegisteredDto userRegisteredDto = null;
-
-    private Handler userHanlder = new Handler() {
+    private final Handler userHanlder = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
@@ -83,13 +80,13 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
     @Override
     protected void initActView() {
         spbSelectImage = new SelectImage(this);
-        mRegisteredUserHeadimg = (RoundedImageView) findViewById(R.id.registered_user_headimg);
-        mRegUserName = (EditText) findViewById(R.id.reg_user_name);
-        mRegUserAccount = (EditText) findViewById(R.id.reg_user_account);
-        mRegUserPassword = (EditText) findViewById(R.id.reg_user_password);
-        mRegPasswordEye = (ImageView) findViewById(R.id.reg_password_eye);
-        mRegUserPasswordAgain = (EditText) findViewById(R.id.reg_user_password_again);
-        mRegStarBtn = (Button) findViewById(R.id.reg_star_btn);
+        mRegisteredUserHeadimg = findViewById(R.id.registered_user_headimg);
+        mRegUserName = findViewById(R.id.reg_user_name);
+        mRegUserAccount = findViewById(R.id.reg_user_account);
+        mRegUserPassword = findViewById(R.id.reg_user_password);
+        mRegPasswordEye = findViewById(R.id.reg_password_eye);
+        mRegUserPasswordAgain = findViewById(R.id.reg_user_password_again);
+        mRegStarBtn = findViewById(R.id.reg_star_btn);
         createDialog();
         setBar();
         setActivityBar();
@@ -143,9 +140,9 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
         bottomDialog = new ComponentDialog(this, R.layout.dialog_selectpicture, R.style.bottomdialog, new ComponentDialog.InitDialog() {
             @Override
             public void initView(View view) {
-                mDialogCamera = (TextView) view.findViewById(R.id.dialog_camera);
-                mDialogPhotoalbum = (TextView) view.findViewById(R.id.dialog_photoalbum);
-                mDialogClose = (TextView) view.findViewById(R.id.dialog_close);
+                mDialogCamera = view.findViewById(R.id.dialog_camera);
+                mDialogPhotoalbum = view.findViewById(R.id.dialog_photoalbum);
+                mDialogClose = view.findViewById(R.id.dialog_close);
             }
 
             @Override
@@ -307,7 +304,7 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
 
     @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.user_egisterd_actbar);
+        ISpbAvtivityBarFView bar = setMyActivityBar(R.id.user_egisterd_actbar);
         bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
             public void onClick() {
@@ -317,7 +314,7 @@ public class UserRegisteredPage extends BaseMVPActivity<IUserRegisteredPageAView
     }
 
     private UserRegisteredDto setUser() {
-        userRegisteredDto = new UserRegisteredDto();
+        UserRegisteredDto userRegisteredDto = new UserRegisteredDto();
         userRegisteredDto.setUser_account(account);
         userRegisteredDto.setUser_name(name);
         userRegisteredDto.setUser_password(password);

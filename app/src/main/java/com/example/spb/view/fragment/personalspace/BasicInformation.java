@@ -14,6 +14,7 @@ import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.entity.Dto.UserDto;
 import com.example.spb.presenter.impl.BasicInformationFPresenterImpl;
+import com.example.spb.presenter.utils.DataVerificationTool;
 import com.example.spb.presenter.utils.InValues;
 import com.example.spb.presenter.utils.MyDateClass;
 import com.example.spb.presenter.utils.SpbBroadcast;
@@ -25,6 +26,8 @@ import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, BasicInformationFPresenterImpl> implements IBasicInformationFView, View.OnClickListener {
 
@@ -45,8 +48,8 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
         super.onCreate(savedInstanceState);
         refreshMsg = new RefreshMsg();
         userToUser = new UserToUser();
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_userMsg),refreshMsg);
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_UserSpace_user),userToUser);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_userMsg), refreshMsg);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_UserSpace_user), userToUser);
     }
 
     @Override
@@ -71,125 +74,113 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
 
     @Override
     protected void initFragView(View view) {
-        personalSpacePage = (PersonalSpacePage)getActivity();
+        personalSpacePage = (PersonalSpacePage) getActivity();
         layoutInflater = LayoutInflater.from(personalSpacePage);
-        mBasicinformationChange = (TextView) view.findViewById(R.id.basicinformation_change);
-        mBasicinformationOnline = (TextView) view.findViewById(R.id.basicinformation_online);
-        mBasicinformationHome = (TextView)view.findViewById(R.id.basicinformation_home);
-        mBasicinformationFavorite = (TagFlowLayout)view.findViewById(R.id.basicinformation_favorite);
-        mBasicinformationConstellation = (TextView)view.findViewById(R.id.basicinformation_constellation);
-        mBasicinformationBirth = (TextView)view.findViewById(R.id.basicinformation_birth);
+        mBasicinformationChange = view.findViewById(R.id.basicinformation_change);
+        mBasicinformationOnline = view.findViewById(R.id.basicinformation_online);
+        mBasicinformationHome = view.findViewById(R.id.basicinformation_home);
+        mBasicinformationFavorite = view.findViewById(R.id.basicinformation_favorite);
+        mBasicinformationConstellation = view.findViewById(R.id.basicinformation_constellation);
+        mBasicinformationBirth = view.findViewById(R.id.basicinformation_birth);
         setMyListener();
     }
 
     @Override
     protected void initData() {
-        if (!personalSpacePage.getDataUserMsgPresenter().getUser_home().equals("")){
+        if (!DataVerificationTool.isEmpty(personalSpacePage.getDataUserMsgPresenter().getUser_home())) {
             mBasicinformationHome.setText(personalSpacePage.getDataUserMsgPresenter().getUser_home());
         }
 
-        if (!personalSpacePage.getDataUserMsgPresenter().getUser_birth().equals("")){
+        if (!DataVerificationTool.isEmpty(personalSpacePage.getDataUserMsgPresenter().getUser_birth())) {
             mBasicinformationBirth.setText(personalSpacePage.getDataUserMsgPresenter().getUser_birth());
             mBasicinformationConstellation.setText(MyDateClass.getConstellation(personalSpacePage.getDataUserMsgPresenter().getUser_birth().substring(5)));
         }
 
         mBasicinformationOnline.setText(personalSpacePage.getDataUserMsgPresenter().getUser_longDay() + "天");
 
-        mBasicinformationFavorite.setAdapter(new TagAdapter<String>(mPresenter.setFavorite(personalSpacePage.getDataUserMsgPresenter().getUser_favorite())) {
-            @Override
-            public View getView(FlowLayout parent, int position, String o) {
-                View view = layoutInflater.inflate(R.layout.item_favorite_tag_one, mBasicinformationFavorite, false);
-                if (mPresenter.strings == null || mPresenter.strings.size() == 0 || mPresenter.strings.get(0).equals("null")){
-                    TextView textView = (TextView) view.findViewById(R.id.text);
-                    textView.setText("无");
-                }else {
-                    RelativeLayout relativeLayout = (RelativeLayout)view.findViewById(R.id.r);
-                    TextView textView = (TextView) view.findViewById(R.id.text);
-                    textView.setText(o);
-                    textView.setTextColor(ContextCompat.getColor(MyApplication.getContext(),R.color.theme_color));
-                    relativeLayout.setBackground(personalSpacePage.getDrawable(R.drawable.favorite_tag_two));
-                }
-                return view;
-            }
-        });
+        setFavoriteAdapter(mPresenter.setFavorite(personalSpacePage.getDataUserMsgPresenter().getUser_favorite()));
 
-        mBasicinformationHome.postInvalidate();
-        mBasicinformationFavorite.postInvalidate();
-        mBasicinformationConstellation.postInvalidate();
-        mBasicinformationBirth.postInvalidate();
-        mBasicinformationOnline.postInvalidate();
+        viewPostInvalidate();
     }
 
-    private void initUserData(){
+    private void initUserData() {
         mBasicinformationChange.setVisibility(View.GONE);
         mBasicinformationOnline.setText(toUserDto.getUser_longday() + "天");
-        if (toUserDto.getUser_home() != null && !toUserDto.getUser_home().equals("")){
+        if (!DataVerificationTool.isEmpty(toUserDto.getUser_home())) {
             mBasicinformationHome.setText(toUserDto.getUser_home());
-        }else {
+        } else {
             mBasicinformationHome.setText("一个神秘的地方");
         }
 
-        if (toUserDto.getUser_birth() != null && !toUserDto.getUser_birth().equals("")){
+        if (!DataVerificationTool.isEmpty(toUserDto.getUser_birth())) {
             mBasicinformationBirth.setText(toUserDto.getUser_birth());
             mBasicinformationConstellation.setText(MyDateClass.getConstellation(toUserDto.getUser_birth().substring(5)));
-        }else {
+        } else {
             mBasicinformationBirth.setText("无");
             mBasicinformationConstellation.setText("无");
         }
 
-        mBasicinformationFavorite.setAdapter(new TagAdapter<String>(mPresenter.setFavorite(toUserDto.getUser_favorite())) {
-            @Override
-            public View getView(FlowLayout parent, int position, String o) {
-                View view = layoutInflater.inflate(R.layout.item_favorite_tag_one, mBasicinformationFavorite, false);
-                if (mPresenter.strings == null || mPresenter.strings.size() == 0 || mPresenter.strings.get(0).equals("null")){
-                    TextView textView = (TextView) view.findViewById(R.id.text);
-                    textView.setText("无");
-                }else {
-                    RelativeLayout relativeLayout = (RelativeLayout)view.findViewById(R.id.r);
-                    TextView textView = (TextView) view.findViewById(R.id.text);
-                    textView.setText(o);
-                    textView.setTextColor(ContextCompat.getColor(MyApplication.getContext(),R.color.theme_color));
-                    relativeLayout.setBackground(personalSpacePage.getDrawable(R.drawable.favorite_tag_two));
-                }
-                return view;
-            }
-        });
+        setFavoriteAdapter(mPresenter.setFavorite(toUserDto.getUser_favorite()));
 
-        for (int i = 0 ; i < mPresenter.getKeys().size() ; i++){
-            switch (i){
+        for (int i = 0; i < mPresenter.getKeys().size(); i++) {
+            switch (i) {
                 case 0:
-                    if (mPresenter.getKeys().get(0) != 1){
+                    if (mPresenter.getKeys().get(0) != 1) {
                         mBasicinformationOnline.setText("秘密");
                     }
                     break;
                 case 1:
-                    if (mPresenter.getKeys().get(1) != 1){
+                    if (mPresenter.getKeys().get(1) != 1) {
                         mBasicinformationBirth.setText("秘密");
                     }
                     break;
                 case 2:
-                    if (mPresenter.getKeys().get(2) != 1){
+                    if (mPresenter.getKeys().get(2) != 1) {
                         mBasicinformationConstellation.setText("秘密");
                     }
                     break;
                 case 3:
-                    if (mPresenter.getKeys().get(3) != 1){
+                    if (mPresenter.getKeys().get(3) != 1) {
                         mBasicinformationHome.setText("秘密");
                     }
                     break;
                 case 4:
-                    if (mPresenter.getKeys().get(4) != 1){
+                    if (mPresenter.getKeys().get(4) != 1) {
                         mBasicinformationFavorite.setVisibility(View.INVISIBLE);
                     }
                     break;
             }
         }
 
-        mBasicinformationOnline.postInvalidate();
+        viewPostInvalidate();
+    }
+
+    private void setFavoriteAdapter(List<String> favoriteAdapter) {
+        mBasicinformationFavorite.setAdapter(new TagAdapter<String>(favoriteAdapter) {
+            @Override
+            public View getView(FlowLayout parent, int position, String o) {
+                View view = layoutInflater.inflate(R.layout.item_favorite_tag_one, mBasicinformationFavorite, false);
+                if (mPresenter.strings == null || mPresenter.strings.size() == 0 || mPresenter.strings.get(0).equals("null")) {
+                    TextView textView = view.findViewById(R.id.text);
+                    textView.setText("无");
+                } else {
+                    RelativeLayout relativeLayout = view.findViewById(R.id.r);
+                    TextView textView = view.findViewById(R.id.text);
+                    textView.setText(o);
+                    textView.setTextColor(ContextCompat.getColor(MyApplication.getContext(), R.color.theme_color));
+                    relativeLayout.setBackground(personalSpacePage.getDrawable(R.drawable.favorite_tag_two));
+                }
+                return view;
+            }
+        });
+    }
+
+    private void viewPostInvalidate() {
         mBasicinformationHome.postInvalidate();
         mBasicinformationFavorite.postInvalidate();
         mBasicinformationConstellation.postInvalidate();
         mBasicinformationBirth.postInvalidate();
+        mBasicinformationOnline.postInvalidate();
     }
 
     @Override
@@ -238,18 +229,18 @@ public class BasicInformation extends BaseMVPFragment<IBasicInformationFView, Ba
         SpbBroadcast.destroyBrc(userToUser);
     }
 
-    class RefreshMsg extends BroadcastReceiver{
+    class RefreshMsg extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             initData();
         }
     }
 
-    class UserToUser extends BroadcastReceiver{
+    class UserToUser extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, @NotNull Intent intent) {
             toUserDto = (UserDto) intent.getSerializableExtra("key_two");
-            if (toUserDto.getUser_account().equals(personalSpacePage.userAccount)){
+            if (toUserDto.getUser_account().equals(personalSpacePage.userAccount)) {
                 mPresenter.setMyPrivacy(toUserDto.getUser_privacy());
                 initUserData();
             }

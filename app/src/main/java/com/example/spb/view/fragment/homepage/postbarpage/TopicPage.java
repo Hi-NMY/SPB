@@ -24,9 +24,7 @@ import pl.droidsonroids.gif.GifImageView;
 
 public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresenterImpl> implements ITopicPageFView {
 
-    private SmartRefreshLayout mTopicpageRefresh;
     private TextView mTopicpageGuessNext;
-    private GifImageView mTopicpageRefreshGif;
     private MySmartRefresh mySmartRefresh;
     private HomePage homePage;
     private RecyclerView mTopicpageGuessList;
@@ -38,7 +36,7 @@ public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         refreshUserTopic = new RefreshUserTopic();
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_topic),refreshUserTopic);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_refresh_topic), refreshUserTopic);
     }
 
     @Override
@@ -51,7 +49,7 @@ public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresen
         homePage.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                switch (responseFlag){
+                switch (responseFlag) {
                     case USERATTTOPIC_TRUE:
                         mTopicpageTipOne.setVisibility(View.VISIBLE);
                         mTopicpageUseratList.setVisibility(View.GONE);
@@ -78,12 +76,12 @@ public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresen
     @Override
     protected void initFragView(View view) {
         homePage = (HomePage) getActivity();
-        mTopicpageTipOne = (TextView)view.findViewById(R.id.topicpage_tip_one);
-        mTopicpageUseratList = (RecyclerView)view.findViewById(R.id.topicpage_userat_list);
-        mTopicpageGuessNext = (TextView) view.findViewById(R.id.topicpage_guess_next);
-        mTopicpageRefresh = (SmartRefreshLayout) view.findViewById(R.id.topicpage_refresh);
-        mTopicpageRefreshGif = (GifImageView) view.findViewById(R.id.topicpage_refresh_gif);
-        mTopicpageGuessList = (RecyclerView) view.findViewById(R.id.topicpage_guess_list);
+        mTopicpageTipOne = view.findViewById(R.id.topicpage_tip_one);
+        mTopicpageUseratList = view.findViewById(R.id.topicpage_userat_list);
+        mTopicpageGuessNext = view.findViewById(R.id.topicpage_guess_next);
+        mTopicpageGuessList = view.findViewById(R.id.topicpage_guess_list);
+        SmartRefreshLayout mTopicpageRefresh = view.findViewById(R.id.topicpage_refresh);
+        GifImageView mTopicpageRefreshGif = view.findViewById(R.id.topicpage_refresh_gif);
         mySmartRefresh = new MySmartRefresh(mTopicpageRefresh, mTopicpageRefreshGif, null);
         setMyListener();
         createDialog();
@@ -102,10 +100,10 @@ public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresen
 
                     @Override
                     public void onReturn(boolean a) {
-                        if (a){
-                            response(null,USERATTTOPIC_TRUE);
-                        }else {
-                            response(null,USERATTTOPIC_FALSE);
+                        if (a) {
+                            response(null, USERATTTOPIC_TRUE);
+                        } else {
+                            response(null, USERATTTOPIC_FALSE);
                         }
                     }
                 });
@@ -172,10 +170,10 @@ public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresen
 
                     @Override
                     public void onReturn(boolean a) {
-                        if (a){
-                            response(null,USERATTTOPIC_TRUE);
-                        }else {
-                            response(null,USERATTTOPIC_FALSE);
+                        if (a) {
+                            response(null, USERATTTOPIC_TRUE);
+                        } else {
+                            response(null, USERATTTOPIC_FALSE);
                         }
                     }
                 });
@@ -199,7 +197,7 @@ public class TopicPage extends BaseMVPFragment<ITopicPageFView, TopicPageFPresen
         SpbBroadcast.destroyBrc(refreshUserTopic);
     }
 
-    class RefreshUserTopic extends BroadcastReceiver{
+    class RefreshUserTopic extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             mPresenter.refreshUserTopic();

@@ -18,10 +18,7 @@ import java.util.List;
 
 public class SetUpAssistPage extends BaseMVPActivity<ISetUpAssistPageAView, SetUpAssistPageAPresenterImpl> implements ISetUpAssistPageAView {
 
-    private FragmentSpbAvtivityBar bar;
     private List<Switch> switches;
-    private Switch mSwitch1;
-    private Switch mSwitch2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +35,8 @@ public class SetUpAssistPage extends BaseMVPActivity<ISetUpAssistPageAView, SetU
     @Override
     protected void initActView() {
         switches = new ArrayList<>();
-        mSwitch1 = (Switch) findViewById(R.id.switch1);
-        mSwitch2 = (Switch) findViewById(R.id.switch2);
+        Switch mSwitch1 = findViewById(R.id.switch1);
+        Switch mSwitch2 = findViewById(R.id.switch2);
         switches.add(mSwitch1);
         switches.add(mSwitch2);
         initData();
@@ -50,16 +47,8 @@ public class SetUpAssistPage extends BaseMVPActivity<ISetUpAssistPageAView, SetU
 
     @Override
     protected void initData() {
-        if (mPresenter.isClssKey()){
-            switches.get(0).setChecked(true);
-        }else {
-            switches.get(0).setChecked(false);
-        }
-        if (mPresenter.isActiveKey()){
-            switches.get(1).setChecked(true);
-        }else {
-            switches.get(1).setChecked(false);
-        }
+        switches.get(0).setChecked(mPresenter.isClssKey());
+        switches.get(1).setChecked(mPresenter.isActiveKey());
 
     }
 
@@ -90,12 +79,12 @@ public class SetUpAssistPage extends BaseMVPActivity<ISetUpAssistPageAView, SetU
 
     @Override
     public void setMyListener() {
-        for (int i = 0 ; i < switches.size() ; i++){
+        for (int i = 0; i < switches.size(); i++) {
             int finalI = i;
             switches.get(i).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    switch(finalI){
+                    switch (finalI) {
                         case 0:
                             mPresenter.setClssKey(isChecked);
                             break;
@@ -103,7 +92,7 @@ public class SetUpAssistPage extends BaseMVPActivity<ISetUpAssistPageAView, SetU
                             mPresenter.setActiveKey(isChecked);
                             break;
                     }
-                    SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_assist_card),0,null);
+                    SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_assist_card), 0, null);
                 }
             });
         }
@@ -120,7 +109,7 @@ public class SetUpAssistPage extends BaseMVPActivity<ISetUpAssistPageAView, SetU
 
     @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.setup_assist_actbar);
+        FragmentSpbAvtivityBar bar = setMyActivityBar(R.id.setup_assist_actbar);
         bar.barCentralTxt(TITLE, null);
         bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override

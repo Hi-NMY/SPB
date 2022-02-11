@@ -13,15 +13,14 @@ import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
 
 public class ScrollCalculatorHelper {
     private int firstVisible = 0;
-    private int lastVisible = 0;
     private int visibleCount = 0;
-    private int playId;
-    private int rangeTop;
-    private int rangeBottom;
+    private final int playId;
+    private final int rangeTop;
+    private final int rangeBottom;
     private PlayRunnable runnable;
     private boolean oneKey = true;
 
-    private Handler playHandler = new Handler();
+    private final Handler playHandler = new Handler();
 
     public ScrollCalculatorHelper(int playId, int rangeTop, int rangeBottom) {
         this.playId = playId;
@@ -30,10 +29,8 @@ public class ScrollCalculatorHelper {
     }
 
     public void onScrollStateChanged(RecyclerView view, int scrollState) {
-        switch (scrollState) {
-            case RecyclerView.SCROLL_STATE_IDLE:
-                playVideo(view);
-                break;
+        if (scrollState == RecyclerView.SCROLL_STATE_IDLE) {
+            playVideo(view);
         }
     }
 
@@ -42,7 +39,6 @@ public class ScrollCalculatorHelper {
             return;
         }
         firstVisible = firstVisibleItem;
-        lastVisible = lastVisibleItem;
         visibleCount = visibleItemCount;
     }
 

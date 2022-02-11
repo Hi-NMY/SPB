@@ -23,7 +23,7 @@ public class MyToastClass {
             view = LayoutInflater.from(context).inflate(R.layout.other_toast_mytoast,null);
         }
         if (textView==null){
-            textView = (TextView)view.findViewById(R.id.ToastText);
+            textView = view.findViewById(R.id.ToastText);
         }
         if (toast==null){
             textView.setText(String.valueOf(value));

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.R;
 import com.example.spb.adapter.PostBarAdapter;
 import com.example.spb.app.MyApplication;
+import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.entity.Bar;
 import com.example.spb.entity.Comment;
@@ -32,9 +33,6 @@ import java.util.List;
 
 public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageFPresenterImpl> implements INewPostPageFView {
 
-    private GifImageView mNewpostpageRefreshTgif;
-    private GifImageView mNewpostpageRefreshBgif;
-    private SmartRefreshLayout mNewpostpageRefresh;
     private MySmartRefresh mySmartRefresh;
     public HomePage homePage;
     private RecyclerView mNewpostpageRecyclerview;
@@ -59,7 +57,6 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageF
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        Log.d("aaaaaaaaaaaaaaaaaaaa","2" + hidden);
     }
 
     @Override
@@ -75,9 +72,9 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageF
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (homePage.getEasyVoice() != null){
-            homePage.getEasyVoice().stopPlayer();
-            homePage.setEasyVoice(null);
+        if (BaseMVPActivity.getEasyVoice() != null){
+            BaseMVPActivity.getEasyVoice().stopPlayer();
+            BaseMVPActivity.setEasyVoice(null);
             postBarAdapter.refreshNoewVoice(-1);
         }
     }
@@ -94,12 +91,12 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageF
 
     @Override
     protected void initFragView(View view) {
-        mNewpostpageRefreshTgif = (GifImageView) view.findViewById(R.id.newpostpage_refresh_tgif);
-        mNewpostpageRefreshBgif = (GifImageView) view.findViewById(R.id.newpostpage_refresh_bgif);
-        mNewpostpageRefresh = (SmartRefreshLayout) view.findViewById(R.id.newpostpage_refresh);
-        mNewpostpageRecyclerview = (RecyclerView) view.findViewById(R.id.newpostpage_recyclerview);
-        mNewpostpageRefreshTip = (TextView)view.findViewById(R.id.newpostpage_refresh_tip);
-        mNewpostpageRecyclerview = MyListAnimation.setListAnimation(homePage,mNewpostpageRecyclerview);
+        GifImageView mNewpostpageRefreshTgif =  view.findViewById(R.id.newpostpage_refresh_tgif);
+        GifImageView mNewpostpageRefreshBgif =  view.findViewById(R.id.newpostpage_refresh_bgif);
+        SmartRefreshLayout mNewpostpageRefresh =  view.findViewById(R.id.newpostpage_refresh);
+        mNewpostpageRecyclerview =  view.findViewById(R.id.newpostpage_recyclerview);
+        mNewpostpageRefreshTip = view.findViewById(R.id.newpostpage_refresh_tip);
+        MyListAnimation.setListAnimation(homePage, mNewpostpageRecyclerview);
         mySmartRefresh = new MySmartRefresh(mNewpostpageRefresh, mNewpostpageRefreshTgif, mNewpostpageRefreshBgif);
         createRefresh();
     }
@@ -147,8 +144,8 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageF
         mySmartRefresh.setMyRefreshListener(new MySmartRefresh.MyRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                if (homePage.getEasyVoice() != null){
-                    homePage.getEasyVoice().stopPlayer();
+                if (BaseMVPActivity.getEasyVoice() != null){
+                    BaseMVPActivity.getEasyVoice().stopPlayer();
                     postBarAdapter.refreshNoewVoice(-1);
                 }
                 mPresenter.obtainNewBar(true);
@@ -156,8 +153,8 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageF
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if (homePage.getEasyVoice() != null){
-                    homePage.getEasyVoice().stopPlayer();
+                if (BaseMVPActivity.getEasyVoice() != null){
+                    BaseMVPActivity.getEasyVoice().stopPlayer();
                     postBarAdapter.refreshNoewVoice(-1);
                 }
                 mPresenter.obtainNewBar(false);
@@ -206,7 +203,7 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageF
                     postBarAdapter.refreshNowCommentItem(comments.size());
                     break;
                 case 1:
-                    postBarAdapter.refreshCommentItem(Integer.valueOf(num));
+                    postBarAdapter.refreshCommentItem(Integer.parseInt(num));
                     break;
             }
         }
@@ -229,7 +226,7 @@ public class NewPostPage extends BaseMVPFragment<INewPostPageFView, NewPostPageF
                     initData();
                     break;
                 case 3:
-                    postBarAdapter.deleteBar(homePage.getDeletePbId());
+                    postBarAdapter.deleteBar(BaseMVPActivity.getDeletePbId());
                     break;
             }
         }

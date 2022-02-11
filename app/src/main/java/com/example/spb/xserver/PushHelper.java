@@ -19,6 +19,7 @@ import com.umeng.message.entity.UMessage;
 
 import java.util.HashMap;
 import java.util.Map;
+
 /**
  * PushSDK集成帮助类
  */
@@ -82,7 +83,7 @@ public class PushHelper {
                 //注册成功会返回deviceToken deviceToken是推送消息的唯一标志
                 Log.i(TAG, "deviceToken --> " + deviceToken);
                 SharedPreferences.Editor editor = MySharedPreferences.saveShared(InValues.send(R.string.Shared_Push));
-                editor.putString(InValues.send(R.string.push_id),deviceToken);
+                editor.putString(InValues.send(R.string.push_id), deviceToken);
                 editor.apply();
             }
 
@@ -101,14 +102,14 @@ public class PushHelper {
         pushAgent.setDisplayNotificationNumber(0);
         pushAgent.setMuteDurationSeconds(0);
         try {
-            SharedPreferences sharedPreferences = context.getSharedPreferences(InValues.send(R.string.Shared_notify_setup),Context.MODE_PRIVATE);
-            boolean notifyAll = sharedPreferences.getBoolean(InValues.send(R.string.notify_all),true);
-            if(notifyAll){
+            SharedPreferences sharedPreferences = context.getSharedPreferences(InValues.send(R.string.Shared_notify_setup), Context.MODE_PRIVATE);
+            boolean notifyAll = sharedPreferences.getBoolean(InValues.send(R.string.notify_all), true);
+            if (notifyAll) {
                 pushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATION_PLAY_SDK_ENABLE);
-            }else {
+            } else {
                 pushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATION_PLAY_SDK_DISABLE);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         //推送消息处理
@@ -116,34 +117,31 @@ public class PushHelper {
             @Override
             public Notification getNotification(Context context, UMessage uMessage) {
                 String nowDate = MyDateClass.showNowDate();
-                Map<String,String> mapData = new HashMap<>();
+                Map<String, String> mapData = new HashMap<>();
                 for (Map.Entry entry : uMessage.extra.entrySet()) {
                     Object key = entry.getKey();
                     Object value = entry.getValue();
-                    mapData.put(String.valueOf(key),String.valueOf(value));
+                    mapData.put(String.valueOf(key), String.valueOf(value));
                 }
-                switch (Integer.valueOf(mapData.get(InValues.send(R.string.Push_fun)))){
-                    case AndroidUnicast.PUSHSYSTEMKEY:
-                        Notice notice1 = new Notice();
-                        notice1.setNotice_date(nowDate);
-                        notice1.setPush_fun(Integer.valueOf(mapData.get(InValues.send(R.string.Push_fun))));
-                        notice1.setPb_id(mapData.get(InValues.send(R.string.Push_system_key)));
-                        notice1.setSee(1);
-                        notice1.save();
-                        break;
-                    default:
-                        Notice notice = new Notice();
-                        notice.setNotice_date(nowDate);
-                        notice.setPush_fun(Integer.valueOf(mapData.get(InValues.send(R.string.Push_fun))));
-                        notice.setUser_account(mapData.get(InValues.send(R.string.Push_useraccount_key)));
-                        notice.setUser_name(mapData.get(InValues.send(R.string.Push_username_key)));
-                        notice.setPb_id(mapData.containsKey(InValues.send(R.string.Push_pbid_key)) ? mapData.get(InValues.send(R.string.Push_pbid_key)) : "");
-                        notice.setComment_id(mapData.containsKey(InValues.send(R.string.Push_commentid_key)) ? Integer.valueOf(mapData.get(InValues.send(R.string.Push_commentid_key))) : 0);
-                        notice.setSee(1);
-                        notice.save();
-                        break;
+                if (Integer.parseInt(mapData.get(InValues.send(R.string.Push_fun))) == AndroidUnicast.PUSHSYSTEMKEY) {
+                    Notice notice1 = new Notice();
+                    notice1.setNotice_date(nowDate);
+                    notice1.setPush_fun(Integer.parseInt(mapData.get(InValues.send(R.string.Push_fun))));
+                    notice1.setPb_id(mapData.get(InValues.send(R.string.Push_system_key)));
+                    notice1.setSee(1);
+                    notice1.save();
+                } else {
+                    Notice notice = new Notice();
+                    notice.setNotice_date(nowDate);
+                    notice.setPush_fun(Integer.parseInt(mapData.get(InValues.send(R.string.Push_fun))));
+                    notice.setUser_account(mapData.get(InValues.send(R.string.Push_useraccount_key)));
+                    notice.setUser_name(mapData.get(InValues.send(R.string.Push_username_key)));
+                    notice.setPb_id(mapData.getOrDefault(InValues.send(R.string.Push_pbid_key), ""));
+                    notice.setComment_id(mapData.containsKey(InValues.send(R.string.Push_commentid_key)) ? Integer.parseInt(mapData.get(InValues.send(R.string.Push_commentid_key))) : 0);
+                    notice.setSee(1);
+                    notice.save();
                 }
-                SpbBroadcast.sendReceiver(context,InValues.send(R.string.Bcr_new_messasge),0,null);
+                SpbBroadcast.sendReceiver(context, InValues.send(R.string.Bcr_new_messasge), 0, null);
                 return super.getNotification(context, uMessage);
             }
 

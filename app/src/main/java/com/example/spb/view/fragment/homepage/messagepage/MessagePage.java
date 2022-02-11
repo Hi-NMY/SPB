@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
-import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.presenter.impl.MessagePageFPresenterImpl;
 import com.example.spb.presenter.utils.InValues;
@@ -32,13 +31,11 @@ public class MessagePage extends BaseMVPFragment<IMessagePageFView, MessagePageF
     private RoundedImageView mMessagepageNotice;
     private RoundedImageView mMessagepageFriend;
     private NewMessage newMessage;
-    private BaseMVPActivity baseMVPActivity;
     private View mViewNewMessage;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        baseMVPActivity = (BaseMVPActivity) getActivity();
         newMessage = new NewMessage();
         SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_new_messasge), newMessage);
     }
@@ -55,9 +52,9 @@ public class MessagePage extends BaseMVPFragment<IMessagePageFView, MessagePageF
 
     @Override
     protected void initFragView(View view) {
-        mMessagepageNotice = (RoundedImageView) view.findViewById(R.id.messagepage_notice);
-        mMessagepageFriend = (RoundedImageView) view.findViewById(R.id.messagepage_friend);
-        mViewNewMessage = (View) view.findViewById(R.id.view_newMessage);
+        mMessagepageNotice = view.findViewById(R.id.messagepage_notice);
+        mMessagepageFriend = view.findViewById(R.id.messagepage_friend);
+        mViewNewMessage = view.findViewById(R.id.view_newMessage);
         setMyListener();
         ConversationListFragment conversationListFragment = new ConversationListFragment();
         // 此处设置 Uri. 通过 appendQueryParameter 去设置所要支持的会话类型. 例如
@@ -203,10 +200,10 @@ public class MessagePage extends BaseMVPFragment<IMessagePageFView, MessagePageF
     class NewMessage extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int key = intent.getIntExtra("key_one",0);
-            if (key == 0){
+            int key = intent.getIntExtra("key_one", 0);
+            if (key == 0) {
                 mViewNewMessage.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 mViewNewMessage.setVisibility(View.INVISIBLE);
             }
         }

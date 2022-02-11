@@ -84,10 +84,8 @@ public abstract class BaseMVPActivity<V, T extends BasePresenter<V>> extends App
     public DataAttentionTopicPresenter getDataAttentionTopicPresenter() {
         if (dataAttentionTopicPresenter == null) {
             setDataAttentionTopicPresenter();
-            return dataAttentionTopicPresenter;
-        } else {
-            return dataAttentionTopicPresenter;
         }
+        return dataAttentionTopicPresenter;
     }
 
     public void setDataAttentionTopicPresenter() {
@@ -97,10 +95,8 @@ public abstract class BaseMVPActivity<V, T extends BasePresenter<V>> extends App
     public DataCollectBarPresenter getDataCollectBarPresenter() {
         if (dataCollectBarPresenter == null) {
             setDataCollectBarPresenter();
-            return dataCollectBarPresenter;
-        } else {
-            return dataCollectBarPresenter;
         }
+        return dataCollectBarPresenter;
     }
 
     public void setDataCollectBarPresenter() {
@@ -110,10 +106,8 @@ public abstract class BaseMVPActivity<V, T extends BasePresenter<V>> extends App
     public DataDiaryPresenter getDataDiaryPresenter() {
         if (dataDiaryPresenter == null) {
             setDataDiaryPresenter();
-            return dataDiaryPresenter;
-        } else {
-            return dataDiaryPresenter;
         }
+        return dataDiaryPresenter;
     }
 
     public void setDataDiaryPresenter() {
@@ -123,10 +117,8 @@ public abstract class BaseMVPActivity<V, T extends BasePresenter<V>> extends App
     public DataFollowPresenter getDataFollowPresenter() {
         if (dataFollowPresenter == null) {
             setDataFollowPresenter();
-            return dataFollowPresenter;
-        } else {
-            return dataFollowPresenter;
         }
+        return dataFollowPresenter;
     }
 
     public void setDataFollowPresenter() {
@@ -136,10 +128,8 @@ public abstract class BaseMVPActivity<V, T extends BasePresenter<V>> extends App
     public DataFollowedPresenter getDataFollowedPresenter() {
         if (dataFollowedPresenter == null) {
             setDataFollowedPresenter();
-            return dataFollowedPresenter;
-        } else {
-            return dataFollowedPresenter;
         }
+        return dataFollowedPresenter;
     }
 
     public void setDataFollowedPresenter() {
@@ -149,10 +139,8 @@ public abstract class BaseMVPActivity<V, T extends BasePresenter<V>> extends App
     public DataLikePresenter getDataLikePresenter() {
         if (dataLikePresenter == null) {
             setDataLikePresenter();
-            return dataLikePresenter;
-        } else {
-            return dataLikePresenter;
         }
+        return dataLikePresenter;
     }
 
     public void setDataLikePresenter() {
@@ -162,10 +150,8 @@ public abstract class BaseMVPActivity<V, T extends BasePresenter<V>> extends App
     public DataPostBarPresenter getDataPostBarPresenter() {
         if (dataPostBarPresenter == null) {
             setDataPostBarPresenter();
-            return dataPostBarPresenter;
-        } else {
-            return dataPostBarPresenter;
         }
+        return dataPostBarPresenter;
     }
 
     public void setDataPostBarPresenter() {
@@ -175,10 +161,8 @@ public abstract class BaseMVPActivity<V, T extends BasePresenter<V>> extends App
     public DataUserMsgPresenter getDataUserMsgPresenter() {
         if (dataUserMsgPresenter == null) {
             setDataUserMsgPresenter();
-            return dataUserMsgPresenter;
-        } else {
-            return dataUserMsgPresenter;
         }
+        return dataUserMsgPresenter;
     }
 
     public void setDataUserMsgPresenter() {
@@ -188,10 +172,8 @@ public abstract class BaseMVPActivity<V, T extends BasePresenter<V>> extends App
     public DataNoticePresenter getDataNoticePresenter() {
         if (dataNoticePresenter == null) {
             setDataNoticePresenter();
-            return dataNoticePresenter;
-        } else {
-            return dataNoticePresenter;
         }
+        return dataNoticePresenter;
     }
 
     public void setDataNoticePresenter() {

@@ -23,8 +23,8 @@ import com.example.spb.entity.Bar;
 import com.example.spb.entity.Comment;
 import com.example.spb.entity.Topic;
 import com.example.spb.presenter.impl.PostBarDetailPageAPresenterImpl;
-import com.example.spb.presenter.utils.*;
 import com.example.spb.presenter.otherimpl.DataLikePresenter;
+import com.example.spb.presenter.utils.*;
 import com.example.spb.view.Component.BarMoreOperateDialog;
 import com.example.spb.view.Component.EasyDialog;
 import com.example.spb.view.Component.MyToastClass;
@@ -46,7 +46,6 @@ import java.util.List;
 
 public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, PostBarDetailPageAPresenterImpl> implements IPostBarDetailPageAView, View.OnClickListener {
 
-    private ISpbAvtivityBarFView bar;
     private Bar barData;
     private RoundedImageView mPostbarDetailUserHeadimg;
     private TextView mPostbarDetailUsername;
@@ -54,23 +53,19 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
     private Button mPostbarDetailAttentionbtn;
     private TextView mPostbarDetailTxt;
     private RecyclerView mPostbarDetailImagelist;
-    private GifImageView mVoiceGif;
     private TextView mVoiceTime;
     private RelativeLayout mPostbarDetailVoice;
     private TagFlowLayout mPostbarDetailTopic;
     private TextView mPostbarDetailLocation;
     private TextView mPostbarDetailCommentNum;
-    private RelativeLayout mPostbarDetailCommentR;
     private ImageView mPostbarDetailLikeImg;
     private TextView mPostbarDetailLikeNum;
-    private RelativeLayout mPostbarDetailLikeR;
     private TextView mPostbarDetailDiscussNum;
     private RecyclerView mPostbarDetailDiscussList;
     private LayoutInflater layoutInflater;
     private RefreshFollow refreshFollow;
     private EditText mCommentText;
     private Button mCommentSend;
-    private RelativeLayout mPostbarDetailBottomCommentR;
     private boolean keyboardStartKey = false;
     private ImageView mPostbarDetailCommentImg;
     private BarMoreOperateDialog barMoreOperateDialog;
@@ -125,33 +120,30 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
     protected void initActView() {
         mPresenter.setBarUser(barData.getUser_account());
         mPresenter.setUserFollowKey(getDataFollowPresenter().determineFollow(barData.getUser_account()));
-        mPostbarDetailUserbadge = (ImageView) findViewById(R.id.postbar_detail_userbadge);
-        mDetailPlayer = (StandardGSYVideoPlayer) findViewById(R.id.detail_player);
-        mVideoCard = (CardView) findViewById(R.id.video_card);
-        mPostbarDetailUserHeadimg = (RoundedImageView) findViewById(R.id.postbar_detail_user_headimg);
-        mPostbarDetailUsername = (TextView) findViewById(R.id.postbar_detail_username);
-        mPostbarDetailPostdate = (TextView) findViewById(R.id.postbar_detail_postdate);
-        mPostbarDetailAttentionbtn = (Button) findViewById(R.id.postbar_detail_attentionbtn);
-        mPostbarDetailTxt = (TextView) findViewById(R.id.postbar_detail_txt);
-        mPostbarDetailImagelist = (RecyclerView) findViewById(R.id.postbar_detail_imagelist);
-        mVoiceGif = (GifImageView) findViewById(R.id.voice_gif);
-        mVoiceTime = (TextView) findViewById(R.id.voice_time);
-        mPostbarDetailVoice = (RelativeLayout) findViewById(R.id.postbar_detail_voice);
-        mPostbarDetailTopic = (TagFlowLayout) findViewById(R.id.postbar_detail_topic);
-        mPostbarDetailLocation = (TextView) findViewById(R.id.postbar_detail_location);
-        mPostbarDetailCommentNum = (TextView) findViewById(R.id.postbar_detail_comment_num);
-        mPostbarDetailCommentR = (RelativeLayout) findViewById(R.id.postbar_detail_comment_R);
-        mPostbarDetailCommentImg = (ImageView) findViewById(R.id.postbar_detail_comment_img);
-        mPostbarDetailLikeImg = (ImageView) findViewById(R.id.postbar_detail_like_img);
-        mPostbarDetailLikeNum = (TextView) findViewById(R.id.postbar_detail_like_num);
-        mPostbarDetailLikeR = (RelativeLayout) findViewById(R.id.postbar_detail_like_R);
-        mPostbarDetailDiscussNum = (TextView) findViewById(R.id.postbar_detail_discuss_num);
-        mPostbarDetailDiscussList = (RecyclerView) findViewById(R.id.postbar_detail_discuss_list);
-        mPostbarDetailDiscussList = MyListAnimation.setListAnimation(this, mPostbarDetailDiscussList);
-        mCommentText = (EditText) findViewById(R.id.comment_text);
-        mCommentSend = (Button) findViewById(R.id.comment_send);
-        mPostbarDetailBottomCommentR = (RelativeLayout) findViewById(R.id.postbar_detail_bottom_commentR);
-        mExcessR = (RelativeLayout) findViewById(R.id.excess_r);
+        mPostbarDetailUserbadge = findViewById(R.id.postbar_detail_userbadge);
+        mDetailPlayer = findViewById(R.id.detail_player);
+        mVideoCard = findViewById(R.id.video_card);
+        mPostbarDetailUserHeadimg = findViewById(R.id.postbar_detail_user_headimg);
+        mPostbarDetailUsername = findViewById(R.id.postbar_detail_username);
+        mPostbarDetailPostdate = findViewById(R.id.postbar_detail_postdate);
+        mPostbarDetailAttentionbtn = findViewById(R.id.postbar_detail_attentionbtn);
+        mPostbarDetailTxt = findViewById(R.id.postbar_detail_txt);
+        mPostbarDetailImagelist = findViewById(R.id.postbar_detail_imagelist);
+        GifImageView mVoiceGif = findViewById(R.id.voice_gif);
+        mVoiceTime = findViewById(R.id.voice_time);
+        mPostbarDetailVoice = findViewById(R.id.postbar_detail_voice);
+        mPostbarDetailTopic = findViewById(R.id.postbar_detail_topic);
+        mPostbarDetailLocation = findViewById(R.id.postbar_detail_location);
+        mPostbarDetailCommentNum = findViewById(R.id.postbar_detail_comment_num);
+        mPostbarDetailCommentImg = findViewById(R.id.postbar_detail_comment_img);
+        mPostbarDetailLikeImg = findViewById(R.id.postbar_detail_like_img);
+        mPostbarDetailLikeNum = findViewById(R.id.postbar_detail_like_num);
+        mPostbarDetailDiscussNum = findViewById(R.id.postbar_detail_discuss_num);
+        mPostbarDetailDiscussList = findViewById(R.id.postbar_detail_discuss_list);
+        MyListAnimation.setListAnimation(this, mPostbarDetailDiscussList);
+        mCommentText = findViewById(R.id.comment_text);
+        mCommentSend = findViewById(R.id.comment_send);
+        mExcessR = findViewById(R.id.excess_r);
         gifShow = new GIFShow(mVoiceGif);
         barMoreOperateDialog = new BarMoreOperateDialog(this);
         setMyListener();
@@ -177,9 +169,9 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
                 .load(InValues.send(R.string.prefix_img) + barData.getUser_account() + InValues.send(R.string.suffix_head_img))
                 .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                 .into(mPostbarDetailUserHeadimg);
-        if (barData.getUser_badge() == null || barData.getUser_badge().equals("")){
+        if (DataVerificationTool.isEmpty(barData.getUser_badge())) {
             mPostbarDetailUserbadge.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             mPostbarDetailUserbadge.setVisibility(View.VISIBLE);
             //显示徽章！！！
             Glide.with(this)
@@ -197,13 +189,11 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
                 noAtt();
             }
         }
+        mPostbarDetailTxt.setVisibility(View.VISIBLE);
+        mPostbarDetailTxt.setText(barData.getPb_article());
         mPostbarDetailUsername.setText(barData.getUser_name());
         mPostbarDetailPostdate.setText(MyDateClass.showDateClass(barData.getPb_date()));
-        if (barData.getPb_article() != null && !barData.getPb_article().equals("")) {
-            mPostbarDetailTxt.setVisibility(View.VISIBLE);
-            mPostbarDetailTxt.setText(barData.getPb_article());
-        }
-        if (barData.getPb_image_url() != null && !barData.getPb_image_url().equals("")) {
+        if (!DataVerificationTool.isEmpty(barData.getPb_image_url())) {
             mPostbarDetailImagelist.setVisibility(View.VISIBLE);
             GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
             mPostbarDetailImagelist.setLayoutManager(gridLayoutManager);
@@ -211,7 +201,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
             postBarImgAdapter.isDetail(true);
             mPostbarDetailImagelist.setAdapter(postBarImgAdapter);
         }
-        if (barData.getPb_voice() != null && !barData.getPb_voice().equals("")) {
+        if (!DataVerificationTool.isEmpty(barData.getPb_voice())) {
             EasyVoice.getVoiceTime(InValues.send(R.string.httpHeadert) + barData.getPb_voice(), 0, new EasyVoice.TimeReturn() {
                 @Override
                 public void onReturn(int time, int position) {
@@ -226,7 +216,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
             });
             mPostbarDetailVoice.setVisibility(View.VISIBLE);
         }
-        if (barData.getPb_topic() != null && !barData.getPb_topic().equals("") && !barData.getPb_topic().equals("null")) {
+        if (!DataVerificationTool.isEmpty(barData.getPb_topic())) {
             mPostbarDetailTopic.setAdapter(new TagAdapter<Topic>(MyResolve.InTopic(barData.getPb_topic())) {
                 @Override
                 public View getView(FlowLayout parent, int position, Topic o) {
@@ -252,7 +242,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
                 }
             });
         }
-        if (barData.getPb_location() != null && !barData.getPb_location().equals("")) {
+        if (!DataVerificationTool.isEmpty(barData.getPb_location())) {
             mPostbarDetailLocation.setVisibility(View.VISIBLE);
             mPostbarDetailLocation.setText(barData.getPb_location());
         }
@@ -394,7 +384,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
 
     @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.postbar_detail_bar);
+        ISpbAvtivityBarFView bar = setMyActivityBar(R.id.postbar_detail_bar);
         bar.setBarBackground(R.color.beijing);
         bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
@@ -481,10 +471,10 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
                 if (getEasyVoice() == null) {
                     toVoice(barData.getPb_voice(), mVoiceTime, gifShow);
                     getEasyVoice().startPlayer();
-                }else {
-                    if (getEasyVoice().isVoicePlayerKey()){
+                } else {
+                    if (getEasyVoice().isVoicePlayerKey()) {
                         getEasyVoice().startPlayer();
-                    }else {
+                    } else {
                         getEasyVoice().stopPlayer();
                     }
                 }
@@ -501,7 +491,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
         super.onDestroy();
         SpbBroadcast.destroyBrc(refreshFollow);
         SpbBroadcast.destroyBrc(barComment);
-        if (getEasyVoice() != null){
+        if (getEasyVoice() != null) {
             getEasyVoice().stopPlayer();
             setEasyVoice(null);
         }
@@ -510,7 +500,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
     @Override
     protected void onPause() {
         super.onPause();
-        if (getEasyVoice() != null){
+        if (getEasyVoice() != null) {
             getEasyVoice().stopPlayer();
             setEasyVoice(null);
         }
@@ -563,7 +553,7 @@ public class PostBarDetailPage extends BaseMVPActivity<IPostBarDetailPageAView, 
                         mPresenter.addOneComment(comment);
                     }
                     closeDialog(EASYDIALOG);
-                    barData.setPb_comment_num(barData.getPb_comment_num() + Integer.valueOf(num));
+                    barData.setPb_comment_num(barData.getPb_comment_num() + Integer.parseInt(num));
                     if (barData.getPb_comment_num() <= 0) {
                         mPostbarDetailDiscussNum.setVisibility(View.GONE);
                         mPostbarDetailCommentNum.setVisibility(View.GONE);

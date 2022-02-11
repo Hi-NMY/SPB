@@ -37,11 +37,11 @@ public class Follow extends BaseMVPFragment<IFollowFView, FollowFPresenterImpl> 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        attentionUserPage = (AttentionUserPage)getActivity();
+        attentionUserPage = (AttentionUserPage) getActivity();
         refreshFollowList = new RefreshFollowList();
         refreshFollow = new RefreshFollow();
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_re_Follow),refreshFollow);
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_Follow),refreshFollowList);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_re_Follow), refreshFollow);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_Follow), refreshFollowList);
     }
 
     @Override
@@ -66,10 +66,10 @@ public class Follow extends BaseMVPFragment<IFollowFView, FollowFPresenterImpl> 
 
     @Override
     protected void initFragView(View view) {
-        mFollowRefreshTgif = (GifImageView)view.findViewById(R.id.follow_refresh_tgif);
-        mFollowRecyclerview = (RecyclerView)view.findViewById(R.id.follow_recyclerview);
-        mFollowRefresh = (SmartRefreshLayout)view.findViewById(R.id.follow_refresh);
-        mFollowRecyclerview = MyListAnimation.setListAnimation(attentionUserPage,mFollowRecyclerview);
+        mFollowRefreshTgif = view.findViewById(R.id.follow_refresh_tgif);
+        mFollowRecyclerview = view.findViewById(R.id.follow_recyclerview);
+        mFollowRefresh = view.findViewById(R.id.follow_refresh);
+        MyListAnimation.setListAnimation(attentionUserPage, mFollowRecyclerview);
         createRefresh();
     }
 
@@ -110,7 +110,7 @@ public class Follow extends BaseMVPFragment<IFollowFView, FollowFPresenterImpl> 
 
     @Override
     public void createRefresh() {
-        mySmartRefresh = new MySmartRefresh(mFollowRefresh,mFollowRefreshTgif,null);
+        mySmartRefresh = new MySmartRefresh(mFollowRefresh, mFollowRefreshTgif, null);
         mySmartRefresh.setMyRefreshListener(new MySmartRefresh.MyRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -136,18 +136,18 @@ public class Follow extends BaseMVPFragment<IFollowFView, FollowFPresenterImpl> 
         SpbBroadcast.destroyBrc(refreshFollowList);
     }
 
-    class RefreshFollowList extends BroadcastReceiver{
+    class RefreshFollowList extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             List<UserDto> userDtos = (List<UserDto>) intent.getSerializableExtra("key_two");
-            if (userDtos != null){
-                mPresenter.addList(userDtos,mFollowRecyclerview);
+            if (userDtos != null) {
+                mPresenter.addList(userDtos, mFollowRecyclerview);
             }
             finishRRefresh(0);
         }
     }
 
-    class RefreshFollow extends BroadcastReceiver{
+    class RefreshFollow extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             mPresenter.addFollowList(attentionUserPage.getDataUserMsgPresenter().getUser_account());

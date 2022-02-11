@@ -22,8 +22,6 @@ public class SelectImage implements SpbSelectImage {
         setTheme();
     }
 
-
-
     @Override
     public void selectEasyImg(OnResultCallbackListener onResultCallbackListener) {
         PictureSelector.create(activity)

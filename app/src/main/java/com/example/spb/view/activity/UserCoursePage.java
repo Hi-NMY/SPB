@@ -12,7 +12,6 @@ import com.gyf.immersionbar.ImmersionBar;
 public class UserCoursePage extends BaseMVPActivity<IUserCoursePageAView, UserCoursePageAPresenterImpl>
         implements IUserCoursePageAView {
 
-    private FragmentSpbAvtivityBar bar;
     private RecyclerView mSubjectList;
 
     @Override
@@ -29,7 +28,7 @@ public class UserCoursePage extends BaseMVPActivity<IUserCoursePageAView, UserCo
 
     @Override
     protected void initActView() {
-        mSubjectList = (RecyclerView) findViewById(R.id.subject_list);
+        mSubjectList = findViewById(R.id.subject_list);
         initData();
         setActivityBar();
         setBar();
@@ -83,7 +82,7 @@ public class UserCoursePage extends BaseMVPActivity<IUserCoursePageAView, UserCo
 
     @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.usercourse_actbar);
+        FragmentSpbAvtivityBar bar = setMyActivityBar(R.id.usercourse_actbar);
         bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
             public void onClick() {

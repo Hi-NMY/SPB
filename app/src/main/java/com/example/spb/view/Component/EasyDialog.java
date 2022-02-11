@@ -12,10 +12,10 @@ import pl.droidsonroids.gif.GifImageView;
 
 public class EasyDialog implements DialogInter {
 
-    private AlertDialog alertDialog;
-    private AlertDialog.Builder builder;
-    private int mloadingId;
-    private Window window;
+    private final AlertDialog alertDialog;
+    private final AlertDialog.Builder builder;
+    private final int mloadingId;
+    private final Window window;
 
     public EasyDialog(Activity context, int loadingId) {
         builder = new AlertDialog.Builder(context);

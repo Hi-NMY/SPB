@@ -16,6 +16,7 @@ import com.example.spb.R;
 import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.presenter.impl.UserPageFPresenterImpl;
+import com.example.spb.presenter.utils.DataVerificationTool;
 import com.example.spb.presenter.utils.InValues;
 import com.example.spb.presenter.utils.MyDateClass;
 import com.example.spb.presenter.utils.SpbBroadcast;
@@ -90,28 +91,28 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
     @Override
     protected void initFragView(View view) {
         homePage = (HomePage) getActivity();
-        mUserPageUserR = (RelativeLayout) view.findViewById(R.id.user_page_userR);
-        mUserPageUseronlinetip = (ImageView) view.findViewById(R.id.user_page_useronlinetip);
-        mUserPageCollectnumR = (RelativeLayout) view.findViewById(R.id.user_page_collectnum_r);
-        mUserPageCollectnum = (TextView) view.findViewById(R.id.user_page_collectnum);
-        mUserPageAttentionnumR = (RelativeLayout) view.findViewById(R.id.user_page_attentionnum_r);
-        mUserPageUserHeadimg = (RoundedImageView) view.findViewById(R.id.user_page_user_headimg);
-        mUserPageUsername = (TextView) view.findViewById(R.id.user_page_username);
-        mUserPageUsersex = (ImageView) view.findViewById(R.id.user_page_usersex);
-        mUserPageAttentionnum = (TextView) view.findViewById(R.id.user_page_attentionnum);
-        mUserPagePostbarnum = (TextView) view.findViewById(R.id.user_page_postbarnum);
-        mUserPageFollow = (TextView) view.findViewById(R.id.user_page_follow);
-        mUserPageFollowed = (TextView) view.findViewById(R.id.user_page_followed);
-        mUserPageUseronlineday = (TextView) view.findViewById(R.id.user_page_useronlineday);
-        mUserPageUserbadge = (ImageView) view.findViewById(R.id.user_page_userbadge);
-        mR1 = (RelativeLayout) view.findViewById(R.id.r1);
-        mR2 = (RelativeLayout) view.findViewById(R.id.r2);
-        mR3 = (RelativeLayout) view.findViewById(R.id.r3);
-        mR4 = (RelativeLayout) view.findViewById(R.id.r4);
-        mUserPageSubject = (RelativeLayout) view.findViewById(R.id.user_page_subject);
-        mUserPageDayactive = (RelativeLayout) view.findViewById(R.id.user_page_dayactive);
-        mSubjectTip = (TextView) view.findViewById(R.id.subject_tip);
-        mSubjectList = (RecyclerView) view.findViewById(R.id.subject_list);
+        mUserPageUserR = view.findViewById(R.id.user_page_userR);
+        mUserPageUseronlinetip = view.findViewById(R.id.user_page_useronlinetip);
+        mUserPageCollectnumR = view.findViewById(R.id.user_page_collectnum_r);
+        mUserPageCollectnum = view.findViewById(R.id.user_page_collectnum);
+        mUserPageAttentionnumR = view.findViewById(R.id.user_page_attentionnum_r);
+        mUserPageUserHeadimg = view.findViewById(R.id.user_page_user_headimg);
+        mUserPageUsername = view.findViewById(R.id.user_page_username);
+        mUserPageUsersex = view.findViewById(R.id.user_page_usersex);
+        mUserPageAttentionnum = view.findViewById(R.id.user_page_attentionnum);
+        mUserPagePostbarnum = view.findViewById(R.id.user_page_postbarnum);
+        mUserPageFollow = view.findViewById(R.id.user_page_follow);
+        mUserPageFollowed = view.findViewById(R.id.user_page_followed);
+        mUserPageUseronlineday = view.findViewById(R.id.user_page_useronlineday);
+        mUserPageUserbadge = view.findViewById(R.id.user_page_userbadge);
+        mR1 = view.findViewById(R.id.r1);
+        mR2 = view.findViewById(R.id.r2);
+        mR3 = view.findViewById(R.id.r3);
+        mR4 = view.findViewById(R.id.r4);
+        mUserPageSubject = view.findViewById(R.id.user_page_subject);
+        mUserPageDayactive = view.findViewById(R.id.user_page_dayactive);
+        mSubjectTip = view.findViewById(R.id.subject_tip);
+        mSubjectList = view.findViewById(R.id.subject_list);
         createDialog();
         setMyListener();
     }
@@ -129,25 +130,33 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
         } else {
             mUserPageUsersex.setImageResource(R.drawable.icon_girl);
         }
-        if (homePage.getDataUserMsgPresenter().getUser_badge() == null || homePage.getDataUserMsgPresenter().getUser_badge().equals("")) {
+        if (DataVerificationTool.isEmpty(homePage.getDataUserMsgPresenter().getUser_badge())) {
             mUserPageUserbadge.setVisibility(View.INVISIBLE);
         } else {
-            Glide.with(homePage)
-                    .load(InValues.send(R.string.prefix_badge_img) + homePage.getDataUserMsgPresenter().getUser_badge())
-                    .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
-                    .centerCrop()
-                    .into(mUserPageUserbadge);
+            setBadgeImg(homePage.getDataUserMsgPresenter().getUser_badge());
         }
-        Glide.with(this)
-                .load(InValues.send(R.string.prefix_img) + homePage.getDataUserMsgPresenter().getUser_account() + InValues.send(R.string.suffix_head_img))
-                .centerCrop()
-                .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
-                .into(mUserPageUserHeadimg);
+        setHeadImg();
         mUserPageFollow.postInvalidate();
         mUserPageFollowed.postInvalidate();
         mUserPageUsername.postInvalidate();
         mUserPageAttentionnum.postInvalidate();
         mUserPageUseronlineday.postInvalidate();
+    }
+
+    private void setHeadImg() {
+        Glide.with(this)
+                .load(InValues.send(R.string.prefix_img) + homePage.getDataUserMsgPresenter().getUser_account() + InValues.send(R.string.suffix_head_img))
+                .centerCrop()
+                .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
+                .into(mUserPageUserHeadimg);
+    }
+
+    private void setBadgeImg(String badge) {
+        Glide.with(this)
+                .load(InValues.send(R.string.prefix_badge_img) + badge)
+                .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
+                .centerCrop()
+                .into(mUserPageUserbadge);
     }
 
     private void viewMyCard() {
@@ -161,15 +170,15 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
                     mPresenter.obtainSubjectClass(new UserPageFPresenterImpl.OnClassReturn() {
                         @Override
                         public void onReturn(boolean key) {
-                            if (key){
+                            if (key) {
                                 mSubjectTip.setVisibility(View.GONE);
                                 mSubjectList.setVisibility(View.VISIBLE);
-                            }else {
+                            } else {
                                 mSubjectTip.setVisibility(View.VISIBLE);
                                 mSubjectList.setVisibility(View.GONE);
                             }
                         }
-                    },mSubjectList);
+                    }, mSubjectList);
                 }
                 if (!activeKey) {
                     mUserPageDayactive.setVisibility(View.GONE);
@@ -180,7 +189,7 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
         });
     }
 
-    public void setAdapter(){
+    public void setAdapter() {
         mPresenter.setClassAdapter(mSubjectList);
     }
 
@@ -199,7 +208,7 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
         tipDialog = new ComponentDialog(getActivity(), R.layout.dialog_day_tip, new ComponentDialog.InitDialog() {
             @Override
             public void initView(View view) {
-                tipImage = (ImageView) view.findViewById(R.id.img);
+                tipImage = view.findViewById(R.id.img);
             }
 
             @Override
@@ -304,6 +313,7 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
         SpbBroadcast.destroyBrc(refreshHeadImg);
         SpbBroadcast.destroyBrc(refreshLongDay);
         SpbBroadcast.destroyBrc(assistCard);
+        SpbBroadcast.destroyBrc(refreshFollowNum);
     }
 
     class RefreshMsg extends BroadcastReceiver {
@@ -343,17 +353,9 @@ public class UserPage extends BaseMVPFragment<IUserPageFView, UserPageFPresenter
             if (a == 1) {
                 String badge = intent.getStringExtra("key_two");
                 mUserPageUserbadge.setVisibility(View.VISIBLE);
-                Glide.with(homePage)
-                        .load(InValues.send(R.string.prefix_badge_img) + badge)
-                        .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
-                        .centerCrop()
-                        .into(mUserPageUserbadge);
+                setBadgeImg(badge);
             } else {
-                Glide.with(MyApplication.getContext())
-                        .load(InValues.send(R.string.prefix_img) + homePage.getDataUserMsgPresenter().getUser_account() + InValues.send(R.string.suffix_head_img))
-                        .centerCrop()
-                        .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
-                        .into(mUserPageUserHeadimg);
+                setHeadImg();
             }
         }
     }

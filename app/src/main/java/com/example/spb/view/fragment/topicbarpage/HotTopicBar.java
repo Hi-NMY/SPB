@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.spb.R;
 import com.example.spb.app.MyApplication;
+import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.base.BaseMVPFragment;
 import com.example.spb.entity.Bar;
 import com.example.spb.entity.Comment;
@@ -29,8 +30,6 @@ public class HotTopicBar extends BaseMVPFragment<IHotTopicBarFView, HotTopicBarF
 
     private AddHotTopicBar addHotTopicBar;
     private RecyclerView mHottopicbarRecyclerview;
-    private GifImageView mHottopicbarMoreGif;
-    private SmartRefreshLayout mHottopicbarRefresh;
     private MySmartRefresh mySmartRefresh;
     private TopicBarPage topicBarPage;
     private RefreshThumb refreshThumb;
@@ -70,11 +69,11 @@ public class HotTopicBar extends BaseMVPFragment<IHotTopicBarFView, HotTopicBarF
 
     @Override
     protected void initFragView(View view) {
-        mHottopicbarRecyclerview = (RecyclerView)view.findViewById(R.id.hottopicbar_recyclerview);
-        mHottopicbarMoreGif = (GifImageView)view.findViewById(R.id.hottopicbar_more_gif);
-        mHottopicbarRefresh = (SmartRefreshLayout)view.findViewById(R.id.hottopicbar_refresh);
-        mHottopicbarRecyclerview = MyListAnimation.setListAnimation(topicBarPage,mHottopicbarRecyclerview);
-        mySmartRefresh = new MySmartRefresh(mHottopicbarRefresh,null,mHottopicbarMoreGif);
+        mHottopicbarRecyclerview = view.findViewById(R.id.hottopicbar_recyclerview);
+        GifImageView mHottopicbarMoreGif =  view.findViewById(R.id.hottopicbar_more_gif);
+        SmartRefreshLayout mHottopicbarRefresh = view.findViewById(R.id.hottopicbar_refresh);
+        MyListAnimation.setListAnimation(topicBarPage, mHottopicbarRecyclerview);
+        mySmartRefresh = new MySmartRefresh(mHottopicbarRefresh,null, mHottopicbarMoreGif);
         createRefresh();
     }
 
@@ -116,9 +115,9 @@ public class HotTopicBar extends BaseMVPFragment<IHotTopicBarFView, HotTopicBarF
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (topicBarPage.getEasyVoice() != null){
-            topicBarPage.getEasyVoice().stopPlayer();
-            topicBarPage.setEasyVoice(null);
+        if (BaseMVPActivity.getEasyVoice() != null){
+            BaseMVPActivity.getEasyVoice().stopPlayer();
+            BaseMVPActivity.setEasyVoice(null);
             mPresenter.stopVoice();
         }
     }
@@ -133,8 +132,8 @@ public class HotTopicBar extends BaseMVPFragment<IHotTopicBarFView, HotTopicBarF
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if (topicBarPage.getEasyVoice() != null){
-                    topicBarPage.getEasyVoice().stopPlayer();
+                if (BaseMVPActivity.getEasyVoice() != null){
+                    BaseMVPActivity.getEasyVoice().stopPlayer();
                     mPresenter.stopVoice();
                 }
                 mPresenter.obtainMoreHotTopicBar();
@@ -175,7 +174,7 @@ public class HotTopicBar extends BaseMVPFragment<IHotTopicBarFView, HotTopicBarF
                     mPresenter.addHotTopicList(bars,mHottopicbarRecyclerview,true);
                     break;
                 case 3:
-                    mPresenter.deleteBarData(topicBarPage.getDeletePbId());
+                    mPresenter.deleteBarData(BaseMVPActivity.getDeletePbId());
                     break;
             }
         }
@@ -201,7 +200,7 @@ public class HotTopicBar extends BaseMVPFragment<IHotTopicBarFView, HotTopicBarF
                     mPresenter.refreshNowComment(comments.size());
                     break;
                 case 1:
-                    mPresenter.refreshComment(Integer.valueOf(num));
+                    mPresenter.refreshComment(Integer.parseInt(num));
                     break;
             }
         }

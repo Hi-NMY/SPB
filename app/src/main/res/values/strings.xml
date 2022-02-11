@@ -230,6 +230,8 @@
     <!--其他-->
     <string name="rong_app_key">x18ywvqfx4z8c</string>
     <string name="rong_app_secret">nCZrj6SCU1h0</string>
+    <string name="u_AppMasterSecret">30ururoedxwitzqujnaghtkh3zyzrmnl</string>
+    <string name="u_AppKey">60e59fdd72748106e47642df</string>
     <string name="certification_badge">certification_badge.png</string>
     <string name="like_badge_one">like_badge_one.png|</string>
     <string name="like_badge_two">like_badge_one.png|like_badge_two.png|</string>

@@ -24,7 +24,6 @@ import pl.droidsonroids.gif.GifImageView;
 
 public class NoticePage extends BaseMVPActivity<INoticePageAView, NoticePageAPresenterImpl> implements INoticePageAView {
 
-    private FragmentSpbAvtivityBar bar;
     private View mViewNoticeOfficial;
     private RelativeLayout mOfficialnotice;
     private GifImageView mNoticeRefreshTgif;
@@ -52,13 +51,13 @@ public class NoticePage extends BaseMVPActivity<INoticePageAView, NoticePageAPre
     @Override
     protected void initActView() {
         gridLayoutManager = new GridLayoutManager(this, 1);
-        mExcessR = (RelativeLayout) findViewById(R.id.excess_r);
-        mViewNoticeOfficial = (View) findViewById(R.id.view_notice_official);
-        mOfficialnotice = (RelativeLayout) findViewById(R.id.officialnotice);
-        mNoticeRefreshTgif = (GifImageView) findViewById(R.id.notice_refresh_tgif);
-        mNoticeRecyclerview = (RecyclerView) findViewById(R.id.notice_recyclerview);
-        mNoticeRefresh = (SmartRefreshLayout) findViewById(R.id.notice_refresh);
-        mNoticeRecyclerview = MyListAnimation.setListAnimation(this, mNoticeRecyclerview);
+        mExcessR =  findViewById(R.id.excess_r);
+        mViewNoticeOfficial =  findViewById(R.id.view_notice_official);
+        mOfficialnotice =  findViewById(R.id.officialnotice);
+        mNoticeRefreshTgif =  findViewById(R.id.notice_refresh_tgif);
+        mNoticeRecyclerview =  findViewById(R.id.notice_recyclerview);
+        mNoticeRefresh =  findViewById(R.id.notice_refresh);
+        MyListAnimation.setListAnimation(this, mNoticeRecyclerview);
         initData();
         setActivityBar();
         setBar();
@@ -98,9 +97,9 @@ public class NoticePage extends BaseMVPActivity<INoticePageAView, NoticePageAPre
         bottomSystemNotice = new ComponentDialog(this, R.layout.dialog_bottom_system_notice, R.style.dialogHomeSend, new ComponentDialog.InitDialog() {
             @Override
             public void initView(View view) {
-                mNoticeClose = (TextView) view.findViewById(R.id.notice_close);
-                mNoticeRecycler = (RecyclerView) view.findViewById(R.id.notice_recycler);
-                mNoticeRecycler = MyListAnimation.setListAnimation(NoticePage.this,mNoticeRecycler);
+                mNoticeClose =  view.findViewById(R.id.notice_close);
+                mNoticeRecycler =  view.findViewById(R.id.notice_recycler);
+                MyListAnimation.setListAnimation(NoticePage.this, mNoticeRecycler);
             }
 
             @Override
@@ -155,7 +154,7 @@ public class NoticePage extends BaseMVPActivity<INoticePageAView, NoticePageAPre
 
     @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.notice_actbar);
+        FragmentSpbAvtivityBar bar = setMyActivityBar(R.id.notice_actbar);
         bar.barCentralTxt(TITLE, null);
         bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override

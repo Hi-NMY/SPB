@@ -36,9 +36,9 @@ public class Followed extends BaseMVPFragment<IFollowedFView, FollowedFPresenter
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        attentionUserPage = (AttentionUserPage)getActivity();
+        attentionUserPage = (AttentionUserPage) getActivity();
         refreshFollowedList = new RefreshFollowedList();
-        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_Followed),refreshFollowedList);
+        SpbBroadcast.obtainRecriver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_Followed), refreshFollowedList);
     }
 
     @Override
@@ -63,10 +63,10 @@ public class Followed extends BaseMVPFragment<IFollowedFView, FollowedFPresenter
 
     @Override
     protected void initFragView(View view) {
-        mFollowedRefreshTgif = (GifImageView)view.findViewById(R.id.followed_refresh_tgif);
-        mFollowedRecyclerview = (RecyclerView)view.findViewById(R.id.followed_recyclerview);
-        mFollowedRefresh = (SmartRefreshLayout)view.findViewById(R.id.followed_refresh);
-        mFollowedRecyclerview = MyListAnimation.setListAnimation(attentionUserPage,mFollowedRecyclerview);
+        mFollowedRefreshTgif = view.findViewById(R.id.followed_refresh_tgif);
+        mFollowedRecyclerview = view.findViewById(R.id.followed_recyclerview);
+        mFollowedRefresh = view.findViewById(R.id.followed_refresh);
+        MyListAnimation.setListAnimation(attentionUserPage, mFollowedRecyclerview);
         createRefresh();
     }
 
@@ -107,7 +107,7 @@ public class Followed extends BaseMVPFragment<IFollowedFView, FollowedFPresenter
 
     @Override
     public void createRefresh() {
-        mySmartRefresh = new MySmartRefresh(mFollowedRefresh,mFollowedRefreshTgif,null);
+        mySmartRefresh = new MySmartRefresh(mFollowedRefresh, mFollowedRefreshTgif, null);
         mySmartRefresh.setMyRefreshListener(new MySmartRefresh.MyRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -136,8 +136,8 @@ public class Followed extends BaseMVPFragment<IFollowedFView, FollowedFPresenter
         @Override
         public void onReceive(Context context, Intent intent) {
             List<UserDto> userDtos = (List<UserDto>) intent.getSerializableExtra("key_two");
-            if (userDtos != null && userDtos.size() != 0){
-                mPresenter.addList(userDtos,mFollowedRecyclerview);
+            if (userDtos != null && userDtos.size() != 0) {
+                mPresenter.addList(userDtos, mFollowedRecyclerview);
             }
             finishRRefresh(0);
         }

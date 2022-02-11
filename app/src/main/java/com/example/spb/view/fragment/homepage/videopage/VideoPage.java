@@ -76,10 +76,10 @@ public class VideoPage extends BaseMVPFragment<IVideoPageFView, VideoPageFPresen
 
     @Override
     protected void initFragView(View view) {
-        mVideopageRefreshTgif = (GifImageView) view.findViewById(R.id.videopage_refresh_tgif);
-        mVideopageRecyclerview = (RecyclerView) view.findViewById(R.id.videopage_recyclerview);
-        mVideopageRefreshBgif = (GifImageView) view.findViewById(R.id.videopage_refresh_bgif);
-        mVideopageRefresh = (SmartRefreshLayout) view.findViewById(R.id.videopage_refresh);
+        mVideopageRefreshTgif =  view.findViewById(R.id.videopage_refresh_tgif);
+        mVideopageRecyclerview =  view.findViewById(R.id.videopage_recyclerview);
+        mVideopageRefreshBgif =  view.findViewById(R.id.videopage_refresh_bgif);
+        mVideopageRefresh =  view.findViewById(R.id.videopage_refresh);
         LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(baseMVPActivity, R.anim.layout_animation);
         controller.setOrder(LayoutAnimationController.ORDER_NORMAL);
         gridLayoutManager = new GridLayoutManager(baseMVPActivity, 1);
@@ -242,7 +242,7 @@ public class VideoPage extends BaseMVPFragment<IVideoPageFView, VideoPageFPresen
                     postVideoAdapter.refreshNowCommentItem(comments.size());
                     break;
                 case 1:
-                    postVideoAdapter.refreshCommentItem(Integer.valueOf(num));
+                    postVideoAdapter.refreshCommentItem(Integer.parseInt(num));
                     break;
             }
         }
@@ -265,7 +265,7 @@ public class VideoPage extends BaseMVPFragment<IVideoPageFView, VideoPageFPresen
                     finishRRefresh(FINISH_REFRESH);
                     break;
                 case 3:
-                    postVideoAdapter.deleteBar(baseMVPActivity.getDeletePbId());
+                    postVideoAdapter.deleteBar(BaseMVPActivity.getDeletePbId());
                     break;
             }
         }

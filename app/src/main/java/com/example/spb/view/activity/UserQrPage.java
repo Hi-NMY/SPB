@@ -22,11 +22,8 @@ public class UserQrPage extends BaseMVPActivity<IUserQrPageAView, UserQrPageAPre
 
     private Bitmap qrBitmap;
     private ImageView mMyQrCode;
-    private FragmentSpbAvtivityBar bar;
 
-    private String TITLETXT = "我的二维码";
     private int height;
-    private RoundedImageView mUserHeadimg;
     private String cacheDate = "";
 
     @Override
@@ -66,14 +63,14 @@ public class UserQrPage extends BaseMVPActivity<IUserQrPageAView, UserQrPageAPre
 
     @Override
     protected void initActView() {
-        mMyQrCode = (ImageView) findViewById(R.id.my_qrCode);
-        mUserHeadimg = (RoundedImageView) findViewById(R.id.user_headimg);
-        if(mUserHeadimg.getTag() == null || !mUserHeadimg.getTag().equals(cacheDate)) {
+        mMyQrCode = findViewById(R.id.my_qrCode);
+        RoundedImageView mUserHeadimg = findViewById(R.id.user_headimg);
+        if (mUserHeadimg.getTag() == null || !mUserHeadimg.getTag().equals(cacheDate)) {
             Glide.with(this)
-                    .load(InValues.send(R.string.httpHeader) + "/UserImageServer/" + getDataUserMsgPresenter().getUser_account() + "/HeadImage/myHeadImage.png")
+                    .load(InValues.send(R.string.prefix_img) + getDataUserMsgPresenter().getUser_account() + InValues.send(R.string.suffix_head_img))
                     .placeholder(R.drawable.logo2)
                     .error(R.drawable.logo2)
-                    .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()),1,1))
+                    .signature(new MediaStoreSignature(String.valueOf(System.currentTimeMillis()), 1, 1))
                     .centerCrop()
                     .into(mUserHeadimg);
             mUserHeadimg.setTag(cacheDate);
@@ -127,8 +124,9 @@ public class UserQrPage extends BaseMVPActivity<IUserQrPageAView, UserQrPageAPre
 
     @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.userqr_actbar);
+        FragmentSpbAvtivityBar bar = setMyActivityBar(R.id.userqr_actbar);
         bar.setBarBackground(R.color.TransColor);
+        String TITLETXT = "我的二维码";
         bar.barCentralTxt(TITLETXT, null);
         bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override

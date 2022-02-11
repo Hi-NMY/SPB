@@ -17,7 +17,6 @@ import java.util.List;
 
 public class SetUpPrivacyPage extends BaseMVPActivity<ISetUpPrivacyPageAView, SetUpPrivacyPageAPresenterImpl> implements ISetUpPrivacyPageAView {
 
-    private FragmentSpbAvtivityBar bar;
     private List<Switch> switches;
 
     @Override
@@ -36,14 +35,14 @@ public class SetUpPrivacyPage extends BaseMVPActivity<ISetUpPrivacyPageAView, Se
     @Override
     protected void initActView() {
         switches = new ArrayList<>();
-        Switch mSwitch1 = (Switch) findViewById(R.id.switch1);
-        Switch mSwitch2 = (Switch) findViewById(R.id.switch2);
-        Switch mSwitch3 = (Switch) findViewById(R.id.switch3);
-        Switch mSwitch4 = (Switch) findViewById(R.id.switch4);
-        Switch mSwitch5 = (Switch) findViewById(R.id.switch5);
-        Switch mSwitch6 = (Switch) findViewById(R.id.switch6);
-        Switch mSwitch7 = (Switch) findViewById(R.id.switch7);
-        Switch mSwitch8 = (Switch) findViewById(R.id.switch8);
+        Switch mSwitch1 = findViewById(R.id.switch1);
+        Switch mSwitch2 = findViewById(R.id.switch2);
+        Switch mSwitch3 = findViewById(R.id.switch3);
+        Switch mSwitch4 = findViewById(R.id.switch4);
+        Switch mSwitch5 = findViewById(R.id.switch5);
+        Switch mSwitch6 = findViewById(R.id.switch6);
+        Switch mSwitch7 = findViewById(R.id.switch7);
+        Switch mSwitch8 = findViewById(R.id.switch8);
         switches.add(mSwitch1);
         switches.add(mSwitch2);
         switches.add(mSwitch3);
@@ -60,12 +59,8 @@ public class SetUpPrivacyPage extends BaseMVPActivity<ISetUpPrivacyPageAView, Se
 
     @Override
     protected void initData() {
-        for (int i = 0 ; i < mPresenter.getKeys().size() ; i++){
-            if (mPresenter.getKeys().get(i) == 1){
-                switches.get(i).setChecked(true);
-            }else {
-                switches.get(i).setChecked(false);
-            }
+        for (int i = 0; i < mPresenter.getKeys().size(); i++) {
+            switches.get(i).setChecked(mPresenter.getKeys().get(i) == 1);
         }
     }
 
@@ -79,17 +74,13 @@ public class SetUpPrivacyPage extends BaseMVPActivity<ISetUpPrivacyPageAView, Se
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                switch (responseFlag){
+                switch (responseFlag) {
                     case ON_SUCCEED:
                         getDataUserMsgPresenter().setUser_privacy(mPresenter.getStringPrivacy());
                         break;
                     case ON_ERROR:
-                        if (switches.get((Integer) response).isChecked()){
-                            switches.get((Integer)response).setChecked(false);
-                        }else {
-                            switches.get((Integer)response).setChecked(true);
-                        }
-                        MyToastClass.ShowToast(MyApplication.getContext(),"错误，请重试");
+                        switches.get((Integer) response).setChecked(!switches.get((Integer) response).isChecked());
+                        MyToastClass.ShowToast(MyApplication.getContext(), "错误，请重试");
                         break;
                 }
             }
@@ -113,13 +104,13 @@ public class SetUpPrivacyPage extends BaseMVPActivity<ISetUpPrivacyPageAView, Se
 
     @Override
     public void setMyListener() {
-        for (int i = 0 ; i < switches.size() ; i++){
+        for (int i = 0; i < switches.size(); i++) {
             int finalI = i;
             switches.get(i).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    mPresenter.setKeys(finalI,isChecked);
-                    mPresenter.updateUserPrivacy(getDataUserMsgPresenter().getUser_account(),finalI);
+                    mPresenter.setKeys(finalI, isChecked);
+                    mPresenter.updateUserPrivacy(getDataUserMsgPresenter().getUser_account(), finalI);
                 }
             });
         }
@@ -136,7 +127,7 @@ public class SetUpPrivacyPage extends BaseMVPActivity<ISetUpPrivacyPageAView, Se
 
     @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.setup_privacy_actbar);
+        FragmentSpbAvtivityBar bar = setMyActivityBar(R.id.setup_privacy_actbar);
         bar.barCentralTxt(TITLE, null);
         bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override

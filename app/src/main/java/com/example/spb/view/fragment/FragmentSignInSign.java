@@ -41,27 +41,6 @@ public class FragmentSignInSign extends BaseMVPFragment<ISignInSignFView, SignIn
     private Sign sign;
     private SignInPage signInPage;
     private TextView mLongSignDay;
-    private ImageView mImg;
-    private View mNoSignBg;
-    private TextView mSignText;
-    private ImageView mImg1;
-    private View mNoSignBg1;
-    private TextView mSignText1;
-    private ImageView mImg2;
-    private View mNoSignBg2;
-    private TextView mSignText2;
-    private ImageView mImg3;
-    private View mNoSignBg3;
-    private TextView mSignText3;
-    private ImageView mImg4;
-    private View mNoSignBg4;
-    private TextView mSignText4;
-    private ImageView mImg5;
-    private View mNoSignBg5;
-    private TextView mSignText5;
-    private ImageView mImg6;
-    private View mNoSignBg6;
-    private TextView mSignText6;
     private Map<Integer, ImageView> imgMap = null;
     private Map<Integer, View> noSignBgMap = null;
     private Map<Integer, TextView> signTextMap = null;
@@ -97,28 +76,28 @@ public class FragmentSignInSign extends BaseMVPFragment<ISignInSignFView, SignIn
         imgMap = new HashMap<>();
         noSignBgMap = new HashMap<>();
         signTextMap = new HashMap<>();
-        mLongSignDay = (TextView) view.findViewById(R.id.long_sign_day);
-        mImg = (ImageView) view.findViewById(R.id.img);
-        mNoSignBg = (View) view.findViewById(R.id.no_sign_bg);
-        mSignText = (TextView) view.findViewById(R.id.sign_text);
-        mImg1 = (ImageView) view.findViewById(R.id.img1);
-        mNoSignBg1 = (View) view.findViewById(R.id.no_sign_bg1);
-        mSignText1 = (TextView) view.findViewById(R.id.sign_text1);
-        mImg2 = (ImageView) view.findViewById(R.id.img2);
-        mNoSignBg2 = (View) view.findViewById(R.id.no_sign_bg2);
-        mSignText2 = (TextView) view.findViewById(R.id.sign_text2);
-        mImg3 = (ImageView) view.findViewById(R.id.img3);
-        mNoSignBg3 = (View) view.findViewById(R.id.no_sign_bg3);
-        mSignText3 = (TextView) view.findViewById(R.id.sign_text3);
-        mImg4 = (ImageView) view.findViewById(R.id.img4);
-        mNoSignBg4 = (View) view.findViewById(R.id.no_sign_bg4);
-        mSignText4 = (TextView) view.findViewById(R.id.sign_text4);
-        mImg5 = (ImageView) view.findViewById(R.id.img5);
-        mNoSignBg5 = (View) view.findViewById(R.id.no_sign_bg5);
-        mSignText5 = (TextView) view.findViewById(R.id.sign_text5);
-        mImg6 = (ImageView) view.findViewById(R.id.img6);
-        mNoSignBg6 = (View) view.findViewById(R.id.no_sign_bg6);
-        mSignText6 = (TextView) view.findViewById(R.id.sign_text6);
+        mLongSignDay = view.findViewById(R.id.long_sign_day);
+        ImageView mImg = view.findViewById(R.id.img);
+        View mNoSignBg = view.findViewById(R.id.no_sign_bg);
+        TextView mSignText = view.findViewById(R.id.sign_text);
+        ImageView mImg1 = view.findViewById(R.id.img1);
+        View mNoSignBg1 = view.findViewById(R.id.no_sign_bg1);
+        TextView mSignText1 = view.findViewById(R.id.sign_text1);
+        ImageView mImg2 = view.findViewById(R.id.img2);
+        View mNoSignBg2 = view.findViewById(R.id.no_sign_bg2);
+        TextView mSignText2 = view.findViewById(R.id.sign_text2);
+        ImageView mImg3 = view.findViewById(R.id.img3);
+        View mNoSignBg3 = view.findViewById(R.id.no_sign_bg3);
+        TextView mSignText3 = view.findViewById(R.id.sign_text3);
+        ImageView mImg4 = view.findViewById(R.id.img4);
+        View mNoSignBg4 = view.findViewById(R.id.no_sign_bg4);
+        TextView mSignText4 = view.findViewById(R.id.sign_text4);
+        ImageView mImg5 = view.findViewById(R.id.img5);
+        View mNoSignBg5 = view.findViewById(R.id.no_sign_bg5);
+        TextView mSignText5 = view.findViewById(R.id.sign_text5);
+        ImageView mImg6 = view.findViewById(R.id.img6);
+        View mNoSignBg6 = view.findViewById(R.id.no_sign_bg6);
+        TextView mSignText6 = view.findViewById(R.id.sign_text6);
         imgMap.put(1, mImg);
         imgMap.put(2, mImg1);
         imgMap.put(3, mImg2);
@@ -142,11 +121,11 @@ public class FragmentSignInSign extends BaseMVPFragment<ISignInSignFView, SignIn
         signTextMap.put(7, mSignText6);
     }
 
-    public void setLongDay(int longday){
+    public void setLongDay(int longday) {
         this.longDay = longday;
         mLongSignDay.setText("已累计签到 " + longday + " 天");
         SpannableStringBuilder builder = new SpannableStringBuilder(mLongSignDay.getText().toString());
-        builder.setSpan(new ForegroundColorSpan(ContextCompat.getColor(MyApplication.getContext(),R.color.theme_color6)), 6, 6 + String.valueOf(longday).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.setSpan(new ForegroundColorSpan(ContextCompat.getColor(MyApplication.getContext(), R.color.theme_color6)), 6, 6 + String.valueOf(longday).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         mLongSignDay.setText(builder);
     }
 
@@ -163,7 +142,7 @@ public class FragmentSignInSign extends BaseMVPFragment<ISignInSignFView, SignIn
                     @Override
                     public void onClick(View v) {
                         showDialogS(LOADINGDIALOG);
-                        mPresenter.addNewSign(signInPage.getDataUserMsgPresenter().getUser_account(),1);
+                        mPresenter.addNewSign(signInPage.getDataUserMsgPresenter().getUser_account(), 1);
                     }
                 });
             } else {
@@ -209,7 +188,7 @@ public class FragmentSignInSign extends BaseMVPFragment<ISignInSignFView, SignIn
                     @Override
                     public void onClick(View v) {
                         showDialogS(LOADINGDIALOG);
-                        mPresenter.addNewSign(signInPage.getDataUserMsgPresenter().getUser_account(),nowSignDay);
+                        mPresenter.addNewSign(signInPage.getDataUserMsgPresenter().getUser_account(), nowSignDay);
                     }
                 });
             } else {
@@ -236,8 +215,8 @@ public class FragmentSignInSign extends BaseMVPFragment<ISignInSignFView, SignIn
         coinDialog = new ComponentDialog(signInPage, R.layout.dialog_coin, new ComponentDialog.InitDialog() {
             @Override
             public void initView(View view) {
-                mClose = (ImageView) view.findViewById(R.id.close);
-                mCoinSize = (TextView) view.findViewById(R.id.coin_size);
+                mClose = view.findViewById(R.id.close);
+                mCoinSize = view.findViewById(R.id.coin_size);
             }
 
             @Override
@@ -261,7 +240,7 @@ public class FragmentSignInSign extends BaseMVPFragment<ISignInSignFView, SignIn
 
     @Override
     public void showDialogS(int i) {
-        switch (i){
+        switch (i) {
             case LOADINGDIALOG:
                 loadingDialog.showMyDialog();
                 break;
@@ -273,7 +252,7 @@ public class FragmentSignInSign extends BaseMVPFragment<ISignInSignFView, SignIn
 
     @Override
     public void closeDialog(int i) {
-        switch (i){
+        switch (i) {
             case LOADINGDIALOG:
                 loadingDialog.closeMyDialog();
                 break;
@@ -327,11 +306,11 @@ public class FragmentSignInSign extends BaseMVPFragment<ISignInSignFView, SignIn
         }
     }
 
-    class AddNewSign extends BroadcastReceiver{
+    class AddNewSign extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             int coin = intent.getIntExtra("key_one", 0);
-            if (coin != 10){
+            if (coin != 10) {
                 closeDialog(LOADINGDIALOG);
                 showDialogS(COINDIALOG);
                 String signDay = intent.getStringExtra("key_two");

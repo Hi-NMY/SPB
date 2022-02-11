@@ -116,19 +116,19 @@ public class BarMoreOperateDialog extends ComponentDialog {
 
     @Override
     public void initView(View view) {
-        mChatR = (RelativeLayout) view.findViewById(R.id.chat_R);
-        mChatTxt = (TextView) view.findViewById(R.id.chat_txt);
-        mFollowIcon = (ImageView) view.findViewById(R.id.follow_icon);
-        mFollowR = (RelativeLayout) view.findViewById(R.id.follow_R);
-        mReportTxt = (TextView) view.findViewById(R.id.report_txt);
-        mReportR = (RelativeLayout) view.findViewById(R.id.report_R);
-        mFollowTxt = (TextView) view.findViewById(R.id.follow_txt);
-        mCollectIcon = (ImageView) view.findViewById(R.id.collect_icon);
-        mCollectR = (RelativeLayout) view.findViewById(R.id.collect_R);
-        mCollectTxt = (TextView) view.findViewById(R.id.collect_txt);
-        mDeleteR = (RelativeLayout) view.findViewById(R.id.delete_R);
-        mDeleteTxt = (TextView) view.findViewById(R.id.delete_txt);
-        Button mCloseDialog = (Button) view.findViewById(R.id.close_dialog);
+        mChatR = view.findViewById(R.id.chat_R);
+        mChatTxt = view.findViewById(R.id.chat_txt);
+        mFollowIcon = view.findViewById(R.id.follow_icon);
+        mFollowR = view.findViewById(R.id.follow_R);
+        mReportTxt = view.findViewById(R.id.report_txt);
+        mReportR = view.findViewById(R.id.report_R);
+        mFollowTxt = view.findViewById(R.id.follow_txt);
+        mCollectIcon = view.findViewById(R.id.collect_icon);
+        mCollectR = view.findViewById(R.id.collect_R);
+        mCollectTxt = view.findViewById(R.id.collect_txt);
+        mDeleteR = view.findViewById(R.id.delete_R);
+        mDeleteTxt = view.findViewById(R.id.delete_txt);
+        Button mCloseDialog = view.findViewById(R.id.close_dialog);
         mCloseDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -220,10 +220,10 @@ public class BarMoreOperateDialog extends ComponentDialog {
                 componentDialog = new ComponentDialog(activity, R.layout.dialog_longclick_view, new ComponentDialog.InitDialog() {
                     @Override
                     public void initView(View view) {
-                        mButtonClose = (Button) view.findViewById(R.id.button_close);
-                        mButtonRight = (Button) view.findViewById(R.id.button_right);
-                        mTopicName = (TextView) view.findViewById(R.id.topic_name);
-                        txt = (TextView) view.findViewById(R.id.txt);
+                        mButtonClose = view.findViewById(R.id.button_close);
+                        mButtonRight = view.findViewById(R.id.button_right);
+                        mTopicName = view.findViewById(R.id.topic_name);
+                        txt = view.findViewById(R.id.txt);
                     }
 
                     @Override
@@ -254,20 +254,7 @@ public class BarMoreOperateDialog extends ComponentDialog {
                                         if (value != null) {
                                             RequestCode requestCode = new Gson().fromJson(value, RequestCode.class);
                                             if (ResponseToast.toToast(requestCode)) {
-                                                //删帖Bcr
-                                                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_personal_bar), 3, getUserAccount(), null);
-                                                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_personal_videobar), 3, getUserAccount(), null);
-                                                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_new_video), 3, null);
-                                                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_new_bar), 3, null);
-                                                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_newtopicbar), 3, getUserAccount(), null);
-                                                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_hottopicbar), 3, null, null);
-                                                SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_userBar_Num));
-                                                SharedPreferences.Editor editor = MySharedPreferences.saveShared(InValues.send(R.string.Shared_userBar_Num));
-                                                editor.putInt(InValues.send(R.string.userBar_num), sharedPreferences.getInt(InValues.send(R.string.userBar_num), 0) - 1);
-                                                editor.apply();
-                                                if (deleteReturn != null) {
-                                                    deleteReturn.onReturn();
-                                                }
+                                                sendBcr(deleteReturn);
                                             }
                                         }
                                     }
@@ -286,6 +273,23 @@ public class BarMoreOperateDialog extends ComponentDialog {
                 componentDialog.showMyDialog();
             }
         });
+    }
+
+    private void sendBcr(DeleteReturn deleteReturn) {
+        //删帖Bcr
+        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_personal_bar), 3, getUserAccount(), null);
+        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_personal_videobar), 3, getUserAccount(), null);
+        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_new_video), 3, null);
+        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_new_bar), 3, null);
+        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_newtopicbar), 3, getUserAccount(), null);
+        SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_add_hottopicbar), 3, null, null);
+        SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_userBar_Num));
+        SharedPreferences.Editor editor = MySharedPreferences.saveShared(InValues.send(R.string.Shared_userBar_Num));
+        editor.putInt(InValues.send(R.string.userBar_num), sharedPreferences.getInt(InValues.send(R.string.userBar_num), 0) - 1);
+        editor.apply();
+        if (deleteReturn != null) {
+            deleteReturn.onReturn();
+        }
     }
 
     @Override

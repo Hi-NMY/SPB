@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import com.example.spb.R;
-import com.example.spb.app.MyApplication;
 import com.example.spb.base.BaseMVPActivity;
 import com.example.spb.presenter.impl.SetUpUpdatePasswordPageAPresenterImpl;
 import com.example.spb.presenter.utils.RemoveNullCharacter;
@@ -25,7 +24,6 @@ import com.gyf.immersionbar.ImmersionBar;
 public class SetUpUpdatePasswordPage extends BaseMVPActivity<ISetUpUpdatePasswordPageAView, SetUpUpdatePasswordPageAPresenterImpl> implements ISetUpUpdatePasswordPageAView, View.OnClickListener {
 
     private DialogInter dialogLoading;
-    private FragmentSpbAvtivityBar bar;
     private EditText mUpdatepasswordOld;
     private EditText mUpdatepasswordPassword;
     private ImageView mUpdatepasswordPasswordEye;
@@ -47,11 +45,11 @@ public class SetUpUpdatePasswordPage extends BaseMVPActivity<ISetUpUpdatePasswor
 
     @Override
     protected void initActView() {
-        mUpdatepasswordOld = (EditText) findViewById(R.id.updatepassword_old);
-        mUpdatepasswordPassword = (EditText) findViewById(R.id.updatepassword_password);
-        mUpdatepasswordPasswordEye = (ImageView) findViewById(R.id.updatepassword_password_eye);
-        mUpdatepasswordAgain = (EditText) findViewById(R.id.updatepassword_again);
-        mRegStarBtn = (Button) findViewById(R.id.reg_star_btn);
+        mUpdatepasswordOld = findViewById(R.id.updatepassword_old);
+        mUpdatepasswordPassword = findViewById(R.id.updatepassword_password);
+        mUpdatepasswordPasswordEye = findViewById(R.id.updatepassword_password_eye);
+        mUpdatepasswordAgain = findViewById(R.id.updatepassword_again);
+        mRegStarBtn = findViewById(R.id.reg_star_btn);
         setActivityBar();
         setBar();
         setMyListener();
@@ -101,7 +99,7 @@ public class SetUpUpdatePasswordPage extends BaseMVPActivity<ISetUpUpdatePasswor
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                RemoveNullCharacter.setRemoveNull(mUpdatepasswordOld,s).setSelection(mUpdatepasswordOld.getText().length());
+                RemoveNullCharacter.setRemoveNull(mUpdatepasswordOld, s).setSelection(mUpdatepasswordOld.getText().length());
             }
 
             @Override
@@ -117,7 +115,7 @@ public class SetUpUpdatePasswordPage extends BaseMVPActivity<ISetUpUpdatePasswor
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                RemoveNullCharacter.setRemoveNull(mUpdatepasswordPassword,s).setSelection(mUpdatepasswordPassword.getText().length());
+                RemoveNullCharacter.setRemoveNull(mUpdatepasswordPassword, s).setSelection(mUpdatepasswordPassword.getText().length());
             }
 
             @Override
@@ -133,7 +131,7 @@ public class SetUpUpdatePasswordPage extends BaseMVPActivity<ISetUpUpdatePasswor
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                RemoveNullCharacter.setRemoveNull(mUpdatepasswordAgain,s).setSelection(mUpdatepasswordAgain.getText().length());
+                RemoveNullCharacter.setRemoveNull(mUpdatepasswordAgain, s).setSelection(mUpdatepasswordAgain.getText().length());
             }
 
             @Override
@@ -154,7 +152,7 @@ public class SetUpUpdatePasswordPage extends BaseMVPActivity<ISetUpUpdatePasswor
 
     @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.setup_updatepassword_actbar);
+        FragmentSpbAvtivityBar bar = setMyActivityBar(R.id.setup_updatepassword_actbar);
         bar.barCentralTxt(TITLE, null);
         bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
@@ -168,21 +166,21 @@ public class SetUpUpdatePasswordPage extends BaseMVPActivity<ISetUpUpdatePasswor
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.reg_star_btn:
-                if (submit()){
+                if (submit()) {
                     showDialogS(0);
                     mPresenter.updatePassword(getDataUserMsgPresenter().getUser_account(), mUpdatepasswordPassword.getText().toString(),
                             mUpdatepasswordOld.getText().toString(), new SetUpUpdatePasswordPageAPresenterImpl.OnReturn() {
-                        @Override
-                        public void onReturn() {
-                            runOnUiThread(new Runnable() {
                                 @Override
-                                public void run() {
-                                    closeDialog(0);
-                                    finish();
+                                public void onReturn() {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            closeDialog(0);
+                                            finish();
+                                        }
+                                    });
                                 }
                             });
-                        }
-                    });
                 }
                 break;
             case R.id.updatepassword_password_eye:
@@ -217,9 +215,9 @@ public class SetUpUpdatePasswordPage extends BaseMVPActivity<ISetUpUpdatePasswor
         if (TextUtils.isEmpty(again)) {
             MyToastClass.ShowToast(this, "请确认密码");
             return false;
-        }else {
+        } else {
             if (!password.equals(again)) {
-                MyToastClass.ShowToast(this,"请确认两次密码一致");
+                MyToastClass.ShowToast(this, "请确认两次密码一致");
                 return false;
             }
         }

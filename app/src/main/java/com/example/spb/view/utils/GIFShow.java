@@ -5,7 +5,7 @@ import pl.droidsonroids.gif.GifImageView;
 
 public class GIFShow {
 
-    private GifDrawable gifDrawable;
+    private final GifDrawable gifDrawable;
 
     public GIFShow(GifImageView gifImageView) {
         gifDrawable = (GifDrawable) gifImageView.getBackground();

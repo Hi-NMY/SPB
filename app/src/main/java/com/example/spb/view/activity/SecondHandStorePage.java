@@ -8,10 +8,8 @@ import com.example.spb.view.fragment.FragmentSpbAvtivityBar;
 import com.example.spb.view.inter.ISecondHandStorePageAView;
 import com.gyf.immersionbar.ImmersionBar;
 
-public class SecondHandStorePage extends BaseMVPActivity<ISecondHandStorePageAView,SecondHandStorePageAPresenterImpl>
+public class SecondHandStorePage extends BaseMVPActivity<ISecondHandStorePageAView, SecondHandStorePageAPresenterImpl>
         implements ISecondHandStorePageAView {
-
-    private FragmentSpbAvtivityBar bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,14 +77,14 @@ public class SecondHandStorePage extends BaseMVPActivity<ISecondHandStorePageAVi
 
     @Override
     public void setActivityBar() {
-        bar = setMyActivityBar(R.id.secondhandstore_actbar);
+        FragmentSpbAvtivityBar bar = setMyActivityBar(R.id.secondhandstore_actbar);
         bar.barLeftImg(R.drawable.left_return, new FragmentSpbAvtivityBar.OnMyClick() {
             @Override
             public void onClick() {
                 finish();
             }
         });
-        bar.barCentralTxt(TITLE,null);
+        bar.barCentralTxt(TITLE, null);
     }
 
     @Override
