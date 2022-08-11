@@ -44,8 +44,10 @@ public class EnterPageAPresenterImpl extends BasePresenter<IEnterPageAView> impl
     @Override
     public boolean getFirstLogIn() {
         SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_FirstLogIn));
-        //  setInitialize();
-        return sharedPreferences.getBoolean(InValues.send(R.string.FirstLogIn_login), true);
+        SharedPreferences isToken = MySharedPreferences.getShared(InValues.send(R.string.Shared_user_token));
+        boolean aBoolean = sharedPreferences.getBoolean(InValues.send(R.string.FirstLogIn_login), true);
+        String string = isToken.getString(InValues.send(R.string.token), null);
+        return string == null || aBoolean;
     }
 
     public void initDate(EnterPage enterPage, Jump jump) {

@@ -23,7 +23,7 @@ public class AccountSecurityModelImpl extends SpbModelAbstrate implements Accoun
                 .add("user_password", updatePasswordDto.getUser_password())
                 .add("user_password_old", updatePasswordDto.getUser_password_old())
                 .build();
-        sendHttp(InValues.send(R.string.updateUserPassword), requestBody, callBack);
+        sendHttp(InValues.send(R.string.updateUserPassword), POST, requestBody, callBack);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class AccountSecurityModelImpl extends SpbModelAbstrate implements Accoun
         requestBody = new FormBody.Builder()
                 .add("user_account", userAccount)
                 .build();
-        sendHttp(InValues.send(R.string.queryVerifyAndUserFull), requestBody, callBack);
+        sendHttp(InValues.send(R.string.queryVerifyAndUserFull), POST, requestBody, callBack);
     }
 
     @Override
@@ -41,6 +41,6 @@ public class AccountSecurityModelImpl extends SpbModelAbstrate implements Accoun
                 .add("user_password", verifyPasswordDto.getUser_password())
                 .add("user_ip", verifyPasswordDto.getUser_ip())
                 .build();
-        sendHttp(InValues.send(R.string.queryVerifyUserPassword), requestBody, callBack);
+        sendHttp(InValues.send(R.string.queryVerifyUserPassword), POST, requestBody, callBack);
     }
 }

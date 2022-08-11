@@ -23,24 +23,22 @@ public class CommentModelImpl extends SpbModelAbstrate implements CommentModel {
                 .add("comment_touser", comment.getComment_touser())
                 .add("cache_account", comment.getCache_account())
                 .build();
-        sendHttp(InValues.send(R.string.addComment), requestBody, callBack);
+        sendHttp(InValues.send(R.string.addComment), POST, requestBody, callBack);
     }
 
     @Override
     public void queryCommentList(String pbId, MyCallBack callBack) {
-        requestBody = new FormBody.Builder()
-                .add("pb_one_id", pbId)
-                .build();
-        sendHttp(InValues.send(R.string.queryCommentList), requestBody, callBack);
+        StringBuffer stringBuffer = new StringBuffer("?");
+        stringBuffer.append("&").append("pb_one_id").append("=").append(pbId);
+        sendHttp(InValues.send(R.string.queryCommentList) + stringBuffer, GET, requestBody, callBack);
     }
 
     @Override
     public void queryCommentOne(String pbId, String commentId, MyCallBack callBack) {
-        requestBody = new FormBody.Builder()
-                .add("pb_one_id", pbId)
-                .add("comment_id", commentId)
-                .build();
-        sendHttp(InValues.send(R.string.queryCommentOne), requestBody, callBack);
+        StringBuffer stringBuffer = new StringBuffer("?");
+        stringBuffer.append("&").append("pb_one_id").append("=").append(pbId);
+        stringBuffer.append("&").append("comment_id").append("=").append(commentId);
+        sendHttp(InValues.send(R.string.queryCommentOne) + stringBuffer, GET, requestBody, callBack);
     }
 
     @Override
@@ -49,6 +47,6 @@ public class CommentModelImpl extends SpbModelAbstrate implements CommentModel {
                 .add("comment_id", commentId)
                 .add("pb_one_id", pbId)
                 .build();
-        sendHttp(InValues.send(R.string.deleteComment), requestBody, callBack);
+        sendHttp(InValues.send(R.string.deleteComment), POST, requestBody, callBack);
     }
 }

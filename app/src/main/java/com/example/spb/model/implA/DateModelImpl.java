@@ -14,6 +14,6 @@ import com.example.spb.presenter.utils.InValues;
 public class DateModelImpl extends SpbModelAbstrate implements DateModel {
     @Override
     public void dateTime(MyCallBack callBack) {
-        sendHttp(InValues.send(R.string.dateTime), null, callBack);
+        sendHttp(InValues.send(R.string.dateTime),GET, null, callBack);
     }
 }

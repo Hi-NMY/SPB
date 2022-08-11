@@ -32,4 +32,6 @@ public interface UserModel {
 
     void deleteUserIp(String userAccount, MyCallBack callBack);
 
+    void logOut(String userAccount, MyCallBack callBack);
+
 }

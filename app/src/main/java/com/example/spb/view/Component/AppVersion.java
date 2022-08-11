@@ -14,6 +14,7 @@ import com.example.spb.entity.Dto.AppVersionDto;
 import com.example.spb.presenter.utils.DataVerificationTool;
 import com.example.spb.presenter.utils.InValues;
 import com.example.spb.presenter.utils.MyResolve;
+import com.example.spb.presenter.utils.MySharedPreferences;
 import com.example.spb.view.InterComponent.DialogInter;
 import com.example.spb.xserver.APPDownload;
 import com.google.gson.Gson;
@@ -114,6 +115,7 @@ public class AppVersion {
                 .post(new FormBody.Builder()
                         .add("versionCode", version)
                         .build())
+                .addHeader("token", MySharedPreferences.getShared(InValues.send(R.string.Shared_user_token)).getString(InValues.send(R.string.token), ""))
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override

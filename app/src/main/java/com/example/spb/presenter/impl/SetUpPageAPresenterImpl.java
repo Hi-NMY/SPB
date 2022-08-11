@@ -42,6 +42,7 @@ public class SetUpPageAPresenterImpl extends BasePresenter<ISetUpPageAView> impl
         UserDto userDto = new UserDto();
         userDto.setUser_account(account);
         userModel.deleteUserIp(account, null);
+        userModel.logOut(account,null);
     }
 
     private void initShareLogIn() {

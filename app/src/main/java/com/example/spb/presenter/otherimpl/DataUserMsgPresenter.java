@@ -26,7 +26,7 @@ import java.util.List;
 
 public class DataUserMsgPresenter extends UserDto{
 
-    private static SharedPreferences sharedPreferences;
+    private static SharedPreferences sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_User));;
     private static SharedPreferences.Editor editor;
     private String user_account;
     private String user_name;
@@ -66,7 +66,6 @@ public class DataUserMsgPresenter extends UserDto{
     }
 
     public void setUserMsg(UserDto userDto) {
-        sharedPreferences = MySharedPreferences.getShared(InValues.send(R.string.Shared_User));
         editor = MySharedPreferences.saveShared(InValues.send(R.string.Shared_User));
         user_account = userDto.getUser_account();
         user_name = userDto.getUser_name();

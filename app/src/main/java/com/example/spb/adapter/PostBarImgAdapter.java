@@ -51,8 +51,13 @@ public class PostBarImgAdapter extends RecyclerView.Adapter<PostBarImgAdapter.Vi
         this.activity = activity;
         this.newBarImageList = newBarImageList;
         for (ImageDouble img : newBarImageList) {
-            minImageList.add(InValues.send(R.string.httpHeadert) + img.getMinPath());
-            maxImageList.add(InValues.send(R.string.httpHeadert) + img.getMaxPath());
+            if (img.getMinPath().startsWith("https")){
+                minImageList.add(img.getMinPath());
+                maxImageList.add(img.getMaxPath());
+            }else {
+                minImageList.add(InValues.send(R.string.httpHeadert) + img.getMinPath());
+                maxImageList.add(InValues.send(R.string.httpHeadert) + img.getMaxPath());
+            }
         }
         config = TransferConfig.build()
                 .setSourceUrlList(maxImageList)

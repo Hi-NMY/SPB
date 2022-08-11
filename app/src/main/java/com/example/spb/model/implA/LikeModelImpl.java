@@ -15,10 +15,9 @@ import okhttp3.FormBody;
 public class LikeModelImpl extends SpbModelAbstrate implements LikeModel {
     @Override
     public void queryLike(String userAccount, MyCallBack callBack) {
-        requestBody = new FormBody.Builder()
-                .add("user_account", userAccount)
-                .build();
-        sendHttp(InValues.send(R.string.queryLike), requestBody, callBack);
+        StringBuffer stringBuffer = new StringBuffer("?");
+        stringBuffer.append("&").append("user_account").append("=").append(userAccount);
+        sendHttp(InValues.send(R.string.queryLike) + stringBuffer, GET, requestBody, callBack);
     }
 
     @Override
@@ -28,7 +27,7 @@ public class LikeModelImpl extends SpbModelAbstrate implements LikeModel {
                 .add("user_account", userAccount)
                 .add("cache_account", cacheAccount == null ? "" : cacheAccount)
                 .build();
-        sendHttp(InValues.send(R.string.addLike), requestBody, callBack);
+        sendHttp(InValues.send(R.string.addLike), POST, requestBody, callBack);
     }
 
     @Override
@@ -37,6 +36,6 @@ public class LikeModelImpl extends SpbModelAbstrate implements LikeModel {
                 .add("pb_one_id", pbId)
                 .add("user_account", userAccount)
                 .build();
-        sendHttp(InValues.send(R.string.deleteLike), requestBody, callBack);
+        sendHttp(InValues.send(R.string.deleteLike), POST, requestBody, callBack);
     }
 }

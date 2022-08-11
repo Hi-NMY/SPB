@@ -16,18 +16,16 @@ import okhttp3.FormBody;
 public class CollectBarModelImpl extends SpbModelAbstrate implements CollectBarModel {
     @Override
     public void queryCollectBarList(String userAccount, MyCallBack callBack) {
-        requestBody = new FormBody.Builder()
-                .add("user_account", userAccount)
-                .build();
-        sendHttp(InValues.send(R.string.queryCollectBarList), requestBody, callBack);
+        StringBuffer stringBuffer = new StringBuffer("?");
+        stringBuffer.append("&").append("user_account").append("=").append(userAccount);
+        sendHttp(InValues.send(R.string.queryCollectBarList) + stringBuffer, GET, requestBody, callBack);
     }
 
     @Override
     public void queryCollectBarFullList(String userAccount, MyCallBack callBack) {
-        requestBody = new FormBody.Builder()
-                .add("user_account", userAccount)
-                .build();
-        sendHttp(InValues.send(R.string.queryCollectBarFullList), requestBody, callBack);
+        StringBuffer stringBuffer = new StringBuffer("?");
+        stringBuffer.append("&").append("user_account").append("=").append(userAccount);
+        sendHttp(InValues.send(R.string.queryCollectBarFullList) + stringBuffer, GET, requestBody, callBack);
     }
 
     @Override
@@ -37,7 +35,7 @@ public class CollectBarModelImpl extends SpbModelAbstrate implements CollectBarM
                 .add("cache_account", cacheAccount)
                 .add("pb_one_id", collectBarDto.getPb_one_id())
                 .build();
-        sendHttp(InValues.send(R.string.addCollectBar), requestBody, callBack);
+        sendHttp(InValues.send(R.string.addCollectBar), POST, requestBody, callBack);
     }
 
     @Override
@@ -46,6 +44,6 @@ public class CollectBarModelImpl extends SpbModelAbstrate implements CollectBarM
                 .add("pb_one_id", collectBarDto.getPb_one_id())
                 .add("user_account", collectBarDto.getUser_account())
                 .build();
-        sendHttp(InValues.send(R.string.deleteCollectBar), requestBody, callBack);
+        sendHttp(InValues.send(R.string.deleteCollectBar), POST, requestBody, callBack);
     }
 }

@@ -109,8 +109,11 @@ public class FirstPageAPresenterImpl extends BasePresenter<IFirstPageAView> impl
             public void onSuccess(@NotNull Response response) {
                 String value = DataVerificationTool.isEmpty(response);
                 if (value != null) {
-                    RequestCode requestCode = new Gson().fromJson(value, RequestCode.class);
-                    if (ResponseToast.toToast(requestCode)) {
+                    RequestEntityJson<String> requestEntity = new Gson().fromJson(value,new TypeToken<RequestEntityJson<String>>(){}.getType());
+                    if (ResponseToast.toToast(requestEntity.getResultCode())) {
+                        SharedPreferences.Editor e = MySharedPreferences.saveShared(InValues.send(R.string.Shared_user_token));
+                        e.putString(InValues.send(R.string.token), requestEntity.getData());
+                        e.commit();
                         verifyAccountHanlder.sendMessage(SendHandler.setMessage(FirstPage.RESPONSE_SUCCESS_TWO, null));
                     } else {
                         verifyAccountHanlder.sendMessage(SendHandler.setMessage(FirstPage.RESPONSE_ERROR, null));

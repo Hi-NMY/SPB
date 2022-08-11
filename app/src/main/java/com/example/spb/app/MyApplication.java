@@ -16,9 +16,14 @@ public class MyApplication extends Application implements RongIMClient.Connectio
     private static Context context;
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
-
+        context = getApplicationContext();
         //预初始化
         PushHelper.preInit(this);
         //push初始化
@@ -30,7 +35,6 @@ public class MyApplication extends Application implements RongIMClient.Connectio
         }).start();
 
         LitePal.initialize(this);
-        context = getApplicationContext();
         RongIM.init(context, InValues.send(R.string.rong_app_key));
         RongIM.setConnectionStatusListener(this);
         RongIM.setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageWrapperListener() {

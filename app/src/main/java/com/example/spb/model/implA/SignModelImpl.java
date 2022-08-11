@@ -15,18 +15,16 @@ import okhttp3.FormBody;
 public class SignModelImpl extends SpbModelAbstrate implements SignModel {
     @Override
     public void queryUserSign(String userAccount, MyCallBack callBack) {
-        requestBody = new FormBody.Builder()
-                .add("user_account", userAccount)
-                .build();
-        sendHttp(InValues.send(R.string.queryUserSign), requestBody, callBack);
+        StringBuffer stringBuffer = new StringBuffer("?");
+        stringBuffer.append("&").append("user_account").append("=").append(userAccount);
+        sendHttp(InValues.send(R.string.queryUserSign) + stringBuffer,GET, requestBody, callBack);
     }
 
     @Override
     public void queryUserBadge(String userAccount, MyCallBack callBack) {
-        requestBody = new FormBody.Builder()
-                .add("user_account", userAccount)
-                .build();
-        sendHttp(InValues.send(R.string.queryUserBadge), requestBody, callBack);
+        StringBuffer stringBuffer = new StringBuffer("?");
+        stringBuffer.append("&").append("user_account").append("=").append(userAccount);
+        sendHttp(InValues.send(R.string.queryUserBadge) + stringBuffer,GET, requestBody, callBack);
     }
 
     @Override
@@ -34,7 +32,7 @@ public class SignModelImpl extends SpbModelAbstrate implements SignModel {
         requestBody = new FormBody.Builder()
                 .add("user_account", userAccount)
                 .build();
-        sendHttp(InValues.send(R.string.updateSignDay), requestBody, callBack);
+        sendHttp(InValues.send(R.string.updateSignDay),POST, requestBody, callBack);
     }
 
     @Override
@@ -42,7 +40,7 @@ public class SignModelImpl extends SpbModelAbstrate implements SignModel {
         requestBody = new FormBody.Builder()
                 .add("user_account", userAccount)
                 .build();
-        sendHttp(InValues.send(R.string.updateSignRight), requestBody, callBack);
+        sendHttp(InValues.send(R.string.updateSignRight),POST, requestBody, callBack);
     }
 
     @Override
@@ -50,7 +48,7 @@ public class SignModelImpl extends SpbModelAbstrate implements SignModel {
         requestBody = new FormBody.Builder()
                 .add("user_account", userAccount)
                 .build();
-        sendHttp(InValues.send(R.string.updateSignDayAndRight), requestBody, callBack);
+        sendHttp(InValues.send(R.string.updateSignDayAndRight),POST, requestBody, callBack);
     }
 
     @Override
@@ -60,7 +58,7 @@ public class SignModelImpl extends SpbModelAbstrate implements SignModel {
                 .add("coin", coin)
                 .add("sign_day", signDay)
                 .build();
-        sendHttp(InValues.send(R.string.updateSignDayAndRightAndCoin), requestBody, callBack);
+        sendHttp(InValues.send(R.string.updateSignDayAndRightAndCoin),POST, requestBody, callBack);
     }
 
     @Override
@@ -69,7 +67,7 @@ public class SignModelImpl extends SpbModelAbstrate implements SignModel {
                 .add("user_account", userAccount)
                 .add("coin", coin)
                 .build();
-        sendHttp(InValues.send(R.string.updateSignCoin), requestBody, callBack);
+        sendHttp(InValues.send(R.string.updateSignCoin),POST, requestBody, callBack);
     }
 
     @Override
@@ -78,7 +76,7 @@ public class SignModelImpl extends SpbModelAbstrate implements SignModel {
                 .add("user_account", userAccount)
                 .add("sign_star_badge", starBadge)
                 .build();
-        sendHttp(InValues.send(R.string.updateSignStarBadge), requestBody, callBack);
+        sendHttp(InValues.send(R.string.updateSignStarBadge),POST, requestBody, callBack);
     }
 
     @Override
@@ -87,7 +85,7 @@ public class SignModelImpl extends SpbModelAbstrate implements SignModel {
                 .add("user_account", userAccount)
                 .add("sign_like_badge", likeBadge)
                 .build();
-        sendHttp(InValues.send(R.string.updateSignLikeBadge), requestBody, callBack);
+        sendHttp(InValues.send(R.string.updateSignLikeBadge),POST, requestBody, callBack);
     }
 
     @Override
@@ -96,6 +94,6 @@ public class SignModelImpl extends SpbModelAbstrate implements SignModel {
                 .add("user_account", userAccount)
                 .add("sign_task_badge", taskBadge)
                 .build();
-        sendHttp(InValues.send(R.string.updateSignTaskBadge), requestBody, callBack);
+        sendHttp(InValues.send(R.string.updateSignTaskBadge),POST, requestBody, callBack);
     }
 }

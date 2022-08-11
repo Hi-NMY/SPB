@@ -21,15 +21,14 @@ import java.io.File;
 public class UserModelImpl extends SpbModelAbstrate implements UserModel {
     @Override
     public void querySchoolTable(MyCallBack callBack) {
-        sendHttp(InValues.send(R.string.querySchoolTable), null, callBack);
+        sendHttp(InValues.send(R.string.querySchoolTable), GET, null, callBack);
     }
 
     @Override
     public void querySearchUser(String search, MyCallBack callBack) {
-        requestBody = new FormBody.Builder()
-                .add("search", search)
-                .build();
-        sendHttp(InValues.send(R.string.querySearchUser), requestBody, callBack);
+        StringBuffer stringBuffer = new StringBuffer("?");
+        stringBuffer.append("&").append("search").append("=").append(search);
+        sendHttp(InValues.send(R.string.querySearchUser) + stringBuffer, GET, requestBody, callBack);
     }
 
     @Override
@@ -42,7 +41,7 @@ public class UserModelImpl extends SpbModelAbstrate implements UserModel {
                 .add("user_home", info.getUser_home())
                 .add("user_profile", info.getUser_profile())
                 .build();
-        sendHttp(InValues.send(R.string.updateUserPersonalInformation), requestBody, callBack);
+        sendHttp(InValues.send(R.string.updateUserPersonalInformation), POST, requestBody, callBack);
     }
 
     @Override
@@ -51,7 +50,7 @@ public class UserModelImpl extends SpbModelAbstrate implements UserModel {
                 .add("user_account", userAccount)
                 .add("ip", ip)
                 .build();
-        sendHttp(InValues.send(R.string.updateUserIp), requestBody, callBack);
+        sendHttp(InValues.send(R.string.updateUserIp), POST, requestBody, callBack);
     }
 
     @Override
@@ -60,7 +59,7 @@ public class UserModelImpl extends SpbModelAbstrate implements UserModel {
                 .add("user_account", userAccount)
                 .add("token", token)
                 .build();
-        sendHttp(InValues.send(R.string.updateUserToken), requestBody, callBack);
+        sendHttp(InValues.send(R.string.updateUserToken), POST, requestBody, callBack);
     }
 
     @Override
@@ -71,7 +70,7 @@ public class UserModelImpl extends SpbModelAbstrate implements UserModel {
                 .addFormDataPart("file", file.getName(), RequestBody.Companion.create(file
                         , MediaType.Companion.parse("image/png")));
         requestBody = builder.build();
-        sendHttp(InValues.send(R.string.updateUserHeadImage), requestBody, callBack);
+        sendHttp(InValues.send(R.string.updateUserHeadImage), POST, requestBody, callBack);
     }
 
     @Override
@@ -82,7 +81,7 @@ public class UserModelImpl extends SpbModelAbstrate implements UserModel {
                 .addFormDataPart("file", file.getName(), RequestBody.Companion.create(file
                         , MediaType.Companion.parse("image/png")));
         requestBody = builder.build();
-        sendHttp(InValues.send(R.string.updateUserBgImage), requestBody, callBack);
+        sendHttp(InValues.send(R.string.updateUserBgImage), POST, requestBody, callBack);
     }
 
     @Override
@@ -91,7 +90,7 @@ public class UserModelImpl extends SpbModelAbstrate implements UserModel {
                 .add("user_account", userAccount)
                 .add("user_badge", userBadge)
                 .build();
-        sendHttp(InValues.send(R.string.updateUserBadgeImage), requestBody, callBack);
+        sendHttp(InValues.send(R.string.updateUserBadgeImage), POST, requestBody, callBack);
     }
 
     @Override
@@ -100,7 +99,7 @@ public class UserModelImpl extends SpbModelAbstrate implements UserModel {
                 .add("user_account", userAccount)
                 .add("user_privacy", userPrivacy)
                 .build();
-        sendHttp(InValues.send(R.string.updateUserPrivacy), requestBody, callBack);
+        sendHttp(InValues.send(R.string.updateUserPrivacy), POST, requestBody, callBack);
     }
 
     @Override
@@ -108,6 +107,14 @@ public class UserModelImpl extends SpbModelAbstrate implements UserModel {
         requestBody = new FormBody.Builder()
                 .add("user_account", userAccount)
                 .build();
-        sendHttp(InValues.send(R.string.deleteUserIp), requestBody, callBack);
+        sendHttp(InValues.send(R.string.deleteUserIp), POST, requestBody, callBack);
+    }
+
+    @Override
+    public void logOut(String userAccount, MyCallBack callBack) {
+        requestBody = new FormBody.Builder()
+                .add("user_account", userAccount)
+                .build();
+        sendHttp(InValues.send(R.string.logout), POST, requestBody, callBack);
     }
 }

@@ -76,101 +76,105 @@
     <string name="assist_class">assist_class</string>
     <string name="assist_active">assist_active</string>
 
+    <string name="Shared_user_token">Shared_user_token</string>
+    <string name="token">token</string>
+
     <!-- 网络请求-->
-    <string name="httpHeader">http://192.168.3.6:8088</string>
-    <string name="httpHeadert">http://192.168.3.6:8088/</string>
+    <string name="httpHeader">http://10.0.2.2:8088</string>
+    <string name="httpHeadert">http://10.0.2.2:8088/</string>
     <string name="rong_api">https://api-cn.ronghub.com/user/getToken.json</string>
-    <string name="prefix_img">http://192.168.3.6:8088/upload/UserImageServer/</string>
-    <string name="prefix_badge_img">http://192.168.3.6:8088/upload/UserImageServer/badge/</string>
+    <string name="prefix_img">http://10.0.2.2:8088/upload/UserImageServer/</string>
+    <string name="prefix_badge_img">http://10.0.2.2:8088/upload/UserImageServer/badge/</string>
     <string name="suffix_head_img">/HeadImage/myHeadImage.png</string>
     <string name="suffix_bg_img">/BackgroundImage/myBackgroundImage.png</string>
-    <string name="local_certification_badge">http://192.168.3.6:8088/upload/UserImageServer/badge/certification_badge.png</string>
-    <string name="isVerison">http://192.168.3.6:8088/appVersion/isVerison</string>
-    <string name="SPBAPK">http://192.168.3.6:8088/upload/spb/UserImageServer/Data/SPB.apk</string>
+    <string name="local_certification_badge">http://10.0.2.2:8088/upload/UserImageServer/badge/certification_badge.png</string>
+    <string name="isVerison">http://10.0.2.2:8088/appVersion/isVerison</string>
+    <string name="SPBAPK">http://10.0.2.2:8088/upload/spb/UserImageServer/Data/SPB.apk</string>
 
-    <string name="updateUserPassword">http://192.168.3.6:8088/accountSecurity/updateUserPassword</string>
-    <string name="queryVerifyAndUserFull">http://192.168.3.6:8088/accountSecurity/queryVerifyAndUserFull</string>
-    <string name="queryVerifyUserPassword">http://192.168.3.6:8088/accountSecurity/queryVerifyUserPassword</string>
+    <string name="updateUserPassword">http://10.0.2.2:8088/accountSecurity/updateUserPassword</string>
+    <string name="queryVerifyAndUserFull">http://10.0.2.2:8088/accountSecurity/queryVerifyAndUserFull</string>
+    <string name="queryVerifyUserPassword">http://10.0.2.2:8088/accountSecurity/queryVerifyUserPassword</string>
 
-    <string name="addAttentionTopic">http://192.168.3.6:8088/attention/addAttentionTopic</string>
-    <string name="queryAttentionTopic">http://192.168.3.6:8088/attention/queryAttentionTopic</string>
-    <string name="deleteAttentionTopicById">http://192.168.3.6:8088/attention/deleteAttentionTopicById</string>
+    <string name="addAttentionTopic">http://10.0.2.2:8088/attention/addAttentionTopic</string>
+    <string name="queryAttentionTopic">http://10.0.2.2:8088/attention/queryAttentionTopic</string>
+    <string name="deleteAttentionTopicById">http://10.0.2.2:8088/attention/deleteAttentionTopicById</string>
 
-    <string name="queryCollectBarList">http://192.168.3.6:8088/collectbar/queryCollectBarList</string>
-    <string name="queryCollectBarFullList">http://192.168.3.6:8088/collectbar/queryCollectBarFullList</string>
-    <string name="addCollectBar">http://192.168.3.6:8088/collectbar/addCollectBar</string>
-    <string name="deleteCollectBar">http://192.168.3.6:8088/collectbar/deleteCollectBar</string>
+    <string name="queryCollectBarList">http://10.0.2.2:8088/collectbar/queryCollectBarList</string>
+    <string name="queryCollectBarFullList">http://10.0.2.2:8088/collectbar/queryCollectBarFullList</string>
+    <string name="addCollectBar">http://10.0.2.2:8088/collectbar/addCollectBar</string>
+    <string name="deleteCollectBar">http://10.0.2.2:8088/collectbar/deleteCollectBar</string>
 
-    <string name="addComment">http://192.168.3.6:8088/comment/addComment</string>
-    <string name="queryCommentList">http://192.168.3.6:8088/comment/queryCommentList</string>
-    <string name="queryCommentOne">http://192.168.3.6:8088/comment/queryCommentOne</string>
-    <string name="deleteComment">http://192.168.3.6:8088/comment/deleteComment</string>
+    <string name="addComment">http://10.0.2.2:8088/comment/addComment</string>
+    <string name="queryCommentList">http://10.0.2.2:8088/comment/queryCommentList</string>
+    <string name="queryCommentOne">http://10.0.2.2:8088/comment/queryCommentOne</string>
+    <string name="deleteComment">http://10.0.2.2:8088/comment/deleteComment</string>
 
-    <string name="dateTime">http://192.168.3.6:8088/date/dateTime</string>
+    <string name="dateTime">http://10.0.2.2:8088/date/dateTime</string>
 
-    <string name="queryDiary">http://192.168.3.6:8088/diary/queryDiary</string>
-    <string name="addDiary">http://192.168.3.6:8088/diary/addDiary</string>
-    <string name="deleteDiary">http://192.168.3.6:8088/diary/deleteDiary</string>
+    <string name="queryDiary">http://10.0.2.2:8088/diary/queryDiary</string>
+    <string name="addDiary">http://10.0.2.2:8088/diary/addDiary</string>
+    <string name="deleteDiary">http://10.0.2.2:8088/diary/deleteDiary</string>
 
-    <string name="queryFollowList">http://192.168.3.6:8088/follow/queryFollowList</string>
-    <string name="queryFollowCount">http://192.168.3.6:8088/follow/queryFollowCount</string>
-    <string name="queryFollowedCount">http://192.168.3.6:8088/follow/queryFollowedCount</string>
-    <string name="queryFollowUserList">http://192.168.3.6:8088/follow/queryFollowUserList</string>
-    <string name="addFollow">http://192.168.3.6:8088/follow/addFollow</string>
-    <string name="deleteFollow">http://192.168.3.6:8088/follow/deleteFollow</string>
+    <string name="queryFollowList">http://10.0.2.2:8088/follow/queryFollowList</string>
+    <string name="queryFollowCount">http://10.0.2.2:8088/follow/queryFollowCount</string>
+    <string name="queryFollowedCount">http://10.0.2.2:8088/follow/queryFollowedCount</string>
+    <string name="queryFollowUserList">http://10.0.2.2:8088/follow/queryFollowUserList</string>
+    <string name="addFollow">http://10.0.2.2:8088/follow/addFollow</string>
+    <string name="deleteFollow">http://10.0.2.2:8088/follow/deleteFollow</string>
 
-    <string name="queryFollowedList">http://192.168.3.6:8088/followed/queryFollowedList</string>
-    <string name="queryFollowedUserList">http://192.168.3.6:8088/followed/queryFollowedUserList</string>
+    <string name="queryFollowedList">http://10.0.2.2:8088/followed/queryFollowedList</string>
+    <string name="queryFollowedUserList">http://10.0.2.2:8088/followed/queryFollowedUserList</string>
 
-    <string name="queryLike">http://192.168.3.6:8088/like/queryLike</string>
-    <string name="addLike">http://192.168.3.6:8088/like/addLike</string>
-    <string name="deleteLike">http://192.168.3.6:8088/like/deleteLike</string>
+    <string name="queryLike">http://10.0.2.2:8088/like/queryLike</string>
+    <string name="addLike">http://10.0.2.2:8088/like/addLike</string>
+    <string name="deleteLike">http://10.0.2.2:8088/like/deleteLike</string>
 
-    <string name="queryNoVideoBarListForDate">http://192.168.3.6:8088/postbar/queryNoVideoBarListForDate</string>
-    <string name="queryNoVideoTopicBarListForThumbNum">http://192.168.3.6:8088/postbar/queryNoVideoTopicBarListForThumbNum</string>
-    <string name="queryNoVideoTopicBarListForDate">http://192.168.3.6:8088/postbar/queryNoVideoTopicBarListForDate</string>
-    <string name="queryNoVideoUserBarListForDate">http://192.168.3.6:8088/postbar/queryNoVideoUserBarListForDate</string>
-    <string name="queryUserBarCount">http://192.168.3.6:8088/postbar/queryUserBarCount</string>
-    <string name="queryNoVideoFollowBarListForDate">http://192.168.3.6:8088/postbar/queryNoVideoFollowBarListForDate</string>
-    <string name="queryBarDetatilForPbid">http://192.168.3.6:8088/postbar/queryBarDetatilForPbid</string>
-    <string name="queryUserBarLikeCount">http://192.168.3.6:8088/postbar/queryUserBarLikeCount</string>
-    <string name="queryNoVideoSearchBarListForDate">http://192.168.3.6:8088/postbar/queryNoVideoSearchBarListForDate</string>
-    <string name="queryVideoBarListForDate">http://192.168.3.6:8088/postbar/queryVideoBarListForDate</string>
-    <string name="queryVideoTopicBarListForDate">http://192.168.3.6:8088/postbar/queryVideoTopicBarListForDate</string>
-    <string name="queryVideoUserBarListForDate">http://192.168.3.6:8088/postbar/queryVideoUserBarListForDate</string>
-    <string name="deleteBar">http://192.168.3.6:8088/postbar/deleteBar</string>
-    <string name="addBar">http://192.168.3.6:8088/postbar/addBar</string>
-    <string name="addBarVideo">http://192.168.3.6:8088/postbar/addBarVideo</string>
+    <string name="queryNoVideoBarListForDate">http://10.0.2.2:8088/postbar/queryNoVideoBarListForDate</string>
+    <string name="queryNoVideoTopicBarListForThumbNum">http://10.0.2.2:8088/postbar/queryNoVideoTopicBarListForThumbNum</string>
+    <string name="queryNoVideoTopicBarListForDate">http://10.0.2.2:8088/postbar/queryNoVideoTopicBarListForDate</string>
+    <string name="queryNoVideoUserBarListForDate">http://10.0.2.2:8088/postbar/queryNoVideoUserBarListForDate</string>
+    <string name="queryUserBarCount">http://10.0.2.2:8088/postbar/queryUserBarCount</string>
+    <string name="queryNoVideoFollowBarListForDate">http://10.0.2.2:8088/postbar/queryNoVideoFollowBarListForDate</string>
+    <string name="queryBarDetatilForPbid">http://10.0.2.2:8088/postbar/queryBarDetatilForPbid</string>
+    <string name="queryUserBarLikeCount">http://10.0.2.2:8088/postbar/queryUserBarLikeCount</string>
+    <string name="queryNoVideoSearchBarListForDate">http://10.0.2.2:8088/postbar/queryNoVideoSearchBarListForDate</string>
+    <string name="queryVideoBarListForDate">http://10.0.2.2:8088/postbar/queryVideoBarListForDate</string>
+    <string name="queryVideoTopicBarListForDate">http://10.0.2.2:8088/postbar/queryVideoTopicBarListForDate</string>
+    <string name="queryVideoUserBarListForDate">http://10.0.2.2:8088/postbar/queryVideoUserBarListForDate</string>
+    <string name="deleteBar">http://10.0.2.2:8088/postbar/deleteBar</string>
+    <string name="addBar">http://10.0.2.2:8088/postbar/addBar</string>
+    <string name="addBarVideo">http://10.0.2.2:8088/postbar/addBarVideo</string>
 
-    <string name="queryUserSign">http://192.168.3.6:8088/sign/queryUserSign</string>
-    <string name="queryUserBadge">http://192.168.3.6:8088/sign/queryUserBadge</string>
-    <string name="updateSignDay">http://192.168.3.6:8088/sign/updateSignDay</string>
-    <string name="updateSignRight">http://192.168.3.6:8088/sign/updateSignRight</string>
-    <string name="updateSignDayAndRight">http://192.168.3.6:8088/sign/updateSignDayAndRight</string>
-    <string name="updateSignDayAndRightAndCoin">http://192.168.3.6:8088/sign/updateSignDayAndRightAndCoin</string>
-    <string name="updateSignCoin">http://192.168.3.6:8088/sign/updateSignCoin</string>
-    <string name="updateSignStarBadge">http://192.168.3.6:8088/sign/updateSignStarBadge</string>
-    <string name="updateSignLikeBadge">http://192.168.3.6:8088/sign/updateSignLikeBadge</string>
-    <string name="updateSignTaskBadge">http://192.168.3.6:8088/sign/updateSignTaskBadge</string>
+    <string name="queryUserSign">http://10.0.2.2:8088/sign/queryUserSign</string>
+    <string name="queryUserBadge">http://10.0.2.2:8088/sign/queryUserBadge</string>
+    <string name="updateSignDay">http://10.0.2.2:8088/sign/updateSignDay</string>
+    <string name="updateSignRight">http://10.0.2.2:8088/sign/updateSignRight</string>
+    <string name="updateSignDayAndRight">http://10.0.2.2:8088/sign/updateSignDayAndRight</string>
+    <string name="updateSignDayAndRightAndCoin">http://10.0.2.2:8088/sign/updateSignDayAndRightAndCoin</string>
+    <string name="updateSignCoin">http://10.0.2.2:8088/sign/updateSignCoin</string>
+    <string name="updateSignStarBadge">http://10.0.2.2:8088/sign/updateSignStarBadge</string>
+    <string name="updateSignLikeBadge">http://10.0.2.2:8088/sign/updateSignLikeBadge</string>
+    <string name="updateSignTaskBadge">http://10.0.2.2:8088/sign/updateSignTaskBadge</string>
 
-    <string name="queryTopicNameList">http://192.168.3.6:8088/topic/queryTopicNameList</string>
-    <string name="querySearchTopicNameList">http://192.168.3.6:8088/topic/querySearchTopicNameList</string>
-    <string name="queryRundomTopicFullList">http://192.168.3.6:8088/topic/queryRundomTopicFullList</string>
-    <string name="queryTopicFull">http://192.168.3.6:8088/topic/queryTopicFull</string>
-    <string name="querySearchTopicFullList">http://192.168.3.6:8088/topic/querySearchTopicFullList</string>
+    <string name="queryTopicNameList">http://10.0.2.2:8088/topic/queryTopicNameList</string>
+    <string name="querySearchTopicNameList">http://10.0.2.2:8088/topic/querySearchTopicNameList</string>
+    <string name="queryRundomTopicFullList">http://10.0.2.2:8088/topic/queryRundomTopicFullList</string>
+    <string name="queryTopicFull">http://10.0.2.2:8088/topic/queryTopicFull</string>
+    <string name="querySearchTopicFullList">http://10.0.2.2:8088/topic/querySearchTopicFullList</string>
 
-    <string name="querySchoolTable">http://192.168.3.6:8088/user/querySchoolTable</string>
-    <string name="querySearchUser">http://192.168.3.6:8088/user/querySearchUser</string>
-    <string name="updateUserPersonalInformation">http://192.168.3.6:8088/user/updateUserPersonalInformation</string>
-    <string name="updateUserHeadImage">http://192.168.3.6:8088/user/updateUserHeadImage</string>
-    <string name="updateUserBgImage">http://192.168.3.6:8088/user/updateUserBgImage</string>
-    <string name="updateUserBadgeImage">http://192.168.3.6:8088/user/updateUserBadgeImage</string>
-    <string name="updateUserPrivacy">http://192.168.3.6:8088/user/updateUserPrivacy</string>
-    <string name="deleteUserIp">http://192.168.3.6:8088/user/deleteUserIp</string>
-    <string name="updateUserIp">http://192.168.3.6:8088/user/updateUserIp</string>
-    <string name="updateUserToken">http://192.168.3.6:8088/user/updateUserToken</string>
+    <string name="querySchoolTable">http://10.0.2.2:8088/user/querySchoolTable</string>
+    <string name="querySearchUser">http://10.0.2.2:8088/user/querySearchUser</string>
+    <string name="updateUserPersonalInformation">http://10.0.2.2:8088/user/updateUserPersonalInformation</string>
+    <string name="updateUserHeadImage">http://10.0.2.2:8088/user/updateUserHeadImage</string>
+    <string name="updateUserBgImage">http://10.0.2.2:8088/user/updateUserBgImage</string>
+    <string name="updateUserBadgeImage">http://10.0.2.2:8088/user/updateUserBadgeImage</string>
+    <string name="updateUserPrivacy">http://10.0.2.2:8088/user/updateUserPrivacy</string>
+    <string name="deleteUserIp">http://10.0.2.2:8088/user/deleteUserIp</string>
+    <string name="logout">http://10.0.2.2:8088/accountSecurity/logout</string>
+    <string name="updateUserIp">http://10.0.2.2:8088/user/updateUserIp</string>
+    <string name="updateUserToken">http://10.0.2.2:8088/user/updateUserToken</string>
 
-    <string name="userRegistered">http://192.168.3.6:8088/registered/userRegistered</string>
+    <string name="userRegistered">http://10.0.2.2:8088/registered/userRegistered</string>
 
 
 

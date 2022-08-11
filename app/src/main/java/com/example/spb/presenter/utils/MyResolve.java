@@ -2,6 +2,7 @@ package com.example.spb.presenter.utils;
 
 import com.example.spb.entity.ImageDouble;
 import com.example.spb.entity.Topic;
+import com.google.zxing.common.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +34,17 @@ public class MyResolve {
 
     public static List<ImageDouble> InDoubleImage(String data) {
         List<ImageDouble> imageDoubles = new ArrayList<>();
-        String[] one = data.split("@");
-        String[] two = one[0].split("\\|");
-        String[] three = one[1].split("\\|");
+        int i = data.indexOf("@");
+        String[] two;
+        String[] three;
+        if (i == -1) {
+            two = data.split("\\|");
+            three = two;
+        } else {
+            String[] one = data.split("@");
+            two = one[0].split("\\|");
+            three = one[1].split("\\|");
+        }
         for (int a = 0; a < two.length; a++) {
             ImageDouble imageDouble = new ImageDouble();
             imageDouble.setMinPath(two[a]);
@@ -58,9 +67,12 @@ public class MyResolve {
 
     public static List<Integer> InSignDay(String data) {
         List<Integer> days = new ArrayList<>();
+        if (DataVerificationTool.isEmpty(data)){
+            return days;
+        }
         String[] s = data.split("\\|");
-        for (int a = 0; a < s.length; a++) {
-            days.add(Integer.valueOf(s[a]));
+        for (String value : s) {
+            days.add(Integer.valueOf(value));
         }
         return days;
     }

@@ -15,20 +15,18 @@ import okhttp3.FormBody;
 public class AttentionModelImpl extends SpbModelAbstrate implements AttentionModel {
     @Override
     public void addAttentionTopic(String userAccount, String topicId, String topicName, MyCallBack callBack) {
-        requestBody = new FormBody.Builder()
-                .add("user_account", userAccount)
-                .add("topic_id", topicId)
-                .add("topic_name", topicName)
-                .build();
-        sendHttp(InValues.send(R.string.addAttentionTopic), requestBody, callBack);
+        StringBuffer stringBuffer = new StringBuffer("?");
+        stringBuffer.append("&").append("user_account").append("=").append(userAccount);
+        stringBuffer.append("&").append("topic_id").append("=").append(topicId);
+        stringBuffer.append("&").append("topic_name").append("=").append(topicName);
+        sendHttp(InValues.send(R.string.addAttentionTopic) + stringBuffer, POST, requestBody, callBack);
     }
 
     @Override
     public void queryAttentionTopic(String account, MyCallBack callBack) {
-        requestBody = new FormBody.Builder()
-                .add("user_account", account)
-                .build();
-        sendHttp(InValues.send(R.string.queryAttentionTopic), requestBody, callBack);
+        StringBuffer stringBuffer = new StringBuffer("?");
+        stringBuffer.append("&").append("user_account").append("=").append(account);
+        sendHttp(InValues.send(R.string.queryAttentionTopic) + stringBuffer, GET, requestBody, callBack);
     }
 
     @Override
@@ -37,6 +35,6 @@ public class AttentionModelImpl extends SpbModelAbstrate implements AttentionMod
                 .add("user_account", userAccount)
                 .add("topic_id", id)
                 .build();
-        sendHttp(InValues.send(R.string.deleteAttentionTopicById), requestBody, callBack);
+        sendHttp(InValues.send(R.string.deleteAttentionTopicById), POST, requestBody, callBack);
     }
 }

@@ -28,6 +28,6 @@ public class UserRegisteredModelImpl extends SpbModelAbstrate implements UserReg
                 .addFormDataPart("file", file.getName(), RequestBody.Companion.create(file
                         , MediaType.Companion.parse("image/png")));
         requestBody = builder.build();
-        sendHttp(InValues.send(R.string.userRegistered), requestBody, callBack);
+        sendHttp(InValues.send(R.string.userRegistered), POST, requestBody, callBack);
     }
 }

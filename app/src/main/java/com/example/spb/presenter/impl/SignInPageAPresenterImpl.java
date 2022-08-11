@@ -83,23 +83,26 @@ public class SignInPageAPresenterImpl extends BasePresenter<ISignInPageAView> im
                 now = calendar.get(Calendar.DAY_OF_MONTH);
                 if (old != now) {
                     initTask();
-                    noDay(onReturn);
-                } else {
-                    if (isAttachView()) {
-                        if (s.getSign_right() == 1) {
-                            if (s.getSign_day() == null || "".equals(s.getSign_day())) {
-                                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_sign_data), SignInPage.SIGN_ERROR_RIGHT, s);
-                            } else {
-                                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_sign_data), SignInPage.SIGN_NO_RIGHT, s);
-                            }
-                            //未签到广播1   signInPage -> 金币,sign ->  连续签到数据 ,badge ->  徽章数据   接收
-                        } else {
-                            SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_sign_data), SignInPage.SIGN_RIGHT, s);
-                            //已签到广播2    signInPage -> 金币,sign ->  连续签到数据 ,badge ->  徽章数据   接收
-                        }
-                        onReturn.onReturn();
-                    }
+                   // noDay(onReturn);
                 }
+                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_sign_data), SignInPage.SIGN_RIGHT, s);
+                onReturn.onReturn();
+//                else {
+//                    if (isAttachView()) {
+//                        if (s.getSign_right() == 1) {
+//                            if (s.getSign_day() == null || "".equals(s.getSign_day())) {
+//                                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_sign_data), SignInPage.SIGN_ERROR_RIGHT, s);
+//                            } else {
+//                                SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_sign_data), SignInPage.SIGN_NO_RIGHT, s);
+//                            }
+//                            //未签到广播1   signInPage -> 金币,sign ->  连续签到数据 ,badge ->  徽章数据   接收
+//                        } else {
+//                            SpbBroadcast.sendReceiver(MyApplication.getContext(), InValues.send(R.string.Bcr_sign_data), SignInPage.SIGN_RIGHT, s);
+//                            //已签到广播2    signInPage -> 金币,sign ->  连续签到数据 ,badge ->  徽章数据   接收
+//                        }
+//                        onReturn.onReturn();
+//                    }
+//                }
             }
         });
     }

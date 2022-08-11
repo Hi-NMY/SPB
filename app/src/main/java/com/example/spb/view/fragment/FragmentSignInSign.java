@@ -38,7 +38,7 @@ public class FragmentSignInSign extends BaseMVPFragment<ISignInSignFView, SignIn
 
     private ObtainSignData obtainSignData;
     private AddNewSign addNewSign;
-    private Sign sign;
+    private Sign sign = null;
     private SignInPage signInPage;
     private TextView mLongSignDay;
     private Map<Integer, ImageView> imgMap = null;
@@ -131,45 +131,9 @@ public class FragmentSignInSign extends BaseMVPFragment<ISignInSignFView, SignIn
 
     @Override
     protected void initData() {
-        for (int i = 1; i <= imgMap.size(); i++) {
-            if (i == 1) {
-                nowSignDay = 1;
-                createDialog();
-                imgMap.get(i).setVisibility(View.INVISIBLE);
-                noSignBgMap.get(i).setVisibility(View.VISIBLE);
-                signTextMap.get(i).setVisibility(View.VISIBLE);
-                noSignBgMap.get(i).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showDialogS(LOADINGDIALOG);
-                        mPresenter.addNewSign(signInPage.getDataUserMsgPresenter().getUser_account(), 1);
-                    }
-                });
-            } else {
-                imgMap.get(i).setVisibility(View.VISIBLE);
-                noSignBgMap.get(i).setVisibility(View.VISIBLE);
-                signTextMap.get(i).setVisibility(View.INVISIBLE);
-            }
+        if (sign == null){
+            return;
         }
-    }
-
-    private void signRightView() {
-        List<Integer> days = MyResolve.InSignDay(sign.getSign_day());
-        for (int i = 1; i <= imgMap.size(); i++) {
-            if (days.contains(i)) {
-                imgMap.get(i).setBackground(signInPage.getDrawable(R.drawable.icon_already_sign));
-                imgMap.get(i).setVisibility(View.VISIBLE);
-                noSignBgMap.get(i).setVisibility(View.INVISIBLE);
-                signTextMap.get(i).setVisibility(View.INVISIBLE);
-            } else {
-                imgMap.get(i).setVisibility(View.VISIBLE);
-                noSignBgMap.get(i).setVisibility(View.VISIBLE);
-                signTextMap.get(i).setVisibility(View.INVISIBLE);
-            }
-        }
-    }
-
-    private void signNoRightView() {
         List<Integer> days = MyResolve.InSignDay(sign.getSign_day());
         Collections.sort(days);
         for (int i = 1; i <= imgMap.size(); i++) {
@@ -178,24 +142,25 @@ public class FragmentSignInSign extends BaseMVPFragment<ISignInSignFView, SignIn
                 imgMap.get(i).setVisibility(View.VISIBLE);
                 noSignBgMap.get(i).setVisibility(View.INVISIBLE);
                 signTextMap.get(i).setVisibility(View.INVISIBLE);
-            } else if (days.get(days.size() - 1) + 1 == i && days.get(days.size() - 1) != 7) {
-                nowSignDay = i;
-                createDialog();
-                imgMap.get(i).setVisibility(View.INVISIBLE);
-                noSignBgMap.get(i).setVisibility(View.VISIBLE);
-                signTextMap.get(i).setVisibility(View.VISIBLE);
-                noSignBgMap.get(i).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showDialogS(LOADINGDIALOG);
-                        mPresenter.addNewSign(signInPage.getDataUserMsgPresenter().getUser_account(), nowSignDay);
-                    }
-                });
-            } else {
+            }else{
                 imgMap.get(i).setVisibility(View.VISIBLE);
                 noSignBgMap.get(i).setVisibility(View.VISIBLE);
                 signTextMap.get(i).setVisibility(View.INVISIBLE);
             }
+        }
+        if (sign.getSign_right() == 1){
+            nowSignDay = days.size() + 1;
+            createDialog();
+            imgMap.get(days.size() + 1).setVisibility(View.INVISIBLE);
+            noSignBgMap.get(days.size() + 1).setVisibility(View.VISIBLE);
+            signTextMap.get(days.size() + 1).setVisibility(View.VISIBLE);
+            noSignBgMap.get(days.size() + 1).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showDialogS(LOADINGDIALOG);
+                    mPresenter.addNewSign(signInPage.getDataUserMsgPresenter().getUser_account(), nowSignDay);
+                }
+            });
         }
     }
 
@@ -289,19 +254,10 @@ public class FragmentSignInSign extends BaseMVPFragment<ISignInSignFView, SignIn
         public void onReceive(Context context, Intent intent) {
             int fun = intent.getIntExtra("key_one", 0);
             sign = (Sign) intent.getSerializableExtra("key_two");
-            switch (fun) {
-                case SIGN_RIGHT:
-                    signRightView();
-                    break;
-                case SIGN_NO_RIGHT:
-                    signNoRightView();
-                    break;
-                case SIGN_ERROR_RIGHT:
-                    initData();
-                    break;
-                default:
-                    MyToastClass.ShowToast(MyApplication.getContext(), "错误！请重试");
-                    break;
+            if (fun == SIGN_RIGHT) {
+                initData();
+            } else {
+                MyToastClass.ShowToast(MyApplication.getContext(), "错误！请重试");
             }
         }
     }
@@ -317,7 +273,7 @@ public class FragmentSignInSign extends BaseMVPFragment<ISignInSignFView, SignIn
                 sign.setSign_day(signDay);
                 sign.setSign_right(0);
                 setLongDay(longDay + 1);
-                signRightView();
+                initData();
             }
         }
     }

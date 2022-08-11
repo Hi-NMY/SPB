@@ -21,10 +21,9 @@ import java.io.File;
 public class DiaryModelImpl extends SpbModelAbstrate implements DiaryModel {
     @Override
     public void queryDiary(String userAccount, MyCallBack callBack) {
-        requestBody = new FormBody.Builder()
-                .add("user_account", userAccount)
-                .build();
-        sendHttp(InValues.send(R.string.queryDiary), requestBody, callBack);
+        StringBuffer stringBuffer = new StringBuffer("?");
+        stringBuffer.append("&").append("user_account").append("=").append(userAccount);
+        sendHttp(InValues.send(R.string.queryDiary) + stringBuffer,GET, requestBody, callBack);
     }
 
     @Override
@@ -40,7 +39,7 @@ public class DiaryModelImpl extends SpbModelAbstrate implements DiaryModel {
                     MediaType.Companion.parse("image/png")));
         }
         requestBody = builder.build();
-        sendHttp(InValues.send(R.string.addDiary), requestBody, callBack);
+        sendHttp(InValues.send(R.string.addDiary),POST, requestBody, callBack);
     }
 
     @Override
@@ -49,6 +48,6 @@ public class DiaryModelImpl extends SpbModelAbstrate implements DiaryModel {
                 .add("user_account", userAccount)
                 .add("id", id)
                 .build();
-        sendHttp(InValues.send(R.string.deleteDiary), requestBody, callBack);
+        sendHttp(InValues.send(R.string.deleteDiary),POST, requestBody, callBack);
     }
 }

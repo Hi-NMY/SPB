@@ -287,6 +287,7 @@ public class PersonalSpacePage extends BaseMVPActivity<IPersonalSpacePageAView, 
                             mPersonalspaceViewpager.setVisibility(View.VISIBLE);
                         } else {
                             mPersonalspaceViewpager.setVisibility(View.INVISIBLE);
+                            MyToastClass.ShowToast(MyApplication.getContext(),"双向关注才能查看空间哦");
                         }
                     }
                     break;

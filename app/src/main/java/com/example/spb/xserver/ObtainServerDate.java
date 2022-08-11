@@ -2,6 +2,7 @@ package com.example.spb.xserver;
 
 import com.example.spb.R;
 import com.example.spb.presenter.utils.InValues;
+import com.example.spb.presenter.utils.MySharedPreferences;
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,6 +18,7 @@ public class ObtainServerDate {
                 .build();
         Request request = new Request.Builder()
                 .url(InValues.send(R.string.dateTime))
+                .addHeader("token", MySharedPreferences.getShared(InValues.send(R.string.Shared_user_token)).getString(InValues.send(R.string.token), ""))
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override

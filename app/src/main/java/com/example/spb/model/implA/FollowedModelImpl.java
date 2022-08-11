@@ -15,25 +15,22 @@ import okhttp3.FormBody;
 public class FollowedModelImpl extends SpbModelAbstrate implements FollowedModel {
     @Override
     public void queryFollowedList(String userAccount, MyCallBack callBack) {
-        requestBody = new FormBody.Builder()
-                .add("user_account", userAccount)
-                .build();
-        sendHttp(InValues.send(R.string.queryFollowedList), requestBody, callBack);
+        StringBuffer stringBuffer = new StringBuffer("?");
+        stringBuffer.append("&").append("user_account").append("=").append(userAccount);
+        sendHttp(InValues.send(R.string.queryFollowedList) + stringBuffer, GET, requestBody, callBack);
     }
 
     @Override
     public void queryFollowedCount(String userAccount, MyCallBack callBack) {
-        requestBody = new FormBody.Builder()
-                .add("user_account", userAccount)
-                .build();
-        sendHttp(InValues.send(R.string.queryFollowedCount), requestBody, callBack);
+        StringBuffer stringBuffer = new StringBuffer("?");
+        stringBuffer.append("&").append("user_account").append("=").append(userAccount);
+        sendHttp(InValues.send(R.string.queryFollowedCount) + stringBuffer, GET, requestBody, callBack);
     }
 
     @Override
     public void queryFollowedUserList(String userAccount, MyCallBack callBack) {
-        requestBody = new FormBody.Builder()
-                .add("user_account", userAccount)
-                .build();
-        sendHttp(InValues.send(R.string.queryFollowedUserList), requestBody, callBack);
+        StringBuffer stringBuffer = new StringBuffer("?");
+        stringBuffer.append("&").append("user_account").append("=").append(userAccount);
+        sendHttp(InValues.send(R.string.queryFollowedUserList) + stringBuffer, GET, requestBody, callBack);
     }
 }

@@ -15,26 +15,23 @@ import okhttp3.FormBody;
 public class FollowModelImpl extends SpbModelAbstrate implements FollowModel {
     @Override
     public void queryFollowList(String userAccount, MyCallBack callBack) {
-        requestBody = new FormBody.Builder()
-                .add("user_account", userAccount)
-                .build();
-        sendHttp(InValues.send(R.string.queryFollowList), requestBody, callBack);
+        StringBuffer stringBuffer = new StringBuffer("?");
+        stringBuffer.append("&").append("user_account").append("=").append(userAccount);
+        sendHttp(InValues.send(R.string.queryFollowList) + stringBuffer, GET, requestBody, callBack);
     }
 
     @Override
     public void queryFollowCount(String userAccount, MyCallBack callBack) {
-        requestBody = new FormBody.Builder()
-                .add("user_account", userAccount)
-                .build();
-        sendHttp(InValues.send(R.string.queryFollowCount), requestBody, callBack);
+        StringBuffer stringBuffer = new StringBuffer("?");
+        stringBuffer.append("&").append("user_account").append("=").append(userAccount);
+        sendHttp(InValues.send(R.string.queryFollowCount) + stringBuffer, GET, requestBody, callBack);
     }
 
     @Override
     public void queryFollowUserList(String userAccount, MyCallBack callBack) {
-        requestBody = new FormBody.Builder()
-                .add("user_account", userAccount)
-                .build();
-        sendHttp(InValues.send(R.string.queryFollowUserList), requestBody, callBack);
+        StringBuffer stringBuffer = new StringBuffer("?");
+        stringBuffer.append("&").append("user_account").append("=").append(userAccount);
+        sendHttp(InValues.send(R.string.queryFollowUserList) + stringBuffer, GET, requestBody, callBack);
     }
 
     @Override
@@ -43,7 +40,7 @@ public class FollowModelImpl extends SpbModelAbstrate implements FollowModel {
                 .add("follow_account", followAccount)
                 .add("followed_account", followedAccount)
                 .build();
-        sendHttp(InValues.send(R.string.addFollow), requestBody, callBack);
+        sendHttp(InValues.send(R.string.addFollow), POST, requestBody, callBack);
     }
 
     @Override
@@ -52,6 +49,6 @@ public class FollowModelImpl extends SpbModelAbstrate implements FollowModel {
                 .add("follow_account", followAccount)
                 .add("followed_account", followedAccount)
                 .build();
-        sendHttp(InValues.send(R.string.deleteFollow), requestBody, callBack);
+        sendHttp(InValues.send(R.string.deleteFollow), POST, requestBody, callBack);
     }
 }

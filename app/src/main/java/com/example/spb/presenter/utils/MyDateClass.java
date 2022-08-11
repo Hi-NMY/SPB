@@ -231,6 +231,9 @@ public class MyDateClass {
     }
 
     public static Date stringToDate(String time) {
+        if (time.contains("T")){
+           time = time.replace("T", " ");
+        }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = null;
         try {
